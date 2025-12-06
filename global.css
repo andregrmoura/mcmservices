@@ -1,0 +1,657 @@
+/*
+====================================
+CSS GERAL E BASE (GLOBAL)
+====================================
+*/
+/* Paleta Premium LIGHT MODE: #F7F7F7, #333333, #C7A96B */
+*, *::before, *::after { box-sizing: border-box; }
+
+@font-face {
+  font-family: 'Great Vibes';
+  src: url('Great_Vibes/GreatVibes-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* MCM - LIGHT MODE ELEGANCE */
+body {
+    margin: 0; font-family: 'Montserrat', sans-serif; 
+    background-color: #F7F7F7; /* Fundo Principal: Off-White Suave */
+    color: #333333; /* Texto Principal: Cinza Grafite */
+    line-height: 1.6;
+}
+
+/* ------------------------------------------- */
+/* --- HEADER - ESTILOS UNIFORMES (CORRIGIDO SEM TAG) --- */
+/* ------------------------------------------- */
+header {
+  width: 100%; box-sizing: border-box; 
+  background-color: #FFFFFF; /* Fundo do Header: Branco Puro */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+  padding: 8px 20px;
+  position: relative; 
+  z-index: 100; 
+}
+
+/* CONTAINER PRINCIPAL: Uma única linha (Logo | Menu | Ações) */
+.header-container {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    width: 100%; 
+    position: relative; 
+    padding: 0;
+}
+
+/* MCM - WRAPPER DO LOGO - AJUSTA A LARGURA AO CONTEÚDO */
+.header-brand-wrapper {
+    display: block !important; 
+    margin: 0 !important; 
+    padding: 0 !important; 
+    flex-shrink: 0; 
+    width: auto; /* PERMITE QUE OCUPE O ESPAÇO APENAS DO LOGO */
+    max-width: 60%; 
+}
+
+.logo-link {
+    /* Retorna ao comportamento de bloco ou flex-row para o alinhamento da logo */
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    
+    width: 450px; /* Largura FIXA da imagem (450px) */
+    height: 130px; /* Altura FIXA */
+    margin: 0 !important;
+    padding: 0; 
+    
+    background-color: transparent; 
+    border: none; 
+    box-shadow: none; 
+    border-radius: 5px; 
+    
+    justify-content: flex-start;
+}
+
+/* MCM - LOGO (TAMANHO ORIGINAL) */
+.header-logo {
+    display: block !important; 
+    height: 130px !important; /* Tamanho do logo ORIGINAL */
+    width: 450px !important; 
+    margin: 0 !important; 
+    padding: 0 !important;
+    object-fit: contain; flex-shrink: 0;
+}
+
+/* TAG de Cidade (Garantido que esteja escondida) */
+.city-tag { display: none; }
+
+/* --- FALLBACK CSS PARA O LOGO QUEBRADA/AUSENTE --- */
+.header-logo {
+    background-color: transparent;
+    border: none;
+    color: #333333; 
+    font-size: 14px; 
+    text-align: center;
+    line-height: 130px; /* Ajustado para a altura original (130px) */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.header-logo:not([src]) {
+    content: "MCM"; 
+    text-indent: 0;
+    overflow: hidden;
+}
+/* --- FIM DO FALLBACK --- */
+
+/* NAVEGAÇÃO PRINCIPAL - COMPACTA NO CENTRO */
+.main-nav-links { 
+    flex-grow: 1; /* Ocupa o espaço central livre */
+    flex-shrink: 1; /* Permite encolher se necessário */
+    text-align: center; 
+    padding: 0 10px; 
+    width: auto;
+}
+
+.main-nav-links ul { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: inline-flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 30px; 
+    align-items: center; 
+    max-width: 100%;
+}
+
+.main-nav-links li a {
+    font-family: 'Montserrat', sans-serif !important; display: block; padding: 8px 10px !important;
+    text-decoration: none; 
+    color: #333333; 
+    font-weight: 400; font-size: 0.95rem; position: relative;
+    transition: color 0.3s; 
+    text-shadow: none; 
+}
+.main-nav-links li a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px;
+    /* Linha Dourada */
+    background: linear-gradient(90deg, #C7A96B, #B89C6A); 
+    transition: width 0.3s ease-out; border-radius: 2px;
+}
+/* Hover/Ativo Dourado */
+.main-nav-links li a:hover { color: #C7A96B; }
+.main-nav-links li a:hover::after, .main-nav-links li a.active::after { width: 100%; }
+.main-nav-links li a.active { color: #C7A96B; }
+
+/* AÇÕES DIREITA (TELEFONE, LOGIN, IDIOMA) - ALINHADAS À DIREITA */
+.header-right-actions { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    flex-shrink: 0; /* Não deve encolher */
+    margin-left: 20px; 
+}
+
+/* Link de Telefone */
+.header-phone-action {
+    display: flex; align-items: center; text-decoration: none;
+    color: #333333; 
+    font-weight: 500; font-size: 15px; white-space: nowrap;
+    padding: 8px 0; transition: color 0.3s;
+}
+/* Ícone Dourado */
+.header-phone-action i.fas {
+    color: #C7A96B; margin-right: 5px; font-size: 16px;
+}
+/* Hover Dourado */
+.header-phone-action:hover { color: #C7A96B; }
+
+/* Link de Login/Portal (MINIMALISTA) */
+.client-login-item {
+    display: flex; 
+    align-items: center; 
+    
+    background-color: transparent !important;
+    border: 1px solid #333333; 
+    
+    border-radius: 5px; 
+    padding: 8px 15px; 
+    color: #333333 !important; 
+    font-weight: 400; 
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* HOVER DISCRETO DOURADO */
+.client-login-item:hover {
+    color: #C7A96B !important; 
+    border-color: #C7A96B !important; 
+    background-color: rgba(199, 169, 107, 0.05); 
+}
+
+.client-login-item i.fas { 
+    margin-right: 5px; 
+    color: inherit !important;
+    font-size: 16px !important; 
+}
+.client-login-item .login-text { 
+    font-weight: normal; 
+    display: inline;
+} 
+
+.desktop-lang-switcher { display: flex; gap: 5px; margin-left: 20px; }
+.desktop-lang-switcher img { width: 30px; height: 20px; cursor: pointer; border: 1px solid #333333; border-radius: 4px; opacity: 0.8; transition: opacity 0.2s, transform 0.2s; }
+/* Borda da Bandeira Ativa Dourada */
+.desktop-lang-switcher img.active { 
+    opacity: 1; 
+    border: 2px solid #C7A96B; 
+    box-shadow: 0 0 5px rgba(199, 169, 107, 0.8); 
+}
+
+/* --- CSS PARA O BOTÃO DE IDIOMA MOBILE --- */
+.mobile-lang-switcher {
+    display: none; 
+    padding: 15px 0 5px 0; 
+    justify-content: center;
+    gap: 15px; 
+    align-items: center;
+    border-top: 1px solid rgba(51, 51, 51, 0.1); 
+}
+.mobile-lang-switcher img {
+    width: 35px; 
+    height: 25px; 
+    cursor: pointer; 
+    border: 1px solid #333333; 
+    border-radius: 4px; 
+    opacity: 0.8; 
+    transition: opacity 0.2s, transform 0.2s;
+}
+/* Borda da Bandeira Ativa Dourada */
+.mobile-lang-switcher img.active { 
+    opacity: 1; 
+    border: 2px solid #C7A96B; 
+    box-shadow: 0 0 5px rgba(199, 169, 107, 0.8); 
+}
+/* --- FIM CSS --- */
+
+.hamburger-btn { display: none; background: none; border: none; cursor: pointer; padding: 10px; z-index: 1001; }
+.hamburger-btn .hamburger-line { display: block; width: 25px; height: 3px; background-color: #333333; margin: 5px 0; transition: transform 0.3s ease, opacity 0.3s ease; }
+.hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
+.hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+.mobile-client-login-item { display: none; }
+.nav-bottom-container { display: none; } /* Removido do desktop */
+
+
+/* FOOTER (Rodapé Light Mode) */
+footer { 
+    background: #FFFFFF !important; 
+    color: #555 !important; 
+    padding: 20px 15px !important; 
+    text-align: center !important; 
+    border-top: 1px solid #EFEFEF !important; 
+    font-size: 0.9rem !important; 
+    margin-top: auto !important; 
+}
+footer p { margin: 5px 0 !important; color: #555 !important; font-family: 'Montserrat', sans-serif;}
+/* Ícone Dourado */
+footer p .fa-envelope { color: #C7A96B !important; }
+footer a { color: #555 !important; text-decoration: none !important; transition: color 0.3s !important; font-family: 'Montserrat', sans-serif;}
+/* Hover Dourado */
+footer a:hover { color: #C7A96B !important; }
+.footer-links { margin-top: 10px !important; margin-bottom: 10px !important; display: flex !important; justify-content: center !important; gap: 15px !important; flex-wrap: wrap !important; }
+.developer-signature { font-size: 0.8rem !important; color: #999 !important; margin-top: 10px !important; margin-bottom: 0 !important; font-family: 'Montserrat', sans-serif;}
+.footer-tagline { font-family: 'Montserrat', sans-serif; font-weight: 500; color: #888 !important; font-size: 0.9rem; margin: 8px 0 !important; padding: 0 !important; }
+
+/* NOVO: Estilos para o link do Instagram e Email no rodapé */
+.footer-social-links {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 1rem;
+}
+.footer-social-links a {
+     color: #555 !important; /* Cor do link Cinza */
+     text-decoration: none;
+     transition: color 0.3s;
+     display: flex; 
+     align-items: center;
+}
+/* Hover Dourado */
+.footer-social-links a:hover {
+     color: #C7A96B !important;
+     text-decoration: underline;
+}
+/* Ícone Dourado */
+.footer-social-links i {
+     margin-right: 5px;
+     color: #C7A96B;
+}
+/* FIM NOVO */
+
+
+/* SCROLL TO TOP (Dourado Fosco) */
+#scrollToTopBtn { 
+    position: fixed; 
+    bottom: 25px; 
+    right: 25px; 
+    z-index: 999; 
+    /* Botão Dourado */
+    background-color: #C7A96B; 
+    color: #FFFFFF; /* Texto Branco */
+    cursor: pointer; 
+    border-radius: 50%; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    
+    width: 50px; 
+    height: 50px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    border: none;
+}
+#scrollToTopBtn i.fas {
+    color: #FFFFFF !important; /* Cor do ícone Branco */
+    font-size: 1.2rem;
+}
+#scrollToTopBtn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    display: flex;
+}
+
+/*
+* ESTILOS DO INDEX.HTML (Hero Slider e Seções)
+*/
+@keyframes kenBurns { 0% { transform: scale(1) translate(0, 0); opacity: 1; } 100% { transform: scale(1.1) translate(0, 0); opacity: 1; } }
+@keyframes textSlideIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes textSlideInFromRight { 0% { opacity: 0; transform: translateX(30px); } 100% { transform: translateX(0); } }
+
+.hero-slider {
+  position: relative; width: 100%; height: 90vh; min-height: 500px; max-height: 700px;
+  background-color: #F7F7F7; /* Fundo Suave */ z-index: 5;
+}
+.hero-slide {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-size: cover; background-position: center center; opacity: 0;
+  visibility: hidden; transition: opacity 3.0s ease, visibility 3.0s ease; z-index: 1;
+}
+.hero-slide.active { opacity: 1; visibility: visible; z-index: 2; }
+.hero-slide.active::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: inherit; background-size: cover; background-position: center center;
+  z-index: 1; animation: kenBurns 15s ease-out forwards;
+}
+/* Overlay mais suave no Light Mode */
+.hero-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.3); z-index: 2;
+}
+.hero-content {
+  position: relative; z-index: 3; max-width: 1200px; margin: 0 auto;
+  text-align: center; color: white; height: 100%; display: flex;
+  flex-direction: column; justify-content: flex-start; align-items: center;
+  padding: 150px 20px 30px 20px; box-sizing: border-box;
+}
+.hero-slide .hero-content h1, .hero-slide .hero-content p, .hero-slide .hero-content button { opacity: 0; }
+.hero-slide.active .hero-content h1 { animation: textSlideInFromRight 2.0s ease 0.2s forwards; }
+.hero-slide.active .hero-content p { animation: textSlideIn 2.0s ease 0.5s forwards; }
+.hero-slide.active .hero-content button { animation: textSlideIn 2.0s ease 0.8s forwards; }
+.hero-content h1 {
+  font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.7rem;
+  margin: 0 0 15px 0; color: #FFFFFF; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.hero-content p {
+  font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1.1rem;
+  margin: 0 0 40px 0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.hero-highlight { position: relative; display: inline-block; }
+.hero-highlight::after { 
+    content: ''; position: absolute; width: 90%; height: 2px;
+    background: rgba(255, 255, 255, 0.7); bottom: -5px; left: 50%;
+    transform: translateX(-50%); border-radius: 1px; opacity: 0.7;
+}
+
+/* BOTÃO PRINCIPAL (CTA): DOURADO/PRETO - Destaque de Luxo */
+.hero-content button { 
+  background: #C7A96B; /* Fundo Dourado Fosco */
+  color: #333333; /* Texto Cinza Grafite */
+  border: 1px solid #C7A96B; 
+  padding: 14px 40px;
+  font-weight: 500; /* Um pouco mais de peso */
+  font-size: 1.1rem; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s ease;
+  z-index: 10; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
+}
+/* Hover do Botão CTA (Dourado mais Intenso no hover) */
+.hero-content button:hover { 
+  background: #B89C6A; /* Dourado levemente mais escuro */
+  color: #333333; 
+  border-color: #B89C6A; 
+  box-shadow: 0 4px 20px rgba(199, 169, 107, 0.6); /* Sombra Dourada Forte */
+  transform: scale(1.03); 
+}
+
+.slider-nav {
+  position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+  z-index: 4; display: flex; gap: 10px;
+}
+.nav-dot { width: 12px; height: 12px; background-color: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; transition: background-color 0.3s, transform 0.3s; }
+/* Dot de Navegação Ativo Dourado */
+.nav-dot.active { 
+    background-color: #C7A96B; 
+    border: 1px solid #fff; 
+    transform: scale(1.1); 
+}
+
+/* Quality Seal */
+.quality-seal-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; position: relative; height: 0; z-index: 10; }
+.quality-seal-img {
+  width: 110px; height: auto; opacity: 0; animation: fadeInSeal 1.5s forwards 0.5s;
+  position: absolute; top: -80px; right: 20px;
+}
+@keyframes fadeInSeal { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 0.8; transform: translateY(0); } }
+
+/* Main Sections */
+main { padding: 0; }
+.services, .about, .testimonials, .contact { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+/* Seção Services (Fundo Cinza Gelo, Títulos Dourados) */
+.services { padding-top: 30px; padding-bottom: 60px; 
+  background-color: #EFEFEF; /* Cinza Gelo */
+  color: #333333; /* Texto Cinza Grafite */
+  position: relative; z-index: 6; text-align: center; overflow: visible; 
+}
+.services h2 { 
+  font-family: 'Playfair Display', serif !important; 
+  font-weight: 400 !important; 
+  color: #C7A96B; /* Dourado Fosco */
+  text-shadow: none; font-size: 2.6rem; position: relative; z-index: 2; display: inline-block; padding-bottom: 10px; margin-top: 0; 
+}
+
+/* Cards de Serviço (Fundo Branco) */
+.service-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 25px auto 0 auto; position: relative; z-index: 2; }
+.card { 
+    background: #FFFFFF; /* Branco Puro */
+    border-radius: 0; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    overflow: hidden; display: flex; flex-direction: column; flex: 1 1 300px; max-width: 350px; opacity: 0; transition: transform 0.3s, box-shadow 0.3s, opacity 1s; z-index: 2; 
+}
+.card.visible { opacity: 1; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.card img { width: 100%; height: 220px; object-fit: cover; filter: grayscale(100%); transition: filter 1s ease-out; }
+.card.visible img { filter: grayscale(0%); }
+.card-content { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
+/* Título do Card Dourado */
+.card-content h3 { 
+    font-family: 'Playfair Display', serif; 
+    color: #C7A96B; 
+    font-size: 1.5rem; font-weight: 400; margin-top: 0; margin-bottom: 10px; padding-bottom: 0; border-bottom: none; 
+}
+/* Texto do Card Cinza Padrão */
+.card-content p { 
+    font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.6; 
+    color: #555555; 
+    margin: 0; flex-grow: 1; 
+}
+
+/* Seção About (Fundo Off-White) */
+.about { 
+    background: #F7F7F7; /* Off-White Suave */
+    padding-top: 60px; padding-bottom: 30px; 
+}
+.about-container { display: flex; align-items: flex-start; gap: 30px; max-width: 1100px; margin: 0 auto; justify-content: center; flex-wrap: wrap; }
+.about-main-img { flex-shrink: 0; width: 100%; max-width: 200px; border-radius: 0; border: none; box-shadow: none; height: 250px; object-fit: cover; }
+
+.about-text { flex-grow: 1; max-width: 600px; }
+
+/* Título Dourado */
+.about-text h2 { 
+    font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.2rem; margin-top: 0; margin-bottom: 20px; text-align: center; 
+    color: #C7A96B; 
+    text-shadow: none; 
+}
+/* Texto Cinza Grafite */
+.about-text p { 
+    font-family: 'Montserrat', sans-serif; font-weight: 400; line-height: 1.7; margin-bottom: 8px; text-align: left; font-size: 1rem; 
+    color: #333333;
+}
+.certifications { margin-top: 20px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; align-items: center; }
+/* Certificado PM Dourado/Cinza */
+.certifications .cert-img, .cert-pm { width: 60px; height: 60px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border: 2px solid #DDDDDD; box-sizing: border-box; }
+.cert-pm { 
+    background-color: #C7A96B; 
+    color: #333333; 
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; line-height: 56px; text-align: center; display: inline-block; 
+}
+
+/* Seção Testimonials (Fundo Off-White) */
+.testimonials { 
+    background-color: #F7F7F7; /* Off-White Suave */
+    color: #333333;
+    text-align: center; padding-top: 40px; padding-bottom: 40px; 
+}
+/* Título Dourado */
+.testimonials h2 { 
+    font-weight: 400; font-size: 2.2rem; 
+    color: #C7A96B; 
+    text-shadow: none; margin-top: 10px; margin-bottom: 15px; 
+}
+.testimonial-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 25px auto 0 auto; }
+/* Card de Testemunho (Fundo Branco, Borda Dourada) */
+.testimonial-card { 
+    background: #FFFFFF; /* Branco Puro */
+    padding: 30px; border-radius: 0; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    flex: 1 1 300px; max-width: 350px; text-align: center; 
+    border-top: 4px solid #C7A96B; 
+    transition: transform 0.3s, box-shadow 0.3s; 
+}
+/* Autor Dourado */
+.testimonial-author { 
+    font-weight: 700; 
+    color: #C7A96B; 
+    margin-top: 0; 
+}
+
+/* Seção Contact (Fundo Cinza Gelo) */
+.contact { 
+    background: #EFEFEF; /* Cinza Gelo */
+    padding: 40px 20px; 
+    text-align: center; 
+    color: #333333;
+}
+/* Título Dourado */
+.contact h2 { 
+    font-size: 2.2rem; margin-bottom: 20px; 
+    color: #C7A96B; 
+    font-family: 'Montserrat', sans-serif; 
+}
+.contact form { max-width: 600px; margin: 30px auto 0 auto; display: flex; flex-direction: column; gap: 15px; }
+/* Botão Enviar Dourado/Cinza */
+.contact button { 
+    background: #C7A96B; 
+    color: #333333; 
+    border: none; padding: 12px; font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: background-color 0.3s; 
+}
+.whatsapp-btn { display: inline-block; margin-top: 25px; padding: 12px 25px; background: #25D366; color: white; border-radius: 8px; font-weight: bold; text-decoration: none; transition: background-color 0.3s; }
+
+/* Melhoria dos Campos do Formulário de Contato (Fundo Branco, Borda Cinza) */
+.contact input[type="text"], 
+.contact input[type="email"], 
+.contact textarea { 
+    padding: 12px; 
+    border: 1px solid #CCCCCC; /* Borda Cinza Claro */
+    background-color: #FFFFFF; /* Fundo Branco */
+    color: #333333; /* Texto Cinza Grafite */
+    border-radius: 8px; 
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+/* Foco do Formulário Dourado */
+.contact input[type="text"]:focus, 
+.contact input[type="email"]:focus, 
+.contact textarea:focus {
+    border-color: #C7A96B; 
+    box-shadow: 0 0 8px rgba(199, 169, 107, 0.4); 
+    outline: none;
+}
+
+/* Separador de Seção */
+.section-separator { display: none; }
+
+/* RESPONSIVIDADE (UNIFORME) */
+@media (max-width: 900px) {
+    /* Header Mobile Adjustments (Uniforme) */
+    header { 
+        padding: 8px 15px;
+    }
+    
+    /* Logo e Link Mobile (Corrigido para 100px) */
+    .header-logo { 
+        height: 100px !important; /* AUMENTADO para 100px (Mobile) */
+        width: 250px !important; /* AUMENTADO para 250px (Mobile) */
+        margin: 0 !important; 
+    }
+    .logo-link {
+        width: 250px; 
+        height: 100px;
+        /* Retorna ao comportamento de linha (row) que estava causando o alinhamento central */
+        display: flex !important;
+        align-items: center; 
+        justify-content: flex-start;
+    }
+    
+    /* Ajustado Wrapper Mobile */
+    .header-brand-wrapper {
+         width: 250px !important;
+         flex-shrink: 0; 
+         align-items: center; 
+    }
+    
+    /* Oculta as ações da direita no desktop, mostrando o menu sanduíche */
+    .header-right-actions .client-login-item,
+    .header-right-actions .header-phone-action,
+    .desktop-lang-switcher { 
+        display: none; 
+    }
+    
+    .hamburger-btn { display: block; }
+    
+    .main-nav-links { 
+        /* REAPARECE no mobile com display: block */
+        display: none; 
+        position: absolute; top: 100%; left: 0; right: 0; width: 100%; 
+        background-color: #FFFFFF; 
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2); padding: 20px; 
+        box-sizing: border-box; z-index: 1000;
+    }
+    .main-nav-links.is-open { display: block; }
+    .main-nav-links ul { flex-direction: column; align-items: center; gap: 20px; }
+    .main-nav-links li a { font-size: 1.1rem; padding: 10px 0 !important; text-shadow: none; }
+    
+    /* Mostra o link de login no menu sanduíche */
+    .mobile-client-login-item { display: block; margin-top: 15px; }
+    
+    /* MOSTRAR O BLOCO DE IDIOMA MOBILE DENTRO DO MENU */
+    .mobile-lang-switcher { 
+        display: flex;
+    }
+
+    /* Oculta o container de navegação inferior no mobile */
+    .nav-bottom-container {
+        display: none;
+    }
+}
+
+@media (min-width: 901px) { /* Garante que o menu principal seja exibido no desktop */
+    /* NAVEGAÇÃO NA BARRA PRINCIPAL (Single Row) */
+    .main-nav-links {
+        display: block; 
+        flex-grow: 1; /* Ocupa o espaço entre a logo e as ações da direita */
+        text-align: center; 
+    }
+}
+
+@media (min-width: 769px) {
+    .about-container { flex-direction: row; align-items: flex-start; }
+    .about-main-img { margin-right: 30px; margin-bottom: 0; }
+    .about-text { text-align: left; }
+    .about-text h2 { text-align: left; }
+    .certifications { justify-content: flex-start; }
+}

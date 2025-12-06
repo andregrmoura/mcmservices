@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCM Services - Client Login</title>
+    
+    <meta name="description" content="Acesse o portal do cliente MCM Services para acompanhar o progresso do seu projeto, visualizar documentos e gerenciar detalhes de execução.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="icon" type="image/png" href="images/favicon.png?v=4"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /*
+        ====================================
+        CSS GERAL E BASE (GLOBAL) - PADRONIZADO HOMEPAGE
+        ====================================
+        */
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #F7F7F7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0; 
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: #333; }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        
+        /* ===============================
+           HEADER (PADRÃO HOMEPAGE)
+        ================================ */
+        header {
+          width: 100%;
+          padding: 5px 25px;
+          background: #FFF;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          position: relative;
+          z-index: 100;
+          /* AJUSTADO: Altura reduzida como no index.html */
+          min-height: 80px; 
+        }
+
+        .header-container {
+          max-width: 1300px;
+          margin: auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+        }
+
+        /* Logo Link/Image (Desktop) */
+        .logo-link {
+            display: flex !important;
+            align-items: center;
+            cursor: default;
+            /* AJUSTADO: Tamanho reduzido como no index.html */
+            width: 255px; 
+            height: 85px; 
+            margin: 0;
+            padding: 0; 
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+        .logo-link img {
+            /* AJUSTADO: Tamanho reduzido como no index.html */
+            height: 85px !important; 
+            width: 255px !important; 
+            object-fit: contain;
+        }
+
+        /* Centralizar menu no espaço restante */
+        nav {
+            flex-grow: 1; 
+            display: flex; 
+            justify-content: center; 
+        }
+
+        nav ul {
+          list-style: none;
+          display: flex;
+          gap: 40px;
+          padding: 0;
+          margin: 0; 
+        }
+
+        nav ul a {
+          text-decoration: none;
+          color: #333;
+          font-weight: 500;
+          position: relative;
+          padding-bottom: 4px;
+          transition: .3s;
+        }
+
+        nav ul a:hover, nav ul a.active {
+          color: #C7A96B;
+        }
+
+        nav ul a::after {
+          content:'';
+          position:absolute;
+          left:0;
+          bottom:0;
+          width:0%;
+          height:2px;
+          background:#C7A96B;
+          transition:.3s;
+        }
+
+        nav ul a:hover::after, nav ul a.active::after {
+          width:100%;
+        }
+
+        .header-right {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          flex-shrink: 0;
+        }
+        
+        /* ESTILOS DO BOTÃO CLIENT LOGIN */
+        .client-login-btn {
+            padding: 8px 15px;
+            border: 1px solid #333; 
+            border-radius: 8px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: .3s;
+            white-space: nowrap;
+        }
+        .client-login-btn i {
+            color: #C7A96B; 
+        }
+        .client-login-btn:hover {
+            background: #C7A96B;
+            color: #333;
+            border-color: #C7A96B;
+        }
+        .client-login-btn:hover i {
+            color: #333;
+        }
+
+        /* HAMBURGER STYLES */
+        .hamburger-btn { 
+            display: none; 
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            padding: 10px; 
+            z-index: 1001; 
+        }
+        .hamburger-btn .hamburger-line { 
+            display: block; 
+            width: 25px; 
+            height: 3px; 
+            background-color: #333; 
+            margin: 5px 0; 
+            transition: transform 0.3s ease, opacity 0.3s ease; 
+        }
+        .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
+        .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* REMOVIDO: Estilos do Telefone */
+        .header-phone {
+            display: none; 
+        }
+
+        /* Language Buttons */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+        }
+        .lang-switcher img {
+          width: 28px;
+          height: 18px;
+          border-radius: 4px;
+          border: 1px solid #AAA;
+          cursor: pointer;
+          opacity: 0.75;
+          transition: .2s;
+        }
+
+        .lang-switcher img.active {
+          opacity: 1;
+          border: 2px solid #C7A96B;
+          box-shadow: 0 0 6px rgba(199,169,107,0.7);
+        }
+        
+        /* Regra para o switcher de idioma dentro do menu mobile */
+        .mobile-nav-flags {
+            display: none; /* Escondido no desktop */
+        }
+
+
+        /*
+        ====================================
+        LOGIN PAGE SPECIFIC STYLES
+        ====================================
+        */
+        main {
+            flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px;
+        }
+        .login-container {
+            background-color: #fff; padding: 30px; border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 400px;
+            text-align: center; box-sizing: border-box; 
+        }
+        .login-container h2 {
+            font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.2rem; 
+            color: #C7A96B; margin-top: 0; margin-bottom: 25px; padding: 0; 
+        }
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: calc(100% - 24px); padding: 12px; margin-bottom: 15px; 
+            border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;
+            font-family: 'Montserrat', sans-serif; box-sizing: border-box;
+            transition: border-color .3s;
+        }
+        .login-form input:focus, .login-form textarea:focus {
+            border-color: #C7A96B;
+            outline: none;
+            box-shadow: 0 0 5px rgba(199, 169, 107, 0.5);
+        }
+        .login-form button {
+            width: 100%; padding: 14px; 
+            background-color: #C7A96B; 
+            color: #333;
+            border: none; border-radius: 8px; font-size: 1.1rem; 
+            font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s;
+            font-family: 'Montserrat', sans-serif; margin-top: 10px; 
+        }
+        .login-form button:hover { 
+            background-color: #b9965e; 
+            color: #FFF;
+            transform: translateY(-2px);
+        }
+        #error-message { 
+            color: #D62828; margin-top: 15px !important; font-size: 0.9rem; min-height: 1.1em; font-weight: 500;
+        }
+        .forgot-password { 
+            margin-top: 15px !important; font-size: 0.95rem; 
+        }
+        .forgot-password a { 
+            color: #333; font-weight: 500; text-decoration: none; position: relative; transition: color 0.3s; 
+        }
+        .forgot-password a:hover { 
+            color: #C7A96B; 
+        }
+        .forgot-password a::after {
+          content:''; position:absolute; left:0; bottom:0; width:0%; height:1px; background:#C7A96B; transition:.3s;
+        }
+
+        .forgot-password a:hover::after {
+          width:100%;
+        }
+
+
+        /* ===============================
+           FOOTER (PADRÃO HOMEPAGE)
+           ADICIONANDO OS ESTILOS FALTANTES AQUI
+        ================================ */
+        footer {
+            background:white; 
+            padding:40px 20px; 
+            text-align:center; 
+            border-top:1px solid #DDD;
+            margin-top: auto; 
+        }
+        
+        .footer-logo-container {
+            display: block;
+            margin: 0 auto 15px; 
+            text-align: center;
+        }
+        .footer-logo-container img {
+            height: 60px; 
+            width: 180px; 
+            object-fit: contain;
+        }
+
+        .footer-content-grid {
+            max-width: 1200px; margin: 0 auto 30px; 
+            display: flex; justify-content: space-between; align-items: flex-start;
+            text-align: left; gap: 30px; flex-wrap: wrap; 
+        }
+
+        .footer-col {
+            display: flex; flex-direction: column; min-width: 150px; padding: 0 10px;
+        }
+        
+        .footer-col h4 {
+            font-size: 1rem; font-weight: 600; color: #333; margin-top: 0; margin-bottom: 15px;
+            border-bottom: 2px solid #C7A96B; padding-bottom: 5px;
+        }
+
+        .footer-col a {
+            color: #555; font-size: 0.9rem; font-weight: 400; padding: 5px 0;
+            transition: color 0.3s; display: block;
+        }
+        .footer-col a:hover { color: #C7A96B; }
+        
+        .footer-social-contact a { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .footer-social-contact i { color: #C7A96B; font-size: 1rem; }
+
+        .footer-bottom-line {
+            padding-top: 20px; border-top: 1px solid #EEE; color: #999;
+            font-size: 0.85rem; text-align: center;
+        }
+        .footer-bottom-line p { margin: 5px 0; }
+        .footer-bottom-line .copyright { font-size: 0.9rem; color: #666; }
+
+
+        /*
+        ====================================
+        RESPONSIVENESS (PADRÃO HOMEPAGE)
+        ====================================
+        */
+        @media (max-width: 1000px) {
+            
+            header {
+                min-height: 70px; /* Redução para 70px */
+            }
+
+            /* Ajuste do tamanho da Logo para Mobile */
+            .logo-link {
+                /* AJUSTADO para caber melhor na nova altura de 70px */
+                width: 180px; 
+                height: 60px; 
+                margin: 0;
+                order: 1;
+                justify-content: flex-start;
+            }
+            .logo-link img {
+                height: 60px !important; 
+                width: 180px !important;
+            }
+
+            .header-container {
+                padding: 5px 15px; 
+            }
+            
+            /* Oculta o menu de desktop e mostra o hamburger */
+            nav {
+                display: none; 
+                order: 3; 
+                width: 100%;
+                margin-top: 15px;
+                position: absolute; 
+                /* AJUSTADO: O menu móvel começa logo abaixo do novo cabeçalho (70px) */
+                top: 70px; 
+                left: 0; 
+                background-color: #FFF; 
+                box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
+                padding: 20px 0; 
+                box-sizing: border-box; 
+                z-index: 99;
+                justify-content: center; 
+                flex-direction: column; 
+            }
+            
+            nav.is-open { display: flex; }
+            
+            nav ul { flex-direction: column; align-items: center; gap: 15px; }
+            
+            .hamburger-btn { display: block; margin: 0; }
+            /* Mostrar bandeiras no menu móvel, se necessário (regra do index) */
+            .mobile-nav-flags {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px; 
+                padding-top: 15px;
+                border-top: 1px solid #EEE;
+            }
+
+            .header-right .client-login-btn,
+            .header-right .lang-switcher { display: none; }
+
+            .header-right { order: 2; display: flex; align-items: center; gap: 0; }
+            .logo-link { margin: 0; order: 1; }
+        }
+    </style>
+</head>
+
+<body id="top">
+
+<header>
+  <div class="header-container">
+    
+    <a class="logo-link" href="index.html">
+      <img src="images/transparent-logo-2.png" alt="MCM Services Logo - Moura Consulting & Management">
+    </a>
+    
+    <nav aria-label="Main Navigation" id="mainNavigation">
+      <ul>
+        <li><a href="index.html#top" data-key="navHome">Home</a></li>
+        <li><a href="index.html#about" data-key="navAbout">About</a></li>
+        <li><a href="index.html#contact" data-key="navContact">Contact</a></li>
+        <li><a href="portfolio.html" data-key="navPortfolioLink">Gallery</a></li>
+      </ul>
+      <div class="lang-switcher mobile-nav-flags">
+        <img src="images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active">
+        <img src="images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')">
+        <img src="images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')">
+      </div>
+    </nav>
+    
+    <div class="header-right">
+      
+      <a href="login.html" data-key="navPortal" class="client-login-btn active">
+          <i class="fas fa-lock" aria-hidden="true"></i> Client Login
+      </a>
+
+      <div class="lang-switcher">
+        <img src="images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active">
+        <img src="images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')">
+        <img src="images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')">
+      </div>
+      
+      <button class="hamburger-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="mainNavigation">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+    </div>
+
+  </div>
+</header>
+    
+    <main>
+        <div class="login-container">
+            <h2 data-key="loginTitle">Client Login</h2>
+            <form class="login-form" id="login-form">
+                <label for="email" class="sr-only" data-key="loginPlaceholderEmail">Your Email</label>
+                <input type="email" id="email" placeholder="Email" data-key="loginPlaceholderEmail" required aria-required="true">
+                
+                <label for="password" class="sr-only" data-key="loginPlaceholderPassword">Password</label>
+                <input type="password" id="password" placeholder="Password" data-key="loginPlaceholderPassword" required aria-required="true">
+                
+                <button type="submit" data-key="loginButton">Login</button>
+            </form>
+            <p id="error-message"></p>
+            <p class="forgot-password"><a href="#" data-key="forgotPassword">Forgot Password?</a></p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo-container">
+            <img src="images/transparent-logo-2.png" alt="MCM Services Logo Footer" />
+        </div>
+        
+        <p style="color:#666; font-size:.95rem; margin-bottom:15px;" data-key="footerTagline">
+          Management Excellence, Flawless Execution.
+        </p>
+
+        <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
+            <i class="fas fa-map-marker-alt" aria-hidden="true" style="color: #C7A96B; margin-right: 5px;"></i>
+            <span data-translate="footer-location">Miami, FL</span>
+        </p>
+        <div class="footer-content-grid">
+            
+            <div class="footer-col">
+                <h4 data-key="footer-nav">Navigation</h4>
+                <a href="index.html#top" data-key="navHome">Home</a>
+                <a href="index.html#about" data-key="navAbout">About</a>
+                <a href="index.html#contact" data-key="navContact">Contact</a>
+                <a href="portfolio.html" data-key="navPortfolioLink">Gallery</a>
+            </div>
+
+            <div class="footer-col footer-social-contact">
+                <h4 data-key="footer-contact">Contact & Connect</h4>
+                <a href="tel:+17862383386">
+                     <i class="fas fa-phone" aria-hidden="true"></i> +1 (786) 238-3386
+                </a>
+                <a href="mailto:info@mcmprosolutions.com">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    info@mcmprosolutions.com
+                </a>
+                <a href="https://www.instagram.com/mcmprosolutions" target="_blank">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    @mcmprosolutions
+                </a>
+            </div>
+
+            <div class="footer-col">
+                <h4 data-key="footer-legal">Legal</h4>
+                <a href="#" data-key="footer-terms">Termos de Uso</a>
+                <a href="#" data-key="footer-privacy">Política de Privacidade</a>
+                <a href="login.html" data-key="navPortal">Client Login</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom-line">
+            <p data-key="developerSignature">Developed by Andre Moura</p>
+            <p class="copyright" data-key="copyrightText">&copy; <span id="currentYear"></span> MCM Services Pro Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a id="scrollToTopBtn" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <script>
+        // OBJETO DE TRADUÇÃO COMPLETO E PADRONIZADO (Do Index.html)
+        const translations = {
+          'en': {
+            // Header/Nav
+            'navHome': 'Home', 'navAbout': 'About', 'navContact': 'Contact', 'navPortfolioLink': 'Gallery', 'navPortal': 'Client Login',
+            // Login Specific
+            'loginTitle': 'Client Login', 'loginPlaceholderEmail': 'Email', 'loginPlaceholderPassword': 'Password', 'loginButton': 'Login', 'forgotPassword': 'Forgot Password?',
+            'errorInvalidCredentials': 'Invalid email or password.', 'errorInvalidEmail': 'Please enter a valid email address.', 'errorDefault': 'Login failed. Please check your email and password.', 'errorMissingAPIKey': 'Critical Error: Firebase API Key is missing. Check Configuration.',
+            // Footer
+            'footerTagline': 'Management Excellence, Flawless Execution.', 'developerSignature': 'Developed by Andre Moura', 'copyrightText': '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. All rights reserved.',
+            'footer-location': 'Miami, FL', 'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy',
+            // FIU (Usado se você usar a frase completa do index)
+            'about-p3': 'Our founder holds qualifications in Project Management from FIU (Florida International University), and important certifications in OSHA and NCCER, reinforcing our commitment to safety, quality, and professional standards.',
+          },
+          'pt': {
+            // Header/Nav
+            'navHome': 'Início', 'navAbout': 'Sobre', 'navContact': 'Contato', 'navPortfolioLink': 'Galeria', 'navPortal': 'Acesso Cliente',
+            // Login Specific
+            'loginTitle': 'Acesso Cliente', 'loginPlaceholderEmail': 'E-mail', 'loginPlaceholderPassword': 'Senha', 'loginButton': 'Entrar', 'forgotPassword': 'Esqueceu a Senha?',
+            'errorInvalidCredentials': 'E-mail ou senha inválidos.', 'errorInvalidEmail': 'Por favor, insira um endereço de e-mail válido.', 'errorDefault': 'Falha no login. Verifique seu e-mail e senha.', 'errorMissingAPIKey': 'Erro Crítico: Chave API do Firebase está ausente. Verifique a Configuração.',
+            // Footer
+            'footerTagline': 'Excelência em Gestão, Execução Impecável.', 'developerSignature': 'Desenvolvido por Andre Moura', 'copyrightText': '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. Todos os direitos reservados.',
+            'footer-location': 'Miami, FL', 'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade',
+            // FIU
+            'about-p3': 'Nosso fundador possui qualificação em Gerenciamento de Projetos pela FIU (Universidade Internacional da Florida), e importantes certificações em OSHA e NCCER, o que reforça nosso compromisso com segurança, qualidade e padrões profissionais.',
+          },
+          'es': {
+            // Header/Nav
+            'navHome': 'Inicio', 'navAbout': 'Nosotros', 'navContact': 'Contacto', 'navPortfolioLink': 'Galería', 'navPortal': 'Acceso Cliente',
+            // Login Specific
+            'loginTitle': 'Acceso Cliente', 'loginPlaceholderEmail': 'Correo Electrónico', 'loginPlaceholderPassword': 'Contraseña', 'loginButton': 'Iniciar Sesión', 'forgotPassword': '¿Olvidaste tu Contraseña?',
+            'errorInvalidCredentials': 'Correo electrónico o contraseña inválidos.', 'errorInvalidEmail': 'Por favor, ingrese una dirección de correo electrónico válida.', 'errorDefault': 'Error de inicio de sesión. Verifique su correo electrónico y contraseña.', 'errorMissingAPIKey': 'Error Crítico: Clave API de Firebase ausente. Verifique la Configuración.',
+            // Footer
+            'footerTagline': 'Excelencia en la Gestión, Ejecución Impecable.', 'developerSignature': 'Desarrollado por Andre Moura', 'copyrightText': '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. Todos los derechos reservados.',
+            'footer-location': 'Miami, FL', 'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidad',
+            // FIU
+            'about-p3': 'Nuestro fundador posee calificación en Gestión de Proyectos por la FIU (Universidad Internacional de Florida), y importantes certificaciones en OSHA y NCCER, lo que refuerza nuestro compromiso con la seguridad, la calidad y los estándares profesionales.',
+          }
+        };
+        // Expondo translations para o módulo de script abaixo
+        window.translations = translations;
+
+
+        let currentLang = localStorage.getItem('language') || 'en';
+
+        function updateTexts(lang) {
+            const dictionary = translations[lang];
+            if (!dictionary) return;
+
+            document.getElementById("currentYear").textContent = new Date().getFullYear(); 
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (dictionary[key]) {
+                    const translation = dictionary[key];
+                    
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translation;
+                    } else if (key === 'copyrightText') {
+                        let text = translation.replace('<span id="currentYear"></span>', document.getElementById('currentYear').outerHTML);
+                        el.innerHTML = text;
+                    } else { 
+                        el.textContent = translation; 
+                    }
+                }
+            });
+        }
+
+        function highlightLanguage(lang) {
+            document.querySelectorAll('.lang-switcher img').forEach(img => {
+                img.classList.remove("active");
+                if (img.getAttribute('data-lang') === lang) {
+                    img.classList.add("active");
+                }
+            });
+        }
+
+        window.setLanguage = function(lang) {
+            if (!translations[lang]) { lang = 'en'; }
+            localStorage.setItem('language', lang);
+            currentLang = lang;
+            updateTexts(lang);
+            highlightLanguage(lang);
+            document.documentElement.lang = lang;
+        }
+
+        const initHamburger = () => {
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const navMenu = document.getElementById('mainNavigation'); 
+            if (hamburgerBtn && navMenu) {
+                hamburgerBtn.addEventListener('click', () => {
+                    const isMenuOpen = navMenu.classList.toggle('is-open');
+                    hamburgerBtn.classList.toggle('is-open');
+                    hamburgerBtn.setAttribute('aria-expanded', isMenuOpen);
+                    document.body.classList.toggle('menu-open', isMenuOpen);
+                });
+            }
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+            let initialLang = localStorage.getItem('language') || 'en';
+            if (!translations[initialLang]) { initialLang = 'en'; }
+            setLanguage(initialLang);
+            
+            document.querySelectorAll('nav ul a').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('a[href="login.html"]').forEach(link => link.classList.add('active'));
+
+            initHamburger();
+        });
+        
+        // ===============================================
+        // LÓGICA DO FIREBASE (Restaurada)
+        // ===============================================
+        
+    </script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signOut,
+            setPersistence,
+            browserSessionPersistence
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        const rawFirebaseConfig = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        let firebaseConfig;
+
+        try {
+            firebaseConfig = JSON.parse(rawFirebaseConfig);
+
+            // TENTATIVA DE CORREÇÃO CRÍTICA: INJETAR A CHAVE DE API DIRETAMENTE
+            if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "SUA_CHAVE_DE_API_DO_FIREBASE_AQUI") {
+                 // Chave injetada para garantir a funcionalidade no ambiente de execução
+                 firebaseConfig = {
+                    apiKey: "AIzaSyAw4bA0M8bc8Qt0fvS5xmc2SBYQkxTVR7g", 
+                    authDomain: "mcm-services-corp.firebaseapp.com",
+                    projectId: "mcm-services-corp",
+                    storageBucket: "mcm-services-corp.firebasestorage.app",
+                    messagingSenderId: "433317388623",
+                    appId: "1:433317388623:web:9db1f24060f026a670e53a"
+                 };
+                 console.warn("Firebase API Key injected for critical initialization.");
+            }
+
+        } catch (e) {
+            console.error("Error parsing Firebase config:", e);
+        }
+
+        const loginForm = document.getElementById('login-form');
+        const errorMessageElement = document.getElementById('error-message');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        let app, auth;
+
+        try {
+            if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "SUA_CHAVE_DE_API_DO_FIREBASE_AQUI") {
+                 throw new Error("API_KEY_MISSING_AFTER_ATTEMPT");
+            }
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            
+            async function signOutInitialSession() {
+                try {
+                    if (auth.currentUser) {
+                        await signOut(auth);
+                    }
+                } catch (error) {
+                    console.warn("Could not sign out current user:", error);
+                }
+            }
+            
+            if (initialAuthToken) {
+                signOutInitialSession();
+            }
+
+        } catch (e) {
+            const currentLang = localStorage.getItem('language') || 'en';
+            const getLangDict = (lang) => window.translations[lang] || window.translations['en'];
+            const langDict = getLangDict(currentLang);
+            
+            if (e.message === "API_KEY_MISSING_AFTER_ATTEMPT") {
+                errorMessageElement.textContent = langDict.errorMissingAPIKey;
+            } else {
+                 errorMessageElement.textContent = langDict.errorDefault + ' (' + (e.code || e.message) + ')';
+            }
+            console.error("Firebase Initialization Error:", e.code || e.message);
+            if (loginForm) loginForm.querySelector('button').disabled = true;
+        }
+
+        
+        function getCurrentLang() {
+            return localStorage.getItem('language') || 'en';
+        }
+        
+        const getErrorMessage = (errorCode, lang) => {
+            const currentTranslations = window.translations[lang] || window.translations['en'];
+            
+            const errorMap = {
+                'auth/invalid-credential': 'errorInvalidCredentials',
+                'auth/invalid-email': 'errorInvalidEmail',
+                'auth/user-not-found': 'errorInvalidCredentials',
+                'auth/wrong-password': 'errorInvalidCredentials',
+                'default': 'errorDefault'
+            };
+            const key = errorMap[errorCode] || errorMap['default'];
+            
+            return currentTranslations[key] || currentTranslations['errorDefault'];
+        };
+        
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                
+                if (!auth) {
+                    errorMessageElement.textContent = "Erro: Firebase Auth não inicializado. Verifique a chave API.";
+                    return;
+                }
+
+                errorMessageElement.textContent = '';
+                
+                const currentLang = getCurrentLang();
+                
+                const loginButton = loginForm.querySelector('button');
+                const originalButtonText = loginButton.textContent;
+                
+                loginButton.disabled = true;
+                loginButton.textContent = '...'; 
+
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                
+                setPersistence(auth, browserSessionPersistence)
+                    .then(() => {
+                         return signInWithEmailAndPassword(auth, email, password);
+                    })
+                    .then((userCredential) => {
+                        console.log("Login successful:", userCredential.user);
+                        setTimeout(() => {
+                            window.location.href = 'portal.html';
+                        }, 500); 
+                    })
+                    .catch((error) => {
+                        console.error("Login error:", error.code, error.message);
+                        
+                        const userMessage = getErrorMessage(error.code, currentLang);
+                        errorMessageElement.textContent = userMessage;
+
+                        loginButton.disabled = false;
+                        loginButton.textContent = originalButtonText; 
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

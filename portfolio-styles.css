@@ -1,0 +1,353 @@
+/*
+ * PORTFOLIO-STYLES.CSS
+ * Estilos específicos da página de Portfólio (Galeria)
+ *
+ * Últimas Alterações:
+ * 1. Seção #sobre (hero inicial) refeita para ter imagem de fundo,
+ * overlay e texto em destaque, no estilo luxuoso da página principal.
+ * 2. Títulos da seção portfolio com nova cor.
+ * 3. Lightbox básico.
+ * 4. Movidos os detalhes do projeto para baixo da seção hero.
+ * 5. Correção: #contato h2 para display: block para o botão ficar abaixo.
+ * 6. Ajuste: Cards quadrados (1:1) e lupa fixa no canto inferior direito.
+ * 7. Correção: Cards com cantos retos (border-radius: 0).
+ * 8. Animações de entrada no Hero (H2 e P).
+*/
+
+/* --- HERO SECTION (NOVO ESTILO) --- */
+#sobre {
+    position: relative;
+    width: 100%;
+    height: 60vh; /* Altura da sua seção hero de galeria */
+    min-height: 400px;
+    max-height: 500px; /* Reduzido um pouco */
+    /* [MUDANÇA] Você precisa adicionar uma imagem de fundo aqui */
+    background-image: url('images/4gallery.jpg'); /* << ADICIONE SUA IMAGEM AQUI */
+    background-color: #333; /* Fallback caso a imagem não carregue */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; /* Texto branco sobre o overlay escuro */
+    padding: 40px 20px;
+    box-sizing: border-box;
+    overflow: hidden; /* Garante que nada saia do container */
+  }
+  
+  /* Overlay Escuro */
+  #sobre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Camada escura semi-transparente */
+    z-index: 1; /* Fica abaixo do texto */
+  }
+  
+  #sobre h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 3.5rem; /* Título maior */
+    margin: 0;
+    color: #FFFFFF; /* Branco */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); /* Sombra intensa para destaque */
+    z-index: 2; /* Fica acima do overlay */
+    position: relative; /* Para garantir z-index */
+
+    /* --- ANIMAÇÃO ADICIONADA --- */
+    opacity: 0;
+    animation: textSlideInFromRight 1.5s ease 0.3s forwards;
+  }
+  
+  #sobre p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.2rem; /* Subtítulo em tamanho bom */
+    margin-top: 15px;
+    max-width: 800px;
+    line-height: 1.5;
+    color: #FFFFFF; /* Branco */
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); /* Sombra para destaque */
+    z-index: 2;
+    position: relative;
+    
+    /* --- ANIMAÇÃO ADICIONADA --- */
+    opacity: 0;
+    animation: textSlideIn 1.5s ease 0.6s forwards;
+  }
+  
+  /* --- [NOVO] Detalhes do Projeto (Movido para baixo do Hero) --- */
+  .project-details-info-wrapper {
+    background-color: #f9f9f9; /* Fundo claro para destacar */
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .project-details-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    flex-wrap: wrap;
+  }
+  .project-details-info span {
+    font-weight: 500;
+  }
+  .project-details-info strong {
+    font-weight: 700;
+    color: #333;
+  }
+  /* --- Fim dos novos estilos --- */
+  
+  
+  /* --- SEÇÃO PRINCIPAL DA GALERIA --- */
+  .project-grid-container {
+    max-width: 1200px;
+    margin: 40px auto; /* Mais espaçamento superior */
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding-bottom: 30px;
+  }
+  
+  /* --- MUDANÇA: CANTOS RETOS --- */
+  .project-card {
+    background-color: white;
+    border-radius: 0; /* <-- CORRIGIDO */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* --- MUDANÇA: CARD QUADRADO --- */
+  .project-image-container {
+    width: 100%;
+    height: 0; /* Remove a altura fixa */
+    padding-bottom: 100%; /* Proporção 1:1 (QUADRADO) */
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #eee; /* Fundo para imagens quebradas */
+  }
+
+  .project-img {
+    position: absolute; /* Posiciona a imagem dentro do container com padding-bottom */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .project-image-container:hover .project-img {
+    transform: scale(1.08); /* Efeito de zoom no hover */
+  }
+  
+  /* --- MUDANÇA: LUPA FIXA NO CANTO --- */
+  .expand-icon {
+    position: absolute;
+    /* Posição inferior direita */
+    bottom: 15px;
+    right: 15px;
+    
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 10px; /* Tamanho ajustado para o canto */
+    font-size: 1.2rem; /* Tamanho ajustado para o canto */
+    z-index: 10; /* Garante que esteja acima de tudo */
+  }
+  
+  /* Regra de hover para a lupa não é mais necessária */
+  
+  .card-content-portfolio {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-content-portfolio h3 {
+    font-family: 'Playfair Display', serif;
+    color: #B8860B; /* Dourado */
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .card-content-portfolio p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .image-auth-note {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: #777;
+    text-align: right;
+    margin-top: 20px;
+    padding-right: 10px;
+  }
+  
+  /* --- LIGHTBOX --- */
+  .lightbox {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    padding-top: 60px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .close-btn:hover,
+  .close-btn:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* --- SEÇÃO DE CONTATO RÁPIDO (FOOTER) --- */
+  #contato {
+    padding: 50px 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #eee;
+    text-align: center;
+  }
+  
+  #contato h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    color: #B8860B; /* Dourado */
+    margin-bottom: 25px;
+    position: relative;
+    display: block; /* CORREÇÃO APLICADA AQUI */
+  }
+  
+  /* Removido borda laranja abaixo do h2, se existir */
+  #contato h2::after {
+      display: none;
+  }
+  
+  
+  /* --- RODAPÉ CLARO --- */
+  /* (O rodapé claro já está no global.css, mas estas regras */
+  /* são específicas para esta página, se necessário) */
+  /* Por enquanto, parece que o global.css cuida de tudo */
+  
+  
+  /* --- RESPONSIVIDADE --- */
+  @media (max-width: 768px) {
+    #sobre {
+      height: 50vh;
+      min-height: 350px;
+    }
+    #sobre h2 {
+      font-size: 2.8rem;
+    }
+    #sobre p {
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    
+    .project-details-info-wrapper {
+        padding: 10px 15px;
+    }
+    .project-details-info {
+        flex-direction: column;
+        gap: 5px;
+        font-size: 0.85rem;
+        align-items: center;
+    }
+    
+    .project-grid-container {
+        margin-top: 20px;
+        padding: 0 15px;
+    }
+  
+    .project-grid {
+      grid-template-columns: 1fr; /* Coluna única em telas menores */
+      gap: 20px;
+    }
+  
+    /* Ajuste para mobile - a proporção 1:1 será mantida */
+    /* .project-image-container { ... } */
+  
+    .card-content-portfolio h3 {
+      font-size: 1.4rem;
+    }
+  
+    .card-content-portfolio p {
+      font-size: 0.9rem;
+    }
+  
+    #contato h2 {
+      font-size: 2rem;
+    }
+    
+    .image-auth-note {
+      text-align: center;
+      padding-right: 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+      #sobre h2 { font-size: 2.2rem; }
+      #sobre p { font-size: 0.9rem; }
+      /* .project-image-container { ... } */
+      .card-content-portfolio h3 { font-size: 1.2rem; }
+      #contato h2 { font-size: 1.8rem; }
+  }

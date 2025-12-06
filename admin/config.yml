@@ -1,0 +1,24 @@
+backend:
+  name: git-gateway
+  branch: main
+  repo: andregmoura/mcmservices 
+  # Se você não configurou o domínio ainda, use a URL aleatória do Netlify aqui:
+  # identity_url: https://SEU-SITE.netlify.app/.netlify/identity 
+  # gateway_url: https://SEU-SITE.netlify.app/.netlify/git 
+
+publish_mode: editorial_workflow
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Páginas"
+    files:
+      - file: "index.html"
+        label: "Página Inicial"
+        # ADICIONE ESTA LINHA:
+        name: "home"
+        fields:
+          - label: "Título da Página"
+            name: "title"
+            widget: "string"
