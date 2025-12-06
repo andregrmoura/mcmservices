@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main # O branch principal do seu site
+  repo: andregmoura/mcmservices # Seu repositório no GitHub
+
+publish_mode: editorial_workflow # Fluxo de trabalho de revisão
+media_folder: "assets/images/uploads" # Onde as imagens serão salvas
+public_folder: "/assets/images/uploads" # O caminho público para essas imagens
+
+collections:
+  - name: "pages"
+    label: "Páginas"
+    files:
+      - file: "index.html"
+        label: "Página Inicial"
+        fields:
+          - label: "Título da Página"
+            name: "title"
+            widget: "string"
