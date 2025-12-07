@@ -1,13 +1,165 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCM Pro Solutions</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* Estilos básicos para o exemplo - Mova isso para o seu styles.css */
+        .service-card, .portfolio-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            /* Adicione estilos para garantir que as imagens cabem */
+        }
+        .service-card img, .portfolio-card img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
 </head>
 <body>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
+    <header>
+        <h1>MCM Pro Solutions</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#services-list-en">Services</a></li>
+                <li><a href="#portfolio-list-en">Portfolio</a></li>
+                </ul>
+        </nav>
+    </header>
+
+    <section id="services-list-en">
+        <h2>Nossos Serviços (Gerados pelo CMS)</h2>
+        </section>
+
+    <section id="portfolio-list-en">
+        <h2>Nosso Portfólio (Gerado pelo CMS)</h2>
+        </section>
+
+    <footer>
+        <p>&copy; 2025 MCM Pro Solutions. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // 🚨 🚨 🚨 VOCÊ DEVE ATUALIZAR ESTAS LISTAS DE ARQUIVOS 🚨 🚨 🚨
+        
+        // 1. LISTA DE ARQUIVOS DE SERVIÇOS MARKDOWN (.md)
+        // Coloque os nomes exatos de todos os seus arquivos de serviço (incluindo os recém-criados)
+        const SERVICE_FILES = [
+            '_index.md', // Deixe este para garantir que o _index seja processado primeiro
+            'iniciação-e-escopo.md',
+            'initiation-scope-en.md',
+            'schedule-time-management-en.md', 
+            'teste-title-en.md' 
+            // ADICIONE AQUI QUALQUER NOVO ARQUIVO DE SERVIÇO QUE VOCÊ CRIAR
+        ];
+        
+        // 2. LISTA DE ARQUIVOS DE PORTFÓLIO MARKDOWN (.md)
+        // Substitua pelos nomes reais dos seus arquivos de portfólio (se houver)
+        const PORTFOLIO_FILES = [
+            // 'projeto-cozinha-en.md',
+            // 'projeto-escritorio-en.md'
+        ];
+        // 🚨 🚨 🚨 FIM DA ATUALIZAÇÃO MANUAL 🚨 🚨 🚨
+
+
+        /**
+         * Função que busca um arquivo Markdown (.md) e separa o Front Matter (metadados) do corpo (conteúdo).
+         * @param {string} filePath - Caminho completo para o arquivo.
+         * @returns {Promise<Object|null>} Um objeto com {metadata, htmlBody}
+         */
+        async function fetchAndParseMarkdown(filePath) {
+            try {
+                const response = await fetch(filePath);
+                
+                if (!response.ok) {
+                    console.warn(`Arquivo não encontrado ou erro HTTP: ${filePath}`);
+                    return null;
+                }
+                
+                const rawContent = await response.text();
+                
+                // Dividir o conteúdo nas linhas '---' para separar o Front Matter (YAML)
+                const parts = rawContent.split('---');
+                
+                if (parts.length < 3) {
+                    // Arquivo não tem Front Matter, trata todo o conteúdo como corpo.
+                    return { metadata: {}, htmlBody: marked.parse(rawContent) };
+                }
+                
+                const yamlBlock = parts[1].trim(); // O Front Matter está entre o primeiro e o segundo '---'
+                const markdownBody = parts.slice(2).join('---').trim(); // O resto é o corpo Markdown
+
+                // Converte o Markdown do corpo para HTML
+                const htmlBody = marked.parse(markdownBody);
+
+                // Uma maneira simples (não completa) de extrair dados do YAML para metadados
+                const metadata = {};
+                yamlBlock.split('\n').forEach(line => {
+                    const [key, value] = line.split(':').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
+                    if (key && value) {
+                        metadata[key] = value;
+                    }
+                });
+
+                return { metadata, htmlBody };
+
+            } catch (error) {
+                console.error(`Erro ao carregar ${filePath}:`, error);
+                return null;
+            }
+        }
+
+
+        /**
+         * Função principal para buscar e renderizar todos os arquivos de uma coleção.
+         */
+        async function loadContent(folder, files, containerId, cardClass) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const contentPromises = files.map(fileName => 
+                fetchAndParseMarkdown(`content/${folder}/${fileName}`)
+            );
+
+            const allParsedContent = (await Promise.all(contentPromises)).filter(item => item !== null);
+            
+            // Se houver campo 'order' no Front Matter, tente ordenar
+            allParsedContent.sort((a, b) => (parseInt(a.metadata.order) || 0) - (parseInt(b.metadata.order) || 0));
+
+            allParsedContent.forEach(item => {
+                const { metadata, htmlBody } = item;
+                
+                // Extrai o caminho da imagem do Front Matter
+                const imagePath = metadata.image ? metadata.image : '';
+
+                // Constrói o card
+                const cardHtml = `
+                    <div class="${cardClass}">
+                        ${imagePath ? `<img src="${imagePath}" alt="${metadata.title || metadata.author || 'Image'}">` : ''}
+                        <h3>${metadata.title || metadata.author || 'Sem Título'}</h3>
+                        <p>${metadata.description || ''}</p>
+                        ${htmlBody}
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        // EXECUTA O CARREGAMENTO QUANDO A PÁGINA ESTIVER PRONTA
+        document.addEventListener('DOMContentLoaded', () => {
+            // Carrega Serviços em Inglês
+            loadContent('services/en', SERVICE_FILES, 'services-list-en', 'service-card');
+            
+            // Carrega Portfólio em Inglês
+            loadContent('portfolio/en', PORTFOLIO_FILES, 'portfolio-list-en', 'portfolio-card');
+        });
+    </script>
 </body>
 </html>
- 

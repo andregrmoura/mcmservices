@@ -472,6 +472,7 @@
         gap:35px;
     }
 
+    /* ESTILOS DE CARD ORIGINAIS APLICADOS PELO JS */
     .card-style {
         background:white;
         width:330px;
@@ -755,6 +756,11 @@
     .footer-bottom-line .copyright {
         font-size: 0.9rem;
         color: #666;
+    }
+    
+    /* FIX: Adiciona margem inferior a <p> dentro do conteúdo injetado para evitar aglutinação de texto */
+    .card-content p + p {
+        margin-top: 10px;
     }
   </style>
 </head>
@@ -1045,6 +1051,8 @@ const parseMarkdownFile = (markdown) => {
     
     const frontmatterString = match[1];
     let frontmatter = {};
+    
+    // Processamento do YAML simples:
     frontmatterString.split('\n').forEach(line => {
         const parts = line.split(':');
         if (parts.length >= 2) {
@@ -1061,37 +1069,37 @@ const parseMarkdownFile = (markdown) => {
 // --- LOADER GERAL DE COLEÇÃO ---
 const loadCollection = async (collectionName) => {
     const lang = currentLang;
-    const containerId = (collectionName === 'services') ? 'serviceCardsContainer' : 'testimonialCardsContainer';
+    const isService = collectionName === 'services';
+    const containerId = isService ? 'serviceCardsContainer' : 'testimonialCardsContainer';
     const container = document.getElementById(containerId);
     if (!container) return;
     
-    container.innerHTML = ''; 
+    container.innerHTML = ''; // Limpa o conteúdo existente
 
     // Define a pasta a ser lida
     let folder = `content/${collectionName}/${lang}`;
     
-    // Fallback: se o idioma não estiver na lista suportada (ou se for 'en')
+    // Fallback: se o idioma não estiver na lista suportada
     if (!supportedLangs.includes(lang)) {
         folder = `content/${collectionName}/en`;
     }
     
-    // --- ATENÇÃO CRÍTICA: LISTE OS NOMES DOS ARQUIVOS AQUI ---
-    // Você deve garantir que estes nomes correspondem aos arquivos criados pelo CMS
+    // --- LISTA DE ARQUIVOS (ATUALIZADA) ---
     let fileNames = [];
-    if (collectionName === 'services') {
+    if (isService) {
+        // Arquivos de Serviço confirmados pelo usuário:
         fileNames = [
-            'iniciacao-e-escopo.md',
-            'cronograma-e-tempo.md',
-            'risco-e-qualidade.md',
-            'stakeholders.md',
-            'orcamento-e-custos.md',
-            'entrega-final.md',
+            '_index.md', // Ignora se não tiver conteúdo
+            'iniciação-e-escopo.md',
+            'initiation-scope-en.md',
+            'schedule-time-management-en.md', 
+            'teste-title-en.md' 
         ];
     } else if (collectionName === 'testimonials') {
+        // Arquivos de Depoimentos (Exemplos):
         fileNames = [
-            'b-mendes.md',
-            'c-oliveira.md',
-            'd-freitas.md',
+            // 'b-mendes.md',
+            // 'c-oliveira.md',
         ];
     }
     
@@ -1110,34 +1118,48 @@ const loadCollection = async (collectionName) => {
             const markdownText = await response.text();
             const data = parseMarkdownFile(markdownText);
             
-            if (data.title || data.author) { 
-                items.push(data);
+            // Ignora o _index.md se ele não tiver título e não for o que queremos
+            if (fileName === '_index.md' && (!data.title)) {
+                 continue;
             }
+            if (!data.title && !data.author) { 
+                continue;
+            }
+            
+            // Adiciona o nome do arquivo aos metadados para debug (opcional)
+            data.fileName = fileName; 
+
+            // Conversão de ordem para número
+            data.order = parseInt(data.order) || 99;
+            
+            items.push(data);
+            
         } catch (error) {
             console.error(`Falha ao carregar ${collectionName}:`, error);
         }
     }
     
     // Ordena os itens pelo campo 'order'
-    items.sort((a, b) => parseInt(a.order) - parseInt(b.order));
+    items.sort((a, b) => a.order - b.order);
 
     // Renderiza o HTML
     items.forEach(item => {
-        if (collectionName === 'services') {
+        if (isService) {
+            // USANDO AS CLASSES DE ESTILO ORIGINAIS: card-style e card-content
             const cardHtml = `
                 <div class="card-style">
-                    <img src="${item.image}" alt="${item.title}">
+                    <img src="${item.image}" alt="${item.title}" onerror="this.onerror=null;this.src='placeholder.jpg';">
                     <div class="card-content">
                         <h3 role="heading" aria-level="3">${item.title}</h3>
-                        <p>${item.body}</p>
+                        ${item.body}
                     </div>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', cardHtml);
         } else if (collectionName === 'testimonials') {
-            const cardHtml = `
+             const cardHtml = `
                 <div class="testimonial-card" role="blockquote" aria-label="Depoimento por ${item.author}">
-                    <p>${item.body}</p>
+                    ${item.body}
                     <p class="testimonial-author">${item.author}</p>
                 </div>
             `;
@@ -1166,6 +1188,7 @@ function updateTexts(lang) {
                 element.setAttribute('placeholder', translation);
             } 
             else {
+                 // Substitui **texto** por <strong>texto</strong> e define o HTML
                  element.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             }
         }
