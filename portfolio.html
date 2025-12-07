@@ -278,7 +278,18 @@
             position: relative;
         }
         
-        /* REMOVIDO: project-details-info-wrapper (Nome e Local) */
+        .project-details-info-wrapper {
+            background-color: #f9f9f9; 
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .project-details-info {
+            display: flex; justify-content: center; align-items: center; gap: 30px;
+            max-width: 1200px; margin: 0 auto;
+            font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #555;
+            flex-wrap: wrap;
+        }
+        .project-details-info strong { font-weight: 700; color: #333; }
         
         .project-grid-container {
             max-width: 1200px; margin: 40px auto; padding: 0 20px; box-sizing: border-box;
@@ -564,10 +575,77 @@
             <p data-key="portfolioSubtitle">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
         </section>
 
-        <section id="portfolio" class="project-grid-container">
-            <div class="project-grid" id="portfolioGridContainer">
+        <div class="project-details-info-wrapper">
+            <div class="project-details-info">
+                <span data-key="projectNameLabel">Project: <strong>Berg Residence</strong></span>
+                <span data-key="projectCityLabel">Location: <strong>Coral Gables, FL</strong></span>
+            </div>
+        </div>
 
+        <section id="portfolio" class="project-grid-container">
+            <div class="project-grid">
+
+                <div class="project-card">
+                    <div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
+                        <img src="images/card1.jpg" alt="Cozinha moderna e luxuosa com ilha central" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project1Title">Cozinha Moderna e Luxuosa</h3>
+                        <p data-key="project1Desc">Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.</p>
+                    </div>
                 </div>
+                <div class="project-card">
+                     <div class="project-image-container" onclick="openLightbox('images/card2.jpg')">
+                        <img src="images/card2.jpg" alt="Espaço Gourmet de Alto Padrão" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project2Title">Espaço Gourmet de Alto Padrão</h3>
+                        <p data-key="project2Desc">Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-container" onclick="openLightbox('images/card3.jpg')">
+                        <img src="images/card3.jpg" alt="Banheiro com design clean e funcional" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project3Title">Banheiro com Design Clean</h3>
+                        <p data-key="project3Desc">Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-container" onclick="openLightbox('images/card4.jpg')">
+                        <img src="images/card4.jpg" alt="Banheiro master de luxo com metais dourados" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project4Title">Banheiro Master de Luxo</h3>
+                        <p data-key="project4Desc">Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-container" onclick="openLightbox('images/card5.png')">
+                        <img src="images/card5.png" alt="Suíte master aconchegante com mobiliário sob medida" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project5Title">Suíte Master Aconchegante</h3>
+                        <p data-key="project5Desc">Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image-container" onclick="openLightbox('images/card6.jpg')">
+                        <img src="images/card6.jpg" alt="Living room integrado e moderno" class="project-img">
+                        <i class="fas fa-search-plus expand-icon"></i>
+                    </div>
+                    <div class="card-content-portfolio">
+                        <h3 data-key="project6Title">Living Room Integrado</h3>
+                        <p data-key="project6Desc">Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.</p>
+                    </div>
+                </div>
+            </div>
             <p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
         </section>
 
@@ -638,9 +716,6 @@
     <button id="scrollToTopBtn" aria-label="Scroll to Top">
         <i class="fas fa-arrow-up"></i>
     </button>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-
 
     <script>
         
@@ -650,7 +725,15 @@
                 // Nav
                 navHome: "Home", navAbout: "About", navContact: "Contact", navPortal: "Client Login", navPortfolioLink: "Gallery",
                 // Portfolio Specific
-                portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.",
+                portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.", projectNameLabel: "Project: <strong>Berg Residence</strong>", projectCityLabel: "Location: <strong>Coral Gables, FL</strong>", 
+                
+                // NOVAS DESCRIÇÕES EM INGLÊS (NUMERAÇÃO REMOVIDA)
+                project1Title: "Modern & Luxurious Kitchen", project1Desc: "Bold design with a central island, custom cabinets, and state-of-the-art appliances.", 
+                project2Title: "High-End Gourmet Space", project2Desc: "An environment that combines preparation functionality with luxury finishes, such as marble and custom lighting.", 
+                project3Title: "Bathroom with Clean Design", project3Desc: "Project focusing on space optimization and combining light textures for a relaxing and functional look.", 
+                project4Title: "Luxury Master Bathroom", project4Desc: "Full renovation using large format tiles, gold fixtures, and a spacious shower for a private spa feel.", 
+                project5Title: "Cozy Master Suite", project5Desc: "Bedroom designed for maximum comfort, with a neutral color palette and custom furniture to optimize rest.", 
+                project6Title: "Integrated Living Room", project6Desc: "Living room that harmoniously connects to other areas, using modern sofas and accent lighting.", 
                 
                 interestedTitle: "Interested in a Project?", requestQuote: "Get a Quote", imageAuthNote: "All images were authorized by the client.",
                 // Footer
@@ -660,7 +743,15 @@
                 // Nav
                 navHome: "Início", navAbout: "Sobre", navContact: "Contato", navPortal: "Acesso Cliente", navPortfolioLink: "Galeria",
                 // Portfolio Specific
-                portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.",
+                portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", projectNameLabel: "Projeto: <strong>Berg Residence</strong>", projectCityLabel: "Local: <strong>Coral Gables, FL</strong>", 
+                
+                // NOVAS DESCRIÇÕES EM PORTUGUÊS (NUMERAÇÃO REMOVIDA)
+                project1Title: "Cozinha Moderna e Luxuosa", project1Desc: "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.", 
+                project2Title: "Espaço Gourmet de Alto Padrão", project2Desc: "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.", 
+                project3Title: "Banheiro com Design Clean", project3Desc: "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.", 
+                project4Title: "Banheiro Master de Luxo", project4Desc: "Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.", 
+                project5Title: "Suíte Master Aconchegante", project5Desc: "Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.", 
+                project6Title: "Living Room Integrado", project6Desc: "Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.", 
                 
                 interestedTitle: "Interessado em um Projeto?", requestQuote: "Solicitar Orçamento", imageAuthNote: "Todas as imagens foram autorizadas pelo cliente.",
                 // Footer
@@ -670,7 +761,15 @@
                 // Nav
                 navHome: "Inicio", navAbout: "Nosotros", navContact: "Contacto", navPortal: "Acceso Cliente", navPortfolioLink: "Galería",
                 // Portfolio Specific
-                portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espacio a Través de Supervisión Experta y Coordinación de Proyectos.",
+                portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espacio a Través de Supervisión Experta y Coordinación de Proyectos.", projectNameLabel: "Proyecto: <strong>Berg Residence</strong>", projectCityLabel: "Ubicación: <strong>Coral Gables, FL</strong>", 
+                
+                // NOVAS DESCRIÇÕES EM ESPANHOL (NUMERAÇÃO REMOVIDA)
+                project1Title: "Cocina Moderna y Lujosa", project1Desc: "Diseño audaz con isla central, gabinetes personalizados y electrodomésticos de última generación.", 
+                project2Title: "Espacio Gourmet de Alto Nivel", project2Desc: "Un ambiente que combina funcionalidad de preparación con acabados de lujo, como mármol e iluminación a medida.", 
+                project3Title: "Baño con Diseño Limpio", project3Desc: "Proyecto centrado en la optimización del espacio y la combinación de texturas claras para un look relajante y funcional.", 
+                project4Title: "Baño Principal de Lujo", project4Desc: "Renovación completa con revestimientos de gran formato, metales dorados y cabina de ducha espaciosa para una sensación de spa privado.", 
+                project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutros y mobiliario a medida para optimizar el descanso.", 
+                project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta armoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
                 
                 interestedTitle: "¿Interesado en un Proyecto?", requestQuote: "Solicitar Cotización", imageAuthNote: "Todas as imágenes fueron autorizadas por el cliente.",
                 // Footer
@@ -679,115 +778,6 @@
         };
 
         let currentLang = localStorage.getItem('language') || 'en';
-        const supportedLangs = ['en', 'pt', 'es'];
-
-        // ===============================================
-        // FUNÇÕES CMS (MARKDOWN PARSER E LOADER)
-        // ===============================================
-        const parseMarkdownFile = (markdown) => {
-            const yamlRegex = /^---\n([\s\S]*?)\n---/
-            const match = markdown.match(yamlRegex);
-            
-            if (!match) {
-                return { body: marked.parse(markdown) }; 
-            }
-            
-            const frontmatterString = match[1];
-            let frontmatter = {};
-            frontmatterString.split('\n').forEach(line => {
-                const parts = line.split(':');
-                if (parts.length >= 2) {
-                    const key = parts[0].trim();
-                    const value = parts.slice(1).join(':').trim().replace(/^['"]|['"]$/g, '');
-                    frontmatter[key] = value;
-                }
-            });
-
-            const body = markdown.substring(match[0].length).trim();
-            return { ...frontmatter, body: marked.parse(body) };
-        };
-        
-        const loadPortfolio = async (lang) => {
-            const container = document.getElementById('portfolioGridContainer');
-            if (!container) return;
-            
-            container.innerHTML = ''; 
-
-            // Define a pasta a ser lida com base no idioma
-            const folder = `content/portfolio/${lang}`;
-            
-            // ATENÇÃO: É necessário listar os arquivos aqui manualmente. 
-            // Estes nomes devem corresponder aos slugs criados pelo CMS:
-            const portfolioFiles = [
-                'cozinha-moderna-luxuosa-en.md', 
-                'espaco-gourmet-alto-padrao-en.md', 
-                'banheiro-design-clean-en.md',
-                'banheiro-master-luxo-en.md',
-                'suite-master-aconchegante-en.md',
-                'living-room-integrado-en.md'
-                // Estes nomes DEVEM ser ajustados para o seu idioma principal 
-                // e para os slugs que o CMS cria (ex: '-pt.md', '-es.md')
-            ];
-            
-            let projects = [];
-            
-            for (const filename of portfolioFiles) {
-                try {
-                    // Tenta buscar o arquivo do idioma atual
-                    // Remove o sufixo de idioma fixo do nome do arquivo
-                    const baseName = filename.replace(/-en\.md$/, '');
-                    const fileUrl = `${folder}/${baseName}-${lang}.md`;
-                    
-                    const response = await fetch(fileUrl);
-                    
-                    if (!response.ok) {
-                        // Fallback para EN se o arquivo traduzido não for encontrado, se EN for o idioma de fallback.
-                        if (lang !== 'en') {
-                            const fallbackUrl = `content/portfolio/en/${baseName}-en.md`;
-                            const fallbackResponse = await fetch(fallbackUrl);
-                            if (fallbackResponse.ok) {
-                                const markdownText = await fallbackResponse.text();
-                                projects.push(parseMarkdownFile(markdownText));
-                            }
-                        }
-                        continue;
-                    }
-
-                    const markdownText = await response.text();
-                    const data = parseMarkdownFile(markdownText);
-                    
-                    if (data.title && data.description) { 
-                        projects.push(data);
-                    }
-                } catch (error) {
-                    console.error(`Erro ao carregar projeto:`, error);
-                }
-            }
-            
-            // Ordena os projetos pelo campo 'order'
-            projects.sort((a, b) => parseInt(a.order) - parseInt(b.order));
-
-            // Renderiza o grid de projetos
-            projects.forEach(project => {
-                const cardHtml = `
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('${project.image}')">
-                            <img src="${project.image}" alt="${project.title}" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3>${project.title}</h3>
-                            <p>${project.description}</p>
-                        </div>
-                    </div>
-                `;
-                container.insertAdjacentHTML('beforeend', cardHtml);
-            });
-        };
-        
-        // ===============================================
-        // FUNÇÕES GERAIS E DE TRADUÇÃO (MANTIDAS)
-        // ===============================================
 
         // Funções de Lightbox
         function openLightbox(imgSrc) {
@@ -832,13 +822,14 @@
                     } else if (key === 'copyrightText') {
                         let text = translation.replace('<span id="currentYear"></span>', document.getElementById('currentYear').outerHTML);
                         el.innerHTML = text;
+                    } else if (key.includes('NameLabel') || key.includes('CityLabel')) { 
+                        // Permite <strong> para negrito no título do projeto
+                        el.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
                     } else { 
                         el.textContent = translation; 
                     }
                 }
             });
-            // Carrega o conteúdo dinâmico (Portfólio) após a mudança de idioma
-            loadPortfolio(lang);
         }
 
         function highlightLanguage(lang) {
@@ -851,7 +842,7 @@
         }
 
         window.setLanguage = function(lang) {
-            if (!supportedLangs.includes(lang)) { lang = 'en'; }
+            if (!translations[lang]) { lang = 'en'; }
             localStorage.setItem('language', lang);
             currentLang = lang;
             updateTexts(lang);
@@ -872,7 +863,6 @@
                     document.body.classList.toggle('menu-open', isMenuOpen);
                 });
                 
-                // CORRIGIDO: Fecha o menu mobile sempre que um link é clicado
                 navMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         if (window.innerWidth <= 1000) {
