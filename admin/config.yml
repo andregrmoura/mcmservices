@@ -1,9 +1,8 @@
-# ... Mantenha os campos backend, publish_mode e media_folder aqui ...
-
 backend:
   name: git-gateway
   branch: main
 
+# Configuração de Mídia
 # Os arquivos media_folder e public_folder devem apontar para a mesma pasta que você criou.
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -11,7 +10,7 @@ public_folder: "/images/uploads"
 collections:
 
   # =========================================================================
-  # 1. COLEÇÕES DA PÁGINA INICIAL (Mantenha se você as usa)
+  # 1. COLEÇÕES DA PÁGINA INICIAL
   # =========================================================================
   - name: "pages"
     label: "Páginas"
@@ -19,8 +18,10 @@ collections:
       - file: "content/pages/home.json"
         label: "Página Inicial"
         name: "home"
+        format: 'json' # Salvando a Home como JSON
+        extension: 'json'
         fields:
-          # ... Mantenha os campos de configuração da home aqui ...
+          # --- Campos do Carrossel (Hero) ---
           - {label: "Slides do Carrossel (Hero)", name: "hero_slides", widget: "list", fields: [
               {label: "Título (EN)", name: "title_en", widget: "string"},
               {label: "Título (PT)", name: "title_pt", widget: "string"},
@@ -30,26 +31,31 @@ collections:
               {label: "Subtítulo (ES)", name: "subtitle_es", widget: "string"},
               {label: "Imagem de Fundo", name: "image", widget: "image"}
             ]}
-  
+          # Adicione outros campos da página inicial aqui se houver
+
   # =========================================================================
-  # 2. SERVIÇOS - COLEÇÕES TRADUZIDAS
+  # 2. SERVIÇOS - COLEÇÕES TRADUZIDAS (AJUSTADO PARA JSON)
   # =========================================================================
   - name: "services_en"
     label: "Serviços (EN)"
     folder: "content/services/en"
     slug: "{{title}}-en"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
       - {label: "Imagem do Card", name: "image", widget: "image", media_folder: "/images/uploads", public_folder: "/images/uploads"}
-      - {label: "Descrição", name: "body", widget: "markdown"}
-      
+      - {label: "Descrição", name: "body", widget: "markdown"} # Markdown salva como string no JSON
+
   - name: "services_pt"
     label: "Serviços (PT)"
     folder: "content/services/pt"
     slug: "{{title}}-pt"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
@@ -61,6 +67,8 @@ collections:
     folder: "content/services/es"
     slug: "{{title}}-es"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
@@ -68,13 +76,15 @@ collections:
       - {label: "Descrição", name: "body", widget: "markdown"}
 
   # =========================================================================
-  # 3. DEPOIMENTOS - COLEÇÕES TRADUZIDAS
+  # 3. DEPOIMENTOS - COLEÇÕES TRADUZIDAS (AJUSTADO PARA JSON)
   # =========================================================================
   - name: "testimonials_en"
     label: "Depoimentos (EN)"
     folder: "content/testimonials/en"
     slug: "{{author}}-en"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
@@ -85,6 +95,8 @@ collections:
     folder: "content/testimonials/pt"
     slug: "{{author}}-pt"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
@@ -95,13 +107,15 @@ collections:
     folder: "content/testimonials/es"
     slug: "{{author}}-es"
     create: true
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
       - {label: "Texto del Testimonio", name: "body", widget: "markdown", hint: "Máximo de 4-5 linhas de texto."}
       
-      # =========================================================================
-  # 4. PORTFÓLIO - COLEÇÕES TRADUZIDAS (Cria os cards da galeria)
+  # =========================================================================
+  # 4. PORTFÓLIO - COLEÇÕES TRADUZIDAS (AJUSTADO PARA JSON)
   # =========================================================================
   - name: "portfolio_en"
     label: "Portfólio (EN)"
@@ -109,12 +123,13 @@ collections:
     slug: "{{title}}-en"
     create: true
     identifier_field: "title"
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título do Projeto", name: "title", widget: "string", required: true, hint: "Ex: Modern & Luxurious Kitchen"}
       - {label: "Descrição Curta", name: "description", widget: "text", required: true, hint: "Aparece sob o título do card."}
       - {label: "Imagem do Card", name: "image", widget: "image", required: true, media_folder: "/images/uploads", public_folder: "/images/uploads", hint: "A imagem principal do card."}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 20, step: 1, default: 10}
-      # Você pode adicionar mais campos aqui para detalhes internos do projeto, se quiser
       
   - name: "portfolio_pt"
     label: "Portfólio (PT)"
@@ -122,6 +137,8 @@ collections:
     slug: "{{title}}-pt"
     create: true
     identifier_field: "title"
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título do Projeto", name: "title", widget: "string", required: true, hint: "Ex: Cozinha Moderna e Luxuosa"}
       - {label: "Descrição Curta", name: "description", widget: "text", required: true, hint: "Aparece sob o título do card."}
@@ -134,6 +151,8 @@ collections:
     slug: "{{title}}-es"
     create: true
     identifier_field: "title"
+    format: 'json'
+    extension: 'json'
     fields:
       - {label: "Título del Proyecto", name: "title", widget: "string", required: true, hint: "Ex: Cocina Moderna y Lujosa"}
       - {label: "Descripción Corta", name: "description", widget: "text", required: true, hint: "Aparece bajo el título del card."}
