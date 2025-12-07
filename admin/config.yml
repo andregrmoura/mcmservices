@@ -1,95 +1,101 @@
+# ... Mantenha os campos backend, publish_mode e media_folder aqui ...
+
 backend:
   name: git-gateway
-  branch: main # Seu branch principal
-  
-publish_mode: editorial_workflow # Sugestão: Permite revisão antes de publicar
-media_folder: "images/uploads" # Pasta no seu projeto onde as imagens serão salvas (Ex: public/images/uploads)
-public_folder: "/images/uploads" # Caminho público para as imagens
-locale: 'pt' # Define o idioma padrão da interface do CMS
+  branch: main
+
+# Os arquivos media_folder e public_folder devem apontar para a mesma pasta que você criou.
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
-  
-  # =====================================================================
-  # 1. PÁGINA ÚNICA: Metadados Globais e Conteúdo Fixo (Home/SEO)
-  #    Este é um ficheiro único que guardará todos os textos que não são repetitivos.
-  # =====================================================================
-  - name: "global"
-    label: "Configurações Globais"
-    editor:
-      preview: false # Desliga a pré-visualização, pois é um conteúdo misto
+
+  # =========================================================================
+  # 1. COLEÇÕES DA PÁGINA INICIAL (Mantenha se você as usa)
+  # =========================================================================
+  - name: "pages"
+    label: "Páginas"
     files:
-      - label: "Página Inicial (Textos Fixos)"
-        name: "home_page_data"
-        file: "content/data/home.json" # Onde os dados serão guardados (JSON)
+      - file: "content/pages/home.json"
+        label: "Página Inicial"
+        name: "home"
         fields:
-          
-          # --- Metadados e SEO ---
-          - label: "SEO / Metadados"
-            name: "seo"
-            widget: "object"
-            fields:
-              - {label: "Título da Página", name: "title", widget: "string", default: "MCM Services - Project Management"}
-              - {label: "Descrição do SEO", name: "description", widget: "text", default: "MCM Services offers premium Project Management services across Miami-Dade and Broward."}
-
-          # --- Secção HERO Slider (3 Slides) ---
-          - label: "Secção HERO (Slider)"
-            name: "hero_slider"
-            widget: "list"
-            min: 1
-            max: 3
-            label_singular: "Slide"
-            fields:
-              - {label: "Imagem de Fundo", name: "image", widget: "image", default: "images/hero1.jpeg"}
-              - {label: "Título Principal (H1)", name: "title", widget: "string"}
-              - {label: "Subtítulo (Parágrafo)", name: "subtitle", widget: "text"}
-              - {label: "Texto do Botão", name: "button_text", widget: "string", default: "Request Your Exclusive Project"}
-          
-          # --- Secção ABOUT US ---
-          - label: "Secção Sobre Nós"
-            name: "about"
-            widget: "object"
-            fields:
-              - {label: "Título Principal", name: "title", widget: "string", default: "Why Choose Us"}
-              - {label: "Foto do Gerente/Fundador", name: "image", widget: "image", default: "images/andresala.jpeg"}
-              - {label: "Parágrafo 1", name: "p1", widget: "markdown"}
-              - {label: "Parágrafo 2", name: "p2", widget: "markdown"}
-              - {label: "Parágrafo 3", name: "p3", widget: "markdown"}
+          # ... Mantenha os campos de configuração da home aqui ...
+          - {label: "Slides do Carrossel (Hero)", name: "hero_slides", widget: "list", fields: [
+              {label: "Título (EN)", name: "title_en", widget: "string"},
+              {label: "Título (PT)", name: "title_pt", widget: "string"},
+              {label: "Título (ES)", name: "title_es", widget: "string"},
+              {label: "Subtítulo (EN)", name: "subtitle_en", widget: "string"},
+              {label: "Subtítulo (PT)", name: "subtitle_pt", widget: "string"},
+              {label: "Subtítulo (ES)", name: "subtitle_es", widget: "string"},
+              {label: "Imagem de Fundo", name: "image", widget: "image"}
+            ]}
   
-          # --- Secção CONTACTO (Textos do formulário) ---
-          - label: "Secção Contato"
-            name: "contact"
-            widget: "object"
-            fields:
-              - {label: "Título do Formulário", name: "title", widget: "string", default: "Request a Project Estimate"}
-              - {label: "Subtítulo", name: "subtitle", widget: "text", default: "Start transforming your project today."}
-              - {label: "Texto do Botão WhatsApp", name: "whatsapp_text", widget: "string", default: "Contact via WhatsApp"}
-
-
-  # =====================================================================
-  # 2. COLEÇÃO REPETITIVA: CARDS DE SERVIÇOS (Foco da sua pergunta)
-  #    Permite criar, editar e ordenar os cartões de serviço.
-  # =====================================================================
-  - name: "services"
-    label: "Serviços (Cards)"
-    folder: "content/services" # Onde o conteúdo de cada card será salvo (ex: content/services/iniciacao.md)
-    create: true # Permite adicionar novos cards
-    identifier_field: "title"
-    fields:
-      - {label: "Título do Card", name: "title", widget: "string", required: true}
-      - {label: "Imagem do Card", name: "image", widget: "image", default: "images/pm22.jpg"}
-      - {label: "Texto do Card", name: "text", widget: "markdown", required: true, hint: "Use **negrito** para destacar palavras-chave."}
-      - {label: "Ordem de Exibição", name: "order", widget: "number", required: true, hint: "Defina um número para controlar a ordem de exibição (1 é o primeiro)."}
-
-  # =====================================================================
-  # 3. COLEÇÃO REPETITIVA: DEPOIMENTOS DE CLIENTES
-  #    Permite adicionar, remover e editar os depoimentos.
-  # =====================================================================
-  - name: "testimonials"
-    label: "Depoimentos de Clientes"
-    folder: "content/testimonials" # Onde o conteúdo de cada depoimento será salvo
+  # =========================================================================
+  # 2. SERVIÇOS - COLEÇÕES TRADUZIDAS
+  # =========================================================================
+  - name: "services_en"
+    label: "Serviços (EN)"
+    folder: "content/services/en"
+    slug: "{{title}}-en"
     create: true
-    identifier_field: "author"
     fields:
-      - {label: "Texto do Depoimento", name: "text", widget: "text", required: true, hint: "Máximo de 4-5 linhas de texto."}
-      - {label: "Autor", name: "author", widget: "string", required: true, hint: "Ex: — Mr. B. Mendes, Miami"}
-      - {label: "Ordem de Exibição", name: "order", widget: "number", required: true, hint: "Defina a ordem (1 é o primeiro)."}
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Imagem do Card", name: "image", widget: "image", media_folder: "/images/uploads", public_folder: "/images/uploads"}
+      - {label: "Descrição", name: "body", widget: "markdown"}
+      
+  - name: "services_pt"
+    label: "Serviços (PT)"
+    folder: "content/services/pt"
+    slug: "{{title}}-pt"
+    create: true
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Imagem do Card", name: "image", widget: "image", media_folder: "/images/uploads", public_folder: "/images/uploads"}
+      - {label: "Descrição", name: "body", widget: "markdown"}
+
+  - name: "services_es"
+    label: "Servicios (ES)"
+    folder: "content/services/es"
+    slug: "{{title}}-es"
+    create: true
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Imagem do Card", name: "image", widget: "image", media_folder: "/images/uploads", public_folder: "/images/uploads"}
+      - {label: "Descrição", name: "body", widget: "markdown"}
+
+  # =========================================================================
+  # 3. DEPOIMENTOS - COLEÇÕES TRADUZIDAS
+  # =========================================================================
+  - name: "testimonials_en"
+    label: "Depoimentos (EN)"
+    folder: "content/testimonials/en"
+    slug: "{{author}}-en"
+    create: true
+    fields:
+      - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Texto do Depoimento", name: "body", widget: "markdown", hint: "Máximo de 4-5 linhas de texto."}
+
+  - name: "testimonials_pt"
+    label: "Depoimentos (PT)"
+    folder: "content/testimonials/pt"
+    slug: "{{author}}-pt"
+    create: true
+    fields:
+      - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Texto do Depoimento", name: "body", widget: "markdown", hint: "Máximo de 4-5 linhas de texto."}
+
+  - name: "testimonials_es"
+    label: "Testimonios (ES)"
+    folder: "content/testimonials/es"
+    slug: "{{author}}-es"
+    create: true
+    fields:
+      - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
+      - {label: "Texto del Testimonio", name: "body", widget: "markdown", hint: "Máximo de 4-5 linhas de texto."}
