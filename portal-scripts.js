@@ -12,7 +12,7 @@ import { getFirestore, collection, getDocs, getDoc, doc } from "https://www.gsta
 
 // Firebase Configuration (MANTIDA IDÊNTICA)
 const firebaseConfig = {
-    apiKey: "AIzaSyAw4bA0M8bc8Qt0fvS5xmc2SBYQkxTVR7g",
+    apiKey: "process.env.VITE_GOOGLE_API_KEY",
     authDomain: "mcm-services-corp.firebaseapp.com",
     projectId: "mcm-services-corp",
     storageBucket: "mcm-services-corp.firebasestorage.app",
