@@ -1,24 +1,95 @@
 backend:
   name: git-gateway
-  branch: main
-  repo: andregmoura/mcmservices 
-  # Se você não configurou o domínio ainda, use a URL aleatória do Netlify aqui:
-  # identity_url: https://SEU-SITE.netlify.app/.netlify/identity 
-  # gateway_url: https://SEU-SITE.netlify.app/.netlify/git 
-
-publish_mode: editorial_workflow
-media_folder: "assets/images/uploads"
-public_folder: "/assets/images/uploads"
+  branch: main # Seu branch principal
+  
+publish_mode: editorial_workflow # Sugestão: Permite revisão antes de publicar
+media_folder: "images/uploads" # Pasta no seu projeto onde as imagens serão salvas (Ex: public/images/uploads)
+public_folder: "/images/uploads" # Caminho público para as imagens
+locale: 'pt' # Define o idioma padrão da interface do CMS
 
 collections:
-  - name: "pages"
-    label: "Páginas"
+  
+  # =====================================================================
+  # 1. PÁGINA ÚNICA: Metadados Globais e Conteúdo Fixo (Home/SEO)
+  #    Este é um ficheiro único que guardará todos os textos que não são repetitivos.
+  # =====================================================================
+  - name: "global"
+    label: "Configurações Globais"
+    editor:
+      preview: false # Desliga a pré-visualização, pois é um conteúdo misto
     files:
-      - file: "index.html"
-        label: "Página Inicial"
-        # ADICIONE ESTA LINHA:
-        name: "home"
+      - label: "Página Inicial (Textos Fixos)"
+        name: "home_page_data"
+        file: "content/data/home.json" # Onde os dados serão guardados (JSON)
         fields:
-          - label: "Título da Página"
-            name: "title"
-            widget: "string"
+          
+          # --- Metadados e SEO ---
+          - label: "SEO / Metadados"
+            name: "seo"
+            widget: "object"
+            fields:
+              - {label: "Título da Página", name: "title", widget: "string", default: "MCM Services - Project Management"}
+              - {label: "Descrição do SEO", name: "description", widget: "text", default: "MCM Services offers premium Project Management services across Miami-Dade and Broward."}
+
+          # --- Secção HERO Slider (3 Slides) ---
+          - label: "Secção HERO (Slider)"
+            name: "hero_slider"
+            widget: "list"
+            min: 1
+            max: 3
+            label_singular: "Slide"
+            fields:
+              - {label: "Imagem de Fundo", name: "image", widget: "image", default: "images/hero1.jpeg"}
+              - {label: "Título Principal (H1)", name: "title", widget: "string"}
+              - {label: "Subtítulo (Parágrafo)", name: "subtitle", widget: "text"}
+              - {label: "Texto do Botão", name: "button_text", widget: "string", default: "Request Your Exclusive Project"}
+          
+          # --- Secção ABOUT US ---
+          - label: "Secção Sobre Nós"
+            name: "about"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "title", widget: "string", default: "Why Choose Us"}
+              - {label: "Foto do Gerente/Fundador", name: "image", widget: "image", default: "images/andresala.jpeg"}
+              - {label: "Parágrafo 1", name: "p1", widget: "markdown"}
+              - {label: "Parágrafo 2", name: "p2", widget: "markdown"}
+              - {label: "Parágrafo 3", name: "p3", widget: "markdown"}
+  
+          # --- Secção CONTACTO (Textos do formulário) ---
+          - label: "Secção Contato"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Título do Formulário", name: "title", widget: "string", default: "Request a Project Estimate"}
+              - {label: "Subtítulo", name: "subtitle", widget: "text", default: "Start transforming your project today."}
+              - {label: "Texto do Botão WhatsApp", name: "whatsapp_text", widget: "string", default: "Contact via WhatsApp"}
+
+
+  # =====================================================================
+  # 2. COLEÇÃO REPETITIVA: CARDS DE SERVIÇOS (Foco da sua pergunta)
+  #    Permite criar, editar e ordenar os cartões de serviço.
+  # =====================================================================
+  - name: "services"
+    label: "Serviços (Cards)"
+    folder: "content/services" # Onde o conteúdo de cada card será salvo (ex: content/services/iniciacao.md)
+    create: true # Permite adicionar novos cards
+    identifier_field: "title"
+    fields:
+      - {label: "Título do Card", name: "title", widget: "string", required: true}
+      - {label: "Imagem do Card", name: "image", widget: "image", default: "images/pm22.jpg"}
+      - {label: "Texto do Card", name: "text", widget: "markdown", required: true, hint: "Use **negrito** para destacar palavras-chave."}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", required: true, hint: "Defina um número para controlar a ordem de exibição (1 é o primeiro)."}
+
+  # =====================================================================
+  # 3. COLEÇÃO REPETITIVA: DEPOIMENTOS DE CLIENTES
+  #    Permite adicionar, remover e editar os depoimentos.
+  # =====================================================================
+  - name: "testimonials"
+    label: "Depoimentos de Clientes"
+    folder: "content/testimonials" # Onde o conteúdo de cada depoimento será salvo
+    create: true
+    identifier_field: "author"
+    fields:
+      - {label: "Texto do Depoimento", name: "text", widget: "text", required: true, hint: "Máximo de 4-5 linhas de texto."}
+      - {label: "Autor", name: "author", widget: "string", required: true, hint: "Ex: — Mr. B. Mendes, Miami"}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", required: true, hint: "Defina a ordem (1 é o primeiro)."}
