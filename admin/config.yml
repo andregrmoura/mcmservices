@@ -99,3 +99,43 @@ collections:
       - {label: "Autor e Local", name: "author", widget: "string", hint: "Ex: Mr. B. Mendes, Miami"}
       - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 10, step: 1, hint: "Número para controlar a ordem de exibição (1 é o primeiro)."}
       - {label: "Texto del Testimonio", name: "body", widget: "markdown", hint: "Máximo de 4-5 linhas de texto."}
+      
+      # =========================================================================
+  # 4. PORTFÓLIO - COLEÇÕES TRADUZIDAS (Cria os cards da galeria)
+  # =========================================================================
+  - name: "portfolio_en"
+    label: "Portfólio (EN)"
+    folder: "content/portfolio/en"
+    slug: "{{title}}-en"
+    create: true
+    identifier_field: "title"
+    fields:
+      - {label: "Título do Projeto", name: "title", widget: "string", required: true, hint: "Ex: Modern & Luxurious Kitchen"}
+      - {label: "Descrição Curta", name: "description", widget: "text", required: true, hint: "Aparece sob o título do card."}
+      - {label: "Imagem do Card", name: "image", widget: "image", required: true, media_folder: "/images/uploads", public_folder: "/images/uploads", hint: "A imagem principal do card."}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 20, step: 1, default: 10}
+      # Você pode adicionar mais campos aqui para detalhes internos do projeto, se quiser
+      
+  - name: "portfolio_pt"
+    label: "Portfólio (PT)"
+    folder: "content/portfolio/pt"
+    slug: "{{title}}-pt"
+    create: true
+    identifier_field: "title"
+    fields:
+      - {label: "Título do Projeto", name: "title", widget: "string", required: true, hint: "Ex: Cozinha Moderna e Luxuosa"}
+      - {label: "Descrição Curta", name: "description", widget: "text", required: true, hint: "Aparece sob o título do card."}
+      - {label: "Imagem do Card", name: "image", widget: "image", required: true, media_folder: "/images/uploads", public_folder: "/images/uploads", hint: "A imagem principal do card."}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 20, step: 1, default: 10}
+
+  - name: "portfolio_es"
+    label: "Portafolio (ES)"
+    folder: "content/portfolio/es"
+    slug: "{{title}}-es"
+    create: true
+    identifier_field: "title"
+    fields:
+      - {label: "Título del Proyecto", name: "title", widget: "string", required: true, hint: "Ex: Cocina Moderna y Lujosa"}
+      - {label: "Descripción Corta", name: "description", widget: "text", required: true, hint: "Aparece bajo el título del card."}
+      - {label: "Imagen del Card", name: "image", widget: "image", required: true, media_folder: "/images/uploads", public_folder: "/images/uploads", hint: "La imagen principal del card."}
+      - {label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", min: 1, max: 20, step: 1, default: 10}
