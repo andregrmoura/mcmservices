@@ -24,12 +24,12 @@
     *, *::before, *::after { box-sizing: border-box; }
     
     body {
+        margin: 0;
         font-family: 'Montserrat', sans-serif;
         background: #F7F7F7;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        margin: 0; 
         line-height: 1.6;
         color: #333;
         overflow-x: hidden;
@@ -45,18 +45,40 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
     }
+    /* CORREÇÃO CRÍTICA: Bloqueia a rolagem do fundo quando o menu está aberto */
+    body.menu-open {
+        overflow: hidden; 
+    }
+    /* Estilo para Títulos (Replicando section-title do index.html) */
+    .section-title-light { 
+        font-family:'Playfair Display', serif;
+        font-size:2.8rem;
+        font-weight:400;
+        color:#C7A96B; 
+        text-align:center; 
+        margin:0 0 30px 0;
+    }
+
 
     /* ====================================
-    HEADER (PADRÃO HOMEPAGE)
+    HEADER (UNIFICADO COM INDEX.HTML)
     ==================================== */
     header {
       width: 100%;
-      padding: 5px 25px;
-      background: #FFF;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
+      padding: 10px 25px; 
+      background: rgba(255, 255, 255, 0); 
+      box-shadow: none;
+      position: fixed; 
+      top: 0;
+      left: 0;
       z-index: 100;
       min-height: 85px; 
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    header.scrolled {
+        background: #FFF;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
     .header-container {
@@ -83,6 +105,7 @@
         height: 85px !important; 
         width: 255px !important; 
         object-fit: contain;
+        transition: height 0.3s ease;
     }
 
     nav {
@@ -94,18 +117,42 @@
     nav ul {
       list-style: none;
       display: flex;
-      gap: 40px;
+      gap: 50px;
       padding: 0;
       margin: 0; 
     }
 
     nav ul a {
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
+      color: #FFF; 
+      font-weight: 400;
       position: relative;
       padding-bottom: 4px;
       transition: .3s;
+    }
+    
+    header.scrolled nav ul a, 
+    header.scrolled .header-right a {
+        color: #333;
+    }
+    
+    .client-login-btn {
+        padding: 8px 15px;
+        border: 1px solid #FFF; 
+        color: #FFF;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: .3s;
+        white-space: nowrap;
+    }
+    
+    header.scrolled .client-login-btn {
+        border-color: #333;
+        color: #333;
     }
 
     nav ul a:hover, nav ul a.active {
@@ -134,51 +181,17 @@
       flex-shrink: 0;
     }
     
-    .client-login-btn {
-        padding: 8px 15px;
-        border: 1px solid #333; 
-        border-radius: 8px;
-        color: #333;
-        text-decoration: none;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: .3s;
-        white-space: nowrap;
-    }
     .client-login-btn i {
         color: #C7A96B; 
     }
     .client-login-btn:hover {
         background: #C7A96B;
-        color: #333;
+        color: #333 !important;
         border-color: #C7A96B;
     }
     .client-login-btn:hover i {
         color: #333;
     }
-
-    /* HAMBURGER STYLES */
-    .hamburger-btn { 
-        display: none; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-        padding: 10px; 
-        z-index: 1001; 
-    }
-    .hamburger-btn .hamburger-line { 
-        display: block; 
-        width: 25px; 
-        height: 3px; 
-        background-color: #333; 
-        margin: 5px 0; 
-        transition: transform 0.3s ease, opacity 0.3s ease; 
-    }
-    .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
-    .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
     /* Language Buttons */
     .lang-switcher {
@@ -201,14 +214,83 @@
       box-shadow: 0 0 6px rgba(199,169,107,0.7);
     }
     
-    /* Regra para o switcher de idioma dentro do menu mobile */
     .mobile-nav-flags {
-        display: none; /* Escondido no desktop */
+        display: none; 
     }
 
+    /* HAMBURGER STYLES */
+    .hamburger-btn { 
+        display: none; 
+        background: none; 
+        border: none; 
+        cursor: pointer; 
+        padding: 10px; 
+        z-index: 1001; 
+    }
+    .hamburger-btn .hamburger-line { 
+        display: block; 
+        width: 25px; 
+        height: 3px; 
+        background-color: #FFF; 
+        margin: 5px 0; 
+        transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease; 
+    }
+    
+    header.scrolled .hamburger-btn .hamburger-line {
+        background-color: #333;
+    }
+    
     /*
     ====================================
-    PORTFOLIO PAGE SPECIFIC STYLES
+    RESPONSIVENESS (UNIFICADO COM INDEX.HTML)
+    ====================================
+    */
+    @media (max-width: 1000px) {
+        
+        header { min-height: 70px; }
+        
+        .logo-link { width: 180px; height: 60px; order: 1; }
+        .logo-link img { height: 60px !important; width: 180px !important; }
+
+        nav {
+            display: none; order: 3; width: 100%; margin-top: 15px;
+            position: absolute; top: 70px; left: 0; background-color: #FFF; 
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2); padding: 20px 0; 
+            box-sizing: border-box; z-index: 99; justify-content: center; 
+            flex-direction: column; 
+        }
+        
+        /* CORREÇÃO: Necessário para mostrar o menu */
+        nav.is-open { display: flex; } 
+        
+        nav ul { flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+        
+        /* CORREÇÃO: Links pretos no menu mobile */
+        nav ul a { color: #333 !important; } 
+
+        .mobile-nav-flags {
+            display: flex; justify-content: center; margin-top: 20px; 
+            padding-top: 15px; border-top: 1px solid #EEE;
+        }
+        
+        .hamburger-btn { display: block; margin: 0; }
+        .hamburger-btn .hamburger-line { background-color: #333 !important; }
+        
+        .header-right .lang-switcher { display: none !important; }
+        .header-right .client-login-btn { display: none; }
+
+        .header-right { order: 2; display: flex; align-items: center; gap: 0; padding-right: 0; }
+        .logo-link { margin: 0; order: 1; }
+
+        /* Responsive Portfolio */
+        #sobre { height: 90vh; min-height: 400px; }
+        #sobre h2 { font-size: 3rem; }
+        #portfolio { padding: 40px 20px; }
+    }
+    
+    /*
+    ====================================
+    PORTFOLIO PAGE SPECIFIC STYLES (HEADER-LIKE HERO)
     ====================================
     */
     main {
@@ -218,9 +300,8 @@
     #sobre {
         position: relative;
         width: 100%;
-        height: 60vh; 
-        min-height: 400px;
-        max-height: 500px; 
+        height: 100vh; 
+        min-height: 500px;
         background-image: url('images/4gallery.jpg'); 
         background-color: #333; 
         background-size: cover;
@@ -234,6 +315,7 @@
         padding: 40px 20px;
         box-sizing: border-box;
         overflow: hidden; 
+        padding-top: 0;
     }
     
     #sobre::before {
@@ -243,60 +325,76 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); 
+        background: rgba(0, 0, 0, 0.25); 
         z-index: 1; 
     }
     
     #sobre h2 {
         font-family: 'Playfair Display', serif;
         font-weight: 400;
-        font-size: 3.5rem; 
+        font-size: 4.8rem; 
         margin: 0;
         color: #FFFFFF; 
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); 
+        text-shadow: 0 3px 12px rgba(0,0,0,0.6); 
         z-index: 2; 
         position: relative; 
     }
     
     #sobre p {
         font-family: 'Montserrat', sans-serif;
-        font-weight: 400;
-        font-size: 1.2rem; 
+        font-weight: 300;
+        font-size: 1.4rem; 
         margin-top: 15px;
         max-width: 800px;
         line-height: 1.5;
         color: #FFFFFF; 
-        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); 
+        text-shadow: 0 3px 12px rgba(0,0,0,0.5);
         z-index: 2;
         position: relative;
     }
+
+    .hero-animate {
+        animation: fadeIn 1.5s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
     
-    /* REMOVIDO: ESTILOS DA BARRA DE DETALHES DO PROJETO */
-    .project-details-info-wrapper {
-        display: none; 
+    /* ====================================
+    PORTFOLIO SECTION (Fundo Claro)
+    ==================================== */
+    #portfolio {
+        padding: 80px 20px; 
+        background: #F7F7F7; 
+        box-sizing: border-box;
+        position: relative;
     }
-    .project-details-info {
-        display: none;
-    }
-    /* FIM DA REMOÇÃO DOS ESTILOS DE DETALHES DO PROJETO */
 
     .project-grid-container {
-        max-width: 1200px; margin: 40px auto; padding: 0 20px; box-sizing: border-box;
+        /* Centraliza o conteúdo principal */
+        max-width: 1200px; 
+        margin: 0 auto;
+        padding: 0; 
     }
     
     .project-grid {
         display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px; padding-bottom: 30px;
+        gap: 30px; 
     }
     
+    /* Cards - Fundo Branco Solido e Ajuste de Conteúdo */
     .project-card {
-        background-color: white; border-radius: 0; 
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); overflow: hidden;
+        background-color: #FFF; 
+        border-radius: 0; 
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); 
+        overflow: hidden;
         display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .project-card:hover {
-        transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
     }
     
     .project-image-container {
@@ -326,12 +424,14 @@
     
     .card-content-portfolio p {
         font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.6;
-        color: #555; margin: 0; flex-grow: 1;
+        color: #555; 
+        margin: 0; flex-grow: 1;
     }
     
     .image-auth-note {
-        font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #777;
+        font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #777; 
         text-align: right; margin-top: 20px; padding-right: 10px;
+        position: relative; z-index: 2;
     }
     
     .lightbox { 
@@ -349,21 +449,22 @@
     }
 
     #contato {
-        padding: 50px 20px; background-color: #F7F7F7; border-top: 1px solid #DDD;
+        padding: 80px 20px; 
+        background-color: #F7F7F7; border-top: 1px solid #DDD;
         text-align: center;
     }
     
     #contato h2 {
-        font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.5rem;
+        font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.8rem;
         color: #C7A96B; margin-bottom: 25px; position: relative; display: block; 
     }
     
-    #contato .btn {
+    .contact-btn-style {
         background:#C7A96B; color:#333; padding:14px 40px; border-radius:8px;
         border:none; font-size:1.1rem; font-weight:600; cursor:pointer;
         transition:.3s; box-shadow:0 4px 14px rgba(0,0,0,0.35); text-decoration: none;
     }
-    #contato .btn:hover {
+    .contact-btn-style:hover {
         background:#b9965e; color:#FFF; transform:scale(1.03);
         box-shadow:0 6px 16px rgba(0,0,0,0.45);
     }
@@ -400,62 +501,6 @@
     }
     .footer-bottom-line p { margin: 5px 0; }
     .footer-bottom-line .copyright { font-size: 0.9rem; color: #666; }
-
-
-    /*
-    ====================================
-    RESPONSIVENESS (CORRIGIDO PARA O SANDUÍCHE)
-    ====================================
-    */
-    @media (max-width: 1000px) {
-        
-        header { min-height: 70px; }
-        
-        .logo-link { width: 180px; height: 60px; margin: 0; order: 1; justify-content: flex-start; }
-        .logo-link img { height: 60px !important; width: 180px !important; }
-
-        .header-container { flex-wrap: nowrap; justify-content: space-between; align-items: center; padding: 5px 15px; }
-        
-        nav {
-            display: none; 
-            order: 3; 
-            width: 100%;
-            margin-top: 15px;
-            position: absolute; 
-            top: 70px; 
-            left: 0; 
-            background-color: #FFF; 
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
-            padding: 20px 0; 
-            box-sizing: border-box; 
-            z-index: 99;
-            justify-content: center; 
-            flex-direction: column; 
-        }
-        
-        nav.is-open { display: flex; } /* Esta é a classe ativada pelo JS */
-        
-        nav ul { flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
-        
-        .mobile-nav-flags {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px; 
-            padding-top: 15px;
-            border-top: 1px solid #EEE;
-        }
-        
-        .hamburger-btn { display: block; margin: 0; }
-        .header-right .lang-switcher { display: none !important; }
-        .header-right .client-login-btn { display: none; }
-
-        .header-right { order: 2; display: flex; align-items: center; gap: 0; padding-right: 0; }
-        .logo-link { margin: 0; order: 1; }
-
-        /* Responsive Portfolio */
-        .project-details-info { flex-direction: column; align-items: flex-start; }
-        .project-details-info span { margin-bottom: 5px; }
-    }
   </style>
 </head>
 
@@ -507,80 +552,85 @@
     
 <main>
         <section id="sobre">
-            <h2 data-key="portfolioTitle">Gallery</h2>
-            <p data-key="portfolioSubtitle">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
+            <h2 data-key="portfolioTitle" class="hero-animate">Gallery</h2>
+            <p data-key="portfolioSubtitle" class="hero-animate" style="animation-delay: 0.3s;">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
         </section>
 
-        <section id="portfolio" class="project-grid-container">
-            <div class="project-grid">
+        <section id="portfolio">
+            <div class="project-grid-container">
+                
+                <h2 class="section-title-light" data-key="portfolioSectionTitle">Projetos Ilustrados</h2>
 
-                <div class="project-card">
-                    <div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
-                        <img src="images/card1.jpg" alt="Cozinha moderna e luxuosa com ilha central" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
+                <div class="project-grid">
+
+                    <div class="project-card">
+                        <div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
+                            <img src="images/card1.jpg" alt="Cozinha moderna e luxuosa com ilha central" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project1Title">Cozinha Moderna e Luxuosa</h3>
+                            <p data-key="project1Desc">Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.</p>
+                        </div>
                     </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project1Title">Cozinha Moderna e Luxuosa</h3>
-                        <p data-key="project1Desc">Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.</p>
+                    <div class="project-card">
+                         <div class="project-image-container" onclick="openLightbox('images/card2.jpg')">
+                            <img src="images/card2.jpg" alt="Espaço Gourmet de Alto Padrão" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project2Title">Espaço Gourmet de Alto Padrão</h3>
+                            <p data-key="project2Desc">Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image-container" onclick="openLightbox('images/card3.jpg')">
+                            <img src="images/card3.jpg" alt="Banheiro com design clean e funcional" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project3Title">Banheiro com Design Clean</h3>
+                            <p data-key="project3Desc">Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image-container" onclick="openLightbox('images/card4.jpg')">
+                            <img src="images/card4.jpg" alt="Banheiro master de luxo com metais dourados" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project4Title">Banheiro Master de Luxo</h3>
+                            <p data-key="project4Desc">Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image-container" onclick="openLightbox('images/card5.png')">
+                            <img src="images/card5.png" alt="Suíte master aconchegante com mobiliário sob medida" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project5Title">Suíte Master Aconchegante</h3>
+                            <p data-key="project5Desc">Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image-container" onclick="openLightbox('images/card6.jpg')">
+                            <img src="images/card6.jpg" alt="Living room integrado e moderno" class="project-img">
+                            <i class="fas fa-search-plus expand-icon"></i>
+                        </div>
+                        <div class="card-content-portfolio">
+                            <h3 data-key="project6Title">Living Room Integrado</h3>
+                            <p data-key="project6Desc">Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card">
-                     <div class="project-image-container" onclick="openLightbox('images/card2.jpg')">
-                        <img src="images/card2.jpg" alt="Espaço Gourmet de Alto Padrão" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
-                    </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project2Title">Espaço Gourmet de Alto Padrão</h3>
-                        <p data-key="project2Desc">Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image-container" onclick="openLightbox('images/card3.jpg')">
-                        <img src="images/card3.jpg" alt="Banheiro com design clean e funcional" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
-                    </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project3Title">Banheiro com Design Clean</h3>
-                        <p data-key="project3Desc">Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image-container" onclick="openLightbox('images/card4.jpg')">
-                        <img src="images/card4.jpg" alt="Banheiro master de luxo com metais dourados" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
-                    </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project4Title">Banheiro Master de Luxo</h3>
-                        <p data-key="project4Desc">Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image-container" onclick="openLightbox('images/card5.png')">
-                        <img src="images/card5.png" alt="Suíte master aconchegante com mobiliário sob medida" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
-                    </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project5Title">Suíte Master Aconchegante</h3>
-                        <p data-key="project5Desc">Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.</p>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image-container" onclick="openLightbox('images/card6.jpg')">
-                        <img src="images/card6.jpg" alt="Living room integrado e moderno" class="project-img">
-                        <i class="fas fa-search-plus expand-icon"></i>
-                    </div>
-                    <div class="card-content-portfolio">
-                        <h3 data-key="project6Title">Living Room Integrado</h3>
-                        <p data-key="project6Desc">Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.</p>
-                    </div>
-                </div>
+                <p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
             </div>
-            <p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
         </section>
 
         <section id="contato" style="text-align: center;">
              <h2 data-key="interestedTitle">Interested in a Project?</h2>
-             <a href="index.html#contact" class="btn" data-key="requestQuote">Get a Quote</a>
+             <a href="index.html#contact" class="contact-btn-style" data-key="requestQuote">Get a Quote</a>
         </section>
     </main>
 
@@ -642,66 +692,47 @@
         </div>
     </footer>
     
-    <button id="scrollToTopBtn" aria-label="Scroll to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
     <script>
         
         // OBJETO DE TRADUÇÃO COMPLETO E PADRONIZADO
         const translations = {
             en: {
-                // Nav
                 navHome: "Home", navAbout: "About", navContact: "Contact", navPortal: "Client Login", navPortfolioLink: "Gallery",
-                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
                 portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.", 
-                
-                // NOVAS DESCRIÇÕES EM INGLÊS 
+                'portfolioSectionTitle': "Illustrated Projects",
                 project1Title: "Modern & Luxurious Kitchen", project1Desc: "Bold design with a central island, custom cabinets, and state-of-the-art appliances.", 
                 project2Title: "High-End Gourmet Space", project2Desc: "An environment that combines preparation functionality with luxury finishes, such as marble and custom lighting.", 
                 project3Title: "Bathroom with Clean Design", project3Desc: "Project focusing on space optimization and combining light textures for a relaxing and functional look.", 
                 project4Title: "Luxury Master Bathroom", project4Desc: "Full renovation using large format tiles, gold fixtures, and a spacious shower for a private spa feel.", 
                 project5Title: "Cozy Master Suite", project5Desc: "Bedroom designed for maximum comfort, with a neutral color palette and custom furniture to optimize rest.", 
                 project6Title: "Integrated Living Room", project6Desc: "Living room that harmoniously connects to other areas, using modern sofas and accent lighting.", 
-                
                 interestedTitle: "Interested in a Project?", requestQuote: "Get a Quote", imageAuthNote: "All images were authorized by the client.",
-                // Footer
                 footerTagline: "Management Excellence, Flawless Execution.", developerSignature: "Developed by Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. All rights reserved.', footer_location: 'Miami, FL', 'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy',
             },
             'pt': {
-                // Nav
                 navHome: "Início", navAbout: "Sobre", navContact: "Contato", navPortal: "Acesso Cliente", navPortfolioLink: "Galeria",
-                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
                 portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", 
-                
-                // NOVAS DESCRIÇÕES EM PORTUGUÊS 
+                'portfolioSectionTitle': "Projetos Ilustrados",
                 project1Title: "Cozinha Moderna e Luxuosa", project1Desc: "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.", 
                 project2Title: "Espaço Gourmet de Alto Padrão", project2Desc: "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.", 
                 project3Title: "Banheiro com Design Clean", project3Desc: "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.", 
                 project4Title: "Banheiro Master de Luxo", project4Desc: "Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.", 
                 project5Title: "Suíte Master Aconchegante", project5Desc: "Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.", 
                 project6Title: "Living Room Integrado", project6Desc: "Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.", 
-                
                 interestedTitle: "Interessado em um Projeto?", requestQuote: "Solicitar Orçamento", imageAuthNote: "Todas as imagens foram autorizadas pelo cliente.",
-                // Footer
                 footerTagline: "Excelência em Gestão, Execução Impecável.", developerSignature: "Desenvolvido por Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. Todos os direitos reservados.', footer_location: 'Miami, FL', 'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade',
             },
             'es': {
-                // Nav
                 navHome: "Inicio", navAbout: "Nosotros", navContact: "Contacto", navPortal: "Acceso Clientes", navPortfolioLink: "Galería",
-                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
                 portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espacio a Través de Supervisión Experta y Coordinación de Proyectos.", 
-                
-                // NOVAS DESCRIÇÕES EM ESPANHOL 
+                'portfolioSectionTitle': "Proyectos Ilustrados",
                 project1Title: "Cocina Moderna y Lujosa", project1Desc: "Diseño audaz con isla central, gabinetes personalizados y electrodomésticos de última generación.", 
                 project2Title: "Espacio Gourmet de Alto Nivel", project2Desc: "Un ambiente que combina funcionalidad de preparación con acabados de lujo, como mármol e iluminación a medida.", 
                 project3Title: "Baño con Diseño Limpio", project3Desc: "Proyecto centrado en la optimización del espacio y la combinación de texturas claras para un look relajante y funcional.", 
                 project4Title: "Baño Principal de Lujo", project4Desc: "Renovación completa con revestimientos de gran formato, metales dorados y cabina de ducha espaciosa para una sensación de spa privado.", 
                 project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutras y mobiliario a medida para optimizar el descanso.", 
                 project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta harmoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
-                
                 interestedTitle: "¿Interesado en un Proyecto?", requestQuote: "Solicitar Cotización", imageAuthNote: "Todas as imágenes fueron autorizadas por el cliente.",
-                // Footer
                 footerTagline: "Excelencia en la Gestión, Ejecución Impecable.", developerSignature: "Desarrollado por Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> MCM Services Pro Solutions. Todos los derechos reservados.', footer_location: 'Miami, FL', 'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade',
             }
         };
@@ -751,11 +782,7 @@
                     } else if (key === 'copyrightText') {
                         let text = translation.replace('<span id="currentYear"></span>', document.getElementById('currentYear').outerHTML);
                         el.innerHTML = text;
-                    } else if (key.includes('NameLabel') || key.includes('CityLabel')) { 
-                        // Permite <strong> para negrito
-                        el.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
                     } else { 
-                        // Use innerHTML para que o negrito (<strong>) funcione no HTML estático traduzido
                         el.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
                     }
                 }
@@ -780,7 +807,17 @@
             document.documentElement.lang = lang;
         }
 
+        // Efeito Scroll do Header
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { 
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
+        // CORREÇÃO DO MENU HAMBÚRGUER
         const initHamburger = () => {
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const navMenu = document.getElementById('mainNavigation'); 
@@ -793,18 +830,14 @@
                     document.body.classList.toggle('menu-open', isMenuOpen);
                 });
                 
-                // Fecha o menu quando um link é clicado (para navegação em páginas longas)
                 navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        // Verifica se o clique é para uma âncora na mesma página ou para o próprio portfolio
-                        const href = link.getAttribute('href');
-                        if (href.startsWith('index.html#') || href === 'portfolio.html') {
-                            if (window.innerWidth <= 1000) {
-                                navMenu.classList.remove('is-open');
-                                hamburgerBtn.classList.remove('is-open');
-                                hamburgerBtn.setAttribute('aria-expanded', false);
-                                document.body.classList.remove('menu-open');
-                            }
+                    link.addEventListener('click', () => {
+                        // Fecha o menu sempre que um link é clicado no mobile
+                        if (window.innerWidth <= 1000) {
+                            navMenu.classList.remove('is-open');
+                            hamburgerBtn.classList.remove('is-open');
+                            hamburgerBtn.setAttribute('aria-expanded', false);
+                            document.body.classList.remove('menu-open');
                         }
                     });
                 });
@@ -821,6 +854,10 @@
             document.querySelector('a[href="portfolio.html"]').classList.add('active'); 
 
             initHamburger();
+            
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            }
         });
     </script>
 </body>

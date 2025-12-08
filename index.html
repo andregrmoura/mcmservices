@@ -42,7 +42,7 @@
     }
 
     /* ====================================
-    HEADER PREMIUM (Mantido)
+    HEADER PREMIUM (Ajustado o min-height e o Logo)
     ====================================
     */
     header {
@@ -54,7 +54,7 @@
       top: 0;
       left: 0;
       z-index: 100;
-      min-height: 80px; 
+      min-height: 85px; /* UNIFICADO: Era 80px */
       transition: background 0.3s ease, box-shadow 0.3s ease;
     }
 
@@ -78,16 +78,16 @@
         display: flex !important;
         align-items: center;
         cursor: default;
-        width: 230px; 
-        height: 75px; 
+        width: 255px; /* UNIFICADO: Era 230px */
+        height: 85px; /* UNIFICADO: Era 75px */
         margin: 0;
         padding: 0; 
         justify-content: flex-start;
         flex-shrink: 0;
     }
     .logo-link img {
-        height: 75px !important; 
-        width: 230px !important; 
+        height: 85px !important; /* UNIFICADO: Era 75px */
+        width: 255px !important; /* UNIFICADO: Era 230px */
         object-fit: contain;
         transition: height 0.3s ease;
     }
@@ -229,7 +229,7 @@
     }
 
     /* ====================================
-    RESPONSIVENESS (Mantido)
+    RESPONSIVENESS (Ajustado o Logo Mobile)
     ====================================
     */
     @media (max-width: 1000px) {
@@ -238,14 +238,14 @@
 
         /* Ajuste do tamanho da Logo para Mobile */
         .logo-link {
-            width: 170px; 
-            height: 55px; 
+            width: 180px; /* UNIFICADO: Era 170px */
+            height: 60px; /* UNIFICADO: Era 55px */
             margin: 0;
             order: 1;
         }
         .logo-link img {
-            height: 55px !important; 
-            width: 170px !important;
+            height: 60px !important; /* UNIFICADO: Era 55px */
+            width: 180px !important; /* UNIFICADO: Era 170px */
         }
         
         /* Resto do menu mobile (Mantido) */
@@ -465,7 +465,7 @@
 
 
     /* ===============================
-       SECTION SERVICES (FUNDO DE MÁRMORE COM DEGRADÊ)
+       SECTION SERVICES (FUNDO DE TIJOLO COM DEGRADÊ) - MANTIDO
     ================================ */
     #services {
         background-image: url('images/tijolo_bg.jpeg'); 
@@ -1256,7 +1256,7 @@ const translations = {
         'services-title': 'Nuestros Servicios de Gestión',
         'service1-title': 'Iniciación y Alcance', 'service1-text': 'Definimos claramente el **alcance**, estableciendo **metas** y objetivos medibles. Creamos la documentación inicial, identificamos a los stakeholders y estructuramos el plan de trabajo para una alineación total desde el inicio.',
         'service2-title': 'Cronogramas y Tiempo', 'service2-text': 'Desarrollamos cronogramas detallados y realistas (Gantt/PERT). Optimizamos la asignación de **recursos** (equipo, materiales, presupuesto) para mantener el proyecto a tiempo y maximizar la eficiencia.',
-        'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **risgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
+        'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **riesgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
         'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantenemos **comunicación** transparente y constante con todos los involucrados. Preparamos informes de estado claros e gestionamos las expectativas de las **partes interesadas** para garantizar la satisfacción y colaboración continuas.',
         'service5-title': 'Presupuesto y Costos', 'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caixa e utilizamos técnicas de Valor Ganado (EVA) para asegurar que o projeto se complete dentro de las restricciones financieras.',
         'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lecciones aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
