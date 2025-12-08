@@ -14,7 +14,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+  
   <style>
 
     /* BASE AND UTILITIES */
@@ -42,20 +42,28 @@
     }
 
     /* ====================================
-    HEADER (COPIADO DO LOGIN.HTML)
+    HEADER PREMIUM (Mantido)
     ====================================
     */
     header {
       width: 100%;
-      padding: 5px 25px;
-      background: #FFF;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
+      padding: 10px 25px;
+      background: rgba(255, 255, 255, 0);
+      box-shadow: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       z-index: 100;
-      /* AJUSTADO: Altura reduzida como no login.html */
       min-height: 80px; 
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
 
+    /* ESTILO DO HEADER AO ROLAR */
+    header.scrolled {
+        background: #FFF;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
     .header-container {
       max-width: 1300px;
       margin: auto;
@@ -70,19 +78,18 @@
         display: flex !important;
         align-items: center;
         cursor: default;
-        /* AJUSTADO: Tamanho reduzido como no login.html */
-        width: 255px; 
-        height: 85px; 
+        width: 230px; 
+        height: 75px; 
         margin: 0;
         padding: 0; 
         justify-content: flex-start;
         flex-shrink: 0;
     }
     .logo-link img {
-        /* AJUSTADO: Tamanho reduzido como no login.html */
-        height: 85px !important; 
-        width: 255px !important; 
+        height: 75px !important; 
+        width: 230px !important; 
         object-fit: contain;
+        transition: height 0.3s ease;
     }
 
     /* Centralizar menu no espaço restante */
@@ -95,18 +102,24 @@
     nav ul {
       list-style: none;
       display: flex;
-      gap: 40px;
+      gap: 50px;
       padding: 0;
       margin: 0; 
     }
 
     nav ul a {
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
+      color: #FFF; 
+      font-weight: 400;
       position: relative;
       padding-bottom: 4px;
       transition: .3s;
+    }
+
+    /* TEXTO DO MENU NO ESTADO ROLADO */
+    header.scrolled nav ul a, 
+    header.scrolled .header-right a {
+        color: #333;
     }
 
     nav ul a:hover, nav ul a.active {
@@ -135,42 +148,39 @@
       flex-shrink: 0;
     }
     
-    /* ESTILOS DO BOTÃO CLIENT LOGIN */
+    /* ESTILOS DO BOTÃO CLIENT LOGIN (Discreto - Outline) */
     .client-login-btn {
         padding: 8px 15px;
-        border: 1px solid #333; 
+        border: 1px solid #FFF;
+        color: #FFF;
         border-radius: 8px;
-        color: #333;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 500;
         display: flex;
         align-items: center;
         gap: 6px;
         transition: .3s;
         white-space: nowrap;
     }
+
+    header.scrolled .client-login-btn {
+        border-color: #333;
+        color: #333;
+    }
+
     .client-login-btn i {
         color: #C7A96B; 
     }
     .client-login-btn:hover {
         background: #C7A96B;
-        color: #333;
+        color: #333 !important;
         border-color: #C7A96B;
     }
     .client-login-btn:hover i {
         color: #333;
     }
 
-    /* REMOVIDO: Estilos do Telefone */
-    .header-phone {
-        display: none; 
-    }
-
     /* Language Buttons */
-    .lang-switcher {
-        display: flex;
-        gap: 5px;
-    }
     .lang-switcher img {
       width: 28px;
       height: 18px;
@@ -187,7 +197,7 @@
       box-shadow: 0 0 6px rgba(199,169,107,0.7);
     }
     
-    /* HAMBURGER STYLES */
+    /* HAMBURGER STYLES (Ajustado para branco no topo) */
     .hamburger-btn { 
         display: none; 
         background: none; 
@@ -200,55 +210,51 @@
         display: block; 
         width: 25px; 
         height: 3px; 
-        background-color: #333; 
+        background-color: #FFF;
         margin: 5px 0; 
-        transition: transform 0.3s ease, opacity 0.3s ease; 
+        transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease; 
     }
+    
+    header.scrolled .hamburger-btn .hamburger-line {
+        background-color: #333;
+    }
+
     .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
     .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
     /* Regra para o switcher de idioma dentro do menu mobile */
     .mobile-nav-flags {
-        display: none; /* Escondido no desktop */
+        display: none;
     }
 
     /* ====================================
-    RESPONSIVENESS (COPIADO DO LOGIN.HTML)
+    RESPONSIVENESS (Mantido)
     ====================================
     */
     @media (max-width: 1000px) {
         
-        header {
-            min-height: 70px; /* Redução para 70px */
-        }
+        header { min-height: 70px; }
 
         /* Ajuste do tamanho da Logo para Mobile */
         .logo-link {
-            /* AJUSTADO para caber melhor na nova altura de 70px */
-            width: 180px; 
-            height: 60px; 
+            width: 170px; 
+            height: 55px; 
             margin: 0;
             order: 1;
-            justify-content: flex-start;
         }
         .logo-link img {
-            height: 60px !important; 
-            width: 180px !important;
-        }
-
-        .header-container {
-            padding: 5px 15px; 
+            height: 55px !important; 
+            width: 170px !important;
         }
         
-        /* Oculta o menu de desktop e mostra o hamburger */
+        /* Resto do menu mobile (Mantido) */
         nav {
             display: none; 
             order: 3; 
             width: 100%;
             margin-top: 15px;
             position: absolute; 
-            /* AJUSTADO: O menu móvel começa logo abaixo do novo cabeçalho (70px) */
             top: 70px; 
             left: 0; 
             background-color: #FFF; 
@@ -265,7 +271,10 @@
         nav ul { flex-direction: column; align-items: center; gap: 15px; }
         
         .hamburger-btn { display: block; margin: 0; }
-        /* Mostrar bandeiras no menu móvel */
+        .hamburger-btn .hamburger-line { background-color: #333 !important; }
+
+        nav ul a { color: #333 !important; }
+
         .mobile-nav-flags {
             display: flex;
             justify-content: center;
@@ -282,19 +291,14 @@
     }
     
     /* ===============================
-       HERO (Restante dos estilos não afetados)
+       HERO SECTION (Mantido)
     ================================ */
-    
-    /* ANIMATIONS */
-    @keyframes textSlideIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
-    @keyframes textSlideInFromRight { 0% { opacity: 0; transform: translateX(30px); } 100% { opacity: 1; transform: translateX(0); } }
-
-
     .hero-container {
       position: relative;
       width: 100%;
-      height: 80vh;
+      height: 100vh;
       overflow: hidden;
+      margin-top: 0;
     }
 
     .hero-slide {
@@ -304,13 +308,11 @@
       background-size: cover;
       background-position: center;
       opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+      transition: opacity 1.5s ease-in-out;
     }
 
     .hero-slide.active {
       opacity: 1;
-      transform: translateX(0);
       z-index: 2;
     }
 
@@ -318,7 +320,7 @@
       position:absolute;
       top:0; left:0;
       width:100%; height:100%;
-      background:rgba(0,0,0,0.35);
+      background:rgba(0,0,0,0.25);
       z-index:1;
     }
 
@@ -328,68 +330,55 @@
       left:50%;
       transform:translate(-50%, -50%);
       width:100%;
-      max-width:900px;
+      max-width:1100px;
       text-align:center;
       color: #FFF;
       z-index:3;
       padding: 20px;
     }
     
-    /* Inicializa elementos do hero como invisíveis */
-    .hero-slide .hero-content h1, 
-    .hero-slide .hero-content p, 
-    .hero-slide .hero-content button { 
-        opacity: 0; 
-    }
-
-    /* Dispara as animações quando o slide está ativo */
-    .hero-slide.active .hero-content h1 { 
-        animation: textSlideInFromRight 1.2s ease 0.2s forwards; 
-    }
-    .hero-slide.active .hero-content p { 
-        animation: textSlideIn 1.2s ease 0.4s forwards; 
-    }
-    .hero-slide.active .hero-content button { 
-        animation: textSlideIn 1.2s ease 0.6s forwards; 
-    }
-    /* FIM DAS REGRAS DE ANIMAÇÃO */
-    
     .hero-content h1 {
       font-family:'Playfair Display', serif;
-      font-size:3.4rem;
+      font-size:4.8rem;
       font-weight:400;
-      margin:0 0 20px 0;
+      margin:0 0 25px 0;
       text-shadow:0 3px 12px rgba(0,0,0,0.6);
+      animation: fadeIn 1.5s ease-in-out forwards;
     }
 
     .hero-content p {
-      font-size:1.2rem;
+      font-size:1.4rem;
       font-weight:300;
       line-height:1.5;
-      margin-bottom:40px;
+      margin-bottom:50px;
       text-shadow:0 3px 12px rgba(0,0,0,0.5);
+      animation: fadeIn 1.5s ease-in-out 0.3s forwards;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .hero-btn {
-      background:#C7A96B;
-      color:#333;
+      background: rgba(199, 169, 107, 0);
+      color: #FFF;
       padding:14px 40px;
       border-radius:8px;
-      border:none;
+      border: 2px solid #FFF;
       font-size:1.1rem;
-      font-weight:600;
+      font-weight:500;
       cursor:pointer;
       transition:.3s;
       box-shadow:0 4px 14px rgba(0,0,0,0.35);
     }
-
-    /* ALTERAÇÃO SOLICITADA: Cor do texto para branco no hover */
+    
     .hero-btn:hover {
-      background:#b9965e;
-      color:#FFF; /* CORRIGIDO: O texto agora fica branco */
+      background:#C7A96B;
+      color:#333;
+      border-color: #C7A96B; 
       transform:scale(1.03);
     }
-    /* FIM DA ALTERAÇÃO SOLICITADA */
 
     /* Slider nav dots */
     .hero-dots {
@@ -415,74 +404,148 @@
       background:#C7A96B;
       transform:scale(1.15);
     }
+    
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 3rem; 
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+        .hero-container {
+            height: 90vh;
+        }
+    }
 
     /* ===============================
-       SECTION STYLES
+       SECTION STYLES GERAIS
     ================================ */
     section {
-        /* PADRONIZADO E REDUZIDO: 40px de padding vertical */
-        padding: 40px 20px;
-        border-top: none; 
-    }
-    
-    /* Regras de Borda Estratégica para Separar Cores */
-    /* Aplica a borda sutil de 1px entre todas as seções (exceto a primeira) */
-    #about, #testimonials, #contact {
-        border-top: 1px solid #CCC; 
-    }
-    #services {
-        /* Remove a borda da primeira seção */
-        border-top: none;
-    }
-    
-    .section-light {
-        background: #F7F7F7;
-    }
-    .section-gray {
-        background: #EFEFEF;
+        padding: 80px 20px; /* Padding vertical padrão */
+        position: relative;
+        box-sizing: border-box;
     }
 
+    /* CORREÇÃO DO ESPAÇAMENTO NA SEÇÃO DE CONTATO */
+    #contact {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    
+    /* Aplicação de divisões nas seções */
+    #about, #testimonials, #contact {
+        border-top: 1px solid #DDD; 
+    }
+    #services {
+        border-top: none;
+    }
+
+    /* Correção Global dos Títulos */
     .section-title {
         font-family:'Playfair Display', serif;
-        font-size:2.6rem;
+        font-size:2.8rem;
         font-weight:400;
         color:#C7A96B;
-        text-align:center;
-        /* REDUZIDO O ESPAÇAMENTO INFERIOR DO TÍTULO */
-        margin:0 0 30px 0; 
+        text-align:center; 
+        margin:0 0 30px 0;
     }
+    /* CORREÇÃO DO SUBTÍTULO: Garante que o subtítulo de contato fique centralizado e reduz a margem */
     .section-subtitle {
-        max-width:650px;
+        max-width:750px;
         margin:auto;
-        text-align:center;
+        text-align:center; 
         color:#333;
-        line-height:1.7;
-        margin-bottom:30px; /* REDUZIDO */
+        line-height:1.8;
+        margin-bottom:30px;
     }
     .content-max-width {
         max-width:1200px;
         margin:auto;
     }
 
-    /* SERVICES CARDS */
+
+    /* ===============================
+       SECTION SERVICES (FUNDO DE MÁRMORE COM DEGRADÊ)
+    ================================ */
+    #services {
+        background-image: url('images/tijolo_bg.jpeg'); 
+        background-attachment: fixed; 
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative; 
+        color: #FFF;
+    }
+    
+    /* OVERLAY COM DEGRADÊ (Clareando das Laterais para o Centro) */
+    #services::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 1;
+        /* Degradê que vai de semi-transparente (lados) para escuro (centro) */
+        background-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.8) 30%,
+            rgba(0, 0, 0, 0.8) 70%,
+            rgba(0, 0, 0, 0.4) 100%
+        );
+    }
+    
+    /* Garante que o conteúdo fique acima do overlay */
+    #services > .content-max-width {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Ajusta o título da seção para a cor primária (dourada) */
+    #services .section-title {
+        color: #C7A96B; 
+    }
+    
+    /* SERVICES CARDS (CORREÇÃO CRÍTICA DO GAP) */
     .service-cards-container {
         display:flex;
         flex-wrap:wrap;
         justify-content:center;
-        gap:35px;
+        /* Margem negativa para compensar a margem lateral dos cartões */
+        margin: 0 -17.5px; 
     }
 
+    /* Ajuste de card para fundo escuro */
     .card-style {
-        background:white;
-        width:330px;
+        background: rgba(255, 255, 255, 0.95);
+        
+        /* SOLUÇÃO DE FORÇA PARA O GAP HORIZONTAL */
+        /* width: calc(33.333% - 35px); /* Calcula o espaço para 3 colunas e subtrai o gap total */
+        width: 330px; /* Mantém o tamanho fixo, mas aplica margem forçada */
+        margin: 0 17.5px 35px 17.5px; /* 17.5px de margem lateral = 35px de espaçamento total */
+        
         border-radius:0;
         overflow:hidden;
-        box-shadow:0 6px 18px rgba(0,0,0,0.12);
+        box-shadow:0 6px 18px rgba(0,0,0,0.3);
         transition:.3s;
     }
+    
+    /* Responsividade para 2 colunas */
+    @media (max-width: 1100px) {
+        .card-style {
+            /* Width para 2 colunas com espaço entre elas */
+            width: calc(50% - 35px); 
+        }
+    }
+    /* Responsividade para 1 coluna */
+    @media (max-width: 700px) {
+        .card-style {
+            /* Full width para 1 coluna */
+            width: calc(100% - 35px); 
+        }
+    }
+
     .card-style:hover {
         transform: translateY(-5px);
-        box-shadow:0 8px 20px rgba(0,0,0,0.2);
+        box-shadow:0 8px 20px rgba(0,0,0,0.5);
     }
 
     .card-style img {
@@ -493,6 +556,7 @@
     .card-content {
         padding:25px;
     }
+    /* Ajusta o conteúdo do card para cor escura */
     .card-content h3 {
         font-family:'Playfair Display', serif; 
         color:#C7A96B; 
@@ -504,15 +568,18 @@
         margin: 0;
     }
 
-    /* ABOUT SECTION */
+
+    /* ===============================
+       ABOUT SECTION (Mantido)
+    ================================ */
     .about-content {
         max-width:1100px;
         margin:auto;
         display:flex;
         flex-wrap:wrap;
+        justify-content:center;
         gap:35px;
         align-items:flex-start; 
-        justify-content:center;
     }
     .about-content img {
         width:250px;
@@ -524,13 +591,14 @@
     .about-text {
         max-width: 650px;
     }
+    /* Garante que o título interno do about-text se alinhe à esquerda */
     .about-text h2 {
         font-family:'Playfair Display', serif;
         font-size:2.2rem;
         font-weight:400;
         color:#C7A96B;
         margin:0 0 20px 0;
-        text-align:left;
+        text-align:left !important; 
     }
     .about-text p {
         text-align:left;
@@ -542,7 +610,6 @@
         margin-top:20px;
     }
     
-    /* Regra geral para imagens de certificação (OSHA) */
     .certifications span, .certifications img {
         width:50px;
         height:50px;
@@ -551,22 +618,17 @@
         background-color: #FFF; 
         overflow: hidden;
         display: block;
-        
-        /* Padrão: usa contain e padding para OSHA não ser cortado */
         object-fit: contain; 
         padding: 3px; 
     }
 
-    /* CORREÇÃO ESPECÍFICA NCCER */
     #nccer-logo {
-        /* MUDANÇA CRÍTICA: Força o preenchimento total e remove padding para NCCER */
         object-fit: cover; 
         padding: 0; 
     }
     
-    /* Span PM (Ajustado para o laranja da sua imagem de referência) */
     .certifications span {
-        background: #E88020; /* Cor Laranja */
+        background: #E88020; 
         color: #FFF; 
         font-weight:700;
         display:flex;
@@ -577,14 +639,17 @@
         border-color: #E88020; 
     }
 
-    /* TESTIMONIALS */
+    /* ===============================
+       TESTIMONIALS (CORRIGIDO GAP)
+    ================================ */
     .testimonial-card-container {
         max-width:1100px;
         margin:auto;
         display:flex;
         flex-wrap:wrap;
-        gap:30px;
         justify-content:center;
+        /* CORREÇÃO DO GAP ENTRE OS CARTÕES */
+        gap: 30px;
     }
     .testimonial-card {
         background:#FFF;
@@ -594,18 +659,38 @@
         box-shadow:0 4px 14px rgba(0,0,0,0.12);
         text-align:left;
         transition: transform .3s;
+        position: relative;
     }
     .testimonial-card:hover {
         transform: translateY(-3px);
     }
+    /* Aspas decorativas para toque premium */
+    .testimonial-card::before {
+        content: '\201C';
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        color: rgba(199, 169, 107, 0.4);
+        position: absolute;
+        top: -15px;
+        left: 10px;
+        z-index: 0;
+    }
     .testimonial-card p {
         margin:0 0 10px 0;
-        line-height: 1.7;
+        line-height: 1.8;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #333;
+        position: relative;
+        z-index: 1;
     }
     .testimonial-author {
         color:#C7A96B; 
-        font-weight:700; 
-        margin:0;
+        font-weight:600;
+        font-size: 1.05rem;
+        margin:15px 0 0 0;
+        text-align: left;
+        display: block;
     }
 
     /* CONTACT FORM */
@@ -644,10 +729,9 @@
         color:#FFF;
     }
     
-    /* CORREÇÃO DO ALINHAMENTO DO BOTÃO WHATSAPP */
     .whatsapp-btn-container {
         max-width: 600px; 
-        margin: 30px auto 0; 
+        margin: 20px auto 0;
         text-align: center; 
     }
 
@@ -682,7 +766,6 @@
         margin: 0 auto 15px; 
         text-align: center;
     }
-    /* ATUALIZADO para nova logo e novo tamanho */
     .footer-logo-container img {
         height: 60px; 
         width: 180px; 
@@ -741,7 +824,6 @@
         font-size: 1rem;
     }
 
-    /* Linha de Direitos Autorais e Assinatura */
     .footer-bottom-line {
         padding-top: 20px;
         border-top: 1px solid #EEE;
@@ -807,14 +889,14 @@
 <div class="hero-container">
 
   <div class="hero-slide active" 
-       style="background-image:url('images/hero1.jpeg');">
+       style="background-image:url('images/bath_bg.jpg');">
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <h1 data-translate="hero1-title">Residential Project Management Excellence</h1>
-      <p data-translate="hero1-subtitle">Premium coordination and complete supervision for high-end homeowners.</p>
+      <h1 data-translate="hero1-title">Project Management for High-End Homes</h1>
+      <p data-translate="hero1-subtitle">From concept to completion — seamless coordination and quality control.</p>
       <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Your Exclusive Project
+        Request Exclusive Project
       </button>
     </div>
   </div>
@@ -824,10 +906,10 @@
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <h1 data-translate="hero2-title">High-End Construction Oversight</h1>
-      <p data-translate="hero2-subtitle">Quality control, execution planning, and flawless delivery from start to finish.</p>
+      <h1 data-translate="hero2-title">Premium Residential Construction Oversight</h1>
+      <p data-translate="hero2-subtitle">Flawless execution delivered with transparency and strategic planning.</p>
       <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Your Exclusive Project
+        Request Exclusive Project
       </button>
     </div>
   </div>
@@ -837,10 +919,10 @@
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <h1 data-translate="hero3-title">Smart Design Meets Professional Management</h1>
-      <p data-translate="hero3-subtitle">We turn vision into reality through structured planning and precise execution.</p>
+      <h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
+      <p data-translate="hero3-subtitle">Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.</p>
       <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Your Exclusive Project
+        Request Exclusive Project
       </button>
     </div>
   </div>
@@ -854,7 +936,7 @@
 </div>
 
 
-<section id="services" class="section-gray">
+<section id="services">
   <div class="content-max-width">
     
     <h2 class="section-title" data-translate="services-title">Our Project Management Services</h2>
@@ -922,7 +1004,7 @@
       <h2 class="section-title" style="text-align:left; margin-bottom: 20px;" data-translate="about-title">Why Choose Us</h2>
 
       <p style="text-align:left;" data-translate="about-p1">
-        At **MCM Services**, we specialize in **high-end residential project management**, construction oversight and detailed coordination from planning to final delivery.
+        We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.
       </p>
 
       <p style="text-align:left;" data-translate="about-p2">
@@ -982,7 +1064,7 @@
   
   <h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Request a Project Estimate</h2>
 
-  <p class="section-subtitle" data-translate="contact-subtitle">
+  <p class="section-subtitle" data-translate="contact-subtitle" style="text-align: center;">
     Start transforming your project today. Excellence in management from start to finish.
   </p>
 
@@ -1075,238 +1157,145 @@ document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 
 // ===================================
-// 1. OBJETO DE TRADUÇÃO (FINAL E CORRIGIDO)
+// 1. OBJETO DE TRADUÇÃO (Mantido)
 // ===================================
 const translations = {
     'en': {
-        // Header/Nav - 'About' no menu
-        'nav-home': 'Home',
-        'nav-about': 'About', 
-        'nav-contact': 'Contact',
-        'nav-gallery': 'Gallery',
-        'client-login': 'Client Login',
-
-        // Hero 
-        'hero1-title': 'Residential Project Management Excellence',
-        'hero1-subtitle': 'Premium coordination and complete supervision for high-end homeowners.',
-        'hero-btn': 'Request Your Exclusive Project',
-        'hero2-title': 'High-End Construction Oversight',
-        'hero2-subtitle': 'Quality control, execution planning, and flawless delivery from start to finish.',
-        'hero3-title': 'Smart Design Meets Professional Management',
-        'hero3-subtitle': 'We turn vision into reality through structured planning and precise execution.',
-
-        // Services
-        'services-title': 'Our Project Management Services',
-        'service1-title': 'Initiation & Scope',
-        'service1-text': 'We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.',
-        'service2-title': 'Schedules & Time Management',
-        'service2-text': 'We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.',
-        'service3-title': 'Risk & Quality',
-        'service3-text': 'We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.',
-        'service4-title': 'Stakeholders',
-        'service4-text': 'We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.',
-        'service5-title': 'Budget & Cost Control',
-        'service5-text': 'We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.',
-        'service6-title': 'Final Delivery',
-        'service6-text': 'We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.',
-
-        // About - 'Why Choose Us' no corpo da seção
+        // Hero Titles (Premium)
+        'hero1-title': 'Project Management for High-End Homes',
+        'hero1-subtitle': 'From concept to completion — seamless coordination and quality control.',
+        'hero2-title': 'Premium Residential Construction Oversight',
+        'hero2-subtitle': 'Flawless execution delivered with transparency and strategic planning.',
+        'hero3-title': 'Structure and Precision for Your Vision',
+        'hero3-subtitle': 'Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.',
+        'hero-btn': 'Request Exclusive Project',
+        
+        // About Section (Premium)
         'about-title': 'Why Choose Us', 
-        'about-p1': 'At **MCM Services**, we specialize in **high-end residential project management**, construction oversight and detailed coordination from planning to final delivery.',
+        'about-p1': 'We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.',
         'about-p2': 'Our approach is focused on structure, **communication** and **risk control**, offering homeowners peace of mind while every phase of the project is managed with precision.',
         'about-p3': 'Our founder holds **qualifications in Project Management from FIU (Florida International University)**, and important **certifications** in **OSHA** and **NCCER**, reinforcing our commitment to safety, quality, and professional standards.',
 
-        // Testimonials
+
+        // Default (Mantido)
+        'nav-home': 'Home', 'nav-about': 'About', 'nav-contact': 'Contact', 'nav-gallery': 'Gallery', 'client-login': 'Client Login',
+        'services-title': 'Our Project Management Services',
+        'service1-title': 'Initiation & Scope', 'service1-text': 'We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.',
+        'service2-title': 'Schedules & Time Management', 'service2-text': 'We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.',
+        'service3-title': 'Risk & Quality', 'service3-text': 'We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.',
+        'service4-title': 'Stakeholders', 'service4-text': 'We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.',
+        'service5-title': 'Budget & Cost Control', 'service5-text': 'We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.',
+        'service6-title': 'Final Delivery', 'service6-text': 'We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.',
         'testimonials-title': 'Client Testimonials',
         'testimonial1-text': 'MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.',
         'testimonial2-text': 'They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.',
         'testimonial3-text': 'Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.',
-
-        // Contact
-        'contact-title': 'Request a Project Estimate',
-        'contact-subtitle': 'Start transforming your project today. Excellence in management from start to finish.',
-        'contact-input-name': 'Your Name',
-        'contact-input-email': 'Your Email',
-        'contact-input-msg': 'Describe your project, timeline, and location',
-        'contact-btn-submit': 'Request Estimate',
-        'contact-btn-whatsapp': 'Contact via WhatsApp',
-
-        // Footer
-        'footer-tagline': 'Management Excellence, Flawless Execution.',
-        'footer-location': 'Miami, FL', 
-        'footer-nav': 'Navigation',
-        'footer-contact': 'Contact & Connect',
-        'footer-legal': 'Legal',
-        'footer-terms': 'Terms of Use', 
-        'footer-privacy': 'Privacy Policy', 
-        'footer-dev': 'Developed by Andre Moura',
+        'contact-title': 'Request a Project Estimate', 'contact-subtitle': 'Start transforming your project today. Excellence in management from start to finish.',
+        'contact-input-name': 'Your Name', 'contact-input-email': 'Your Email', 'contact-input-msg': 'Describe your project, timeline, and location',
+        'contact-btn-submit': 'Request Estimate', 'contact-btn-whatsapp': 'Contact via WhatsApp',
+        'footer-tagline': 'Management Excellence, Flawless Execution.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 
+        'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy', 'footer-dev': 'Developed by Andre Moura',
         'footer-copy': 'MCM Services Pro Solutions. All rights reserved.',
     },
     'pt': {
-        // Header/Nav - 'Sobre' no menu
-        'nav-home': 'Início',
-        'nav-about': 'Sobre', 
-        'nav-contact': 'Contato',
-        'nav-gallery': 'Galeria',
-        'client-login': 'Login do Cliente',
-
-        // Hero 
-        'hero1-title': 'Excelência em Gerenciamento de Projetos Residenciais',
-        'hero1-subtitle': 'Coordenação premium e supervisão completa para proprietários de alto padrão.',
-        'hero-btn': 'Solicite Seu Projeto Exclusivo',
-        'hero2-title': 'Supervisão de Construção de Alto Nível',
-        'hero2-subtitle': 'Controle de qualidade, planejamento de execução e entrega impecável do início ao fim.',
-        'hero3-title': 'Design Inteligente com Gerenciamento Profissional',
-        'hero3-subtitle': 'Transformamos a visão em realidade através de planejamento estruturado e execução precisa.',
-
-        // Services
-        'services-title': 'Nossos Serviços de Gerenciamento',
-        'service1-title': 'Iniciação e Escopo',
-        'service1-text': 'Definimos claramente o **escopo**, estabelecendo **metas** e objetivos mensuráveis. Criamos a documentação inicial, identificamos stakeholders e estruturamos o plano de trabalho para alinhamento total desde o início.',
-        'service2-title': 'Cronograma e Tempo',
-        'service2-text': 'Desenvolvemos cronogramas detalhados e realistas (Gantt/PERT). Otimizamos a alocação de **recursos** (equipe, materiais, orçamento) para manter o projeto no prazo e maximizar a eficiência.',
-        'service3-title': 'Risco e Qualidade',
-        'service3-text': 'Realizamos identificação, análise e monitoramento proativos de **riscos** para mitigar impactos. Implementamos um rigoroso controle de **qualidade** para garantir que todas as entregas atendam aos padrões definidos.',
-        'service4-title': 'Partes Interessadas (Stakeholders)',
-        'service4-text': 'Mantemos **comunicação** transparente e constante com todos os envolvidos. Preparamos relatórios de status claros e gerenciamos as expectativas das **partes interessadas** para garantir satisfação e colaboração contínuas.',
-        'service5-title': 'Orçamento e Custos',
-        'service5-text': 'Gerenciamos o **orçamento** do projeto com precisão. Monitoramos custos, controlamos o fluxo de caixa e usamos técnicas de Valor Agregado (EVA) para garantir que o projeto seja concluído dentro das restrições financeiras.',
-        'service6-title': 'Entrega Final',
-        'service6-text': 'Lidamos com a entrega final, aceitação formal do cliente e **encerramento** administrativo. Coletamos **lições aprendidas** para refinar processos e garantir a melhoria contínua em projetos futuros.',
-
-        // About - 'Por Que Nos Escolher' no corpo da seção
+        // Hero Titles (Premium)
+        'hero1-title': 'Gerenciamento de Projetos para Residências de Alto Padrão',
+        'hero1-subtitle': 'Do conceito à conclusão — coordenação e controle de qualidade impecáveis.',
+        'hero2-title': 'Supervisão Premium de Construção Residencial',
+        'hero2-subtitle': 'Execução impecável entregue com transparência e planejamento estratégico.',
+        'hero3-title': 'Estrutura e Precisão para a Sua Visão',
+        'hero3-subtitle': 'Mitigação de riscos, controle de orçamento e acabamento de alta qualidade, garantidos.',
+        'hero-btn': 'Solicitar Projeto Exclusivo',
+        
+        // About Section (Premium)
         'about-title': 'Por Que Nos Escolher', 
-        'about-p1': 'Na **MCM Services**, somos especializados em **gerenciamento de projetos residenciais de alto padrão**, supervisão de construção e coordenação detalhada, do planejamento à entrega final.',
+        'about-p1': 'Gerenciamos cada etapa do seu projeto residencial com precisão, transparência e alta qualidade de execução — garantindo que sua casa receba a expertise que merece.',
         'about-p2': 'Nossa abordagem foca em estrutura, **comunicação** e **controle de risco**, oferecendo tranquilidade aos proprietários enquanto cada fase do projeto é gerenciada com precisão.',
         'about-p3': 'Nosso fundador possui **qualificação em Gerenciamento de Projetos pela FIU (Universidade Internacional da Florida)**, e importantes **certificações** em **OSHA** e **NCCER**, o que reforça nosso compromisso com segurança, qualidade e padrões profissionais.',
 
-        // Testimonials
+        // Default (Mantido)
+        'nav-home': 'Início', 'nav-about': 'Sobre', 'nav-contact': 'Contato', 'nav-gallery': 'Galeria', 'client-login': 'Login do Cliente',
+        'services-title': 'Nossos Serviços de Gerenciamento',
+        'service1-title': 'Iniciação e Escopo', 'service1-text': 'Definimos claramente o **escopo**, estabelecendo **metas** e objetivos mensuráveis. Criamos a documentação inicial, identificamos stakeholders e estruturamos o plano de trabalho para alinhamento total desde o início.',
+        'service2-title': 'Cronograma e Tempo', 'service2-text': 'Desenvolvemos cronogramas detalhados e realistas (Gantt/PERT). Otimizamos a alocação de **recursos** (equipe, materiais, orçamento) para manter o projeto no prazo e maximizar a eficiência.',
+        'service3-title': 'Risco e Qualidade', 'service3-text': 'Realizamos identificação, análise e monitoramento proativos de **riscos** para mitigar impactos. Implementamos um rigoroso controle de **qualidade** para garantir que todas as entregas atendam aos padrões definidos.',
+        'service4-title': 'Partes Interessadas (Stakeholders)', 'service4-text': 'Mantemos **comunicação** transparente e constante com todos os envolvidos. Preparamos relatórios de status claros e gerenciamos as expectativas das **partes interessadas** para garantir satisfação e colaboração contínuas.',
+        'service5-title': 'Orçamento e Custos', 'service5-text': 'Gerenciamos o **orçamento** do projeto com precisão. Monitoramos custos, controlamos o fluxo de caixa e usamos técnicas de Valor Agregado (EVA) para garantir que o projeto seja concluído dentro das restrições financeiras.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Lidamos com a entrega final, aceitação formal do cliente e **encerramento** administrativo. Coletamos **lições aprendidas** para refinar processos e garantir a melhoria contínua em projetos futuros.',
         'testimonials-title': 'Depoimentos de Clientes',
         'testimonial1-text': 'A MCM Services entregou um gerenciamento excepcional. O **cronograma** foi preciso e o **controle de orçamento** manteve tudo tranquilo. Profissionalismo total.',
         'testimonial2-text': 'Eles coordenaram nossa reforma com precisão. Excelente **comunicação**, **controle de risco** e resultado final de alta qualidade.',
         'testimonial3-text': 'Coordenação de **stakeholders** excepcional em um projeto complexo de design de interiores. Serviço de alto padrão do início ao fim.',
-
-        // Contact
-        'contact-title': 'Solicite um Orçamento de Projeto',
-        'contact-subtitle': 'Comece a transformar seu projeto hoje. Excelência em gestão do início ao fim.',
-        'contact-input-name': 'Seu Nome',
-        'contact-input-email': 'Seu E-mail',
-        'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
-        'contact-btn-submit': 'Solicitar Orçamento',
-        'contact-btn-whatsapp': 'Contato via WhatsApp',
-
-        // Footer
-        'footer-tagline': 'Excelência em Gestão, Execução Impecável.',
-        'footer-location': 'Miami, FL', 
-        'footer-nav': 'Navegação',
-        'footer-contact': 'Contato e Conexão',
-        'footer-legal': 'Legal',
-        'footer-terms': 'Termos de Uso', 
-        'footer-privacy': 'Política de Privacidade', 
-        'footer-dev': 'Desenvolvido por Andre Moura',
+        'contact-title': 'Solicite um Orçamento de Projeto', 'contact-subtitle': 'Comece a transformar seu projeto hoje. Excelência em gestão do início ao fim.',
+        'contact-input-name': 'Seu Nome', 'contact-input-email': 'Seu E-mail', 'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
+        'contact-btn-submit': 'Solicitar Orçamento', 'contact-btn-whatsapp': 'Contato via WhatsApp',
+        'footer-tagline': 'Excelência em Gestão, Execução Impecável.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 
+        'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desenvolvido por Andre Moura',
         'footer-copy': 'MCM Services Pro Solutions. Todos os direitos reservados.',
     },
     'es': {
-        // Header/Nav - 'Nosotros' no menu
-        'nav-home': 'Inicio',
-        'nav-about': 'Nosotros', 
-        'nav-contact': 'Contacto',
-        'nav-gallery': 'Galería',
-        'client-login': 'Acceso Clientes',
-
-        // Hero 
-        'hero1-title': 'Excelencia en Gestión de Proyectos Residenciales',
-        'hero1-subtitle': 'Coordinación premium y supervisión completa para propietarios de alta gama.',
-        'hero-btn': 'Solicite Su Proyecto Exclusivo',
-        'hero2-title': 'Supervisión de Construcción de Alto Nivel',
-        'hero2-subtitle': 'Control de calidad, ejecución planning, y flawless delivery from start to finish.',
-        'hero3-title': 'Diseño Inteligente con Gestión Profesional',
-        'hero3-subtitle': 'Convertimos la visión en realidad a través de una planificación estructurada y una ejecución precisa.',
-
-        // Services
-        'services-title': 'Nuestros Servicios de Gestión',
-        'service1-title': 'Iniciación y Alcance',
-        'service1-text': 'Definimos claramente el **alcance**, estableciendo **metas** y objetivos medibles. Creamos la documentación inicial, identificamos a los stakeholders y estructuramos el plan de trabajo para una alineación total desde el inicio.',
-        'service2-title': 'Cronogramas y Tiempo',
-        'service2-text': 'Desarrollamos cronogramas detallados y realistas (Gantt/PERT). Optimizamos la asignación de **recursos** (equipo, materiales, presupuesto) para mantener el proyecto a tiempo y maximizar la eficiencia.',
-        'service3-title': 'Riesgo y Calidad',
-        'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **riesgos** para mitigar impactos. Implementamos un rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
-        'service4-title': 'Partes Interesadas (Stakeholders)',
-        'service4-text': 'Mantenemos **comunicación** transparente y constante con todos los involucrados. Preparamos informes de estado claros y gestionamos las expectativas de las **partes interesadas** para garantizar la satisfacción y colaboración continuas.',
-        'service5-title': 'Presupuesto y Costos',
-        'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caja y utilizamos técnicas de Valor Ganado (EVA) para asegurar que el proyecto se complete dentro de las restricciones financieras.',
-        'service6-title': 'Entrega Final',
-        'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lecciones aprendidas** para refinar procesos y garantizar la mejora continua en proyectos futuros.',
-
-        // About - 'Por Qué Elegirnos' no corpo da seção
+        // Hero Titles (Premium)
+        'hero1-title': 'Gestión de Proyectos para Residencias de Alta Gama',
+        'hero1-subtitle': 'Desde el concepto hasta la finalización — coordinación y control de calidad impecables.',
+        'hero2-title': 'Supervisión Premium de Construcción Residencial',
+        'hero2-subtitle': 'Ejecución impecable entregada con transparencia y planificación estratégica.',
+        'hero3-title': 'Estrutura y Precisión para Su Visión',
+        'hero3-subtitle': 'Mitigación de riesgos, control de presupuesto y artesanía de alta calidad, garantizados.',
+        'hero-btn': 'Solicitar Proyecto Exclusivo',
+        
+        // About Section (Premium)
         'about-title': 'Por Qué Elegirnos', 
-        'about-p1': 'En **MCM Services**, nos especializamos en **gestión de proyectos residenciales de alta gama**, supervisión de construcción y coordinación detallada, desde la planificación hasta la entrega final.',
-        'about-p2': 'Nuestro enfoque se centra en la estructura, la **comunicación** y el **control de riesgos**, ofreciendo tranquilidad a los propietarios mientras cada fase del proyecto se gestiona con precisión.',
-        'about-p3': 'Nuestro fundador posee **calificación en Gestión de Proyectos por la FIU (Universidad Internacional de Florida)**, y importantes **certificaciones** en **OSHA** y **NCCER**, lo que refuerza nuestro compromiso con la seguridad, la calidad y los estándares profesionales.',
+        'about-p1': 'Gestionamos cada paso de su proyecto residencial con precisión, transparencia y alta calidad de ejecución, garantizando que su hogar reciba la experiencia que merece.',
+        'about-p2': 'Nuestro enfoque se centra en la estructura, la **comunicação** y el **control de riesgos**, ofreciendo tranquilidad a los propietarios mientras cada fase del proyecto se gestiona con precisión.',
+        'about-p3': 'Nuestro fundador posee **calificación en Gestión de Proyectos por la FIU (Universidad Internacional de Florida)**, y importantes **certificaciones** en **OSHA** y **NCCER**, lo que refuerza nuestro compromiso con seguridad, calidad y estándares profesionales.',
 
-        // Testimonials
+        // Default (Mantido)
+        'nav-home': 'Inicio', 'nav-about': 'Nosotros', 'nav-contact': 'Contacto', 'nav-gallery': 'Galería', 'client-login': 'Acceso Clientes',
+        'services-title': 'Nuestros Servicios de Gestión',
+        'service1-title': 'Iniciación y Alcance', 'service1-text': 'Definimos claramente el **alcance**, estableciendo **metas** y objetivos medibles. Creamos la documentación inicial, identificamos a los stakeholders y estructuramos el plan de trabajo para una alineación total desde el inicio.',
+        'service2-title': 'Cronogramas y Tiempo', 'service2-text': 'Desarrollamos cronogramas detallados y realistas (Gantt/PERT). Optimizamos la asignación de **recursos** (equipo, materiales, presupuesto) para mantener el proyecto a tiempo y maximizar la eficiencia.',
+        'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **risgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
+        'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantenemos **comunicación** transparente y constante con todos los involucrados. Preparamos informes de estado claros e gestionamos las expectativas de las **partes interesadas** para garantizar la satisfacción y colaboración continuas.',
+        'service5-title': 'Presupuesto y Costos', 'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caixa e utilizamos técnicas de Valor Ganado (EVA) para asegurar que o projeto se complete dentro de las restricciones financieras.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lecciones aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
         'testimonials-title': 'Testimonios de Clientes',
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
-        'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicación**, **control de riesgos** y un resultado final de alta calidad.',
+        'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
         'testimonial3-text': 'Excelente **coordinación de stakeholders** en un proyecto complejo de diseño de interiores. High-end service from start to finish.',
-
-        // Contact
-        'contact-title': 'Solicite una Estimación de Proyecto',
-        'contact-subtitle': 'Comience a transformar su proyecto hoy. Excelencia en gestión de principio a fin.',
-        'contact-input-name': 'Su Nombre',
-        'contact-input-email': 'Su Correo Electrónico',
-        'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
-        'contact-btn-submit': 'Solicitar Estimación',
-        'contact-btn-whatsapp': 'Contactar vía WhatsApp',
-
-        // Footer
-        'footer-tagline': 'Excelencia en Gestión, Ejecución Impecable.',
-        'footer-location': 'Miami, FL', 
-        'footer-nav': 'Navegación',
-        'footer-contact': 'Contacto y Conexión',
-        'footer-legal': 'Legal',
-        'footer-terms': 'Términos de Uso', 
-        'footer-privacy': 'Política de Privacidad', 
-        'footer-dev': 'Desarrollado por Andre Moura',
+        'contact-title': 'Solicite una Estimación de Proyecto', 'contact-subtitle': 'Comience a transformar su proyecto hoy. Excelencia en gestión de principio a fin.',
+        'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
+        'contact-btn-submit': 'Solicitar Estimación', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
+        'footer-tagline': 'Excelência en Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navegación', 'footer-contact': 'Contato y Conexión', 'footer-legal': 'Legal', 
+        'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
         'footer-copy': 'MCM Services Pro Solutions. Todos los derechos reservados.',
     }
 };
 
+let currentLang = localStorage.getItem('language') || 'en';
+const supportedLangs = ['en', 'pt', 'es'];
+
+
 // ===================================
-// 2. FUNÇÃO setLanguage (Corrigida)
+// 2. FUNÇÕES GERAIS E DE TRADUÇÃO
 // ===================================
-function setLanguage(lang) {
-    // 1. Atualiza as bandeiras
-    const allFlags = document.querySelectorAll(".lang-switcher img");
-    allFlags.forEach(img => {
-        img.classList.remove("active");
-    });
-    document.querySelectorAll(`img[data-lang='${lang}']`).forEach(img => {
-        img.classList.add("active");
-    });
 
-    // 2. Armazena o idioma
-    localStorage.setItem('language', lang);
+function updateTexts(lang) {
+    const dictionary = translations[lang];
+    if (!dictionary) return;
 
-    // 3. Atualiza o atributo lang do HTML
-    document.documentElement.lang = lang;
+    document.getElementById("currentYear").textContent = new Date().getFullYear(); 
 
-    // 4. TRADUZ O CONTEÚDO
-    const currentTranslations = translations[lang];
-    if (!currentTranslations) return; 
-
-    // Seleciona todos os elementos com o atributo 'data-translate'
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
-        const translation = currentTranslations[key];
+        const translation = dictionary[key];
 
         if (translation) {
-            // Se for input/textarea, traduz o placeholder
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 element.setAttribute('placeholder', translation);
             } 
-            // Para outros elementos (títulos, parágrafos, botões), usa innerHTML 
-            // para permitir formatação (como negrito com **)
             else {
                  // Substitui **texto** por <strong>texto</strong> e insere o HTML
                  element.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -1315,9 +1304,27 @@ function setLanguage(lang) {
     });
 }
 
+function highlightLanguage(lang) {
+    document.querySelectorAll('.lang-switcher img').forEach(img => {
+        img.classList.remove("active");
+        if (img.getAttribute('data-lang') === lang) {
+            img.classList.add("active");
+        }
+    });
+}
+
+window.setLanguage = function(lang) {
+    if (!supportedLangs.includes(lang)) { lang = 'en'; }
+    localStorage.setItem('language', lang);
+    currentLang = lang;
+    updateTexts(lang);
+    highlightLanguage(lang);
+    document.documentElement.lang = lang;
+}
+
 
 // ============================
-// HERO Slider (Fade + Slide)
+// HERO Slider (100vh Fade Suave)
 // ============================
 let currentSlide = 0;
 const slides = document.querySelectorAll(".hero-slide");
@@ -1327,8 +1334,8 @@ function showSlide(index) {
   slides.forEach(slide => slide.classList.remove("active"));
   dots.forEach(dot => dot.classList.remove("active"));
 
-  slides[index].classList.add("active");
-  dots[index].classList.add("active");
+  if (slides[index]) slides[index].classList.add("active");
+  if (dots[index]) dots[index].classList.add("active");
 
   currentSlide = index;
 }
@@ -1338,14 +1345,27 @@ function nextSlide() {
   showSlide(currentSlide);
 }
 
-let slideInterval = setInterval(nextSlide, 9000); // INTERVALO DE 9 SEGUNDOS
+let slideInterval = setInterval(nextSlide, 9000);
 
 dots.forEach(dot => {
   dot.addEventListener("click", () => {
     clearInterval(slideInterval);
     showSlide(parseInt(dot.dataset.slide));
-    slideInterval = setInterval(nextSlide, 9000); // REINICIA COM 9 SEGUNDOS
+    slideInterval = setInterval(nextSlide, 9000);
   });
+});
+
+// ============================
+// EFEITO SCROLL NO HEADER
+// ============================
+const header = document.querySelector('header');
+window.addEventListener('scroll', () => {
+    // 50px é a distância mínima para aplicar o fundo branco
+    if (window.scrollY > 50) { 
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
 });
 
 
@@ -1362,7 +1382,8 @@ const initHamburger = () => {
             hamburgerBtn.classList.toggle('is-open');
             hamburgerBtn.setAttribute('aria-expanded', isMenuOpen);
             
-            document.body.classList.toggle('menu-open', isMenuOpen);
+            // Adiciona classe para bloquear rolagem da página
+            document.body.classList.toggle('menu-open', isMenuOpen); 
         });
         
         // Fechar menu quando um link é clicado
@@ -1380,14 +1401,13 @@ const initHamburger = () => {
 };
 
 
-// Initial slide show
+// Initial calls
 showSlide(0); 
 initHamburger();
-// Chama a função de tradução inicial ao carregar a página
+
 document.addEventListener('DOMContentLoaded', () => {
     const initialLang = localStorage.getItem('language') || 'en';
-    // O setLanguage inicializa as bandeiras E traduz
-    setLanguage(initialLang); 
+    window.setLanguage(initialLang); 
 });
 </script>
 </body>
