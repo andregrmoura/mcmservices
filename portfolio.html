@@ -271,9 +271,9 @@
         position: relative;
     }
     
-    /* REMOVIDO: ESTILOS DA BARRA DE DETALHES DO PROJETO (JÁ FOI REMOVIDO DO HTML) */
+    /* REMOVIDO: ESTILOS DA BARRA DE DETALHES DO PROJETO */
     .project-details-info-wrapper {
-        display: none; /* Garante que a barra seja invisível */
+        display: none; 
     }
     .project-details-info {
         display: none;
@@ -697,7 +697,7 @@
                 project2Title: "Espacio Gourmet de Alto Nivel", project2Desc: "Un ambiente que combina funcionalidad de preparación con acabados de lujo, como mármol e iluminación a medida.", 
                 project3Title: "Baño con Diseño Limpio", project3Desc: "Proyecto centrado en la optimización del espacio y la combinación de texturas claras para un look relajante y funcional.", 
                 project4Title: "Baño Principal de Lujo", project4Desc: "Renovación completa con revestimientos de gran formato, metales dorados y cabina de ducha espaciosa para una sensación de spa privado.", 
-                project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutros y mobiliario a medida para optimizar el descanso.", 
+                project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutras y mobiliario a medida para optimizar el descanso.", 
                 project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta harmoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
                 
                 interestedTitle: "¿Interesado en un Proyecto?", requestQuote: "Solicitar Cotización", imageAuthNote: "Todas as imágenes fueron autorizadas por el cliente.",
@@ -796,8 +796,9 @@
                 // Fecha o menu quando um link é clicado (para navegação em páginas longas)
                 navMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', (e) => {
-                        // Verifica se o clique é para uma âncora na mesma página
-                        if (link.getAttribute('href').startsWith('index.html#') || link.getAttribute('href') === 'portfolio.html') {
+                        // Verifica se o clique é para uma âncora na mesma página ou para o próprio portfolio
+                        const href = link.getAttribute('href');
+                        if (href.startsWith('index.html#') || href === 'portfolio.html') {
                             if (window.innerWidth <= 1000) {
                                 navMenu.classList.remove('is-open');
                                 hamburgerBtn.classList.remove('is-open');
