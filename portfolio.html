@@ -1,526 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCM Services - Completed Projects Gallery</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCM Services - Completed Projects Gallery</title>
 
-    <meta name="description" content="Nossa galeria de projetos concluídos. Veja a excelência em gerenciamento e execução de reformas e reparos residenciais de alto padrão em Miami-Dade e Broward.">
+  <meta name="description" content="Nossa galeria de projetos concluídos. Veja a excelência em gerenciamento e execução de reformas e reparos residenciais de alto padrão em Miami-Dade e Broward.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link rel="icon" type="image/png" href="images/favicon.png?v=4"> 
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /*
+    ====================================
+    CSS GERAL E BASE (GLOBAL) - PADRONIZADO HOMEPAGE
+    ====================================
+    */
+    *, *::before, *::after { box-sizing: border-box; }
     
-    <link rel="icon" type="image/png" href="images/favicon.png?v=4"> 
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background: #F7F7F7;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0; 
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+    }
+    a { text-decoration: none; color: #333; }
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    /* ====================================
+    HEADER (PADRÃO HOMEPAGE)
+    ==================================== */
+    header {
+      width: 100%;
+      padding: 5px 25px;
+      background: #FFF;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 100;
+      min-height: 85px; 
+    }
+
+    .header-container {
+      max-width: 1300px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-link {
+        display: flex !important;
+        align-items: center;
+        cursor: default;
+        width: 255px; 
+        height: 85px; 
+        margin: 0;
+        padding: 0; 
+        justify-content: flex-start;
+        flex-shrink: 0;
+    }
+    .logo-link img {
+        height: 85px !important; 
+        width: 255px !important; 
+        object-fit: contain;
+    }
+
+    nav {
+        flex-grow: 1; 
+        display: flex; 
+        justify-content: center; 
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+      padding: 0;
+      margin: 0; 
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: .3s;
+    }
+
+    nav ul a:hover, nav ul a.active {
+      color: #C7A96B;
+    }
+
+    nav ul a::after {
+      content:'';
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:0%;
+      height:2px;
+      background:#C7A96B;
+      transition:.3s;
+    }
+
+    nav ul a:hover::after, nav ul a.active::after {
+      width:100%;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
+    }
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    .client-login-btn {
+        padding: 8px 15px;
+        border: 1px solid #333; 
+        border-radius: 8px;
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: .3s;
+        white-space: nowrap;
+    }
+    .client-login-btn i {
+        color: #C7A96B; 
+    }
+    .client-login-btn:hover {
+        background: #C7A96B;
+        color: #333;
+        border-color: #C7A96B;
+    }
+    .client-login-btn:hover i {
+        color: #333;
+    }
 
-    <style>
-        /*
-        ====================================
-        CSS GERAL E BASE (GLOBAL) - PADRONIZADO HOMEPAGE
-        ====================================
-        */
-        *, *::before, *::after { box-sizing: border-box; }
+    /* HAMBURGER STYLES */
+    .hamburger-btn { 
+        display: none; 
+        background: none; 
+        border: none; 
+        cursor: pointer; 
+        padding: 10px; 
+        z-index: 1001; 
+    }
+    .hamburger-btn .hamburger-line { 
+        display: block; 
+        width: 25px; 
+        height: 3px; 
+        background-color: #333; 
+        margin: 5px 0; 
+        transition: transform 0.3s ease, opacity 0.3s ease; 
+    }
+    .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
+    .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* Language Buttons */
+    .lang-switcher {
+        display: flex;
+        gap: 5px;
+    }
+    .lang-switcher img {
+      width: 28px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1px solid #AAA;
+      cursor: pointer;
+      opacity: 0.75;
+      transition: .2s;
+    }
+
+    .lang-switcher img.active {
+      opacity: 1;
+      border: 2px solid #C7A96B;
+      box-shadow: 0 0 6px rgba(199,169,107,0.7);
+    }
+    
+    /* Regra para o switcher de idioma dentro do menu mobile */
+    .mobile-nav-flags {
+        display: none; /* Escondido no desktop */
+    }
+
+    /*
+    ====================================
+    PORTFOLIO PAGE SPECIFIC STYLES
+    ====================================
+    */
+    main {
+        flex-grow: 1; 
+    }
+    
+    #sobre {
+        position: relative;
+        width: 100%;
+        height: 60vh; 
+        min-height: 400px;
+        max-height: 500px; 
+        background-image: url('images/4gallery.jpg'); 
+        background-color: #333; 
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white; 
+        padding: 40px 20px;
+        box-sizing: border-box;
+        overflow: hidden; 
+    }
+    
+    #sobre::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); 
+        z-index: 1; 
+    }
+    
+    #sobre h2 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 400;
+        font-size: 3.5rem; 
+        margin: 0;
+        color: #FFFFFF; 
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); 
+        z-index: 2; 
+        position: relative; 
+    }
+    
+    #sobre p {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 1.2rem; 
+        margin-top: 15px;
+        max-width: 800px;
+        line-height: 1.5;
+        color: #FFFFFF; 
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); 
+        z-index: 2;
+        position: relative;
+    }
+    
+    /* REMOVIDO: ESTILOS DA BARRA DE DETALHES DO PROJETO (JÁ FOI REMOVIDO DO HTML) */
+    .project-details-info-wrapper {
+        display: none; /* Garante que a barra seja invisível */
+    }
+    .project-details-info {
+        display: none;
+    }
+    /* FIM DA REMOÇÃO DOS ESTILOS DE DETALHES DO PROJETO */
+
+    .project-grid-container {
+        max-width: 1200px; margin: 40px auto; padding: 0 20px; box-sizing: border-box;
+    }
+    
+    .project-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px; padding-bottom: 30px;
+    }
+    
+    .project-card {
+        background-color: white; border-radius: 0; 
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); overflow: hidden;
+        display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .project-image-container {
+        width: 100%; height: 0; padding-bottom: 100%; 
+        position: relative; overflow: hidden; cursor: pointer; background-color: #eee; 
+    }
+
+    .project-img {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        object-fit: cover; transition: transform 0.5s ease;
+    }
+    
+    .project-image-container:hover .project-img { transform: scale(1.08); }
+    
+    .expand-icon {
+        position: absolute; bottom: 15px; right: 15px; color: white;
+        background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; padding: 10px; 
+        font-size: 1.2rem; z-index: 10; 
+    }
+    
+    .card-content-portfolio { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    
+    .card-content-portfolio h3 {
+        font-family: 'Playfair Display', serif; color: #C7A96B; 
+        font-size: 1.6rem; font-weight: 400; margin-top: 0; margin-bottom: 10px;
+    }
+    
+    .card-content-portfolio p {
+        font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.6;
+        color: #555; margin: 0; flex-grow: 1;
+    }
+    
+    .image-auth-note {
+        font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #777;
+        text-align: right; margin-top: 20px; padding-right: 10px;
+    }
+    
+    .lightbox { 
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.9); z-index: 10000;
+        display: flex; justify-content: center; align-items: center;
+    }
+    .lightbox-content {
+        max-width: 90%; max-height: 90%; 
+        display: block; margin: auto;
+    }
+    .close-btn { 
+        position: absolute; top: 20px; right: 35px; color: #f1f1f1; 
+        font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer;
+    }
+
+    #contato {
+        padding: 50px 20px; background-color: #F7F7F7; border-top: 1px solid #DDD;
+        text-align: center;
+    }
+    
+    #contato h2 {
+        font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.5rem;
+        color: #C7A96B; margin-bottom: 25px; position: relative; display: block; 
+    }
+    
+    #contato .btn {
+        background:#C7A96B; color:#333; padding:14px 40px; border-radius:8px;
+        border:none; font-size:1.1rem; font-weight:600; cursor:pointer;
+        transition:.3s; box-shadow:0 4px 14px rgba(0,0,0,0.35); text-decoration: none;
+    }
+    #contato .btn:hover {
+        background:#b9965e; color:#FFF; transform:scale(1.03);
+        box-shadow:0 6px 16px rgba(0,0,0,0.45);
+    }
+
+    /* ===============================
+       FOOTER (PADRÃO HOMEPAGE)
+    ================================ */
+    footer {
+        background:white; padding:40px 20px; text-align:center; border-top:1px solid #DDD;
+    }
+    
+    .footer-logo-container { display: block; margin: 0 auto 15px; text-align: center; }
+    .footer-logo-container img { height: 60px; width: 180px; object-fit: contain; }
+
+    .footer-content-grid {
+        max-width: 1200px; margin: 0 auto 30px; display: flex;
+        justify-content: space-between; align-items: flex-start;
+        text-align: left; gap: 30px; flex-wrap: wrap; 
+    }
+
+    .footer-col { display: flex; flex-direction: column; min-width: 150px; padding: 0 10px; }
+    .footer-col h4 {
+        font-size: 1rem; font-weight: 600; color: #333; margin-top: 0; margin-bottom: 15px;
+        border-bottom: 2px solid #C7A96B; padding-bottom: 5px;
+    }
+    .footer-col a { color: #555; font-size: 0.9rem; font-weight: 400; padding: 5px 0; transition: color 0.3s; display: block; }
+    .footer-col a:hover { color: #C7A96B; }
+    
+    .footer-social-contact a { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .footer-social-contact i { color: #C7A96B; font-size: 1rem; }
+
+    .footer-bottom-line { padding-top: 20px; border-top: 1px solid #EEE; color: #999;
+        font-size: 0.85rem; text-align: center;
+    }
+    .footer-bottom-line p { margin: 5px 0; }
+    .footer-bottom-line .copyright { font-size: 0.9rem; color: #666; }
+
+
+    /*
+    ====================================
+    RESPONSIVENESS (CORRIGIDO PARA O SANDUÍCHE)
+    ====================================
+    */
+    @media (max-width: 1000px) {
         
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: #F7F7F7;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0; 
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-        a { text-decoration: none; color: #333; }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
+        header { min-height: 70px; }
         
-        /* ===============================
-           HEADER (PADRÃO HOMEPAGE)
-        ================================ */
-        header {
-          width: 100%;
-          padding: 5px 25px;
-          background: #FFF;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-          position: relative;
-          z-index: 100;
-          /* AJUSTADO: Tamanho reduzido (15%) */
-          min-height: 85px; 
-        }
+        .logo-link { width: 180px; height: 60px; margin: 0; order: 1; justify-content: flex-start; }
+        .logo-link img { height: 60px !important; width: 180px !important; }
 
-        .header-container {
-          max-width: 1300px;
-          margin: auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 10px;
-        }
-
-        /* Logo Link/Image (Desktop) */
-        .logo-link {
-            display: flex !important;
-            align-items: center;
-            cursor: default;
-            /* AJUSTADO: Tamanho reduzido (15%) */
-            width: 255px; 
-            height: 85px; 
-            margin: 0;
-            padding: 0; 
-            justify-content: flex-start;
-            flex-shrink: 0;
-        }
-        .logo-link img {
-            /* AJUSTADO: Tamanho reduzido (15%) */
-            height: 85px !important; 
-            width: 255px !important; 
-            object-fit: contain;
-        }
-
-        /* Centralizar menu no espaço restante */
+        .header-container { flex-wrap: nowrap; justify-content: space-between; align-items: center; padding: 5px 15px; }
+        
         nav {
-            flex-grow: 1; 
-            display: flex; 
-            justify-content: center; 
-        }
-
-        nav ul {
-          list-style: none;
-          display: flex;
-          gap: 40px;
-          padding: 0;
-          margin: 0; 
-        }
-
-        nav ul a {
-          text-decoration: none;
-          color: #333;
-          font-weight: 500;
-          position: relative;
-          padding-bottom: 4px;
-          transition: .3s;
-        }
-
-        nav ul a:hover, nav ul a.active {
-          color: #C7A96B;
-        }
-
-        nav ul a::after {
-          content:'';
-          position:absolute;
-          left:0;
-          bottom:0;
-          width:0%;
-          height:2px;
-          background:#C7A96B;
-          transition:.3s;
-        }
-
-        nav ul a:hover::after, nav ul a.active::after {
-          width:100%;
-        }
-
-        .header-right {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          flex-shrink: 0;
-        }
-        
-        /* ESTILOS DO BOTÃO CLIENT LOGIN */
-        .client-login-btn {
-            padding: 8px 15px;
-            border: 1px solid #333; 
-            border-radius: 8px;
-            color: #333;
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: .3s;
-            white-space: nowrap;
-        }
-        .client-login-btn i {
-            color: #C7A96B; 
-        }
-        .client-login-btn:hover {
-            background: #C7A96B;
-            color: #333;
-            border-color: #C7A96B;
-        }
-        .client-login-btn:hover i {
-            color: #333;
-        }
-
-        /* HAMBURGER STYLES */
-        .hamburger-btn { 
             display: none; 
-            background: none; 
-            border: none; 
-            cursor: pointer; 
-            padding: 10px; 
-            z-index: 1001; 
-        }
-        .hamburger-btn .hamburger-line { 
-            display: block; 
-            width: 25px; 
-            height: 3px; 
-            background-color: #333; 
-            margin: 5px 0; 
-            transition: transform 0.3s ease, opacity 0.3s ease; 
-        }
-        .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
-        .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        /* Language Buttons */
-        .lang-switcher {
-            display: flex;
-            gap: 5px;
-        }
-        .lang-switcher img {
-          width: 28px;
-          height: 18px;
-          border-radius: 4px;
-          border: 1px solid #AAA;
-          cursor: pointer;
-          opacity: 0.75;
-          transition: .2s;
-        }
-
-        .lang-switcher img.active {
-          opacity: 1;
-          border: 2px solid #C7A96B;
-          box-shadow: 0 0 6px rgba(199,169,107,0.7);
-        }
-        
-        /* Regra para o switcher de idioma dentro do menu mobile */
-        .mobile-nav-flags {
-            display: none; /* Escondido no desktop */
-        }
-
-        /*
-        ====================================
-        PORTFOLIO PAGE SPECIFIC STYLES
-        ====================================
-        */
-        main {
-            flex-grow: 1; 
-        }
-        
-        #sobre {
-            position: relative;
+            order: 3; 
             width: 100%;
-            height: 60vh; 
-            min-height: 400px;
-            max-height: 500px; 
-            /* Mantido: Imagem de fundo padrão para o banner */
-            background-image: url('images/4gallery.jpg'); 
-            background-color: #333; 
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white; 
-            padding: 40px 20px;
-            box-sizing: border-box;
-            overflow: hidden; 
-        }
-        
-        #sobre::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); 
-            z-index: 1; 
-        }
-        
-        #sobre h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-            font-size: 3.5rem; 
-            margin: 0;
-            color: #FFFFFF; 
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); 
-            z-index: 2; 
-            position: relative; 
-        }
-        
-        #sobre p {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-            font-size: 1.2rem; 
             margin-top: 15px;
-            max-width: 800px;
-            line-height: 1.5;
-            color: #FFFFFF; 
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); 
-            z-index: 2;
-            position: relative;
+            position: absolute; 
+            top: 70px; 
+            left: 0; 
+            background-color: #FFF; 
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
+            padding: 20px 0; 
+            box-sizing: border-box; 
+            z-index: 99;
+            justify-content: center; 
+            flex-direction: column; 
         }
         
-        .project-details-info-wrapper {
-            background-color: #f9f9f9; 
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-        }
-        .project-details-info {
-            display: flex; justify-content: center; align-items: center; gap: 30px;
-            max-width: 1200px; margin: 0 auto;
-            font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: #555;
-            flex-wrap: wrap;
-        }
-        .project-details-info strong { font-weight: 700; color: #333; }
+        nav.is-open { display: flex; } /* Esta é a classe ativada pelo JS */
         
-        .project-grid-container {
-            max-width: 1200px; margin: 40px auto; padding: 0 20px; box-sizing: border-box;
+        nav ul { flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+        
+        .mobile-nav-flags {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px; 
+            padding-top: 15px;
+            border-top: 1px solid #EEE;
         }
         
-        .project-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; padding-bottom: 30px;
-        }
-        
-        .project-card {
-            background-color: white; border-radius: 0; 
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); overflow: hidden;
-            display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .project-image-container {
-            width: 100%; height: 0; padding-bottom: 100%; 
-            position: relative; overflow: hidden; cursor: pointer; background-color: #eee; 
-        }
+        .hamburger-btn { display: block; margin: 0; }
+        .header-right .lang-switcher { display: none !important; }
+        .header-right .client-login-btn { display: none; }
 
-        .project-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; transition: transform 0.5s ease;
-        }
-        
-        .project-image-container:hover .project-img { transform: scale(1.08); }
-        
-        .expand-icon {
-            position: absolute; bottom: 15px; right: 15px; color: white;
-            background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; padding: 10px; 
-            font-size: 1.2rem; z-index: 10; 
-        }
-        
-        .card-content-portfolio { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        
-        .card-content-portfolio h3 {
-            font-family: 'Playfair Display', serif; color: #C7A96B; 
-            font-size: 1.6rem; font-weight: 400; margin-top: 0; margin-bottom: 10px;
-        }
-        
-        .card-content-portfolio p {
-            font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.6;
-            color: #555; margin: 0; flex-grow: 1;
-        }
-        
-        .image-auth-note {
-            font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #777;
-            text-align: right; margin-top: 20px; padding-right: 10px;
-        }
-        
-        .lightbox { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); z-index: 10000;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .lightbox-content {
-            max-width: 90%; max-height: 90%; 
-            display: block; margin: auto;
-        }
-        .close-btn { 
-            position: absolute; top: 20px; right: 35px; color: #f1f1f1; 
-            font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer;
-        }
+        .header-right { order: 2; display: flex; align-items: center; gap: 0; padding-right: 0; }
+        .logo-link { margin: 0; order: 1; }
 
-        #contato {
-            padding: 50px 20px; background-color: #F7F7F7; border-top: 1px solid #DDD;
-            text-align: center;
-        }
-        
-        #contato h2 {
-            font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.5rem;
-            color: #C7A96B; margin-bottom: 25px; position: relative; display: block; 
-        }
-        
-        #contato .btn {
-            background:#C7A96B; color:#333; padding:14px 40px; border-radius:8px;
-            border:none; font-size:1.1rem; font-weight:600; cursor:pointer;
-            transition:.3s; box-shadow:0 4px 14px rgba(0,0,0,0.35); text-decoration: none;
-        }
-        #contato .btn:hover {
-            background:#b9965e; color:#FFF; transform:scale(1.03);
-            box-shadow:0 6px 16px rgba(0,0,0,0.45);
-        }
-
-        /* ===============================
-           FOOTER (PADRÃO HOMEPAGE)
-        ================================ */
-        footer {
-            background:white; padding:40px 20px; text-align:center; border-top:1px solid #DDD;
-        }
-        
-        .footer-logo-container { display: block; margin: 0 auto 15px; text-align: center; }
-        .footer-logo-container img { height: 60px; width: 180px; object-fit: contain; }
-
-        .footer-content-grid {
-            max-width: 1200px; margin: 0 auto 30px; display: flex;
-            justify-content: space-between; align-items: flex-start;
-            text-align: left; gap: 30px; flex-wrap: wrap; 
-        }
-
-        .footer-col { display: flex; flex-direction: column; min-width: 150px; padding: 0 10px; }
-        .footer-col h4 {
-            font-size: 1rem; font-weight: 600; color: #333; margin-top: 0; margin-bottom: 15px;
-            border-bottom: 2px solid #C7A96B; padding-bottom: 5px;
-        }
-        .footer-col a { color: #555; font-size: 0.9rem; font-weight: 400; padding: 5px 0; transition: color 0.3s; display: block; }
-        .footer-col a:hover { color: #C7A96B; }
-        
-        .footer-social-contact a { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-        .footer-social-contact i { color: #C7A96B; font-size: 1rem; }
-
-        .footer-bottom-line { padding-top: 20px; border-top: 1px solid #EEE; color: #999;
-            font-size: 0.85rem; text-align: center;
-        }
-        .footer-bottom-line p { margin: 5px 0; }
-        .footer-bottom-line .copyright { font-size: 0.9rem; color: #666; }
-
-
-        /*
-        ====================================
-        RESPONSIVENESS (PADRÃO HOMEPAGE)
-        ====================================
-        */
-        @media (max-width: 1000px) {
-            
-            header {
-                /* AJUSTADO: Altura reduzida como no index.html */
-                min-height: 70px; 
-            }
-            
-            /* Ajuste do tamanho da Logo para Mobile */
-            .logo-link {
-                /* AJUSTADO: Tamanho reduzido como no index.html */
-                width: 180px; 
-                height: 60px;
-                margin: 0;
-                order: 1;
-                justify-content: flex-start;
-            }
-            .logo-link img {
-                height: 60px !important; 
-                width: 180px !important;
-            }
-
-            .header-container {
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                align-items: center; 
-                padding: 5px 15px; 
-            }
-            
-            /* 1. Oculta o menu de desktop e mostra o hamburger */
-            nav {
-                display: none; 
-                order: 3; 
-                width: 100%;
-                margin-top: 15px;
-                
-                /* Estilo do menu mobile (overlay) */
-                position: absolute; 
-                /* AJUSTADO: O menu móvel começa logo abaixo do novo cabeçalho (70px) */
-                top: 70px; 
-                left: 0; 
-                background-color: #FFF; 
-                box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
-                padding: 20px 0; 
-                box-sizing: border-box; 
-                z-index: 99;
-
-                /* Garante que o menu móvel use a largura total */
-                justify-content: center; 
-                flex-direction: column; 
-            }
-            
-            /* Menu aberto */
-            nav.is-open {
-                display: flex; 
-            }
-            
-            nav ul {
-                flex-direction: column; /* Links em coluna */
-                align-items: center;
-                justify-content: center;
-                gap: 15px;
-            }
-            
-            /* Estiliza e mostra os botões de idioma no menu sanduíche */
-            .mobile-nav-flags {
-                display: flex;
-                justify-content: center;
-                margin-top: 20px; 
-                padding-top: 15px;
-                border-top: 1px solid #EEE;
-            }
-            
-            /* Mostra o botão hamburger e oculta o login/idioma no cabeçalho */
-            .hamburger-btn { 
-                display: block; 
-                margin: 0; 
-            }
-            /* Ocultamos o switcher desktop, pois adicionamos a versão mobile no NAV */
-            .header-right .lang-switcher {
-                display: none !important; 
-            }
-            
-            .header-right .client-login-btn {
-                display: none; 
-            }
-
-            .header-right {
-                order: 2; 
-                display: flex;
-                align-items: center;
-                gap: 0;
-                padding-right: 0; /* CORRIGIDO: Garante que o hamburger fique no canto */
-            }
-            .logo-link {
-                margin: 0;
-                order: 1; 
-            }
-
-            /* Responsive Portfolio */
-            .project-details-info { flex-direction: column; align-items: flex-start; }
-            .project-details-info span { margin-bottom: 5px; }
-        }
-    </style>
+        /* Responsive Portfolio */
+        .project-details-info { flex-direction: column; align-items: flex-start; }
+        .project-details-info span { margin-bottom: 5px; }
+    }
+  </style>
 </head>
 
 <body id="top">
@@ -574,13 +510,6 @@
             <h2 data-key="portfolioTitle">Gallery</h2>
             <p data-key="portfolioSubtitle">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
         </section>
-
-        <div class="project-details-info-wrapper">
-            <div class="project-details-info">
-                <span data-key="projectNameLabel">Project: <strong>Berg Residence</strong></span>
-                <span data-key="projectCityLabel">Location: <strong>Coral Gables, FL</strong></span>
-            </div>
-        </div>
 
         <section id="portfolio" class="project-grid-container">
             <div class="project-grid">
@@ -724,10 +653,10 @@
             en: {
                 // Nav
                 navHome: "Home", navAbout: "About", navContact: "Contact", navPortal: "Client Login", navPortfolioLink: "Gallery",
-                // Portfolio Specific
-                portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.", projectNameLabel: "Project: <strong>Berg Residence</strong>", projectCityLabel: "Location: <strong>Coral Gables, FL</strong>", 
+                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
+                portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.", 
                 
-                // NOVAS DESCRIÇÕES EM INGLÊS (NUMERAÇÃO REMOVIDA)
+                // NOVAS DESCRIÇÕES EM INGLÊS 
                 project1Title: "Modern & Luxurious Kitchen", project1Desc: "Bold design with a central island, custom cabinets, and state-of-the-art appliances.", 
                 project2Title: "High-End Gourmet Space", project2Desc: "An environment that combines preparation functionality with luxury finishes, such as marble and custom lighting.", 
                 project3Title: "Bathroom with Clean Design", project3Desc: "Project focusing on space optimization and combining light textures for a relaxing and functional look.", 
@@ -742,10 +671,10 @@
             'pt': {
                 // Nav
                 navHome: "Início", navAbout: "Sobre", navContact: "Contato", navPortal: "Acesso Cliente", navPortfolioLink: "Galeria",
-                // Portfolio Specific
-                portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", projectNameLabel: "Projeto: <strong>Berg Residence</strong>", projectCityLabel: "Local: <strong>Coral Gables, FL</strong>", 
+                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
+                portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", 
                 
-                // NOVAS DESCRIÇÕES EM PORTUGUÊS (NUMERAÇÃO REMOVIDA)
+                // NOVAS DESCRIÇÕES EM PORTUGUÊS 
                 project1Title: "Cozinha Moderna e Luxuosa", project1Desc: "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.", 
                 project2Title: "Espaço Gourmet de Alto Padrão", project2Desc: "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.", 
                 project3Title: "Banheiro com Design Clean", project3Desc: "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.", 
@@ -759,17 +688,17 @@
             },
             'es': {
                 // Nav
-                navHome: "Inicio", navAbout: "Nosotros", navContact: "Contacto", navPortal: "Acceso Cliente", navPortfolioLink: "Galería",
-                // Portfolio Specific
-                portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espacio a Través de Supervisión Experta y Coordinación de Proyectos.", projectNameLabel: "Proyecto: <strong>Berg Residence</strong>", projectCityLabel: "Ubicación: <strong>Coral Gables, FL</strong>", 
+                navHome: "Inicio", navAbout: "Nosotros", navContact: "Contacto", navPortal: "Acceso Clientes", navPortfolioLink: "Galería",
+                // Portfolio Specific - REMOVIDOS projectNameLabel e projectCityLabel
+                portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espacio a Través de Supervisión Experta y Coordinación de Proyectos.", 
                 
-                // NOVAS DESCRIÇÕES EM ESPANHOL (NUMERAÇÃO REMOVIDA)
+                // NOVAS DESCRIÇÕES EM ESPANHOL 
                 project1Title: "Cocina Moderna y Lujosa", project1Desc: "Diseño audaz con isla central, gabinetes personalizados y electrodomésticos de última generación.", 
                 project2Title: "Espacio Gourmet de Alto Nivel", project2Desc: "Un ambiente que combina funcionalidad de preparación con acabados de lujo, como mármol e iluminación a medida.", 
                 project3Title: "Baño con Diseño Limpio", project3Desc: "Proyecto centrado en la optimización del espacio y la combinación de texturas claras para un look relajante y funcional.", 
                 project4Title: "Baño Principal de Lujo", project4Desc: "Renovación completa con revestimientos de gran formato, metales dorados y cabina de ducha espaciosa para una sensación de spa privado.", 
                 project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutros y mobiliario a medida para optimizar el descanso.", 
-                project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta armoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
+                project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta harmoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
                 
                 interestedTitle: "¿Interesado en un Proyecto?", requestQuote: "Solicitar Cotización", imageAuthNote: "Todas as imágenes fueron autorizadas por el cliente.",
                 // Footer
@@ -823,10 +752,11 @@
                         let text = translation.replace('<span id="currentYear"></span>', document.getElementById('currentYear').outerHTML);
                         el.innerHTML = text;
                     } else if (key.includes('NameLabel') || key.includes('CityLabel')) { 
-                        // Permite <strong> para negrito no título do projeto
+                        // Permite <strong> para negrito
                         el.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
                     } else { 
-                        el.textContent = translation; 
+                        // Use innerHTML para que o negrito (<strong>) funcione no HTML estático traduzido
+                        el.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
                     }
                 }
             });
@@ -863,13 +793,17 @@
                     document.body.classList.toggle('menu-open', isMenuOpen);
                 });
                 
+                // Fecha o menu quando um link é clicado (para navegação em páginas longas)
                 navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 1000) {
-                            navMenu.classList.remove('is-open');
-                            hamburgerBtn.classList.remove('is-open');
-                            hamburgerBtn.setAttribute('aria-expanded', false);
-                            document.body.classList.remove('menu-open');
+                    link.addEventListener('click', (e) => {
+                        // Verifica se o clique é para uma âncora na mesma página
+                        if (link.getAttribute('href').startsWith('index.html#') || link.getAttribute('href') === 'portfolio.html') {
+                            if (window.innerWidth <= 1000) {
+                                navMenu.classList.remove('is-open');
+                                hamburgerBtn.classList.remove('is-open');
+                                hamburgerBtn.setAttribute('aria-expanded', false);
+                                document.body.classList.remove('menu-open');
+                            }
                         }
                     });
                 });
