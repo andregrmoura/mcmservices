@@ -29,7 +29,6 @@
     }
     a { text-decoration: none; color: #333; }
     
-    /* Accessibility */
     .sr-only {
         position: absolute;
         width: 1px;
@@ -40,92 +39,152 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
     }
+    /* Classe para travar o scroll no body quando o menu está aberto */
+    body.menu-open {
+        overflow: hidden;
+    }
 
     /* ====================================
-    HEADER PREMIUM (Ajustado o min-height e o Logo)
+    HEADER (SEMI-TRANSPARENTE E ABSOLUTO)
     ====================================
     */
     header {
       width: 100%;
-      padding: 10px 25px;
-      background: rgba(255, 255, 255, 0);
-      box-shadow: none;
-      position: fixed;
-      top: 0;
+      background: rgba(0, 0, 0, 0.4); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      position: absolute; 
+      top: 0; 
       left: 0;
       z-index: 100;
-      min-height: 85px; /* UNIFICADO: Era 80px */
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      padding: 25px 25px; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* ESTILO DO HEADER AO ROLAR */
-    header.scrolled {
-        background: #FFF;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /* EFEITO GRADIENTE NA TRANSIÇÃO HEADER/HERO */
+    header::after {
+        content: '';
+        position: absolute;
+        bottom: 0; /* Alinha na parte inferior do header */
+        left: 0;
+        width: 100%;
+        height: 30px; /* Altura do gradiente */
+        /* Gradiente sutil: Transparente para um preto suave */
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.0) 100%);
+        z-index: 90; /* Abaixo do conteúdo do header (z-index: 100) */
+        pointer-events: none; /* Garante que não interfira nos cliques */
+        transform: translateY(100%); /* Desloca para fora do header, ficando entre o header e o hero */
     }
-    
+
+
+    /* Container para organizar verticalmente */
     .header-container {
       max-width: 1300px;
+      width: 100%;
       margin: auto;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column; 
+      gap: 10px; 
+      padding: 0; 
     }
 
-    /* Logo Link/Image (Desktop) */
-    .logo-link {
-        display: flex !important;
+    /* Novo container para logo e flags */
+    .header-top-row {
+        width: 100%;
+        display: flex;
         align-items: center;
-        cursor: default;
-        width: 255px; /* UNIFICADO: Era 230px */
-        height: 85px; /* UNIFICADO: Era 75px */
-        margin: 0;
-        padding: 0; 
-        justify-content: flex-start;
-        flex-shrink: 0;
+        justify-content: space-between; 
+        margin-bottom: 5px; 
+        position: relative; /* Base para o botão sanduíche */
     }
+    
+    /* Coluna vazia para alinhar a logo no centro */
+    .header-col-left {
+        width: 150px; 
+    }
+    
+    /* Coluna do Centro para a Logo */
+    .logo-link {
+        flex-grow: 1;
+        text-align: center;
+        margin: 0; 
+    }
+    
     .logo-link img {
-        height: 85px !important; /* UNIFICADO: Era 75px */
-        width: 255px !important; /* UNIFICADO: Era 230px */
+        height: 120px !important; 
+        width: auto !important; 
+        max-width: 400px; 
         object-fit: contain;
-        transition: height 0.3s ease;
     }
 
-    /* Centralizar menu no espaço restante */
+    /* Botões de Idioma (Movidos para a Direita) */
+    .lang-switcher {
+        display: flex;
+        gap: 10px; 
+        margin: 0;
+        width: 150px; 
+        justify-content: flex-end;
+    }
+    
+    .lang-switcher img {
+      width: 25px; 
+      height: 18px;
+      border-radius: 3px;
+      border: 1px solid #AAA;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: .2s;
+    }
+    .lang-switcher img.active {
+      opacity: 1;
+      border: 2px solid #C7A96B;
+      box-shadow: 0 0 6px rgba(199,169,107,0.7);
+    }
+    
+    /* Menu Principal (Abaixo do Top Row) */
     nav {
-        flex-grow: 1; 
+        width: 100%;
         display: flex; 
         justify-content: center; 
+        margin-top: 0px; 
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 50px;
+      gap: 50px; 
       padding: 0;
       margin: 0; 
+      justify-content: center;
     }
 
     nav ul a {
       text-decoration: none;
       color: #FFF; 
-      font-weight: 400;
+      font-weight: 400; 
       position: relative;
       padding-bottom: 4px;
       transition: .3s;
+      font-size: 1.05rem; 
+      white-space: nowrap;
+      letter-spacing: 0.5px; 
     }
-
-    /* TEXTO DO MENU NO ESTADO ROLADO */
-    header.scrolled nav ul a, 
-    header.scrolled .header-right a {
-        color: #333;
+    
+    /* Estilo do link Client Login */
+    .client-login-link {
+        font-weight: 400; 
+        color: #FFF; 
     }
-
+    .client-login-link:hover {
+        color: #C7A96B; 
+    }
+    
     nav ul a:hover, nav ul a.active {
       color: #C7A96B;
     }
-
+    
     nav ul a::after {
       content:'';
       position:absolute;
@@ -141,164 +200,151 @@
       width:100%;
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-shrink: 0;
-    }
+    /* Elementos Laterais Removidos */
+    .header-right { display: none; }
     
-    /* ESTILOS DO BOTÃO CLIENT LOGIN (Discreto - Outline) */
-    .client-login-btn {
-        padding: 8px 15px;
-        border: 1px solid #FFF;
-        color: #FFF;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: .3s;
-        white-space: nowrap;
-    }
+    /* NOVAS CLASSES MOBILE */
+    .mobile-nav-flags { display: none; }
+    .hamburger-btn { display: none; } 
 
-    header.scrolled .client-login-btn {
-        border-color: #333;
-        color: #333;
-    }
-
-    .client-login-btn i {
-        color: #C7A96B; 
-    }
-    .client-login-btn:hover {
-        background: #C7A96B;
-        color: #333 !important;
-        border-color: #C7A96B;
-    }
-    .client-login-btn:hover i {
-        color: #333;
-    }
-
-    /* Language Buttons */
-    .lang-switcher img {
-      width: 28px;
-      height: 18px;
-      border-radius: 4px;
-      border: 1px solid #AAA;
-      cursor: pointer;
-      opacity: 0.75;
-      transition: .2s;
-    }
-
-    .lang-switcher img.active {
-      opacity: 1;
-      border: 2px solid #C7A96B;
-      box-shadow: 0 0 6px rgba(199,169,107,0.7);
-    }
-    
-    /* HAMBURGER STYLES (Ajustado para branco no topo) */
-    .hamburger-btn { 
-        display: none; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-        padding: 10px; 
-        z-index: 1001; 
-    }
-    .hamburger-btn .hamburger-line { 
-        display: block; 
-        width: 25px; 
-        height: 3px; 
-        background-color: #FFF;
-        margin: 5px 0; 
-        transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease; 
-    }
-    
-    header.scrolled .hamburger-btn .hamburger-line {
-        background-color: #333;
-    }
-
-    .hamburger-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .hamburger-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
-    .hamburger-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-    /* Regra para o switcher de idioma dentro do menu mobile */
-    .mobile-nav-flags {
-        display: none;
-    }
 
     /* ====================================
-    RESPONSIVENESS (Ajustado o Logo Mobile)
+    RESPONSIVENESS (MOBILE)
     ====================================
     */
-    @media (max-width: 1000px) {
-        
-        header { min-height: 70px; }
-
-        /* Ajuste do tamanho da Logo para Mobile */
-        .logo-link {
-            width: 180px; /* UNIFICADO: Era 170px */
-            height: 60px; /* UNIFICADO: Era 55px */
-            margin: 0;
-            order: 1;
+    @media (min-width: 769px) {
+        header {
+            padding-top: 15px; 
+            padding-bottom: 15px;
         }
-        .logo-link img {
-            height: 60px !important; /* UNIFICADO: Era 55px */
-            width: 180px !important; /* UNIFICADO: Era 170px */
-        }
-        
-        /* Resto do menu mobile (Mantido) */
-        nav {
-            display: none; 
-            order: 3; 
-            width: 100%;
-            margin-top: 15px;
-            position: absolute; 
-            top: 70px; 
-            left: 0; 
-            background-color: #FFF; 
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
-            padding: 20px 0; 
-            box-sizing: border-box; 
-            z-index: 99;
-            justify-content: center; 
-            flex-direction: column; 
-        }
-        
-        nav.is-open { display: flex; }
-        
-        nav ul { flex-direction: column; align-items: center; gap: 15px; }
-        
-        .hamburger-btn { display: block; margin: 0; }
-        .hamburger-btn .hamburger-line { background-color: #333 !important; }
-
-        nav ul a { color: #333 !important; }
-
-        .mobile-nav-flags {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px; 
-            padding-top: 15px;
-            border-top: 1px solid #EEE;
-        }
-
-        .header-right .client-login-btn,
-        .header-right .lang-switcher { display: none; }
-
-        .header-right { order: 2; display: flex; align-items: center; gap: 0; }
-        .logo-link { margin: 0; order: 1; }
     }
     
+    @media (max-width: 768px) {
+        
+        header { 
+            padding-top: 15px; 
+            padding-bottom: 15px;
+        }
+        
+        /* Ajuste do gradiente para mobile */
+        header::after {
+             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.0) 100%);
+        }
+
+        .header-container {
+            gap: 0; /* Remove gap */
+        }
+        
+        /* Oculta o Lang Switcher na top row no mobile */
+        .lang-switcher { display: none; }
+        
+        /* Reajusta o Top Row no mobile: Logo centralizada, Hamburger na direita */
+        .header-top-row {
+            padding-right: 40px; /* Espaço para o botão */
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        .header-col-left {
+            display: none; 
+        }
+        .logo-link {
+            text-align: left; /* Logo alinhada à esquerda no topo */
+            flex-grow: 1;
+        }
+        .logo-link img {
+            height: 70px !important; 
+            max-width: 75%;
+        }
+        
+        /* --- HAMBURGER ICON --- */
+        .hamburger-btn {
+            display: block;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 110;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #FFF;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        .hamburger-btn:hover {
+            color: #C7A96B;
+        }
+
+        /* --- MOBILE MENU (OFF-CANVAS) --- */
+        nav {
+            /* Transforma NAV em menu off-canvas vertical */
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 75%; /* Largura do menu */
+            max-width: 300px;
+            background: #222; /* Fundo escuro para contraste */
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+            transform: translateX(100%); /* Esconde o menu */
+            transition: transform 0.4s ease-in-out;
+            padding: 80px 30px 20px;
+            margin-top: 0;
+            z-index: 99;
+            display: block;
+        }
+        
+        /* Efeito de abertura */
+        body.menu-open nav {
+            transform: translateX(0); /* Mostra o menu */
+        }
+
+        nav ul { 
+            flex-direction: column; 
+            align-items: flex-start; /* Alinha links à esquerda */
+            gap: 20px; 
+        }
+        
+        nav ul a {
+            font-size: 1.1rem;
+            letter-spacing: normal;
+            display: block;
+            width: 100%;
+            padding: 5px 0;
+        }
+        
+        .client-login-link {
+            font-weight: 700;
+            color: #C7A96B; 
+        }
+        
+        /* Bandeiras dentro do menu off-canvas */
+        .mobile-nav-flags { 
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        .mobile-nav-flags img {
+            width: 30px;
+            height: 20px;
+        }
+    }
+
+
     /* ===============================
-       HERO SECTION (Mantido)
+       HERO SECTION (Updated)
     ================================ */
     .hero-container {
       position: relative;
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      margin-top: 0;
+      margin-top: 0; 
     }
 
     .hero-slide {
@@ -315,6 +361,22 @@
       opacity: 1;
       z-index: 2;
     }
+    
+    /* Subtle Gradient Overlay for Readability */
+    .hero-gradient-overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.45) 0%, 
+            rgba(0, 0, 0, 0.25) 30%, 
+            rgba(0, 0, 0, 0.1) 70%,
+            rgba(0, 0, 0, 0.1) 100%
+        );
+        z-index: 1;
+    }
+
 
     .hero-overlay {
       position:absolute;
@@ -326,7 +388,7 @@
 
     .hero-content {
       position:absolute;
-      top:50%;
+      top:60%; 
       left:50%;
       transform:translate(-50%, -50%);
       width:100%;
@@ -343,8 +405,14 @@
       font-weight:400;
       margin:0 0 25px 0;
       text-shadow:0 3px 12px rgba(0,0,0,0.6);
-      animation: fadeIn 1.5s ease-in-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
     }
+    
+    .hero-slide.active .hero-content h1 {
+        animation: fadeInUp 1s ease-out forwards;
+    }
+
 
     .hero-content p {
       font-size:1.4rem;
@@ -352,14 +420,35 @@
       line-height:1.5;
       margin-bottom:50px;
       text-shadow:0 3px 12px rgba(0,0,0,0.5);
-      animation: fadeIn 1.5s ease-in-out 0.3s forwards;
+      opacity: 0;
+      transform: translateY(20px);
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    .hero-slide.active .hero-content p {
+        animation: fadeInUp 1s ease-out 0.2s forwards;
+    }
+    
+    /* Fade Up Animation */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
+    /* CTA Buttons Container */
+    .hero-cta-buttons {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 1s ease-out 0.4s forwards;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .hero-slide.active .hero-cta-buttons {
+        animation: fadeInUp 1s ease-out 0.4s forwards;
+    }
+    
+    /* Primary CTA */
     .hero-btn {
       background: rgba(199, 169, 107, 0);
       color: #FFF;
@@ -379,6 +468,20 @@
       border-color: #C7A96B; 
       transform:scale(1.03);
     }
+    
+    /* Secondary CTA (Portfolio) */
+    .hero-btn.secondary {
+        background: #C7A96B;
+        color: #333;
+        border-color: #C7A96B;
+    }
+    
+    .hero-btn.secondary:hover {
+        background: transparent;
+        color: #FFF;
+        border-color: #FFF;
+    }
+
 
     /* Slider nav dots */
     .hero-dots {
@@ -411,9 +514,18 @@
         }
         .hero-content p {
             font-size: 1.1rem;
+            margin-bottom: 30px;
         }
         .hero-container {
             height: 90vh;
+        }
+        .hero-cta-buttons {
+            flex-direction: column;
+            gap: 15px;
+        }
+        .hero-btn {
+            width: 80%;
+            margin: 0 auto;
         }
     }
 
@@ -421,18 +533,16 @@
        SECTION STYLES GERAIS
     ================================ */
     section {
-        padding: 80px 20px; /* Padding vertical padrão */
+        padding: 80px 20px; 
         position: relative;
         box-sizing: border-box;
     }
 
-    /* CORREÇÃO DO ESPAÇAMENTO NA SEÇÃO DE CONTATO */
     #contact {
         padding-top: 50px;
         padding-bottom: 50px;
     }
     
-    /* Aplicação de divisões nas seções */
     #about, #testimonials, #contact {
         border-top: 1px solid #DDD; 
     }
@@ -440,7 +550,6 @@
         border-top: none;
     }
 
-    /* Correção Global dos Títulos */
     .section-title {
         font-family:'Playfair Display', serif;
         font-size:2.8rem;
@@ -449,7 +558,6 @@
         text-align:center; 
         margin:0 0 30px 0;
     }
-    /* CORREÇÃO DO SUBTÍTULO: Garante que o subtítulo de contato fique centralizado e reduz a margem */
     .section-subtitle {
         max-width:750px;
         margin:auto;
@@ -465,7 +573,7 @@
 
 
     /* ===============================
-       SECTION SERVICES (FUNDO DE TIJOLO COM DEGRADÊ) - MANTIDO
+       SECTION SERVICES
     ================================ */
     #services {
         background-image: url('images/tijolo_bg.jpeg'); 
@@ -477,68 +585,56 @@
         color: #FFF;
     }
     
-    /* OVERLAY COM DEGRADÊ (Clareando das Laterais para o Centro) */
+    /* OVERLAY COM DEGRADÊ (AJUSTADO NOVAMENTE PARA CLAREAR) */
     #services::before {
         content: '';
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
         z-index: 1;
-        /* Degradê que vai de semi-transparente (lados) para escuro (centro) */
+        /* ALTERADO: Valores de opacidade (0.6 -> 0.4 e 0.2 -> 0.1) */
         background-image: linear-gradient(
             to right,
-            rgba(0, 0, 0, 0.4) 0%,
-            rgba(0, 0, 0, 0.8) 30%,
-            rgba(0, 0, 0, 0.8) 70%,
-            rgba(0, 0, 0, 0.4) 100%
+            rgba(0, 0, 0, 0.1) 0%, /* Clareado */
+            rgba(0, 0, 0, 0.4) 30%, /* Clareado */
+            rgba(0, 0, 0, 0.4) 70%, /* Clareado */
+            rgba(0, 0, 0, 0.1) 100% /* Clareado */
         );
     }
     
-    /* Garante que o conteúdo fique acima do overlay */
     #services > .content-max-width {
         position: relative;
         z-index: 2;
     }
 
-    /* Ajusta o título da seção para a cor primária (dourada) */
     #services .section-title {
         color: #C7A96B; 
     }
     
-    /* SERVICES CARDS (CORREÇÃO CRÍTICA DO GAP) */
+    /* SERVICES CARDS */
     .service-cards-container {
         display:flex;
         flex-wrap:wrap;
         justify-content:center;
-        /* Margem negativa para compensar a margem lateral dos cartões */
         margin: 0 -17.5px; 
     }
 
-    /* Ajuste de card para fundo escuro */
     .card-style {
         background: rgba(255, 255, 255, 0.95);
-        
-        /* SOLUÇÃO DE FORÇA PARA O GAP HORIZONTAL */
-        /* width: calc(33.333% - 35px); /* Calcula o espaço para 3 colunas e subtrai o gap total */
-        width: 330px; /* Mantém o tamanho fixo, mas aplica margem forçada */
-        margin: 0 17.5px 35px 17.5px; /* 17.5px de margem lateral = 35px de espaçamento total */
-        
+        width: 330px;
+        margin: 0 17.5px 35px 17.5px; 
         border-radius:0;
         overflow:hidden;
         box-shadow:0 6px 18px rgba(0,0,0,0.3);
         transition:.3s;
     }
     
-    /* Responsividade para 2 colunas */
     @media (max-width: 1100px) {
         .card-style {
-            /* Width para 2 colunas com espaço entre elas */
             width: calc(50% - 35px); 
         }
     }
-    /* Responsividade para 1 coluna */
     @media (max-width: 700px) {
         .card-style {
-            /* Full width para 1 coluna */
             width: calc(100% - 35px); 
         }
     }
@@ -556,11 +652,11 @@
     .card-content {
         padding:25px;
     }
-    /* Ajusta o conteúdo do card para cor escura */
     .card-content h3 {
         font-family:'Playfair Display', serif; 
         color:#C7A96B; 
         margin:0 0 15px 0;
+        text-align: center; 
     }
     .card-content p {
         color:#555; 
@@ -570,7 +666,7 @@
 
 
     /* ===============================
-       ABOUT SECTION (Mantido)
+       ABOUT SECTION
     ================================ */
     .about-content {
         max-width:1100px;
@@ -591,7 +687,6 @@
     .about-text {
         max-width: 650px;
     }
-    /* Garante que o título interno do about-text se alinhe à esquerda */
     .about-text h2 {
         font-family:'Playfair Display', serif;
         font-size:2.2rem;
@@ -640,7 +735,7 @@
     }
 
     /* ===============================
-       TESTIMONIALS (CORRIGIDO GAP)
+       TESTIMONIALS
     ================================ */
     .testimonial-card-container {
         max-width:1100px;
@@ -648,7 +743,6 @@
         display:flex;
         flex-wrap:wrap;
         justify-content:center;
-        /* CORREÇÃO DO GAP ENTRE OS CARTÕES */
         gap: 30px;
     }
     .testimonial-card {
@@ -664,7 +758,6 @@
     .testimonial-card:hover {
         transform: translateY(-3px);
     }
-    /* Aspas decorativas para toque premium */
     .testimonial-card::before {
         content: '\201C';
         font-family: 'Playfair Display', serif;
@@ -846,47 +939,54 @@
 <header>
   <div class="header-container">
     
-    <a class="logo-link" href="#top">
-      <img src="images/transparent-logo-2.png" alt="MCM Services Logo - Moura Consulting & Management">
-    </a>
+    <div class="header-top-row">
+        <div class="header-col-left"></div>
+        
+        <a class="logo-link" href="#top">
+          <img src="images/FODA.png" alt="MCM Services Logo - Moura Consulting & Management">
+        </a>
+        
+        <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
+             <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="lang-switcher">
+            <img src="images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active">
+            <img src="images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')">
+            <img src="images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')">
+        </div>
+    </div>
     
     <nav aria-label="Main Navigation" id="mainNavigation">
       <ul>
-        <li><a href="#top" aria-current="page" data-translate="nav-home">Home</a></li>
+        <li><a href="#top" class="active" aria-current="page" data-translate="nav-home">Home</a></li>
         <li><a href="#about" data-translate="nav-about">About</a></li>
         <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
         <li><a href="portfolio.html" data-translate="nav-gallery">Gallery</a></li>
+        <li>
+            <a href="login.html" class="client-login-link" data-translate="client-login">
+                 Client Login
+            </a>
+        </li>
       </ul>
-      <div class="lang-switcher mobile-nav-flags">
+      
+      <div class="mobile-nav-flags">
         <img src="images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active">
         <img src="images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')">
         <img src="images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')">
       </div>
+
     </nav>
+    
     <div class="header-right">
-      
-      <a href="login.html" class="client-login-btn" data-translate="client-login">
-          <i class="fas fa-lock" aria-hidden="true"></i> Client Login
-      </a>
-
-      <div class="lang-switcher">
-        <img src="images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active">
-        <img src="images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')">
-        <img src="images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')">
       </div>
-      
-      <button class="hamburger-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="mainNavigation">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-
-    </div>
 
   </div>
 </header>
 
 <div class="hero-container">
+  
+  <div class="hero-gradient-overlay"></div>
 
   <div class="hero-slide active" 
        style="background-image:url('images/bath_bg.jpg');">
@@ -895,9 +995,16 @@
     <div class="hero-content">
       <h1 data-translate="hero1-title">Project Management for High-End Homes</h1>
       <p data-translate="hero1-subtitle">From concept to completion — seamless coordination and quality control.</p>
-      <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Exclusive Project
-      </button>
+      
+      <div class="hero-cta-buttons">
+          <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
+            View Portfolio
+          </a>
+          <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
+            Request Exclusive Project
+          </button>
+      </div>
+
     </div>
   </div>
 
@@ -908,9 +1015,15 @@
     <div class="hero-content">
       <h1 data-translate="hero2-title">Premium Residential Construction Oversight</h1>
       <p data-translate="hero2-subtitle">Flawless execution delivered with transparency and strategic planning.</p>
-      <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Exclusive Project
-      </button>
+      
+      <div class="hero-cta-buttons">
+          <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
+            View Portfolio
+          </a>
+          <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
+            Request Exclusive Project
+          </button>
+      </div>
     </div>
   </div>
 
@@ -921,9 +1034,15 @@
     <div class="hero-content">
       <h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
       <p data-translate="hero3-subtitle">Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.</p>
-      <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-        Request Exclusive Project
-      </button>
+      
+      <div class="hero-cta-buttons">
+          <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
+            View Portfolio
+          </a>
+          <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
+            Request Exclusive Project
+          </button>
+      </div>
     </div>
   </div>
 
@@ -1157,7 +1276,7 @@ document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 
 // ===================================
-// 1. OBJETO DE TRADUÇÃO (Mantido)
+// 1. OBJETO DE TRADUÇÃO
 // ===================================
 const translations = {
     'en': {
@@ -1169,6 +1288,7 @@ const translations = {
         'hero3-title': 'Structure and Precision for Your Vision',
         'hero3-subtitle': 'Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.',
         'hero-btn': 'Request Exclusive Project',
+        'hero-btn-portfolio': 'View Portfolio', 
         
         // About Section (Premium)
         'about-title': 'Why Choose Us', 
@@ -1207,6 +1327,7 @@ const translations = {
         'hero3-title': 'Estrutura e Precisão para a Sua Visão',
         'hero3-subtitle': 'Mitigação de riscos, controle de orçamento e acabamento de alta qualidade, garantidos.',
         'hero-btn': 'Solicitar Projeto Exclusivo',
+        'hero-btn-portfolio': 'Ver Portfólio', 
         
         // About Section (Premium)
         'about-title': 'Por Que Nos Escolher', 
@@ -1244,6 +1365,7 @@ const translations = {
         'hero3-title': 'Estrutura y Precisión para Su Visión',
         'hero3-subtitle': 'Mitigación de riesgos, control de presupuesto y artesanía de alta calidad, garantizados.',
         'hero-btn': 'Solicitar Proyecto Exclusivo',
+        'hero-btn-portfolio': 'Ver Portafolio', 
         
         // About Section (Premium)
         'about-title': 'Por Qué Elegirnos', 
@@ -1257,9 +1379,9 @@ const translations = {
         'service1-title': 'Iniciación y Alcance', 'service1-text': 'Definimos claramente el **alcance**, estableciendo **metas** y objetivos medibles. Creamos la documentación inicial, identificamos a los stakeholders y estructuramos el plan de trabajo para una alineación total desde el inicio.',
         'service2-title': 'Cronogramas y Tiempo', 'service2-text': 'Desarrollamos cronogramas detallados y realistas (Gantt/PERT). Optimizamos la asignación de **recursos** (equipo, materiales, presupuesto) para mantener el proyecto a tiempo y maximizar la eficiencia.',
         'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **riesgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
-        'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantenemos **comunicación** transparente y constante con todos los involucrados. Preparamos informes de estado claros e gestionamos las expectativas de las **partes interesadas** para garantizar la satisfacción y colaboración continuas.',
+        'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantemos **comunicación** transparente e constante con todos los involucrados. Preparamos informes de estado claros e gerenciamos las expectativas de las **partes interesadas** para garantir a satisfação e colaboração continuas.',
         'service5-title': 'Presupuesto y Costos', 'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caixa e utilizamos técnicas de Valor Ganado (EVA) para asegurar que o projeto se complete dentro de las restricciones financieras.',
-        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lecciones aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **leções aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
         'testimonials-title': 'Testimonios de Clientes',
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
         'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
@@ -1267,8 +1389,8 @@ const translations = {
         'contact-title': 'Solicite una Estimación de Proyecto', 'contact-subtitle': 'Comience a transformar su proyecto hoy. Excelencia en gestión de principio a fin.',
         'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
         'contact-btn-submit': 'Solicitar Estimación', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
-        'footer-tagline': 'Excelência en Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
-        'footer-nav': 'Navegación', 'footer-contact': 'Contato y Conexión', 'footer-legal': 'Legal', 
+        'footer-tagline': 'Excelência en la Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 
         'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
         'footer-copy': 'MCM Services Pro Solutions. Todos los derechos reservados.',
     }
@@ -1322,6 +1444,25 @@ window.setLanguage = function(lang) {
     document.documentElement.lang = lang;
 }
 
+// NOVO: Função para abrir/fechar o menu sanduíche
+window.toggleMenu = function() {
+    const body = document.body;
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const isMenuOpen = body.classList.contains('menu-open');
+    
+    if (isMenuOpen) {
+        body.classList.remove('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        // Mudar ícone para barras
+        hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    } else {
+        body.classList.add('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        // Mudar ícone para X (fechar)
+        hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
+    }
+}
+
 
 // ============================
 // HERO Slider (100vh Fade Suave)
@@ -1331,6 +1472,7 @@ const slides = document.querySelectorAll(".hero-slide");
 const dots = document.querySelectorAll(".dot");
 
 function showSlide(index) {
+  // Reset animations by removing/re-adding the active class
   slides.forEach(slide => slide.classList.remove("active"));
   dots.forEach(dot => dot.classList.remove("active"));
 
@@ -1355,59 +1497,20 @@ dots.forEach(dot => {
   });
 });
 
-// ============================
-// EFEITO SCROLL NO HEADER
-// ============================
-const header = document.querySelector('header');
-window.addEventListener('scroll', () => {
-    // 50px é a distância mínima para aplicar o fundo branco
-    if (window.scrollY > 50) { 
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
-
-
-// ============================
-// Hamburger Menu Toggler
-// ============================
-const initHamburger = () => {
-    const hamburgerBtn = document.querySelector('.hamburger-btn');
-    const navMenu = document.getElementById('mainNavigation'); 
-
-    if (hamburgerBtn && navMenu) {
-        hamburgerBtn.addEventListener('click', () => {
-            const isMenuOpen = navMenu.classList.toggle('is-open');
-            hamburgerBtn.classList.toggle('is-open');
-            hamburgerBtn.setAttribute('aria-expanded', isMenuOpen);
-            
-            // Adiciona classe para bloquear rolagem da página
-            document.body.classList.toggle('menu-open', isMenuOpen); 
-        });
-        
-        // Fechar menu quando um link é clicado
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1000) {
-                    navMenu.classList.remove('is-open');
-                    hamburgerBtn.classList.remove('is-open');
-                    hamburgerBtn.setAttribute('aria-expanded', false);
-                    document.body.classList.remove('menu-open');
-                }
-            });
-        });
-    }
-};
-
-
 // Initial calls
 showSlide(0); 
-initHamburger();
 
 document.addEventListener('DOMContentLoaded', () => {
     const initialLang = localStorage.getItem('language') || 'en';
     window.setLanguage(initialLang); 
+    
+    // Adicionar listener de click aos links do menu para fechar o menu no mobile
+    const menuLinks = document.querySelectorAll('nav ul a');
+    if (window.innerWidth <= 768) {
+        menuLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+    }
 });
 </script>
 </body>
