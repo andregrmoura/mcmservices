@@ -21,7 +21,7 @@
         
         body {
             font-family: 'Montserrat', sans-serif;
-            background: #F7F7F7;
+            background: #F7F7F7; /* Fundo limpo */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -53,10 +53,16 @@
             margin:0 0 30px 0;
         }
 
-        /* HEADER */
+        /* ====================================
+           HEADER (COM BACKGROUND MODIFICADO)
+           ==================================== */
         header {
           width: 100%;
-          background: rgba(0, 0, 0, 0.4); 
+          /* 🌟 NOVO BACKGROUND COM IMAGEM E GRADIENTE/OVERLAY 🌟 */
+          background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                      url('images/login_bg.jpg') no-repeat center center;
+          background-size: cover; /* Garante que a imagem cubra todo o header */
+          /* ---------------------------------------------------- */
           box-shadow: 0 5px 15px rgba(0,0,0,0.4);
           position: absolute; 
           top: 0; 
@@ -237,6 +243,11 @@
             .header-col-left {
                 display: none; 
             }
+            .logo-link {
+                /* Garante alinhamento à esquerda no mobile */
+                text-align: left; 
+                flex-grow: 1;
+            }
             .logo-link img {
                 height: 70px !important; 
                 max-width: 75%;
@@ -308,43 +319,63 @@
         /* LOGIN PAGE SPECIFIC STYLES */
         main {
             padding-top: 180px; 
-            flex-grow: 1; display: flex; justify-content: center; align-items: center; padding-bottom: 40px;
+            flex-grow: 1; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding-bottom: 40px;
             min-height: calc(100vh - 40px);
             position: relative;
             z-index: 10;
         }
-        main::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4); 
-            z-index: 1;
-        }
+        /* REMOVIDO: main::before - para eliminar o overlay */
+        
         .login-container {
-            background-color: #fff; padding: 30px; border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); width: 100%; max-width: 400px;
-            text-align: center; box-sizing: border-box; 
+            background-color: #fff; 
+            padding: 30px; 
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); 
+            width: 100%; 
+            max-width: 400px;
+            text-align: center; 
+            box-sizing: border-box; 
             position: relative;
             z-index: 2;
         }
         .login-container h2 {
-            font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.2rem; 
-            color: #C7A96B; margin-top: 0; margin-bottom: 25px; padding: 0; 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 400; 
+            font-size: 2.2rem; 
+            color: #C7A96B; 
+            margin-top: 0; 
+            margin-bottom: 25px; 
+            padding: 0; 
         }
         .login-form input[type="email"],
         .login-form input[type="password"] {
-            width: calc(100% - 24px); padding: 12px; margin-bottom: 15px; 
-            border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;
-            font-family: 'Montserrat', sans-serif; box-sizing: border-box;
+            width: calc(100% - 24px); 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif; 
+            box-sizing: border-box;
             transition: border-color .3s;
         }
         .login-form button {
-            width: 100%; padding: 14px; 
+            width: 100%; 
+            padding: 14px; 
             background-color: #C7A96B; 
             color: #333;
-            border: none; border-radius: 8px; font-size: 1.1rem; 
-            font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s;
-            font-family: 'Montserrat', sans-serif; margin-top: 10px; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease, transform 0.2s;
+            font-family: 'Montserrat', sans-serif; 
+            margin-top: 10px; 
         }
         .login-form button:hover { 
             background-color: #b9965e; 
@@ -352,13 +383,23 @@
             transform: translateY(-2px);
         }
         #error-message { 
-            color: #D62828; margin-top: 15px !important; font-size: 0.9rem; min-height: 1.1em; font-weight: 500;
+            color: #D62828; 
+            margin-top: 15px !important; 
+            font-size: 0.9rem; 
+            min-height: 1.1em; 
+            font-weight: 500;
         }
         .forgot-password a { 
-            color: #333; font-weight: 500; text-decoration: none; position: relative; transition: color 0.3s; 
+            color: #333; 
+            font-weight: 500; 
+            text-decoration: none; 
+            position: relative; 
+            transition: color 0.3s; 
         }
 
-        /* FOOTER */
+        /* ====================================
+           FOOTER (RESTURADO DO INDEX.HTML)
+           ==================================== */
         footer {
             background:white; 
             padding:40px 20px; 
@@ -366,21 +407,80 @@
             border-top:1px solid #DDD;
             margin-top: auto; 
         }
+        .footer-logo-container {
+            display: block;
+            margin: 0 auto 15px; 
+            text-align: center;
+        }
         .footer-logo-container img {
             height: 60px; 
             width: 180px; 
             object-fit: contain;
         }
+        .footer-content-grid {
+            max-width: 1200px; 
+            margin: 0 auto 30px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            text-align: left;
+            gap: 30px;
+            flex-wrap: wrap; 
+        }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+            padding: 0 10px;
+        }
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #C7A96B; 
+            padding-bottom: 5px;
+        }
+        .footer-col a {
+            color: #555;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 5px 0;
+            transition: color 0.3s;
+            display: block;
+        }
+        .footer-col a:hover {
+            color: #C7A96B;
+        }
+        .footer-social-contact a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .footer-social-contact i {
+            color: #C7A96B;
+            font-size: 1rem;
+        }
         .footer-bottom-line {
-            padding-top: 20px; border-top: 1px solid #EEE; color: #999;
-            font-size: 0.85rem; text-align: center;
+            padding-top: 20px; 
+            border-top: 1px solid #EEE; 
+            color: #999;
+            font-size: 0.85rem; 
+            text-align: center;
+        }
+        .footer-bottom-line p {
+            margin: 5px 0;
+        }
+        .footer-bottom-line .copyright {
+            font-size: 0.9rem;
+            color: #666;
         }
     </style>
 </head>
 
-<body id="top" style="background-image: url('images/4gallery.jpg'); background-size: cover; background-attachment: fixed;">
-
-<header>
+<body id="top"> <header>
   <div class="header-container">
     
     <div class="header-top-row">
@@ -551,6 +651,11 @@
             localStorage.setItem('language', lang);
             currentLang = lang;
             updateTexts(lang);
+            // Atualiza o texto da mensagem de erro se estiver visível
+            const errorMessageElement = document.getElementById('error-message');
+            if (errorMessageElement.textContent) {
+                errorMessageElement.textContent = window.translations[lang]['errorDefault'];
+            }
         }
 
         window.toggleMenu = function() {

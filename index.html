@@ -550,6 +550,7 @@
         border-top: none;
     }
 
+    /* Regra global do título de seção */
     .section-title {
         font-family:'Playfair Display', serif;
         font-size:2.8rem;
@@ -573,10 +574,10 @@
 
 
     /* ===============================
-       SECTION SERVICES
+       SECTION SERVICES (CARROSSEL)
     ================================ */
     #services {
-        background-image: url('images/tijolo_bg.jpeg'); 
+        background-image: url('images/service_bg.jpg'); 
         background-attachment: fixed; 
         background-position: center;
         background-repeat: no-repeat;
@@ -585,60 +586,77 @@
         color: #FFF;
     }
     
-    /* OVERLAY COM DEGRADÊ (AJUSTADO NOVAMENTE PARA CLAREAR) */
+    /* OVERLAY COM DEGRADÊ */
     #services::before {
         content: '';
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
         z-index: 1;
-        /* ALTERADO: Valores de opacidade (0.6 -> 0.4 e 0.2 -> 0.1) */
         background-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.1) 0%, /* Clareado */
-            rgba(0, 0, 0, 0.4) 30%, /* Clareado */
-            rgba(0, 0, 0, 0.4) 70%, /* Clareado */
-            rgba(0, 0, 0, 0.1) 100% /* Clareado */
+            /* Deixa o topo mais transparente para clarear o título */
+            to bottom,
+            rgba(0, 0, 0, 0.0) 0%,   
+            rgba(0, 0, 0, 0.0) 25%,  
+            rgba(0, 0, 0, 0.3) 50%,  
+            rgba(0, 0, 0, 0.4) 100% 
         );
+        background-blend-mode: multiply; 
     }
+
     
     #services > .content-max-width {
         position: relative;
         z-index: 2;
     }
 
+    /* CORREÇÃO: Removendo o text-shadow para o título ficar limpo como os demais */
     #services .section-title {
         color: #C7A96B; 
+        text-shadow: none; /* Removendo o text-shadow forte */
     }
     
-    /* SERVICES CARDS */
-    .service-cards-container {
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        margin: 0 -17.5px; 
+    /* * ALTERAÇÃO AQUI: Remoção do text-shadow do subtítulo, mantendo a cor #333 
+    */
+    #services .section-subtitle {
+        /* text-shadow: 0 0 4px rgba(0, 0, 0, 0.6); <- LINHA REMOVIDA */
+        color: #333; 
     }
 
+    
+    .carousel-container {
+        position: relative;
+        max-width: 1080px; 
+        margin: 0 auto;
+        padding: 0 45px; 
+    }
+    
+    /* Viewport (Corta o excesso) */
+    .carousel-viewport {
+        overflow: hidden; 
+    }
+
+    /* Container dos Cards (o que será transladado) */
+    .service-cards-carousel {
+        display: flex; 
+        flex-wrap: nowrap; 
+        transition: transform 0.5s ease-in-out; 
+        margin: 0 -17.5px; 
+        padding-bottom: 20px;
+    }
+
+    /* SERVICES CARDS */
     .card-style {
         background: rgba(255, 255, 255, 0.95);
-        width: 330px;
-        margin: 0 17.5px 35px 17.5px; 
+        flex: 0 0 330px; 
+        width: 330px; 
+        margin: 0 17.5px; 
         border-radius:0;
         overflow:hidden;
         box-shadow:0 6px 18px rgba(0,0,0,0.3);
         transition:.3s;
+        min-height: 520px; /* Adicionado para garantir o espaço vertical do texto */
     }
     
-    @media (max-width: 1100px) {
-        .card-style {
-            width: calc(50% - 35px); 
-        }
-    }
-    @media (max-width: 700px) {
-        .card-style {
-            width: calc(100% - 35px); 
-        }
-    }
-
     .card-style:hover {
         transform: translateY(-5px);
         box-shadow:0 8px 20px rgba(0,0,0,0.5);
@@ -650,7 +668,7 @@
         object-fit:cover;
     }
     .card-content {
-        padding:25px;
+        padding:25px; 
     }
     .card-content h3 {
         font-family:'Playfair Display', serif; 
@@ -660,8 +678,63 @@
     }
     .card-content p {
         color:#555; 
-        line-height:1.6;
+        line-height:1.7; 
+        font-size: 0.95rem; /* REDUÇÃO DA FONTE para ajudar a caber o texto */
         margin: 0;
+    }
+
+    /* Estilização dos Botões de Navegação */
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(199, 169, 107, 0.85); 
+        color: #FFF;
+        border: none;
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10; 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .carousel-btn:hover {
+        background: #C7A96B;
+        transform: translateY(-50%) scale(1.05);
+    }
+    
+    .carousel-btn.prev-btn {
+        left: 0;
+    }
+
+    .carousel-btn.next-btn {
+        right: 0;
+    }
+    
+    /* Media Query para Mobile (Scroll Horizontal) */
+    @media (max-width: 768px) {
+        .carousel-btn {
+            display: none;
+        }
+        .carousel-container {
+            padding: 0 10px; 
+        }
+        .service-cards-carousel {
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start; 
+        }
+        .card-style {
+            flex: 0 0 85%; 
+            width: 85%;
+            margin: 0 15px; 
+            scroll-snap-align: center; 
+            min-height: initial; /* Remove a altura mínima no mobile */
+        }
     }
 
 
@@ -1059,56 +1132,73 @@
   <div class="content-max-width">
     
     <h2 class="section-title" data-translate="services-title">Our Project Management Services</h2>
+    <p class="section-subtitle" data-translate="contact-subtitle" style="margin-bottom: 50px; opacity: 0.9;">
+        Start transforming your project today. Excellence in management from start to finish.
+    </p>
 
-    <div class="service-cards-container">
+    <div class="carousel-container">
+        
+        <button class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
 
-      <div class="card-style">
-        <img src="images/pm22.jpg" alt="Project Initiation and Scope Definition">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service1-title">Initiation & Scope</h3>
-          <p data-translate="service1-text">We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.</p>
+        <div class="carousel-viewport">
+            <div class="service-cards-carousel"> 
+                
+                <div class="card-style">
+                    <img src="images/pm22.jpg" alt="Project Initiation and Scope Definition">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service1-title">Initiation & Scope</h3>
+                    <p data-translate="service1-text">We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.</p>
+                    </div>
+                </div>
+
+                <div class="card-style">
+                    <img src="images/pm24.png" alt="Project Schedules and Time Management">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service2-title">Schedules & Time Management</h3>
+                    <p data-translate="service2-text">We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="card-style">
+                    <img src="images/pm23.jpg" alt="Risk Management and Quality Control">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service3-title">Risk & Quality</h3>
+                    <p data-translate="service3-text">We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.</p>
+                    </div>
+                </div>
+
+                <div class="card-style">
+                    <img src="images/pm30.jpg" alt="Stakeholder and Communication Management">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service4-title">Stakeholders</h3>
+                    <p data-translate="service4-text">We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.</p>
+                    </div>
+                </div>
+
+                <div class="card-style">
+                    <img src="images/pm25.jpg" alt="Budget and Cost Control">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service5-title">Budget & Cost Control</h3>
+                    <p data-translate="service5-text">We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.</p>
+                    </div>
+                </div>
+
+                <div class="card-style">
+                    <img src="images/pm26.jpg" alt="Final Project Delivery and Closure">
+                    <div class="card-content">
+                    <h3 role="heading" aria-level="3" data-translate="service6-title">Final Delivery</h3>
+                    <p data-translate="service6-text">We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.</p>
+                    </div>
+                </div>
+            
+            </div>
         </div>
-      </div>
 
-      <div class="card-style">
-        <img src="images/pm24.png" alt="Project Schedules and Time Management">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service2-title">Schedules & Time Management</h3>
-          <p data-translate="service2-text">We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.</p>
-        </div>
-      </div>
-
-      <div class="card-style">
-        <img src="images/pm23.jpg" alt="Risk Management and Quality Control">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service3-title">Risk & Quality</h3>
-          <p data-translate="service3-text">We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.</p>
-        </div>
-      </div>
-
-      <div class="card-style">
-        <img src="images/pm30.jpg" alt="Stakeholder and Communication Management">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service4-title">Stakeholders</h3>
-          <p data-translate="service4-text">We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.</p>
-        </div>
-      </div>
-
-      <div class="card-style">
-        <img src="images/pm25.jpg" alt="Budget and Cost Control">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service5-title">Budget & Cost Control</h3>
-          <p data-translate="service5-text">We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.</p>
-        </div>
-      </div>
-
-      <div class="card-style">
-        <img src="images/pm26.jpg" alt="Final Project Delivery and Closure">
-        <div class="card-content">
-          <h3 role="heading" aria-level="3" data-translate="service6-title">Final Delivery</h3>
-          <p data-translate="service6-text">We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.</p>
-        </div>
-      </div>
+        <button class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
 
     </div>
   </div>
@@ -1381,7 +1471,7 @@ const translations = {
         'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **riesgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
         'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantemos **comunicación** transparente e constante con todos los involucrados. Preparamos informes de estado claros e gerenciamos las expectativas de las **partes interesadas** para garantir a satisfação e colaboração continuas.',
         'service5-title': 'Presupuesto y Costos', 'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caixa e utilizamos técnicas de Valor Ganado (EVA) para asegurar que o projeto se complete dentro de las restricciones financieras.',
-        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **leções aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lições aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
         'testimonials-title': 'Testimonios de Clientes',
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
         'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
@@ -1500,6 +1590,54 @@ dots.forEach(dot => {
 // Initial calls
 showSlide(0); 
 
+// ============================
+// Carousel de Serviços (AJUSTADO)
+// ============================
+const carousel = document.querySelector('.service-cards-carousel');
+const cards = document.querySelectorAll('.service-cards-carousel .card-style');
+const totalCards = cards.length;
+const cardsPerView = 3; // O número de cards que queremos exibir completamente
+let carouselIndex = 0; 
+let cardWidth = 0; 
+
+function updateCardWidth() {
+    if (cards.length > 0) {
+        const cardRect = cards[0].getBoundingClientRect();
+        const style = window.getComputedStyle(cards[0]);
+        const marginLeft = parseFloat(style.marginLeft);
+        const marginRight = parseFloat(style.marginRight);
+        
+        // Largura total de um card, incluindo suas margens
+        cardWidth = cardRect.width + marginLeft + marginRight; 
+    }
+}
+
+
+window.moveCarousel = function(direction) {
+    if (window.innerWidth <= 768) return; // Desativa a navegação por botões no mobile
+
+    updateCardWidth();
+
+    carouselIndex += direction;
+    
+    // O último índice válido é quando o primeiro card visível é o 'totalCards - cardsPerView'
+    const maxIndex = totalCards - cardsPerView; 
+
+    if (carouselIndex < 0) {
+        carouselIndex = 0;
+    } else if (carouselIndex > maxIndex) { 
+        carouselIndex = maxIndex; 
+    }
+
+    // Calcula a posição de translação. Move pela largura total do card * o índice.
+    const offset = -carouselIndex * cardWidth;
+    
+    if (carousel) {
+        carousel.style.transform = `translateX(${offset}px)`;
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const initialLang = localStorage.getItem('language') || 'en';
     window.setLanguage(initialLang); 
@@ -1511,6 +1649,18 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', toggleMenu);
         });
     }
+
+    // Chamada inicial do carrossel para posicionar corretamente (currentIndex=0)
+    updateCardWidth();
+    window.moveCarousel(0); 
+});
+
+// Adiciona um listener para atualizar a largura quando a tela for redimensionada
+window.addEventListener('resize', () => {
+    // Atraso para garantir que o DOM já se ajustou e forçar um novo cálculo de posição
+    setTimeout(() => {
+        window.moveCarousel(0);
+    }, 100); 
 });
 </script>
 </body>

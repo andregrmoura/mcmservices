@@ -8,12 +8,35 @@
  * 5. [MUDANÇA] Slogan (.hero-slogan) removido.
  * 6. [MUDANÇA] Bloco de texto do Hero elevado (não mais centralizado).
  * 7. [MUDANÇA] Aumentado espaço acima do botão do hero (margin-bottom do <p>).
+ * * 🟢 CORREÇÃO 1: Sobreposição dos indicadores de slide (z-index).
+ * 🟢 CORREÇÃO 2: Inclusão de estilos de borda das bandeiras (para consistência).
 */
 
 /* Regra global para previnir estouro de texto */
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+/* =================================================
+ESTILOS DO HEADER (INCLUÍDOS DO LOGIN.HTML PARA CONSISTÊNCIA)
+=================================================
+*/
+
+/* 🟢 CORREÇÃO 2: Estilos das bandeiras (Botões de Idioma) */
+.lang-switcher img, .mobile-nav-flags img {
+    width: 25px; 
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid #AAA; /* Borda Padrão */
+    cursor: pointer;
+    opacity: 0.8;
+    transition: .2s;
+}
+.lang-switcher img.active, .mobile-nav-flags img.active {
+    opacity: 1;
+    border: 2px solid #C7A96B; /* Borda Ativa */
+    box-shadow: 0 0 6px rgba(199,169,107,0.7);
 }
 
 /* =================================================
@@ -114,7 +137,7 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   animation: kenBurns 15s ease-out forwards; /* Duração de 15s (sincronizada com o JS) */
 }
 
-/* --- [SUGESTÃO 1 APLICADA] OVERLAY MAIS ESCURO --- */
+/* --- OVERLAY MAIS ESCURO --- */
 .hero-overlay {
   position: absolute;
   top: 0;
@@ -166,10 +189,6 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
 /* --- FIM DAS MUDANÇAS --- */
 
 
-/* * Regras .hero-slogan foram removidas 
-*/
-
-
 /* Estilos do Texto e Botão */
 .hero-content h1 {
   font-family: 'Playfair Display', serif; 
@@ -183,8 +202,6 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   font-family: 'Montserrat', sans-serif; 
   font-weight: 400; 
   font-size: 1.1rem; 
-  /* 👇 MUDANÇA APLICADA AQUI 👇
-  */
   margin: 0 0 40px 0; /* Espaçamento inferior aumentado de 25px para 40px */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -205,7 +222,7 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   opacity: 0.7; 
 }
 
-/* --- [SUGESTÃO 2 APLICADA] Botão Preto com Borda Laranja e Sombra --- */
+/* Botão Preto com Borda Laranja e Sombra */
 .hero-content button { 
   background: #000000; /* Fundo PRETO */
   color: white; /* Texto BRANCO */
@@ -219,13 +236,12 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   z-index: 10; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); /* Sombra mais intensa */
 }
-/* --- [SUGESTÃO 2 APLICADA] Efeito de hover mais sutil no botão --- */
 .hero-content button:hover { 
   background: #333333; 
   color: white; 
   border-color: #f57c00; 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-  transform: scale(1.03); /* [SUGESTÃO 2 APLICADA] Leve zoom no hover */
+  transform: scale(1.03); /* Leve zoom no hover */
 }
 
 
@@ -235,7 +251,8 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 4;
+  /* 🟢 CORREÇÃO 1: Z-index elevado para garantir visibilidade sobre o slide */
+  z-index: 50; 
   display: flex;
   gap: 10px;
 }
@@ -246,6 +263,8 @@ INÍCIO DOS NOVOS ESTILOS DO HERO SLIDER
   background-color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  /* 🟢 CORREÇÃO 1: Garante que os pontos individuais estejam no topo */
+  z-index: 55;
 }
 .nav-dot:hover {
   background-color: rgba(255, 255, 255, 0.8);
@@ -372,7 +391,7 @@ footer .footer-tagline {
   padding: 0 !important;
 }
 
-/* 👇 NOVA REGRA CSS para remover o negrito apenas do texto do Client Login (Mantida aqui para garantir prioridade) */
+/* NOVA REGRA CSS para remover o negrito apenas do texto do Client Login (Mantida aqui para garantir prioridade) */
 .client-login-item .login-text {
     font-weight: normal; /* Define a fonte para peso normal */
 }
