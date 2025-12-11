@@ -683,7 +683,7 @@
     
     <script type="module">
         // ===============================================
-        // LÓGICA DO FIREBASE (CORRIGIDA COM CONFIGURAÇÃO REAL)
+        // IMPORTAÇÕES DO FIREBASE (Versões CDN)
         // ===============================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
@@ -693,12 +693,11 @@
             browserSessionPersistence
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         
-        // Importa o Firestore
-        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Importa o Firestore e os métodos de documento
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 
-        // 🟢 CONFIGURAÇÃO REAL DO FIREBASE - USANDO OS VALORES FORNECIDOS
-        // (A chave 'apiKey' foi ajustada para o formato correto que inicia com 'AIzaSy...')
+        // 🔑 CONFIGURAÇÃO DO FIREBASE (Sua API Key)
         const firebaseConfig = {
              apiKey: "AIzaSyAw4bA0M8bc8Qt0fvS5xmc2SBYQkxTVR7g", 
              authDomain: "mcm-services-corp.firebaseapp.com", 
@@ -728,7 +727,8 @@
             const getLangDict = (lang) => window.translations && window.translations[lang] ? window.translations[lang] : window.translations['en'];
             const langDict = getLangDict(currentLang);
             
-            errorMessageElement.textContent = langDict.errorDefault + ' (' + (e.code || e.message) + ')';
+            // Exibe mensagem de erro crítico se a inicialização falhar (provavelmente devido a API Key)
+            errorMessageElement.textContent = langDict.errorMissingAPIKey; 
             console.error("Firebase initialization failed:", e.code || e.message);
             if (loginForm) loginForm.querySelector('button').disabled = true;
         }
@@ -777,35 +777,41 @@
                 
                 try {
                     // 1. AUTENTICAÇÃO (Auth)
+                    // Se houver falha aqui (senha ou e-mail errado), ele CAI no bloco catch.
                     await setPersistence(auth, browserSessionPersistence);
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
                     
-                    // 2. VERIFICAÇÃO NO FIRESTORE (DB)
-                    const clientCollectionRef = collection(db, "Client");
-                    let foundClient = false;
+                    // O UID DO USUÁRIO
+                    const clientUID = user.uid;
                     
-                    const querySnapshot = await getDocs(clientCollectionRef);
+                    // 2. BUSCA NO FIRESTORE (DB) - Usando o UID como Client ID, conforme suas regras
                     
-                    for (const clientDoc of querySnapshot.docs) {
-                        const projectsSubCollectionRef = collection(db, `Client/${clientDoc.id}/projects`);
+                    let foundProject = false;
+                    
+                    // TENTA acessar o documento Client/{UID} (Obrigatório pela sua regra de segurança)
+                    const clientDocRef = doc(db, "Client", clientUID);
+                    const clientDocSnap = await getDoc(clientDocRef);
+
+                    if (clientDocSnap.exists()) {
+                        
+                        // O documento Client/{UID} existe. Agora verifica a subcoleção 'projects'
+                        const projectsSubCollectionRef = collection(db, `Client/${clientUID}/projects`);
                         const projectsQuery = query(projectsSubCollectionRef, where("email", "==", email));
                         const projectsSnapshot = await getDocs(projectsQuery);
                         
                         if (!projectsSnapshot.empty) {
-                            foundClient = true;
+                            foundProject = true;
                             
                             // Salva IDs e dados do cliente para o portal
-                            localStorage.setItem('clientId', clientDoc.id);
+                            localStorage.setItem('clientId', clientUID);
                             localStorage.setItem('projectId', projectsSnapshot.docs[0].id); 
                             localStorage.setItem('clientData', JSON.stringify(projectsSnapshot.docs[0].data()));
-
-                            break; 
                         }
-                    }
-
-                    if (!foundClient) {
-                        // Usuário autenticado, mas não tem dados no Firestore correspondentes ao e-mail
+                    } 
+                    
+                    if (!foundProject) {
+                        // Usuário logado no Auth, mas não tem documento de projeto correspondente
                         throw new Error("firestore/user-not-found-in-db");
                     }
                     

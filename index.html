@@ -43,6 +43,19 @@
     body.menu-open {
         overflow: hidden;
     }
+    
+    /* --- ESTILIZAÇÃO DE BARRA DE ROLAGEM CUSTOMIZADA --- */
+    
+    /* Para navegadores baseados em WebKit (Chrome, Safari, Edge) */
+    .service-cards-carousel::-webkit-scrollbar {
+        display: none; /* Oculta a barra de rolagem */
+    }
+    
+    /* Para Firefox */
+    .service-cards-carousel {
+        scrollbar-width: none; /* Oculta a barra (moderno) */
+        -ms-overflow-style: none; /* Oculta a barra (IE e Edge antigo) */
+    }
 
     /* ====================================
     HEADER (SEMI-TRANSPARENTE E ABSOLUTO)
@@ -131,13 +144,15 @@
     .lang-switcher img {
       width: 25px; 
       height: 18px;
-      border-radius: 3px;
+      border-radius: 3px; /* RESTAURADO PARA CANTOS SUAVES */
       border: 1px solid #AAA;
       cursor: pointer;
       opacity: 0.8;
       transition: .2s;
     }
-    .lang-switcher img.active {
+    
+    /* [CORRIGIDO] Aplica o estilo de ativação (borda dourada/sombra) ao switcher mobile */
+    .lang-switcher img.active, .mobile-nav-flags img.active { 
       opacity: 1;
       border: 2px solid #C7A96B;
       box-shadow: 0 0 6px rgba(199,169,107,0.7);
@@ -332,6 +347,75 @@
         .mobile-nav-flags img {
             width: 30px;
             height: 20px;
+            border-radius: 3px; /* RESTAURADO PARA CANTOS SUAVES */
+        }
+
+        /* --- CORREÇÃO DA SESSÃO SERVICES (Responsividade do Background) --- */
+        #services {
+            /* Define attachment como scroll (padrão) no mobile 
+               para evitar bugs de parallax e garantir cover responsivo */
+            background-attachment: scroll; 
+            /* Garante que o cover seja aplicado no mobile */
+            background-size: cover; 
+            padding: 60px 20px;
+        }
+        
+        /* --- HABILITAÇÃO DOS BOTÕES NO MOBILE E AJUSTE DE POSIÇÃO --- */
+        .carousel-btn {
+            display: block; /* Tornar visível */
+            top: 50%;
+            /* Ajusta a posição para não interferir na rolagem manual */
+            z-index: 10; 
+            background: rgba(199, 169, 107, 0.75);
+            width: 35px;
+            height: 35px;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+        .carousel-btn.prev-btn {
+            left: 5px; /* Mais próximo da borda */
+        }
+        .carousel-btn.next-btn {
+            right: 5px; /* Mais próximo da borda */
+        }
+        
+        .carousel-container {
+            padding: 0 10px; 
+        }
+        .service-cards-carousel {
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start; 
+        }
+        .card-style {
+            flex: 0 0 85%; 
+            width: 85%;
+            margin: 0 15px; 
+            scroll-snap-align: center; 
+            min-height: initial; /* Remove a altura mínima no mobile */
+        }
+        
+        /* --- CORREÇÃO DE CENTRALIZAÇÃO DA SEÇÃO ABOUT NO MOBILE --- */
+        .about-content {
+            /* No mobile (que é também abaixo de 900px), força centralização total */
+            flex-direction: column;
+            align-items: center; /* CENTRALIZA A IMAGEM E O BLOCO DE TEXTO */
+            text-align: center; 
+        }
+        .about-content img {
+            margin: 0 auto; /* GARANTE QUE A IMAGEM SEJA CENTRALIZADA COMO UM BLOCO */
+            display: block; /* Garante que a imagem se comporte como um bloco para margin: auto */
+        }
+        .about-text {
+            /* Garante que o bloco de texto interno centre seus filhos */
+            align-items: center; 
+        }
+        .about-text h2 {
+            text-align: center !important; /* Centraliza o título no mobile */
+        }
+        .about-text p {
+            text-align: center; /* Centraliza os parágrafos no mobile */
         }
     }
 
@@ -486,7 +570,8 @@
     /* Slider nav dots */
     .hero-dots {
       position:absolute;
-      bottom:22px;
+      /* AJUSTE: Move os dots para cima no mobile para evitar sobreposição */
+      bottom:22px; 
       left:50%;
       transform:translateX(-50%);
       display:flex;
@@ -522,10 +607,16 @@
         .hero-cta-buttons {
             flex-direction: column;
             gap: 15px;
+            /* ADICIONA MARGEM INFERIOR PARA AFASTAR DOS DOTS */
+            margin-bottom: 25px; 
         }
         .hero-btn {
             width: 80%;
             margin: 0 auto;
+        }
+        
+        .hero-dots {
+            bottom: 30px; /* Reforça a posição mais alta no mobile */
         }
     }
 
@@ -538,11 +629,19 @@
         box-sizing: border-box;
     }
 
+    /* [MODIFICADO] Padronizando o padding-top/bottom de Testimonials e Contact */
     #contact {
         padding-top: 50px;
         padding-bottom: 50px;
     }
     
+    #testimonials {
+        padding-top: 50px; /* Reduzido de 80px para 50px */
+        padding-bottom: 50px; /* Alinhando o espaço inferior com a seção de contato */
+    }
+    /* [FIM MODIFICADO] */
+
+
     #about, #testimonials, #contact {
         border-top: 1px solid #DDD; 
     }
@@ -570,6 +669,7 @@
     .content-max-width {
         max-width:1200px;
         margin:auto;
+        padding: 0 20px; /* Adicionado padding para o conteúdo principal */
     }
 
 
@@ -578,10 +678,10 @@
     ================================ */
     #services {
         background-image: url('images/service_bg.jpg'); 
-        background-attachment: fixed; 
+        background-attachment: fixed; /* DESKTOP: Parallax */
         background-position: center;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: cover; /* ESSENCIAL PARA RESPONSIVIDADE */
         position: relative; 
         color: #FFF;
     }
@@ -716,9 +816,26 @@
     
     /* Media Query para Mobile (Scroll Horizontal) */
     @media (max-width: 768px) {
+        
+        /* [ALTERAÇÃO AQUI] Botões visíveis e reposicionados no mobile */
         .carousel-btn {
-            display: none;
+            display: block; /* Tornar visível */
+            top: 50%;
+            /* Ajusta a posição para não interferir na rolagem manual */
+            z-index: 10; 
+            background: rgba(199, 169, 107, 0.75);
+            width: 35px;
+            height: 35px;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
         }
+        .carousel-btn.prev-btn {
+            left: 5px; /* Mais próximo da borda */
+        }
+        .carousel-btn.next-btn {
+            right: 5px; /* Mais próximo da borda */
+        }
+        
         .carousel-container {
             padding: 0 10px; 
         }
@@ -735,6 +852,28 @@
             scroll-snap-align: center; 
             min-height: initial; /* Remove a altura mínima no mobile */
         }
+        
+        /* --- CORREÇÃO DE CENTRALIZAÇÃO DA SEÇÃO ABOUT NO MOBILE --- */
+        .about-content {
+            /* No mobile (que é também abaixo de 900px), força centralização total */
+            flex-direction: column;
+            align-items: center; /* CENTRALIZA A IMAGEM E O BLOCO DE TEXTO */
+            text-align: center; 
+        }
+        .about-content img {
+            margin: 0 auto; /* GARANTE QUE A IMAGEM SEJA CENTRALIZADA COMO UM BLOCO */
+            display: block; /* Garante que a imagem se comporte como um bloco para margin: auto */
+        }
+        .about-text {
+            /* Garante que o bloco de texto interno centre seus filhos */
+            align-items: center; 
+        }
+        .about-text h2 {
+            text-align: center !important; /* Centraliza o título no mobile */
+        }
+        .about-text p {
+            text-align: center; /* Centraliza os parágrafos no mobile */
+        }
     }
 
 
@@ -748,7 +887,7 @@
         flex-wrap:wrap;
         justify-content:center;
         gap:35px;
-        align-items:flex-start; 
+        align-items:flex-start; /* Alinhamento superior no desktop */
     }
     .about-content img {
         width:250px;
@@ -756,9 +895,14 @@
         object-fit:cover;
         border-radius:4px;
         flex-shrink: 0;
+        display: block; /* Torna a imagem um bloco para que margin: auto funcione */
     }
     .about-text {
         max-width: 650px;
+        /* Adicionado para ajudar na centralização do conteúdo interno no mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
     }
     .about-text h2 {
         font-family:'Playfair Display', serif;
@@ -766,10 +910,10 @@
         font-weight:400;
         color:#C7A96B;
         margin:0 0 20px 0;
-        text-align:left !important; 
+        text-align:left; /* Definido para o layout desktop */
     }
     .about-text p {
-        text-align:left;
+        text-align:left; /* Definido para o layout desktop */
     }
     .certifications {
         display:flex; 
@@ -1273,7 +1417,7 @@
   
   <h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Request a Project Estimate</h2>
 
-  <p class="section-subtitle" data-translate="contact-subtitle" style="text-align: center;">
+  <p class="section-subtitle" style="text-align: center;" data-translate="contact-subtitle">
     Start transforming your project today. Excellence in management from start to finish.
   </p>
 
@@ -1490,6 +1634,12 @@ let currentLang = localStorage.getItem('language') || 'en';
 const supportedLangs = ['en', 'pt', 'es'];
 
 
+// ============================
+// Dynamic Year
+// ============================
+document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+
 // ===================================
 // 2. FUNÇÕES GERAIS E DE TRADUÇÃO
 // ===================================
@@ -1517,20 +1667,23 @@ function updateTexts(lang) {
 }
 
 function highlightLanguage(lang) {
-    document.querySelectorAll('.lang-switcher img').forEach(img => {
+    // A função highlightLanguage foi incorporada e melhorada na setLanguage
+}
+
+window.setLanguage = function(lang) {
+    if (!translations[lang]) { lang = 'en'; }
+    localStorage.setItem('language', lang);
+    currentLang = lang;
+    updateTexts(lang);
+    
+    // [CORREÇÃO AQUI] Atualiza o estado ativo de todas as bandeiras (desktop e mobile)
+    document.querySelectorAll('.lang-switcher img, .mobile-nav-flags img').forEach(img => {
         img.classList.remove("active");
         if (img.getAttribute('data-lang') === lang) {
             img.classList.add("active");
         }
     });
-}
-
-window.setLanguage = function(lang) {
-    if (!supportedLangs.includes(lang)) { lang = 'en'; }
-    localStorage.setItem('language', lang);
-    currentLang = lang;
-    updateTexts(lang);
-    highlightLanguage(lang);
+    
     document.documentElement.lang = lang;
 }
 
@@ -1591,46 +1744,75 @@ dots.forEach(dot => {
 showSlide(0); 
 
 // ============================
-// Carousel de Serviços (AJUSTADO)
+// Carousel de Serviços (AJUSTADO E CORRIGIDO)
 // ============================
 const carousel = document.querySelector('.service-cards-carousel');
 const cards = document.querySelectorAll('.service-cards-carousel .card-style');
 const totalCards = cards.length;
-const cardsPerView = 3; // O número de cards que queremos exibir completamente
-let carouselIndex = 0; 
-let cardWidth = 0; 
-
-function updateCardWidth() {
-    if (cards.length > 0) {
-        const cardRect = cards[0].getBoundingClientRect();
-        const style = window.getComputedStyle(cards[0]);
-        const marginLeft = parseFloat(style.marginLeft);
-        const marginRight = parseFloat(style.marginRight);
-        
-        // Largura total de um card, incluindo suas margens
-        cardWidth = cardRect.width + marginLeft + marginRight; 
-    }
-}
-
+const cardsPerView = 3; 
 
 window.moveCarousel = function(direction) {
-    if (window.innerWidth <= 768) return; // Desativa a navegação por botões no mobile
-
-    updateCardWidth();
-
-    carouselIndex += direction;
     
-    // O último índice válido é quando o primeiro card visível é o 'totalCards - cardsPerView'
+    // NAVEGAÇÃO MOBILE (Móvel por Scroll)
+    if (window.innerWidth <= 768) {
+        // Usa o elemento que tem o overflow (o próprio .service-cards-carousel)
+        const scrollContainer = carousel; 
+        const card = cards[0]; // Pega o primeiro card como referência
+        
+        if (!scrollContainer || !card) return;
+        
+        const cardStyle = window.getComputedStyle(card);
+        const marginH = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+        const cardWidthMobile = card.offsetWidth + marginH; 
+        
+        const newScroll = scrollContainer.scrollLeft + (direction * cardWidthMobile);
+
+        // O scroll é aplicado diretamente no elemento .service-cards-carousel
+        scrollContainer.scrollTo({ 
+            left: newScroll,
+            behavior: 'smooth'
+        });
+        return; 
+    }
+    
+    // NAVEGAÇÃO DESKTOP (Móvel por Transform)
+    if (cards.length === 0) return;
+
+    // Recalcula a largura do card com margem (necessário para garantir precisão)
+    const cardElement = cards[0];
+    const cardStyle = window.getComputedStyle(cardElement);
+    const marginH = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+    const cardWidth = cardElement.offsetWidth + marginH;
+    
+    // Tenta obter o índice atual da transformação
+    let currentCarouselIndex = 0;
+    if (carousel && carousel.style.transform) {
+        const transformValue = carousel.style.transform;
+        const matrixMatch = transformValue.match(/matrix\(([^)]+)\)/);
+        if (matrixMatch) {
+            // O valor de translação X está na 5ª posição (índice 4) da matrix 2D
+            const values = matrixMatch[1].split(',').map(v => parseFloat(v.trim()));
+            const currentOffset = values[4] || 0; 
+            if (cardWidth > 0) {
+                 // Estima o índice atual
+                 currentCarouselIndex = Math.round(Math.abs(currentOffset) / cardWidth);
+            }
+        }
+    } 
+    
+    currentCarouselIndex += direction;
+    
+    // O último índice que o primeiro card pode assumir é (totalCards - cardsPerView)
     const maxIndex = totalCards - cardsPerView; 
 
-    if (carouselIndex < 0) {
-        carouselIndex = 0;
-    } else if (carouselIndex > maxIndex) { 
-        carouselIndex = maxIndex; 
+    if (currentCarouselIndex < 0) {
+        currentCarouselIndex = 0;
+    } else if (currentCarouselIndex > maxIndex) { 
+        currentCarouselIndex = maxIndex; 
     }
 
-    // Calcula a posição de translação. Move pela largura total do card * o índice.
-    const offset = -carouselIndex * cardWidth;
+    // Aplica a translação
+    const offset = -currentCarouselIndex * cardWidth;
     
     if (carousel) {
         carousel.style.transform = `translateX(${offset}px)`;
@@ -1651,7 +1833,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Chamada inicial do carrossel para posicionar corretamente (currentIndex=0)
-    updateCardWidth();
     window.moveCarousel(0); 
 });
 
@@ -1659,7 +1840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', () => {
     // Atraso para garantir que o DOM já se ajustou e forçar um novo cálculo de posição
     setTimeout(() => {
-        window.moveCarousel(0);
+        window.moveCarousel(0); 
     }, 100); 
 });
 </script>
