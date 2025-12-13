@@ -693,11 +693,12 @@
             browserSessionPersistence
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         
-        // Importa o Firestore e os métodos de documento
+        // Importa o Firestore e os métodos de documento (CORREÇÃO DE IMPORTAÇÃO)
         import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 
         // 🔑 CONFIGURAÇÃO DO FIREBASE (Sua API Key)
+        // Se o login falhar, esta chave pode estar INCORRETA/EXPIRADA.
         const firebaseConfig = {
              apiKey: "AIzaSyAw4bA0M8bc8Qt0fvS5xmc2SBYQkxTVR7g", 
              authDomain: "mcm-services-corp.firebaseapp.com", 
@@ -785,11 +786,11 @@
                     // O UID DO USUÁRIO
                     const clientUID = user.uid;
                     
-                    // 2. BUSCA NO FIRESTORE (DB) - Usando o UID como Client ID, conforme suas regras
+                    // 2. BUSCA NO FIRESTORE (DB) - Lógica corrigida para Client ID = UID
                     
                     let foundProject = false;
                     
-                    // TENTA acessar o documento Client/{UID} (Obrigatório pela sua regra de segurança)
+                    // TENTA acessar o documento Client/{UID} (requerido pela sua regra de segurança)
                     const clientDocRef = doc(db, "Client", clientUID);
                     const clientDocSnap = await getDoc(clientDocRef);
 
