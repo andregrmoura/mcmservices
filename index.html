@@ -41,7 +41,7 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
     }
-    /* Classe para travar o scroll no body quando o menu está aberto */
+    /* Classe para travar o scroll no body quando o menu/modal está aberto */
     body.menu-open {
         overflow: hidden;
     }
@@ -412,6 +412,102 @@
             scroll-snap-align: center; 
             min-height: initial;
         }
+    }
+
+    /* ===============================
+    MODAL POPUP (Janela ao Abrir)
+    ================================ */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.75);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; 
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal-content {
+        background-color: #FFF;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        max-width: 450px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+        transform: translateY(-50px);
+        transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.open .modal-content {
+        transform: translateY(0);
+    }
+
+    /* Estilo para a logo dentro do modal */
+    .modal-logo {
+        max-width: 250px; 
+        height: auto;
+        display: block; 
+        margin: 0 auto 15px auto; 
+    }
+
+
+    .modal-content h3 {
+        font-family: 'Playfair Display', serif;
+        color: #C7A96B;
+        font-size: 1.8rem;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .modal-content p {
+        color: #555; 
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .modal-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #AAA;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .modal-close-btn:hover {
+        color: #333;
+    }
+
+    .modal-cta-btn {
+        background: #C7A96B;
+        color: #333;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s;
+        display: inline-block;
+    }
+
+    .modal-cta-btn:hover {
+        background: #b9965e;
+        color: #FFF;
     }
 
 
@@ -1077,6 +1173,25 @@
 
 <body id="top">
 
+<div id="welcomeModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="closeModal()" aria-label="Fechar janela pop-up">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <img src="images/mcmbrand-removebg-preview.png" alt="MCM Services Logo" class="modal-logo">
+        
+        <h3 data-translate="modal-title">Welcome to MCM Services</h3>
+        
+        <p data-translate="modal-text">
+            Schedule an exclusive consultation to discuss your high-end project in Miami.
+        </p>
+        
+        <a href="https://wa.me/17862383386" target="_blank" class="modal-cta-btn" data-translate="modal-btn">
+            Schedule Now
+        </a>
+    </div>
+</div>
 <header>
 <div class="header-container">
     
@@ -1428,20 +1543,19 @@
 
 <script>
 // ============================
-// Dynamic Year
+// 1. OBJETO DE TRADUÇÃO (COMPLETO E ATUALIZADO)
 // ============================
-document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-
-// ===================================
-// 1. OBJETO DE TRADUÇÃO (ATUALIZADO)
-// ===================================
 const translations = {
     'en': {
+        // Modal Pop-up
+        'modal-title': 'Welcome to MCM Services',
+        'modal-text': 'Schedule an exclusive consultation to discuss your high-end project in Miami.',
+        'modal-btn': 'Schedule Now',
+        
         // Hero Titles (Premium)
         'hero1-title': 'Project Management for High-End Homes',
         'hero1-subtitle': 'From concept to completion — seamless coordination and quality control.',
-        'hero2-title': 'Premium Residential Project Oversight', // Removido 'Construction'
+        'hero2-title': 'Premium Residential Project Oversight', 
         'hero2-subtitle': 'Flawless execution delivered with transparency and strategic planning.',
         'hero3-title': 'Structure and Precision for Your Vision',
         'hero3-subtitle': 'Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.',
@@ -1460,7 +1574,7 @@ const translations = {
         'services-title': 'Our Project Management Services',
         'service1-title': 'Initiation & Scope', 'service1-text': 'We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.',
         'service2-title': 'Schedules & Time Management', 'service2-text': 'We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.',
-        'service3-title': 'Risk & Quality', 'service3-3ext': 'We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.',
+        'service3-title': 'Risk & Quality', 'service3-text': 'We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.',
         'service4-title': 'Stakeholders', 'service4-text': 'We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.',
         'service5-title': 'Budget & Cost Control', 'service5-text': 'We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.',
         'service6-title': 'Final Delivery', 'service6-text': 'We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.',
@@ -1477,10 +1591,15 @@ const translations = {
         'footer-copy': 'MCM Services Pro Solutions. All rights reserved.',
     },
     'pt': {
+        // Modal Pop-up
+        'modal-title': 'Bem-vindo(a) à MCM Services',
+        'modal-text': 'Agende uma consulta exclusiva para discutir seu projeto residencial de alto padrão em Miami-Dade ou Broward.',
+        'modal-btn': 'Agendar Agora',
+
         // Hero Titles (Premium)
         'hero1-title': 'Gerenciamento de Projetos para Residências de Alto Padrão',
         'hero1-subtitle': 'Do conceito à conclusão — coordenação e controle de qualidade impecáveis.',
-        'hero2-title': 'Supervisão Premium de Projetos Residenciais', // Removido 'Construção'
+        'hero2-title': 'Supervisão Premium de Projetos Residenciais', 
         'hero2-subtitle': 'Execução impecável entregue com transparência e planejamento estratégico.',
         'hero3-title': 'Estrutura e Precisão para a Sua Visão',
         'hero3-subtitle': 'Mitigação de riscos, controle de orçamento e acabamento de alta qualidade, garantidos.',
@@ -1515,10 +1634,15 @@ const translations = {
         'footer-copy': 'MCM Services Pro Solutions. Todos os direitos reservados.',
     },
     'es': {
+        // Modal Pop-up
+        'modal-title': 'Bienvenido(a) a MCM Services',
+        'modal-text': 'Agende una consulta exclusiva para discutir su proyecto residencial de alta gama en Miami-Dade o Broward.',
+        'modal-btn': 'Agendar Ahora',
+        
         // Hero Titles (Premium)
         'hero1-title': 'Gestión de Proyectos para Residencias de Alta Gama',
         'hero1-subtitle': 'Desde el concepto hasta la finalización — coordinación y control de calidad impecables.',
-        'hero2-title': 'Supervisión Premium de Proyectos Residenciales', // Removido 'Construcción'
+        'hero2-title': 'Supervisión Premium de Proyectos Residenciales', 
         'hero2-subtitle': 'Ejecución impecable entregada con transparencia y planificación estratégica.',
         'hero3-title': 'Estrutura y Precisión para Su Visión',
         'hero3-subtitle': 'Mitigación de riesgos, control de presupuesto y artesanía de alta calidad, garantizados.',
@@ -1618,6 +1742,27 @@ window.toggleMenu = function() {
         // Mudar ícone para X (fechar)
         hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
     }
+}
+
+
+// ======================================
+// MODAL POPUP (Janela ao Abrir) - NOVO!
+// ======================================
+const modal = document.getElementById('welcomeModal');
+    
+function openModal() {
+    // Verifica se o modal já foi exibido nesta sessão
+    if (sessionStorage.getItem('modalShown') !== 'true') {
+        modal.classList.add('open');
+        document.body.classList.add('menu-open'); // Usa a mesma classe para travar o scroll
+    }
+}
+
+window.closeModal = function() {
+    modal.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    // Define que o modal foi exibido para não aparecer novamente na mesma sessão
+    sessionStorage.setItem('modalShown', 'true'); 
 }
 
 
@@ -1755,6 +1900,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Chamada inicial do carrossel para posicionar corretamente (currentIndex=0)
     window.moveCarousel(0); 
+
+    // Abre o modal após um pequeno atraso (ex: 500ms) para carregar a página
+    setTimeout(openModal, 500);
 });
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada

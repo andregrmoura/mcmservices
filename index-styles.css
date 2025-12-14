@@ -10,6 +10,8 @@
  * 7. [MUDANÇA] Aumentado espaço acima do botão do hero (margin-bottom do <p>).
  * * 🟢 CORREÇÃO 1: Sobreposição dos indicadores de slide (z-index).
  * 🟢 CORREÇÃO 2: Inclusão de estilos de borda das bandeiras (para consistência).
+ * 🔴 AJUSTE CARD SERVICE (Desktop): Largura aumentada para 400px.
+ * 🔴 AJUSTE CARD SERVICE (Mobile): Largura ajustada para 96% com margens de 2%.
 */
 
 /* Regra global para previnir estouro de texto */
@@ -295,9 +297,19 @@ main { padding: 0; }
 .about-text h2 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 2.2rem; margin-top: 0; margin-bottom: 20px; text-align: center; color: #B8860B; /* MODIFICADO: Dourado */ text-shadow: none; }
 .contact h2 { font-size: 2.2rem; margin-bottom: 20px;}
 
-/* Cards de Serviço */
-.service-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 25px auto 0 auto; position: relative; z-index: 2; }
-.card { background: white; border-radius: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; flex: 1 1 300px; max-width: 350px; opacity: 0; transition: transform 0.3s, box-shadow 0.3s, opacity 1s; z-index: 2; }
+/* Cards de Serviço (Desktop) */
+.service-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 25px auto 0 auto; position: relative; z-index: 2; 
+    /* AJUSTE PARA O CARROSSEL (Permite que cards vazem para o carrossel se aplicável) */
+    max-width: 1250px; 
+    margin: 25px auto 0 auto; 
+    gap: 50px; /* Aumenta o espaçamento entre cards */
+}
+.card { background: white; border-radius: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; 
+    /* 🔴 AJUSTE: Largura aumentada para desktop */
+    flex: 1 1 400px; 
+    max-width: 400px; 
+    
+    opacity: 0; transition: transform 0.3s, box-shadow 0.3s, opacity 1s; z-index: 2; }
 .card.visible { opacity: 1; }
 .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 .card img { width: 100%; height: 220px; object-fit: cover; filter: grayscale(100%); transition: filter 1s ease-out; }
@@ -428,6 +440,16 @@ footer .footer-tagline {
   .about-text p { text-align: left; }
   .certifications { justify-content: center; }
   .section-nav-btn { width: 45px !important; height: 45px !important; font-size: 1.3rem !important; }
+  
+  /* *************************************************** */
+  /* AJUSTE PARA OTIMIZAR A LARGURA E MARGEM DO CARD DE SERVIÇOS NO MOBILE */
+  .card { 
+      /* Correção para cards ficarem centralizados no scroll-snap (96% + 2% + 2% = 100%) */
+      flex: 1 1 96%;
+      max-width: 96%;
+      margin: 0 2%; /* Adiciona margem lateral para espaçamento */
+  }
+  /* *************************************************** */
 }
 
 @media (min-width: 769px) {
