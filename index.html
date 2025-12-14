@@ -414,101 +414,113 @@
         }
     }
 
-    /* ===============================
-    MODAL POPUP (Janela ao Abrir)
-    ================================ */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.75);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000; 
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease;
-    }
+/* ===============================
+   MODAL POPUP – PREMIUM VERSION
+   =============================== */
 
-    .modal-overlay.open {
-        opacity: 1;
-        visibility: visible;
-    }
+   .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
 
-    .modal-content {
-        background-color: #FFF;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        max-width: 450px;
-        width: 90%;
-        text-align: center;
-        position: relative;
-        transform: translateY(-50px);
-        transition: transform 0.3s ease;
-    }
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
 
-    .modal-overlay.open .modal-content {
-        transform: translateY(0);
-    }
+.modal-content {
+    background: #ffffff;
+    padding: 40px 35px;
+    border-radius: 10px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    position: relative;
 
-    /* Estilo para a logo dentro do modal */
-    .modal-logo {
-        max-width: 250px; 
-        height: auto;
-        display: block; 
-        margin: 0 auto 15px auto; 
-    }
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.35),
+        0 5px 15px rgba(0, 0, 0, 0.15);
 
+    transform: translateY(40px);
+    opacity: 0;
+    transition: all 0.45s ease;
+}
 
-    .modal-content h3 {
-        font-family: 'Playfair Display', serif;
-        color: #C7A96B;
-        font-size: 1.8rem;
-        margin-top: 0;
-        margin-bottom: 15px;
-    }
+.modal-overlay.open .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
 
-    .modal-content p {
-        color: #555; 
-        margin-bottom: 25px;
-        line-height: 1.6;
-    }
+/* Logo */
+.modal-logo {
+    max-width: 220px;
+    margin: 0 auto 20px;
+    display: block;
+}
 
-    .modal-close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: #AAA;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
+/* Título */
+.modal-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 500;
+    color: #C2A46D; /* Champagne Gold */
+    letter-spacing: 0.6px;
+    margin-bottom: 15px;
+}
 
-    .modal-close-btn:hover {
-        color: #333;
-    }
+/* Texto */
+.modal-content p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
 
-    .modal-cta-btn {
-        background: #C7A96B;
-        color: #333;
-        padding: 10px 25px;
-        border-radius: 6px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: background 0.3s;
-        display: inline-block;
-    }
+/* Botão CTA */
+.modal-cta-btn {
+    background: #C2A46D;
+    color: #1e1e1e;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.35s ease;
+}
 
-    .modal-cta-btn:hover {
-        background: #b9965e;
-        color: #FFF;
-    }
+.modal-cta-btn:hover {
+    background: #b4955f;
+    transform: translateY(-1px);
+}
+
+/* Botão fechar */
+.modal-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #aaa;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.modal-close-btn:hover {
+    opacity: 0.9;
+}
 
 
     /* ===============================
@@ -1548,9 +1560,9 @@
 const translations = {
     'en': {
         // Modal Pop-up
-        'modal-title': 'Welcome to MCM Services',
-        'modal-text': 'Schedule an exclusive consultation to discuss your high-end project in Miami.',
-        'modal-btn': 'Schedule Now',
+        'modal-title': 'Elevated Residential Projects',
+        'modal-text': 'Exclusive consulting and management for high-end homes in Miami',
+        'modal-btn': 'Schedule NowBook a Private Consultation',
         
         // Hero Titles (Premium)
         'hero1-title': 'Project Management for High-End Homes',
