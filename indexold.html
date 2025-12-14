@@ -399,13 +399,8 @@
         .carousel-btn.prev-btn { left: 5px; }
         .carousel-btn.next-btn { right: 5px; }
         .carousel-container { padding: 0 10px; }
-        .service-cards-carousel {
-            overflow-x: auto; 
-            scroll-snap-type: x mandatory; 
-            -webkit-overflow-scrolling: touch;
-            justify-content: flex-start; 
-        }
-        .card-style {
+        .service-cards-carousel { justify-content: flex-start; }
+.card-style {
             flex: 0 0 85%; 
             width: 85%;
             margin: 0 15px; 
@@ -461,7 +456,7 @@
 
 /* Logo */
 .modal-logo {
-    max-width: 220px;
+    max-width: 250px;
     margin: 0 auto 20px;
     display: block;
 }
@@ -829,15 +824,11 @@
     .service-cards-carousel {
     display: flex;
     flex-wrap: nowrap;
-    gap: 40px;               /* espaçamento entre cards */
-    padding: 0 20px 25px;    /* “respiro” lateral e embaixo */
-    margin: 0;               /* IMPORTANTÍSSIMO: remove margem negativa */
-    transform: none !important;
-    transition: none !important;
+    gap: 40px;
+    padding: 0 20px 25px;
+    margin: 0;
 }
-
-
-    /* SERVICES CARDS */
+/* SERVICES CARDS */
     .card-style {
         background: rgba(255, 255, 255, 0.95);
         flex: 0 0 330px; 
@@ -909,10 +900,6 @@
     }
 
   
-
-.service-cards-carousel {
-  will-change: transform;
-}
 
 /* MOBILE / TABLET */
 @media (max-width: 768px) {
@@ -1214,28 +1201,128 @@
         color: #666;
     }
 </style>
+
+<style>
+/* ===============================
+   MODAL POPUP – PREMIUM
+   =============================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s ease, visibility .4s ease;
+  z-index: 2000;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #fff;
+  max-width: 420px;
+  width: 90%;
+  padding: 40px 35px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.35),
+    0 5px 15px rgba(0,0,0,.15);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all .45s ease;
+}
+
+.modal-overlay.open .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-logo {
+  max-width: 220px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.modal-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: 1.9rem;
+  letter-spacing: .6px;
+  color: #C2A46D;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .95rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.modal-cta-btn {
+  background: #C2A46D;
+  color: #1e1e1e;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: .9rem;
+  letter-spacing: .4px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .35s ease;
+}
+
+.modal-cta-btn:hover {
+  background: #b4955f;
+  transform: translateY(-1px);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #aaa;
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity .3s ease;
+}
+
+.modal-close-btn:hover { opacity: .9; }
+</style>
+
 </head>
 
 <body id="top">
 
 <div id="welcomeModal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close-btn" onclick="closeModal()" aria-label="Fechar janela pop-up">
-            <i class="fas fa-times"></i>
-        </button>
-        
-        <img src="images/mcmbrand-removebg-preview.png" alt="MCM Services Logo" class="modal-logo">
-        
-        <h3 data-translate="modal-title">Welcome to MCM Services</h3>
-        
-        <p data-translate="modal-text">
-            Schedule an exclusive consultation to discuss your high-end project in Miami.
-        </p>
-        
-        <a href="https://wa.me/17862383386" target="_blank" class="modal-cta-btn" data-translate="modal-btn">
-            Schedule Now
-        </a>
-    </div>
+    
+<div class="modal-content">
+  <button class="modal-close-btn" type="button" onclick="closeModal()" aria-label="Close">×</button>
+
+  <img src="images/mcmbrand-removebg-preview.png" alt="MCM Services" class="modal-logo">
+
+  <h3>Elevated Residential Projects</h3>
+
+  <p>
+    Exclusive consulting and management for high-end homes in Miami.
+  </p>
+
+  <div class="modal-divider"></div>
+
+  <a class="modal-cta-btn" href="#contact" onclick="closeModal()">Book a Private Consultation</a>
+</div>
+
 </div>
 <header>
 <div class="header-container">
@@ -1366,7 +1453,7 @@
 
     <div class="carousel-container">
         
-        <button class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
+        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
             <i class="fas fa-chevron-left"></i>
         </button>
 
@@ -1424,7 +1511,7 @@
             </div>
         </div>
 
-        <button class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
+        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
             <i class="fas fa-chevron-right"></i>
         </button>
 
@@ -1595,7 +1682,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Elevated Residential Projects',
         'modal-text': 'Exclusive consulting and management for high-end homes in Miami',
-        'modal-btn': 'Schedule NowBook a Private Consultation',
+        'modal-btn': 'Schedule NowBook a Elevated Residential Projects',
         
         // Hero Titles (Premium)
         'hero1-title': 'Project Management for High-End Homes',
@@ -1882,10 +1969,29 @@ window.addEventListener('resize', () => {
     }, 100); 
 });
 </script>
+
 <script>
-  // (cole o mesmo código JS aqui dentro)
+// ======================================
+// MODAL POPUP – ALWAYS OPEN ON REFRESH
+// ======================================
+function openModal() {
+  const modal = document.getElementById('welcomeModal');
+  if (!modal) return;
+  modal.classList.add('open');
+  document.body.classList.add('menu-open');
+}
+
+window.closeModal = function () {
+  const modal = document.getElementById('welcomeModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.classList.remove('menu-open');
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(openModal, 300);
+});
 </script>
 
-  
 </body>
 </html>

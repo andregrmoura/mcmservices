@@ -460,3 +460,26 @@ footer .footer-tagline {
     .about-text h2 { text-align: left; }
     .certifications { justify-content: flex-start; }
 }
+
+
+/* ===============================
+   FIX FINAL – ABOUT (Why Choose Us)
+   Centralizado SOMENTE no mobile
+   =============================== */
+@media (max-width: 768px) {
+  .about-container{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-text,
+  .about-text h2,
+  .about-text p{
+    text-align: center !important;
+  }
+
+  .certifications{
+    justify-content: center !important;
+  }
+}
