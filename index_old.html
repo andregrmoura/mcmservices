@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="icon" type="image/png" href="images/favicon.png?v=5">
+<link rel="icon" type="image/png" href="mcmservices/favicon-64x64.png?v=5">
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -1329,30 +1329,47 @@
 </style>
 
 
+
 <style>
 /* ===============================
-   SERVICES CAROUSEL – SNAP CENTER (NO FLOATING)
+   SERVICES CAROUSEL – SNAP (DESKTOP START, MOBILE CENTER)
+   - Desktop: show first 3 cards naturally (no big side padding)
+   - Mobile/Tablet: snap to center (no floating)
    =============================== */
+
 .carousel-viewport{
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-
   scroll-snap-type: x mandatory;
-  scroll-padding: 50%;
 }
 
+/* Track */
 .service-cards-carousel{
   display: flex;
   flex-wrap: nowrap;
   gap: 40px;
-  padding: 0 50% 25px;
+  padding: 0 20px 25px;   /* small side padding so first cards start visible */
 }
 
+/* Default (desktop): snap to START so you see 3 cards at the beginning */
 .card-style{
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+/* Mobile/Tablet: snap to CENTER (premium feel, no floating) */
+@media (max-width: 768px){
+  .carousel-viewport{
+    scroll-padding: 50%;
+  }
+  .service-cards-carousel{
+    padding: 0 50% 25px;  /* allow first/last to center on small screens */
+  }
+  .card-style{
+    scroll-snap-align: center;
+  }
 }
 </style>
 
@@ -1998,15 +2015,19 @@ window.moveCarousel = function(direction) {
   const cards = document.querySelectorAll('.service-cards-carousel .card-style');
   if (!viewport || !cards.length) return;
 
-  // Find the card closest to the viewport center
-  const center = viewport.scrollLeft + viewport.clientWidth / 2;
+  const isMobileLike = window.innerWidth <= 768;
+
+  // Focus point: center on mobile/tablet, left edge on desktop
+  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
 
   let closestIndex = 0;
   let closestDist = Infinity;
 
   cards.forEach((card, i) => {
-    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-    const dist = Math.abs(cardCenter - center);
+    const point = isMobileLike
+      ? (card.offsetLeft + card.offsetWidth / 2) // center
+      : (card.offsetLeft);                       // start
+    const dist = Math.abs(point - focusX);
     if (dist < closestDist) {
       closestDist = dist;
       closestIndex = i;
@@ -2016,8 +2037,11 @@ window.moveCarousel = function(direction) {
   const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
   const target = cards[targetIndex];
 
-  const targetLeft = target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2);
-  viewport.scrollTo({ left: targetLeft, behavior: 'smooth' });
+  const targetLeft = isMobileLike
+    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
+    : (target.offsetLeft - 20);
+
+  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
 };
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada
