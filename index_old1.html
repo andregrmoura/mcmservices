@@ -456,7 +456,7 @@
 
 /* Logo */
 .modal-logo {
-    max-width: 250px;
+    max-width: 220px;
     margin: 0 auto 20px;
     display: block;
 }
@@ -1301,6 +1301,61 @@
 .modal-close-btn:hover { opacity: .9; }
 </style>
 
+
+<style>
+/* ===============================
+   ABOUT – CENTRALIZAR NO MOBILE (FIX FINAL)
+   =============================== */
+@media (max-width: 768px) {
+
+  #about .about-content{
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  #about .about-text{
+    align-items: center !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #about .about-text h2,
+  #about .about-text p{
+    text-align: center !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===============================
+   SERVICES CAROUSEL – SNAP CENTER (NO FLOATING)
+   =============================== */
+.carousel-viewport{
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  scroll-snap-type: x mandatory;
+  scroll-padding: 50%;
+}
+
+.service-cards-carousel{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 40px;
+  padding: 0 50% 25px;
+}
+
+.card-style{
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+</style>
+
 </head>
 
 <body id="top">
@@ -1940,21 +1995,29 @@ showSlide(0);
 // ============================
 window.moveCarousel = function(direction) {
   const viewport = document.querySelector('.carousel-viewport');
-  const track = document.querySelector('.service-cards-carousel');
-  if (!viewport || !track) return;
+  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
+  if (!viewport || !cards.length) return;
 
-  const card = track.querySelector('.card-style');
-  if (!card) return;
+  // Find the card closest to the viewport center
+  const center = viewport.scrollLeft + viewport.clientWidth / 2;
 
-  const gap = parseFloat(getComputedStyle(track).gap) || 0;
+  let closestIndex = 0;
+  let closestDist = Infinity;
 
-  // (mobile) se não tiver gap, usa margens do card
-  const cs = getComputedStyle(card);
-  const m = (parseFloat(cs.marginLeft) || 0) + (parseFloat(cs.marginRight) || 0);
+  cards.forEach((card, i) => {
+    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+    const dist = Math.abs(cardCenter - center);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIndex = i;
+    }
+  });
 
-  const step = card.getBoundingClientRect().width + (gap || m);
+  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
+  const target = cards[targetIndex];
 
-  viewport.scrollBy({ left: direction * step, behavior: 'smooth' });
+  const targetLeft = target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2);
+  viewport.scrollTo({ left: targetLeft, behavior: 'smooth' });
 };
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada

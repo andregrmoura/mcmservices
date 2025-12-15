@@ -1328,51 +1328,6 @@
 }
 </style>
 
-
-
-<style>
-/* ===============================
-   SERVICES CAROUSEL – SNAP (DESKTOP START, MOBILE CENTER)
-   - Desktop: show first 3 cards naturally (no big side padding)
-   - Mobile/Tablet: snap to center (no floating)
-   =============================== */
-
-.carousel-viewport{
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-}
-
-/* Track */
-.service-cards-carousel{
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 40px;
-  padding: 0 20px 25px;   /* small side padding so first cards start visible */
-}
-
-/* Default (desktop): snap to START so you see 3 cards at the beginning */
-.card-style{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* Mobile/Tablet: snap to CENTER (premium feel, no floating) */
-@media (max-width: 768px){
-  .carousel-viewport{
-    scroll-padding: 50%;
-  }
-  .service-cards-carousel{
-    padding: 0 50% 25px;  /* allow first/last to center on small screens */
-  }
-  .card-style{
-    scroll-snap-align: center;
-  }
-}
-</style>
-
 </head>
 
 <body id="top">
@@ -2012,36 +1967,21 @@ showSlide(0);
 // ============================
 window.moveCarousel = function(direction) {
   const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
-  if (!viewport || !cards.length) return;
+  const track = document.querySelector('.service-cards-carousel');
+  if (!viewport || !track) return;
 
-  const isMobileLike = window.innerWidth <= 768;
+  const card = track.querySelector('.card-style');
+  if (!card) return;
 
-  // Focus point: center on mobile/tablet, left edge on desktop
-  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
+  const gap = parseFloat(getComputedStyle(track).gap) || 0;
 
-  let closestIndex = 0;
-  let closestDist = Infinity;
+  // (mobile) se não tiver gap, usa margens do card
+  const cs = getComputedStyle(card);
+  const m = (parseFloat(cs.marginLeft) || 0) + (parseFloat(cs.marginRight) || 0);
 
-  cards.forEach((card, i) => {
-    const point = isMobileLike
-      ? (card.offsetLeft + card.offsetWidth / 2) // center
-      : (card.offsetLeft);                       // start
-    const dist = Math.abs(point - focusX);
-    if (dist < closestDist) {
-      closestDist = dist;
-      closestIndex = i;
-    }
-  });
+  const step = card.getBoundingClientRect().width + (gap || m);
 
-  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
-  const target = cards[targetIndex];
-
-  const targetLeft = isMobileLike
-    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
-    : (target.offsetLeft - 20);
-
-  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+  viewport.scrollBy({ left: direction * step, behavior: 'smooth' });
 };
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada
