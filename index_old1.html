@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="icon" type="image/png" href="mcmservices/favicon-64x64.png?v=5">
+<link rel="icon" type="image/png" href="mcmservices/favicon-64x64.png?v=7">
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -1373,6 +1373,20 @@
 }
 </style>
 
+
+<style>
+#menuOverlay{
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 98;
+  display: none;
+}
+body.menu-open #menuOverlay{
+  display: block;
+}
+</style>
+
 </head>
 
 <body id="top">
@@ -1443,6 +1457,9 @@
 
 </div>
 </header>
+<!-- Mobile menu overlay (click outside to close) -->
+<div id="menuOverlay"></div>
+
 
 <div class="hero-container">
 
@@ -2078,6 +2095,41 @@ window.closeModal = function () {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(openModal, 300);
 });
+</script>
+
+
+<script>
+function toggleMenu() {
+  const body = document.body;
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+
+  body.classList.toggle('menu-open');
+
+  const isOpen = body.classList.contains('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', isOpen);
+
+  hamburgerBtn.innerHTML = isOpen
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
+}
+
+function closeMobileMenu(){
+  const body = document.body;
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+
+  body.classList.remove('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
+}
+
+document.querySelectorAll('#mainNavigation a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 768) closeMobileMenu();
+  });
+});
+
+document.getElementById('menuOverlay')
+  .addEventListener('click', closeMobileMenu);
 </script>
 
 </body>

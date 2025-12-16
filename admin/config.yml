@@ -2,47 +2,169 @@ backend:
   name: git-gateway
   branch: main
 
-# Não precisamos de media_folder se não vamos gerenciar imagens no CMS
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
 
 collections:
-  # =========================================================================
-  # COLEÇÃO DE ARQUIVOS ÚNICOS PARA TRADUÇÃO (TEXTOS DE TODAS AS PÁGINAS)
-  # =========================================================================
-  - name: "content_files"
-    label: "Gerenciamento de Textos"
-    files:
-      
-      # ARQUIVO PRINCIPAL DE TRADUÇÃO EM INGLÊS (EN)
-      - file: "content/translations/en.json"
-        label: "Textos em Inglês (EN)"
-        name: "en"
-        format: "json"
-        
-        fields:
-          - {label: "ID da Página", name: "page_id", widget: "hidden", default: "en"} # Campo oculto
-          - {label: "Instruções", name: "info", widget: "note", 
-             description: "Edite as chaves de texto abaixo. Para que as mudanças apareçam no site, você deve PUBLICAR este arquivo e, em seguida, COPIAR o conteúdo JSON gerado e COLAR no objeto 'translations.en' no script JavaScript do seu HTML.",
-             class: "informational"}
 
-          # --- EXEMPLOS DE CAMPOS (ADICIONE TODOS OS SEUS data-key AQUI) ---
-          - {label: "Home: Título Principal", name: "hero1-title", widget: "string"}
-          - {label: "Serviços: Título da Seção", name: "services-title", widget: "string"}
-          - {label: "Serviço 1: Título", name: "service1-title", widget: "string"}
-          - {label: "Serviço 1: Texto", name: "service1-text", widget: "markdown"}
-          - {label: "Depoimentos: Título", name: "testimonials-title", widget: "string"}
-          - {label: "Depoimento 1: Texto", name: "testimonial1-text", widget: "markdown"}
-          - {label: "Portfolio: Título", name: "portfolioTitle", widget: "string"}
-          - {label: "Portfolio: Descrição 1", name: "project1Desc", widget: "markdown"}
-          # --- FIM DOS EXEMPLOS ---
-          
-      # ARQUIVO PRINCIPAL DE TRADUÇÃO EM PORTUGUÊS (PT)
-      - file: "content/translations/pt.json"
-        label: "Textos em Português (PT)"
-        name: "pt"
+  # =========================
+  # HOME / SITE PRINCIPAL
+  # =========================
+  - name: "site"
+    label: "Site (Home)"
+    files:
+      - file: "content/site.json"
+        label: "Home – Texts & Images"
+        name: "home"
         format: "json"
-        
         fields:
-          - {label: "ID da Página", name: "page_id", widget: "hidden", default: "pt"}
-          # Adicione os mesmos campos da seção 'en' aqui para que o CMS os exiba
-          - {label: "Home: Título Principal", name: "hero1-title", widget: "string"}
-          # ... Repita todos os campos de texto aqui ...
+          - label: "Brand"
+            name: "brand"
+            widget: "object"
+            fields:
+              - { label: "Logo (Header)", name: "logo_header", widget: "image", required: false }
+              - { label: "Logo (Footer)", name: "logo_footer", widget: "image", required: false }
+
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Slide 1 Background", name: "slide1_bg", widget: "image", required: false }
+              - { label: "Slide 2 Background", name: "slide2_bg", widget: "image", required: false }
+              - { label: "Slide 3 Background", name: "slide3_bg", widget: "image", required: false }
+
+          - label: "About"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Portrait Image", name: "portrait", widget: "image", required: false }
+
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "text", widget: "text" }
+              - { label: "Card Image", name: "image", widget: "image", required: false }
+
+  # =========================
+  # PORTFOLIO / GALLERY
+  # =========================
+  - name: "portfolio"
+    label: "Portfolio (Gallery)"
+    files:
+      - file: "content/portfolio_data.json"
+        label: "Portfolio Content"
+        name: "portfolio"
+        format: "json"
+        fields:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Background Image", name: "background", widget: "image", required: false }
+
+              - label: "Title"
+                name: "title"
+                widget: "object"
+                fields:
+                  - { label: "EN", name: "en", widget: "string" }
+                  - { label: "PT", name: "pt", widget: "string" }
+                  - { label: "ES", name: "es", widget: "string" }
+
+              - label: "Subtitle"
+                name: "subtitle"
+                widget: "object"
+                fields:
+                  - { label: "EN", name: "en", widget: "string" }
+                  - { label: "PT", name: "pt", widget: "string" }
+                  - { label: "ES", name: "es", widget: "string" }
+
+          - label: "Section Title"
+            name: "sectionTitle"
+            widget: "object"
+            fields:
+              - { label: "EN", name: "en", widget: "string" }
+              - { label: "PT", name: "pt", widget: "string" }
+              - { label: "ES", name: "es", widget: "string" }
+
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            summary: "{{fields.title.en}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+
+              - label: "Title"
+                name: "title"
+                widget: "object"
+                fields:
+                  - { label: "EN", name: "en", widget: "string" }
+                  - { label: "PT", name: "pt", widget: "string" }
+                  - { label: "ES", name: "es", widget: "string" }
+
+              - label: "Description"
+                name: "desc"
+                widget: "object"
+                fields:
+                  - { label: "EN", name: "en", widget: "text" }
+                  - { label: "PT", name: "pt", widget: "text" }
+                  - { label: "ES", name: "es", widget: "text" }
+
+  # =========================
+  # CLIENT PORTAL (LOGIN)
+  # =========================
+  - name: "portal"
+    label: "Client Portal"
+    files:
+      - file: "content/portal_data.json"
+        label: "Clients & Projects"
+        name: "portal"
+        format: "json"
+        fields:
+          - label: "Clients"
+            name: "clients"
+            widget: "list"
+            summary: "{{fields.name}} ({{fields.email}})"
+            fields:
+              - { label: "Client ID", name: "id", widget: "string" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Password", name: "password", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
+              - { label: "Address", name: "address", widget: "string", required: false }
+              - { label: "Notes", name: "notes", widget: "text", required: false }
+
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.client_id}})"
+            fields:
+              - { label: "Project ID", name: "id", widget: "string" }
+              - { label: "Client ID", name: "client_id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Status", name: "status", widget: "select", options: ["Planned", "In Progress", "On Hold", "Completed"] }
+              - { label: "Start Date", name: "start_date", widget: "string", required: false }
+              - { label: "End Date", name: "end_date", widget: "string", required: false }
+              - { label: "Responsible", name: "responsible", widget: "string", required: false }
+              - { label: "Price (USD)", name: "price_usd", widget: "number", value_type: "float", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
+
+              - label: "Gallery Images"
+                name: "gallery"
+                widget: "list"
+                required: false
+                field:
+                  { label: "Image", name: "image", widget: "image" }
+
+              - label: "Documents (PDF)"
+                name: "documents"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "PDF File", name: "url", widget: "file" }

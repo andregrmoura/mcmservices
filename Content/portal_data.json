@@ -1,0 +1,40 @@
+{
+  "clients": [
+    {
+      "id": "demo-client",
+      "name": "Demo Client",
+      "email": "demo@example.com",
+      "password": "1234",
+      "phone": "+1 (000) 000-0000",
+      "address": "Miami, FL",
+      "notes": "Change this demo client in /admin."
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-demo-001",
+      "client_id": "demo-client",
+      "title": "Bathroom Remodel - Coconut Grove",
+      "status": "In Progress",
+      "start_date": "2025-12-01",
+      "end_date": "2026-01-15",
+      "responsible": "MCM Services",
+      "price_usd": 15000,
+      "description": "Demo project – edit in Admin.",
+      "gallery": [
+        "images/uploads/demo1.jpg",
+        "images/uploads/demo2.jpg"
+      ],
+      "documents": [
+        {
+          "label": "Estimate PDF",
+          "url": "docs/estimate-demo.pdf"
+        },
+        {
+          "label": "Schedule PDF",
+          "url": "docs/schedule-demo.pdf"
+        }
+      ]
+    }
+  ]
+}

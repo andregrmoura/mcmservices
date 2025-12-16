@@ -1,0 +1,46 @@
+{
+  "brand": {
+    "logo_header": "images/FODA.png",
+    "logo_footer": "images/transparent-logo-2.png"
+  },
+  "hero": {
+    "slide1_bg": "images/bath_bg.jpg",
+    "slide2_bg": "images/hero2.jpeg",
+    "slide3_bg": "images/hero3.jpeg"
+  },
+  "about": {
+    "portrait": "images/andresala.jpeg"
+  },
+  "services": [
+    {
+      "title": "Initiation & Scope",
+      "text": "We clearly define the scope and goals...",
+      "image": "images/pm22.jpg"
+    },
+    {
+      "title": "Schedules & Time Management",
+      "text": "We develop detailed schedules...",
+      "image": "images/pm24.png"
+    },
+    {
+      "title": "Risk & Quality",
+      "text": "Proactive risk identification and quality control...",
+      "image": "images/pm23.jpg"
+    },
+    {
+      "title": "Stakeholders",
+      "text": "Transparent communication with all stakeholders...",
+      "image": "images/pm30.jpg"
+    },
+    {
+      "title": "Budget & Cost Control",
+      "text": "Precision budget tracking and cost control...",
+      "image": "images/pm25.jpg"
+    },
+    {
+      "title": "Final Delivery",
+      "text": "Delivery, acceptance, and closure with lessons learned...",
+      "image": "images/pm26.jpg"
+    }
+  ]
+}

@@ -681,7 +681,161 @@
         
     </script>
     
-    
-<script src="login.js"></script>
+    <script type="module">
+        // ===============================================
+        // IMPORTAÇÕES DO FIREBASE (Versões CDN)
+        // ===============================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            setPersistence,
+            browserSessionPersistence
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        // Importa o Firestore e os métodos de documento (CORREÇÃO DE IMPORTAÇÃO)
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+        // 🔑 CONFIGURAÇÃO DO FIREBASE (Sua API Key)
+        // Se o login falhar, esta chave pode estar INCORRETA/EXPIRADA.
+        const firebaseConfig = {
+             apiKey: "AIzaSyAw4bA0M8bc8Qt0fvS5xmc2SBYQkxTVR7g", 
+             authDomain: "mcm-services-corp.firebaseapp.com", 
+             projectId: "mcm-services-corp", 
+             storageBucket: "mcm-services-corp.firebasestorage.app", 
+             messagingSenderId: "433317388623", 
+             appId: "1:433317388623:web:9db1f24060f026a670e53a" 
+        };
+        // ===============================================
+        
+        const loginForm = document.getElementById('login-form');
+        const errorMessageElement = document.getElementById('error-message');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        let app, auth, db; 
+
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app); // Inicializa o Firestore
+            errorMessageElement.textContent = ''; // Limpa o erro inicial
+            console.log("Firebase initialized successfully.");
+
+        } catch (e) {
+            const currentLang = localStorage.getItem('language') || 'en';
+            const getLangDict = (lang) => window.translations && window.translations[lang] ? window.translations[lang] : window.translations['en'];
+            const langDict = getLangDict(currentLang);
+            
+            // Exibe mensagem de erro crítico se a inicialização falhar (provavelmente devido a API Key)
+            errorMessageElement.textContent = langDict.errorMissingAPIKey; 
+            console.error("Firebase initialization failed:", e.code || e.message);
+            if (loginForm) loginForm.querySelector('button').disabled = true;
+        }
+        
+        function getCurrentLang() {
+            return localStorage.getItem('language') || 'en';
+        }
+        
+        const getErrorMessage = (errorCode, lang) => {
+            const currentTranslations = window.translations && window.translations[lang] ? window.translations[lang] : window.translations['en'];
+            
+            const errorMap = {
+                'auth/invalid-credential': 'errorInvalidCredentials',
+                'auth/invalid-email': 'errorInvalidCredentials',
+                'auth/user-not-found': 'errorInvalidCredentials',
+                'auth/wrong-password': 'errorInvalidCredentials',
+                'firestore/user-not-found-in-db': 'errorInvalidCredentials', 
+                'default': 'errorDefault'
+            };
+            const key = errorMap[errorCode] || errorMap['default'];
+            
+            return currentTranslations[key] || currentTranslations['errorDefault'];
+        };
+        
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                
+                if (!auth || !db) {
+                    return;
+                }
+
+                errorMessageElement.textContent = '';
+                
+                const currentLang = getCurrentLang();
+                
+                const loginButton = loginForm.querySelector('button');
+                const originalButtonText = loginButton.textContent;
+                
+                loginButton.disabled = true;
+                loginButton.textContent = '...'; 
+
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                
+                try {
+                    // 1. AUTENTICAÇÃO (Auth)
+                    // Se houver falha aqui (senha ou e-mail errado), ele CAI no bloco catch.
+                    await setPersistence(auth, browserSessionPersistence);
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    
+                    // O UID DO USUÁRIO
+                    const clientUID = user.uid;
+                    
+                    // 2. BUSCA NO FIRESTORE (DB) - Lógica corrigida para Client ID = UID
+                    
+                    let foundProject = false;
+                    
+                    // TENTA acessar o documento Client/{UID} (requerido pela sua regra de segurança)
+                    const clientDocRef = doc(db, "Client", clientUID);
+                    const clientDocSnap = await getDoc(clientDocRef);
+
+                    if (clientDocSnap.exists()) {
+                        
+                        // O documento Client/{UID} existe. Agora verifica a subcoleção 'projects'
+                        const projectsSubCollectionRef = collection(db, `Client/${clientUID}/projects`);
+                        const projectsQuery = query(projectsSubCollectionRef, where("email", "==", email));
+                        const projectsSnapshot = await getDocs(projectsQuery);
+                        
+                        if (!projectsSnapshot.empty) {
+                            foundProject = true;
+                            
+                            // Salva IDs e dados do cliente para o portal
+                            localStorage.setItem('clientId', clientUID);
+                            localStorage.setItem('projectId', projectsSnapshot.docs[0].id); 
+                            localStorage.setItem('clientData', JSON.stringify(projectsSnapshot.docs[0].data()));
+                        }
+                    } 
+                    
+                    if (!foundProject) {
+                        // Usuário logado no Auth, mas não tem documento de projeto correspondente
+                        throw new Error("firestore/user-not-found-in-db");
+                    }
+                    
+                    // 3. REDIRECIONAMENTO BEM-SUCEDIDO
+                    setTimeout(() => {
+                        window.location.href = 'portal.html';
+                    }, 500); 
+
+                } catch (error) {
+                    let errorCode = error.code || 'default';
+                    
+                    if (error.message === "firestore/user-not-found-in-db") {
+                        errorCode = "firestore/user-not-found-in-db";
+                    }
+                    
+                    const userMessage = getErrorMessage(errorCode, currentLang);
+                    errorMessageElement.textContent = userMessage;
+
+                    loginButton.disabled = false;
+                    loginButton.textContent = originalButtonText; 
+                }
+            });
+        }
+    </script>
 </body>
 </html>
