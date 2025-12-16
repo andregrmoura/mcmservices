@@ -1,15 +1,34 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Console</title>
+
+  <!-- Netlify Identity Widget (necessário para login) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <!-- Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
 
-  <!-- Netlify Identity redirect -->
+  <style>
+    body { font-family: system-ui, -apple-system, Arial; padding: 24px; }
+    .hint { opacity: .8; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <noscript>Ative JavaScript para abrir o Admin.</noscript>
+  <div id="fallback">
+    Carregando Admin...
+    <div class="hint">Se ficar travado aqui, é porque o script do CMS não carregou.</div>
+  </div>
+
   <script>
+    // Se o CMS carregar, ele substitui a tela automaticamente.
+    // Se não carregar, você pelo menos vê essa mensagem e consegue debugar.
+
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
+      window.netlifyIdentity.on("init", (user) => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
             document.location.href = "/admin/";
@@ -18,6 +37,5 @@
       });
     }
   </script>
-</head>
-<body></body>
+</body>
 </html>
