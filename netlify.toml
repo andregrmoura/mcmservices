@@ -1,5 +1,4 @@
 [build]
-  base = "mcmservices"
   publish = "mcmservices"
 
 [[redirects]]
