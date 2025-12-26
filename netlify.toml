@@ -1,2 +1,9 @@
 [build]
-  publish = "."
+  base = "mcmservices"
+  publish = "mcmservices"
+
+[[redirects]]
+  from = "/connect"
+  to = "https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl"
+  status = 301
+  force = true
