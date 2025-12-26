@@ -6,3 +6,9 @@
   to = "https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/connect"
+  status = 301
+  force = true
