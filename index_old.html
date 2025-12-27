@@ -1968,6 +1968,27 @@ window.toggleMenu = function() {
 }
 
 
+// ======================================
+// MODAL POPUP (Janela ao Abrir) - NOVO!
+// ======================================
+const modal = document.getElementById('welcomeModal');
+    
+function openModal() {
+    // Verifica se o modal já foi exibido nesta sessão
+    if (sessionStorage.getItem('modalShown') !== 'true') {
+        modal.classList.add('open');
+        document.body.classList.add('menu-open'); // Usa a mesma classe para travar o scroll
+    }
+}
+
+window.closeModal = function() {
+    modal.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    // Define que o modal foi exibido para não aparecer novamente na mesma sessão
+    sessionStorage.setItem('modalShown', 'true'); 
+}
+
+
 // ============================
 // HERO Slider (100vh Fade Suave)
 // ============================
@@ -2056,88 +2077,28 @@ window.addEventListener('resize', () => {
 </script>
 
 <script>
-/* ======================================
-   MODAL POPUP (Timing + anti-loop)
-   - Shows after a short delay OR after user scrolls a bit (whichever comes first)
-   - Shows max once per 24h per device (localStorage)
-   - Optional: add ?nopopup=1 to suppress (useful for testing)
-====================================== */
-(function () {
-  const MODAL_ID = 'welcomeModal';
-  const DELAY_MS = 7000;            // ⬅️ timing: 7s after page load
-  const COOLDOWN_HOURS = 24;        // ⬅️ won't show again for 24h
-  const STORAGE_KEY = 'mcm_welcomeModal_lastShown';
-  const SCROLL_TRIGGER_RATIO = 0.35; // ⬅️ or show after ~35% scroll
-
-  const modal = document.getElementById(MODAL_ID);
+// ======================================
+// MODAL POPUP – ALWAYS OPEN ON REFRESH
+// ======================================
+function openModal() {
+  const modal = document.getElementById('welcomeModal');
   if (!modal) return;
+  modal.classList.add('open');
+  document.body.classList.add('menu-open');
+}
 
-  const now = () => Date.now();
-  const hoursSince = (ts) => (now() - ts) / 36e5;
+window.closeModal = function () {
+  const modal = document.getElementById('welcomeModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.classList.remove('menu-open');
+};
 
-  function isSuppressedByUrl() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('nopopup') === '1';
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function canShow() {
-    if (isSuppressedByUrl()) return false;
-    const last = Number(localStorage.getItem(STORAGE_KEY) || 0);
-    if (last && hoursSince(last) < COOLDOWN_HOURS) return false;
-    return true;
-  }
-
-  function lockScroll(lock) {
-    document.body.classList.toggle('menu-open', !!lock);
-  }
-
-  window.openWelcomeModal = function () {
-    if (!canShow()) return;
-    modal.classList.add('open');
-    lockScroll(true);
-    localStorage.setItem(STORAGE_KEY, String(now()));
-  };
-
-  window.closeModal = function () {
-    modal.classList.remove('open');
-    lockScroll(false);
-    localStorage.setItem(STORAGE_KEY, String(now()));
-  };
-
-  let opened = false;
-  function openOnce() {
-    if (opened) return;
-    opened = true;
-    window.openWelcomeModal();
-    cleanup();
-  }
-
-  const timer = setTimeout(openOnce, DELAY_MS);
-
-  function onScroll() {
-    const doc = document.documentElement;
-    const max = (doc.scrollHeight - doc.clientHeight) || 1;
-    const ratio = doc.scrollTop / max;
-    if (ratio >= SCROLL_TRIGGER_RATIO) openOnce();
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  function cleanup() {
-    clearTimeout(timer);
-    window.removeEventListener('scroll', onScroll);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // if user lands mid-page (anchor), evaluate scroll quickly
-    setTimeout(onScroll, 50);
-  });
-})();
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(openModal, 300);
+});
 </script>
+
 
 <script>
 function toggleMenu() {
