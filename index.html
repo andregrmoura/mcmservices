@@ -399,6 +399,39 @@
         .carousel-btn.prev-btn { left: 5px; }
         .carousel-btn.next-btn { right: 5px; }
         .carousel-container { padding: 0 10px; }
+
+/* Services carousel (desktop + mobile) */
+#services .carousel-viewport{
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#services .carousel-viewport::-webkit-scrollbar{ display:none; }
+
+#services .service-cards-carousel{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 40px;
+  padding: 0 20px 25px;
+}
+
+#services .card-style{
+  flex: 0 0 340px;   /* desktop card width */
+  width: 340px;
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 768px){
+  #services .card-style{
+    flex: 0 0 85%;
+    width: 85%;
+    margin: 0 15px;
+    scroll-snap-align: center;
+  }
+}
         .service-cards-carousel { justify-content: flex-start; }
 .card-style {
             flex: 0 0 85%; 
@@ -1436,7 +1469,7 @@ body.menu-open #menuOverlay{
 
   <div class="modal-divider"></div>
 
-  <a class="modal-cta-btn" href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" target="_blank" rel="noopener" onclick="closeModal()">
+  <a class="modal-cta-btn" href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" target="_blank" rel="noopener" onclick="closeModal()" data-translate="modal-btn">
     Book a Private Consultation
   </a>
 </div>
@@ -1574,7 +1607,7 @@ body.menu-open #menuOverlay{
 
     <div class="carousel-container">
         
-        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
+        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1, this)">
             <i class="fas fa-chevron-left"></i>
         </button>
 
@@ -1632,7 +1665,7 @@ body.menu-open #menuOverlay{
             </div>
         </div>
 
-        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
+        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1, this)">
             <i class="fas fa-chevron-right"></i>
         </button>
 
@@ -1643,7 +1676,7 @@ body.menu-open #menuOverlay{
 <section id="about" class="section-light">
 <div class="about-content">
 
-    <img src="images/andresala.jpeg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
+    <img src="images/andre-bg-white.jpeg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
 
     <div class="about-text">
     <h2 class="section-title" style="text-align:left; margin-bottom: 20px;" data-translate="about-title">Why Choose Us</h2>
@@ -1808,7 +1841,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Elevated Residential Projects',
         'modal-text': 'Exclusive consulting and management for high-end homes in Miami',
-        \1'Book a Private Consultation',
+        'modal-btn': 'Book a Private Consultation',
         
         // Hero Titles (Premium)
         'hero1-title': 'Project Management for High-End Homes',
@@ -1842,9 +1875,9 @@ const translations = {
         'testimonial1-text': 'MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.',
         'testimonial2-text': 'They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.',
         'testimonial3-text': 'Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.',
-        \1'Request a Project Consultation', \1'Share your project details and we’ll follow up to schedule a private consultation.',
+        'contact-title': 'Request a Project Consultation', 'contact-subtitle': 'Share your project details and we’ll follow up to schedule a private consultation.',
         'contact-input-name': 'Your Name', 'contact-input-email': 'Your Email', 'contact-input-msg': 'Describe your project, timeline, and location',
-        \1'Submit Inquiry', 'contact-btn-whatsapp': 'Contact via WhatsApp',
+        'contact-btn-submit': 'Submit Inquiry', 'contact-btn-whatsapp': 'Contact via WhatsApp',
         'footer-tagline': 'Management Excellence, Flawless Execution.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 
         'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy', 'footer-dev': 'Developed by Andre Moura',
@@ -1854,7 +1887,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Bem-vindo(a) à MCM Services',
         'modal-text': 'Agende uma consulta exclusiva para discutir seu projeto residencial de alto padrão em Miami-Dade ou Broward.',
-        \1'Agendar Consulta Privada',
+        'modal-btn': 'Agendar Consulta Privada',
 
         // Hero Titles (Premium)
         'hero1-title': 'Gerenciamento de Projetos para Residências de Alto Padrão',
@@ -1887,9 +1920,9 @@ const translations = {
         'testimonial1-text': 'A MCM Services entregou um gerenciamento excepcional. O **cronograma** foi preciso e o **controle de orçamento** manteve tudo tranquilo. Profissionalismo total.',
         'testimonial2-text': 'Eles coordenaram nossa reforma com precisão. Excelente **comunicação**, **controle de risco** e resultado final de alta qualidade.',
         'testimonial3-text': 'Coordenação de **stakeholders** excepcional em um projeto complexo de design de interiores. Serviço de alto padrão do início ao fim.',
-        \1'Solicite uma Consulta de Projeto', \1'Compartilhe os detalhes do seu projeto e entraremos em contato para agendar uma consulta privada.',
+        'contact-title': 'Solicite uma Consulta de Projeto', 'contact-subtitle': 'Compartilhe os detalhes do seu projeto e entraremos em contato para agendar uma consulta privada.',
         'contact-input-name': 'Seu Nome', 'contact-input-email': 'Seu E-mail', 'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
-        \1'Enviar Solicitação', 'contact-btn-whatsapp': 'Contato via WhatsApp',
+        'contact-btn-submit': 'Enviar Solicitação', 'contact-btn-whatsapp': 'Contato via WhatsApp',
         'footer-tagline': 'Excelência em Gestão, Execução Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 
         'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desenvolvido por Andre Moura',
@@ -1899,7 +1932,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Bienvenido(a) a MCM Services',
         'modal-text': 'Agende una consulta exclusiva para discutir su proyecto residencial de alta gama en Miami-Dade o Broward.',
-        \1'Agendar Consulta Privada',
+        'modal-btn': 'Agendar una Consulta Privada',
         
         // Hero Titles (Premium)
         'hero1-title': 'Gestión de Proyectos para Residencias de Alta Gama',
@@ -1932,9 +1965,9 @@ const translations = {
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
         'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
         'testimonial3-text': 'Excelente **coordinación de stakeholders** en un proyecto complejo de diseño de interiores. High-end service from start to finish.',
-        \1'Solicite una Consulta de Proyecto', \1'Comparta los detalles de su proyecto y nos pondremos en contacto para agendar una consulta privada.',
+        'contact-title': 'Solicite una Consulta de Proyecto', 'contact-subtitle': 'Comparta los detalles de su proyecto y nos pondremos en contacto para agendar una consulta privada.',
         'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
-        \1'Enviar Solicitud', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
+        'contact-btn-submit': 'Enviar Solicitud', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
         'footer-tagline': 'Excelência en la Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 
         'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
@@ -2049,38 +2082,22 @@ showSlide(0);
 /// ============================
 // Carousel de Serviços (FINAL – viewport scroll)
 // ============================
-window.moveCarousel = function(direction) {
-  const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
-  if (!viewport || !cards.length) return;
+window.moveCarousel = function(direction, btn) {
+  // Find the carousel related to the clicked button (so it works even if there are multiple carousels)
+  const container = btn ? btn.closest('.carousel-container') : document.querySelector('#services .carousel-container');
+  const viewport = container ? container.querySelector('.carousel-viewport') : document.querySelector('#services .carousel-viewport');
+  const track = container ? container.querySelector('.service-cards-carousel') : document.querySelector('#services .service-cards-carousel');
+  const firstCard = track ? track.querySelector('.card-style') : null;
 
-  const isMobileLike = window.innerWidth <= 768;
+  if (!viewport || !track || !firstCard) return;
 
-  // Focus point: center on mobile/tablet, left edge on desktop
-  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
+  // Scroll by exactly one card (card width + gap)
+  const trackStyles = window.getComputedStyle(track);
+  const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
+  const cardWidth = firstCard.getBoundingClientRect().width;
+  const step = cardWidth + gap;
 
-  let closestIndex = 0;
-  let closestDist = Infinity;
-
-  cards.forEach((card, i) => {
-    const point = isMobileLike
-      ? (card.offsetLeft + card.offsetWidth / 2) // center
-      : (card.offsetLeft);                       // start
-    const dist = Math.abs(point - focusX);
-    if (dist < closestDist) {
-      closestDist = dist;
-      closestIndex = i;
-    }
-  });
-
-  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
-  const target = cards[targetIndex];
-
-  const targetLeft = isMobileLike
-    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
-    : (target.offsetLeft - 20);
-
-  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+  viewport.scrollBy({ left: direction * step, behavior: 'smooth' });
 };
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada
