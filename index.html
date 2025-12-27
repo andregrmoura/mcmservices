@@ -399,39 +399,6 @@
         .carousel-btn.prev-btn { left: 5px; }
         .carousel-btn.next-btn { right: 5px; }
         .carousel-container { padding: 0 10px; }
-
-/* Services carousel (desktop + mobile) */
-#services .carousel-viewport{
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-#services .carousel-viewport::-webkit-scrollbar{ display:none; }
-
-#services .service-cards-carousel{
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 40px;
-  padding: 0 20px 25px;
-}
-
-#services .card-style{
-  flex: 0 0 340px;   /* desktop card width */
-  width: 340px;
-  margin: 0;
-  scroll-snap-align: start;
-}
-
-@media (max-width: 768px){
-  #services .card-style{
-    flex: 0 0 85%;
-    width: 85%;
-    margin: 0 15px;
-    scroll-snap-align: center;
-  }
-}
         .service-cards-carousel { justify-content: flex-start; }
 .card-style {
             flex: 0 0 85%; 
@@ -1031,32 +998,6 @@
     }
 
     /* ===============================
-       ABOUT CTA (Blinq Link)
-       =============================== */
-    .about-cta{
-        margin-top: 28px;
-        width: 100%;
-        text-align: left;
-    }
-    .about-cta-link{
-        display: inline-block;
-        padding: 12px 26px;
-        border-radius: 8px;
-        border: 1px solid #C7A96B;
-        color: #333;
-        background: transparent;
-        font-weight: 500;
-        font-size: 0.95rem;
-        letter-spacing: 0.3px;
-        transition: all 0.3s ease;
-    }
-    .about-cta-link:hover{
-        background: #C7A96B;
-        color: #333;
-        transform: translateY(-1px);
-    }
-
-    /* ===============================
     TESTIMONIALS
     ================================ */
     .testimonial-card-container {
@@ -1384,10 +1325,6 @@
   #about .about-text p{
     text-align: center !important;
   }
-
-  #about .about-cta{
-    text-align: center !important;
-  }
 }
 </style>
 
@@ -1469,8 +1406,8 @@ body.menu-open #menuOverlay{
 
   <div class="modal-divider"></div>
 
-  <a class="modal-cta-btn" href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" target="_blank" rel="noopener" onclick="closeModal()" data-translate="modal-btn">
-    Book a Private Consultation
+  <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">
+    Book a Private Consultation </a>
   </a>
 </div>
 
@@ -1607,7 +1544,7 @@ body.menu-open #menuOverlay{
 
     <div class="carousel-container">
         
-        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1, this)">
+        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
             <i class="fas fa-chevron-left"></i>
         </button>
 
@@ -1665,7 +1602,7 @@ body.menu-open #menuOverlay{
             </div>
         </div>
 
-        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1, this)">
+        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
             <i class="fas fa-chevron-right"></i>
         </button>
 
@@ -1676,7 +1613,7 @@ body.menu-open #menuOverlay{
 <section id="about" class="section-light">
 <div class="about-content">
 
-    <img src="images/andre-bg-white.jpeg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
+    <img src="images/andresala.jpeg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
 
     <div class="about-text">
     <h2 class="section-title" style="text-align:left; margin-bottom: 20px;" data-translate="about-title">Why Choose Us</h2>
@@ -1698,11 +1635,6 @@ body.menu-open #menuOverlay{
         <img src="images/nccer.jpeg" alt="NCCER Certification Logo" id="nccer-logo">
         <img src="images/osha.jpeg" alt="OSHA Certification Logo">
     </div>
-
-    <div class="about-cta">
-        <a href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" target="_blank" rel="noopener" class="about-cta-link" data-translate="about-cta">Private consultations by appointment</a>
-    </div>
-
     </div>
 </div>
 </section>
@@ -1745,7 +1677,7 @@ body.menu-open #menuOverlay{
 
 <section id="contact" class="section-gray">
 
-<h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Request a Project Consultation</h2>
+<h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Request a Project Estimate</h2>
 
 <p class="section-subtitle" style="text-align: center;" data-translate="contact-subtitle">
     Start transforming your project today. Excellence in management from start to finish.
@@ -1762,7 +1694,7 @@ body.menu-open #menuOverlay{
     <label for="message" class="sr-only">Project Description</label>
     <textarea id="message" name="message" rows="5" placeholder="Describe your project, timeline, and location" required aria-required="true" data-translate="contact-input-msg"></textarea>
 
-    <button type="submit" data-translate="contact-btn-submit">Submit Inquiry</button>
+    <button type="submit" data-translate="contact-btn-submit">Request Estimate</button>
 
 </form>
 
@@ -1841,7 +1773,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Elevated Residential Projects',
         'modal-text': 'Exclusive consulting and management for high-end homes in Miami',
-        'modal-btn': 'Book a Private Consultation',
+        'modal-btn': 'Schedule NowBook a Elevated Residential Projects',
         
         // Hero Titles (Premium)
         'hero1-title': 'Project Management for High-End Homes',
@@ -1858,8 +1790,6 @@ const translations = {
         'about-p1': 'We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.',
         'about-p2': 'Our approach is focused on structure, **communication** and **risk control**, offering homeowners peace of mind while every phase of the project is managed with precision.',
         'about-p3': 'Our founder holds **qualifications in Project Management from FIU (Florida International University)**, and important **certifications** in **OSHA** and **NCCER**, reinforcing our commitment to safety, quality, and professional standards.',
-        'about-cta': 'Private consultations by appointment',
-
 
 
         // Default (Mantido)
@@ -1875,9 +1805,9 @@ const translations = {
         'testimonial1-text': 'MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.',
         'testimonial2-text': 'They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.',
         'testimonial3-text': 'Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.',
-        'contact-title': 'Request a Project Consultation', 'contact-subtitle': 'Share your project details and we’ll follow up to schedule a private consultation.',
+        'contact-title': 'Request a Project Estimate', 'contact-subtitle': 'Start transforming your project today. Excellence in management from start to finish.',
         'contact-input-name': 'Your Name', 'contact-input-email': 'Your Email', 'contact-input-msg': 'Describe your project, timeline, and location',
-        'contact-btn-submit': 'Submit Inquiry', 'contact-btn-whatsapp': 'Contact via WhatsApp',
+        'contact-btn-submit': 'Request Estimate', 'contact-btn-whatsapp': 'Contact via WhatsApp',
         'footer-tagline': 'Management Excellence, Flawless Execution.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 
         'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy', 'footer-dev': 'Developed by Andre Moura',
@@ -1887,7 +1817,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Bem-vindo(a) à MCM Services',
         'modal-text': 'Agende uma consulta exclusiva para discutir seu projeto residencial de alto padrão em Miami-Dade ou Broward.',
-        'modal-btn': 'Agendar Consulta Privada',
+        'modal-btn': 'Agendar Agora',
 
         // Hero Titles (Premium)
         'hero1-title': 'Gerenciamento de Projetos para Residências de Alto Padrão',
@@ -1904,8 +1834,6 @@ const translations = {
         'about-p1': 'Gerenciamos cada etapa do seu projeto residencial com precisão, transparência e alta qualidade de execução — garantindo que sua casa receba a expertise que merece.',
         'about-p2': 'Nossa abordagem foca em estrutura, **comunicação** e **controle de risco**, oferecendo tranquilidade aos proprietários enquanto cada fase do projeto é gerenciada com precisão.',
         'about-p3': 'Nosso fundador possui **qualificação em Gerenciamento de Projetos pela FIU (Universidade Internacional da Florida)**, e importantes **certificações** em **OSHA** e **NCCER**, o que reforça nosso compromisso com segurança, qualidade e padrões profissionais.',
-        'about-cta': 'Consultas privadas mediante agendamento',
-
 
         // Default (Mantido)
         'nav-home': 'Início', 'nav-about': 'Sobre', 'nav-contact': 'Contato', 'nav-gallery': 'Galeria', 'client-login': 'Login do Cliente',
@@ -1920,9 +1848,9 @@ const translations = {
         'testimonial1-text': 'A MCM Services entregou um gerenciamento excepcional. O **cronograma** foi preciso e o **controle de orçamento** manteve tudo tranquilo. Profissionalismo total.',
         'testimonial2-text': 'Eles coordenaram nossa reforma com precisão. Excelente **comunicação**, **controle de risco** e resultado final de alta qualidade.',
         'testimonial3-text': 'Coordenação de **stakeholders** excepcional em um projeto complexo de design de interiores. Serviço de alto padrão do início ao fim.',
-        'contact-title': 'Solicite uma Consulta de Projeto', 'contact-subtitle': 'Compartilhe os detalhes do seu projeto e entraremos em contato para agendar uma consulta privada.',
+        'contact-title': 'Solicite um Orçamento de Projeto', 'contact-subtitle': 'Comece a transformar seu projeto hoje. Excelência em gestão do início ao fim.',
         'contact-input-name': 'Seu Nome', 'contact-input-email': 'Seu E-mail', 'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
-        'contact-btn-submit': 'Enviar Solicitação', 'contact-btn-whatsapp': 'Contato via WhatsApp',
+        'contact-btn-submit': 'Solicitar Orçamento', 'contact-btn-whatsapp': 'Contato via WhatsApp',
         'footer-tagline': 'Excelência em Gestão, Execução Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 
         'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desenvolvido por Andre Moura',
@@ -1932,7 +1860,7 @@ const translations = {
         // Modal Pop-up
         'modal-title': 'Bienvenido(a) a MCM Services',
         'modal-text': 'Agende una consulta exclusiva para discutir su proyecto residencial de alta gama en Miami-Dade o Broward.',
-        'modal-btn': 'Agendar una Consulta Privada',
+        'modal-btn': 'Agendar Ahora',
         
         // Hero Titles (Premium)
         'hero1-title': 'Gestión de Proyectos para Residencias de Alta Gama',
@@ -1949,8 +1877,6 @@ const translations = {
         'about-p1': 'Gestionamos cada paso de su proyecto residencial con precisión, transparencia y alta calidad de ejecución, garantizando que su hogar reciba la experiencia que merece.',
         'about-p2': 'Nuestro enfoque se centra en la estructura, la **comunicação** y el **control de riesgos**, ofreciendo tranquilidad a los propietarios mientras cada fase del proyecto se gestiona con precisión.',
         'about-p3': 'Nuestro fundador posee **calificación en Gestión de Proyectos por la FIU (Universidad Internacional de Florida)**, y importantes **certificaciones** en **OSHA** y **NCCER**, lo que refuerza nuestro compromiso con seguridad, calidad y estándares profesionales.',
-        'about-cta': 'Consultas privadas con cita previa',
-
 
         // Default (Mantido)
         'nav-home': 'Inicio', 'nav-about': 'Nosotros', 'nav-contact': 'Contacto', 'nav-gallery': 'Galería', 'client-login': 'Acceso Clientes',
@@ -1965,9 +1891,9 @@ const translations = {
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
         'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
         'testimonial3-text': 'Excelente **coordinación de stakeholders** en un proyecto complejo de diseño de interiores. High-end service from start to finish.',
-        'contact-title': 'Solicite una Consulta de Proyecto', 'contact-subtitle': 'Comparta los detalles de su proyecto y nos pondremos en contacto para agendar una consulta privada.',
+        'contact-title': 'Solicite una Estimación de Proyecto', 'contact-subtitle': 'Comience a transformar su proyecto hoy. Excelencia en gestión de principio a fin.',
         'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
-        'contact-btn-submit': 'Enviar Solicitud', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
+        'contact-btn-submit': 'Solicitar Estimación', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
         'footer-tagline': 'Excelência en la Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 
         'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
@@ -2042,6 +1968,27 @@ window.toggleMenu = function() {
 }
 
 
+// ======================================
+// MODAL POPUP (Janela ao Abrir) - NOVO!
+// ======================================
+const modal = document.getElementById('welcomeModal');
+    
+function openModal() {
+    // Verifica se o modal já foi exibido nesta sessão
+    if (sessionStorage.getItem('modalShown') !== 'true') {
+        modal.classList.add('open');
+        document.body.classList.add('menu-open'); // Usa a mesma classe para travar o scroll
+    }
+}
+
+window.closeModal = function() {
+    modal.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    // Define que o modal foi exibido para não aparecer novamente na mesma sessão
+    sessionStorage.setItem('modalShown', 'true'); 
+}
+
+
 // ============================
 // HERO Slider (100vh Fade Suave)
 // ============================
@@ -2082,22 +2029,38 @@ showSlide(0);
 /// ============================
 // Carousel de Serviços (FINAL – viewport scroll)
 // ============================
-window.moveCarousel = function(direction, btn) {
-  // Find the carousel related to the clicked button (so it works even if there are multiple carousels)
-  const container = btn ? btn.closest('.carousel-container') : document.querySelector('#services .carousel-container');
-  const viewport = container ? container.querySelector('.carousel-viewport') : document.querySelector('#services .carousel-viewport');
-  const track = container ? container.querySelector('.service-cards-carousel') : document.querySelector('#services .service-cards-carousel');
-  const firstCard = track ? track.querySelector('.card-style') : null;
+window.moveCarousel = function(direction) {
+  const viewport = document.querySelector('.carousel-viewport');
+  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
+  if (!viewport || !cards.length) return;
 
-  if (!viewport || !track || !firstCard) return;
+  const isMobileLike = window.innerWidth <= 768;
 
-  // Scroll by exactly one card (card width + gap)
-  const trackStyles = window.getComputedStyle(track);
-  const gap = parseFloat(trackStyles.columnGap || trackStyles.gap) || 0;
-  const cardWidth = firstCard.getBoundingClientRect().width;
-  const step = cardWidth + gap;
+  // Focus point: center on mobile/tablet, left edge on desktop
+  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
 
-  viewport.scrollBy({ left: direction * step, behavior: 'smooth' });
+  let closestIndex = 0;
+  let closestDist = Infinity;
+
+  cards.forEach((card, i) => {
+    const point = isMobileLike
+      ? (card.offsetLeft + card.offsetWidth / 2) // center
+      : (card.offsetLeft);                       // start
+    const dist = Math.abs(point - focusX);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIndex = i;
+    }
+  });
+
+  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
+  const target = cards[targetIndex];
+
+  const targetLeft = isMobileLike
+    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
+    : (target.offsetLeft - 20);
+
+  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
 };
 
 // Adiciona um listener para atualizar a largura quando a tela for redimensionada
@@ -2114,88 +2077,28 @@ window.addEventListener('resize', () => {
 </script>
 
 <script>
-/* ======================================
-   MODAL POPUP (Timing + anti-loop)
-   - Shows after a short delay OR after user scrolls a bit (whichever comes first)
-   - Shows max once per 24h per device (localStorage)
-   - Optional: add ?nopopup=1 to suppress (useful for testing)
-====================================== */
-(function () {
-  const MODAL_ID = 'welcomeModal';
-  const DELAY_MS = 7000;            // ⬅️ timing: 7s after page load
-  const COOLDOWN_HOURS = 24;        // ⬅️ won't show again for 24h
-  const STORAGE_KEY = 'mcm_welcomeModal_lastShown';
-  const SCROLL_TRIGGER_RATIO = 0.35; // ⬅️ or show after ~35% scroll
-
-  const modal = document.getElementById(MODAL_ID);
+// ======================================
+// MODAL POPUP – ALWAYS OPEN ON REFRESH
+// ======================================
+function openModal() {
+  const modal = document.getElementById('welcomeModal');
   if (!modal) return;
+  modal.classList.add('open');
+  document.body.classList.add('menu-open');
+}
 
-  const now = () => Date.now();
-  const hoursSince = (ts) => (now() - ts) / 36e5;
+window.closeModal = function () {
+  const modal = document.getElementById('welcomeModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.classList.remove('menu-open');
+};
 
-  function isSuppressedByUrl() {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('nopopup') === '1';
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function canShow() {
-    if (isSuppressedByUrl()) return false;
-    const last = Number(localStorage.getItem(STORAGE_KEY) || 0);
-    if (last && hoursSince(last) < COOLDOWN_HOURS) return false;
-    return true;
-  }
-
-  function lockScroll(lock) {
-    document.body.classList.toggle('menu-open', !!lock);
-  }
-
-  window.openWelcomeModal = function () {
-    if (!canShow()) return;
-    modal.classList.add('open');
-    lockScroll(true);
-    localStorage.setItem(STORAGE_KEY, String(now()));
-  };
-
-  window.closeModal = function () {
-    modal.classList.remove('open');
-    lockScroll(false);
-    localStorage.setItem(STORAGE_KEY, String(now()));
-  };
-
-  let opened = false;
-  function openOnce() {
-    if (opened) return;
-    opened = true;
-    window.openWelcomeModal();
-    cleanup();
-  }
-
-  const timer = setTimeout(openOnce, DELAY_MS);
-
-  function onScroll() {
-    const doc = document.documentElement;
-    const max = (doc.scrollHeight - doc.clientHeight) || 1;
-    const ratio = doc.scrollTop / max;
-    if (ratio >= SCROLL_TRIGGER_RATIO) openOnce();
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  function cleanup() {
-    clearTimeout(timer);
-    window.removeEventListener('scroll', onScroll);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // if user lands mid-page (anchor), evaluate scroll quickly
-    setTimeout(onScroll, 50);
-  });
-})();
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(openModal, 300);
+});
 </script>
+
 
 <script>
 function toggleMenu() {
