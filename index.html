@@ -1387,6 +1387,41 @@ body.menu-open #menuOverlay{
 }
 </style>
 
+<style>
+/* ===============================
+   ABOUT CTA – BLINQ (DISCREET)
+   =============================== */
+.about-cta {
+    margin-top: 28px;
+}
+
+.about-cta a {
+    display: inline-block;
+    padding: 10px 26px;
+    border: 1px solid #C7A96B;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    color: #C7A96B;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.about-cta a:hover {
+    background: #C7A96B;
+    color: #333;
+    transform: translateY(-1px);
+}
+
+/* Centraliza no mobile sem afetar desktop */
+@media (max-width: 768px) {
+    .about-cta {
+        text-align: center;
+    }
+}
+</style>
+
 </head>
 
 <body id="top">
@@ -1539,7 +1574,7 @@ body.menu-open #menuOverlay{
     
     <h2 class="section-title" data-translate="services-title">Our Project Management Services</h2>
     <p class="section-subtitle" data-translate="contact-subtitle" style="margin-bottom: 50px; opacity: 0.9;">
-        Start transforming your project today. Excellence in management from start to finish.
+        Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
     </p>
 
     <div class="carousel-container">
@@ -1613,7 +1648,7 @@ body.menu-open #menuOverlay{
 <section id="about" class="section-light">
 <div class="about-content">
 
-    <img src="images/andre-bg-white.jpeg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
+    <img src="images/andre-bg-white.jpg" alt="Professional Project Manager Portrait" data-cms-img="about.portrait">
 
     <div class="about-text">
     <h2 class="section-title" style="text-align:left; margin-bottom: 20px;" data-translate="about-title">Why Choose Us</h2>
@@ -1635,6 +1670,16 @@ body.menu-open #menuOverlay{
         <img src="images/nccer.jpeg" alt="NCCER Certification Logo" id="nccer-logo">
         <img src="images/osha.jpeg" alt="OSHA Certification Logo">
     </div>
+
+<div class="about-cta">
+    <a 
+      href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl"
+      target="_blank"
+      rel="noopener"
+    >
+        Private Consultation
+    </a>
+</div>
     </div>
 </div>
 </section>
@@ -1677,10 +1722,10 @@ body.menu-open #menuOverlay{
 
 <section id="contact" class="section-gray">
 
-<h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Request a Project Estimate</h2>
+<h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Submit a Project Inquiry</h2>
 
 <p class="section-subtitle" style="text-align: center;" data-translate="contact-subtitle">
-    Start transforming your project today. Excellence in management from start to finish.
+    Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
 </p>
 
 <form action="submit_form.php" method="POST" class="contact-form">
@@ -1694,7 +1739,7 @@ body.menu-open #menuOverlay{
     <label for="message" class="sr-only">Project Description</label>
     <textarea id="message" name="message" rows="5" placeholder="Describe your project, timeline, and location" required aria-required="true" data-translate="contact-input-msg"></textarea>
 
-    <button type="submit" data-translate="contact-btn-submit">Request Estimate</button>
+    <button type="submit" data-translate="contact-btn-submit">Submit Inquiry</button>
 
 </form>
 
@@ -1805,7 +1850,7 @@ const translations = {
         'testimonial1-text': 'MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.',
         'testimonial2-text': 'They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.',
         'testimonial3-text': 'Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.',
-        'contact-title': 'Request a Project Estimate', 'contact-subtitle': 'Start transforming your project today. Excellence in management from start to finish.',
+        'contact-title': 'Submit a Project Inquiry', 'contact-subtitle': 'Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.',
         'contact-input-name': 'Your Name', 'contact-input-email': 'Your Email', 'contact-input-msg': 'Describe your project, timeline, and location',
         'contact-btn-submit': 'Request Estimate', 'contact-btn-whatsapp': 'Contact via WhatsApp',
         'footer-tagline': 'Management Excellence, Flawless Execution.', 'footer-location': 'Miami, FL', 
@@ -1848,9 +1893,9 @@ const translations = {
         'testimonial1-text': 'A MCM Services entregou um gerenciamento excepcional. O **cronograma** foi preciso e o **controle de orçamento** manteve tudo tranquilo. Profissionalismo total.',
         'testimonial2-text': 'Eles coordenaram nossa reforma com precisão. Excelente **comunicação**, **controle de risco** e resultado final de alta qualidade.',
         'testimonial3-text': 'Coordenação de **stakeholders** excepcional em um projeto complexo de design de interiores. Serviço de alto padrão do início ao fim.',
-        'contact-title': 'Solicite um Orçamento de Projeto', 'contact-subtitle': 'Comece a transformar seu projeto hoje. Excelência em gestão do início ao fim.',
+        'contact-title': 'Enviar consulta do Projeto', 'contact-subtitle': 'Compartilhe os detalhes básicos do seu projeto. As solicitações qualificadas serão avaliadas antes da consulta.',
         'contact-input-name': 'Seu Nome', 'contact-input-email': 'Seu E-mail', 'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
-        'contact-btn-submit': 'Solicitar Orçamento', 'contact-btn-whatsapp': 'Contato via WhatsApp',
+        'contact-btn-submit': 'Enviar consulta', 'contact-btn-whatsapp': 'Contato via WhatsApp',
         'footer-tagline': 'Excelência em Gestão, Execução Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 
         'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desenvolvido por Andre Moura',
@@ -1891,9 +1936,9 @@ const translations = {
         'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
         'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
         'testimonial3-text': 'Excelente **coordinación de stakeholders** en un proyecto complejo de diseño de interiores. High-end service from start to finish.',
-        'contact-title': 'Solicite una Estimación de Proyecto', 'contact-subtitle': 'Comience a transformar su proyecto hoy. Excelencia en gestión de principio a fin.',
+        'contact-title': 'Enviar consulta del Proyecto', 'contact-subtitle': 'Comparta los detalles básicos de su proyecto. Las consultas calificadas serán revisadas antes de la consulta.',
         'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
-        'contact-btn-submit': 'Solicitar Estimación', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
+        'contact-btn-submit': 'Enviar consulta', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
         'footer-tagline': 'Excelência en la Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
         'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 
         'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
