@@ -562,3 +562,27 @@ RESPONSIVIDADE (UNIFORME)
       transform: translateX(0) !important;
   }
 }
+
+
+/* === CTA (Portfolio) - keep consistent across languages (desktop + responsive) === */
+#contato { text-align: center; }
+#contato h2 { word-break: normal; }
+
+#contato .contact-btn-style{
+  display: inline-block;
+  max-width: 92%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Mobile */
+@media (max-width: 768px){
+  #contato h2{ font-size: clamp(2rem, 7vw, 3.2rem); }
+  #contato .contact-btn-style{
+    width: auto;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
