@@ -385,3 +385,27 @@ footer {
         text-align: center; 
     }
 }
+
+/* === Premium Footer (Authoritative) === */
+footer .copyright{
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+  text-align: center;
+}
+footer .copyright strong{
+  font-weight: 600;
+  color: #333;
+}
+footer .powered-by{
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #9a9a9a;
+  letter-spacing: 0.5px;
+}
+footer .brand-soft{
+  font-weight: 500;
+  color: #7f7f7f;
+}

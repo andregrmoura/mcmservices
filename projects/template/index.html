@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Project | MCM Services</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png?v=3" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+  <link rel="shortcut icon" href="/favicon.ico?v=3" />
+
+  <style>
+    /* BASE (match your main page) */
+    *, *::before, *::after { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:#F7F7F7;
+      color:#333;
+      overflow-x:hidden;
+      line-height:1.6;
+      text-align:center;
+    }
+    a{ text-decoration:none; color:#333; }
+    .sr-only{
+      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0,0,0,0);border:0;
+    }
+    body.menu-open{ overflow:hidden; }
+
+    /* ====================================
+       HEADER (same structure/style as main)
+       ==================================== */
+    header{
+      width:100%;
+      background:rgba(0,0,0,0.4);
+      box-shadow:0 5px 15px rgba(0,0,0,0.4);
+      position:absolute;
+      top:0; left:0;
+      z-index:100;
+      padding:25px 25px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+    header::after{
+      content:'';
+      position:absolute;
+      bottom:0; left:0;
+      width:100%;
+      height:30px;
+      background:linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.0) 100%);
+      z-index:90;
+      pointer-events:none;
+      transform:translateY(100%);
+    }
+
+    .header-container{
+      max-width:1300px;
+      width:100%;
+      margin:auto;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:0;
+    }
+
+    .header-top-row{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:5px;
+      position:relative;
+    }
+    .header-col-left{ width:150px; }
+
+    .logo-link{ flex-grow:1; text-align:center; margin:0; display:block; }
+    .logo-link img{
+      height:90px !important;
+      width:auto !important;
+      max-width:320px;
+      object-fit:contain;
+    }
+
+    .lang-switcher{
+      display:flex;
+      gap:10px;
+      margin:0;
+      width:150px;
+      justify-content:flex-end;
+    }
+    .lang-switcher img, .mobile-nav-flags img{
+      width:25px;
+      height:18px;
+      border-radius:3px;
+      border:1px solid #AAA;
+      cursor:pointer;
+      opacity:0.8;
+      transition:.2s;
+    }
+    .lang-switcher img.active, .mobile-nav-flags img.active{
+      opacity:1;
+      border:2px solid #C7A96B;
+      box-shadow:0 0 6px rgba(199,169,107,0.7);
+    }
+
+    nav{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-top:0;
+    }
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:50px;
+      padding:0;
+      margin:0;
+      justify-content:center;
+    }
+    nav ul a{
+      color:#FFF;
+      font-weight:400;
+      position:relative;
+      padding-bottom:4px;
+      transition:.3s;
+      font-size:1.05rem;
+      white-space:nowrap;
+      letter-spacing:0.5px;
+    }
+    .client-login-link{ font-weight:400; color:#FFF; }
+    .client-login-link:hover{ color:#C7A96B; }
+
+    nav ul a:hover, nav ul a.active{ color:#C7A96B; }
+    nav ul a::after{
+      content:'';
+      position:absolute;
+      left:0; bottom:0;
+      width:0%;
+      height:2px;
+      background:#C7A96B;
+      transition:.3s;
+    }
+    nav ul a:hover::after, nav ul a.active::after{ width:100%; }
+
+    .header-right{ display:none; }
+    .hamburger-btn{ display:none; }
+
+    @media (min-width: 769px){
+      header{ padding-top:15px; padding-bottom:15px; }
+    }
+
+    @media (max-width: 768px){
+      header{ padding-top:15px; padding-bottom:15px; }
+      header::after{
+        background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.0) 100%);
+      }
+      .header-container{ gap:0; }
+      .lang-switcher{ display:flex; width:auto; justify-content:flex-end; }
+
+      .header-top-row{
+        padding-right:40px;
+        padding-left:20px;
+        margin-bottom:0;
+      }
+      .header-col-left{ display:none; }
+      .logo-link{ text-align:left; flex-grow:1; }
+      .logo-link img{ height:70px !important; max-width:75%; }
+
+      .hamburger-btn{
+        display:block;
+        position:absolute;
+        right:15px;
+        top:50%;
+        transform:translateY(-50%);
+        z-index:110;
+        width:30px;
+        height:30px;
+        cursor:pointer;
+        background:none;
+        border:none;
+        color:#FFF;
+        font-size:1.5rem;
+        transition:color 0.3s;
+      }
+      .hamburger-btn:hover{ color:#C7A96B; }
+
+      nav{
+        position:fixed;
+        top:0;
+        right:0;
+        height:100vh;
+        width:75%;
+        max-width:300px;
+        background:#222;
+        box-shadow:-5px 0 15px rgba(0,0,0,0.5);
+        transform:translateX(100%);
+        transition:transform 0.4s ease-in-out;
+        padding:80px 30px 20px;
+        margin-top:0;
+        z-index:99;
+        display:block;
+      }
+      body.menu-open nav{ transform:translateX(0); }
+
+      nav ul{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+      }
+      nav ul a{
+        font-size:1.1rem;
+        letter-spacing:normal;
+        display:block;
+        width:100%;
+        padding:5px 0;
+      }
+      .client-login-link{
+        font-weight:700;
+        color:#C7A96B;
+      }
+      .mobile-nav-flags img{
+        width:30px;
+        height:20px;
+        border-radius:3px;
+      }
+    }
+
+    /* Menu overlay to close when clicking outside */
+    #menuOverlay{
+      position:fixed;
+      inset:0;
+      background:transparent;
+      z-index:98;
+      display:none;
+    }
+    body.menu-open #menuOverlay{ display:block; }
+
+    /* ===============================
+       PROJECT PAGE CONTENT (LIGHT)
+       =============================== */
+    main{
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:220px 20px 80px; /* space for absolute header */
+    }
+    .project-box{
+      max-width:900px;
+      text-align:left;
+    }
+    .project-box h1{
+      font-family:'Playfair Display',serif;
+      color:#C7A96B;
+      font-size:3rem;
+      margin:0 0 20px 0;
+    }
+    .project-box p{
+      font-size:1.05rem;
+      line-height:1.7;
+      color:#555;
+      margin:0 0 35px 0;
+    }
+    .actions{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+    .actions a{
+      padding:14px 32px;
+      border-radius:8px;
+      border:2px solid #333;
+      font-weight:500;
+      transition:.3s;
+      display:inline-block;
+    }
+    .actions a.primary:hover{
+      background:#C7A96B;
+      border-color:#C7A96B;
+      color:#333;
+    }
+    .actions a.secondary{
+      border-color:#C7A96B;
+      color:#C7A96B;
+    }
+    .actions a.secondary:hover{
+      background:#C7A96B;
+      color:#333;
+    }
+
+    /* ===============================
+       FOOTER (same as main)
+       =============================== */
+    footer{
+      background:white;
+      padding:40px 20px;
+      text-align:center;
+      border-top:1px solid #DDD;
+    }
+    .footer-logo-container{
+      display:block;
+      margin:0 auto 15px;
+      text-align:center;
+    }
+    .footer-logo-container img{
+      height:60px;
+      width:180px;
+      object-fit:contain;
+    }
+    .footer-content-grid{
+      max-width:1200px;
+      margin:0 auto 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      text-align:left;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+    .footer-col{
+      display:flex;
+      flex-direction:column;
+      min-width:150px;
+      padding:0 10px;
+      align-items:flex-start;
+    }
+    .footer-col h4{
+      font-size:1rem;
+      font-weight:600;
+      color:#333;
+      margin-top:0;
+      margin-bottom:15px;
+      border-bottom:2px solid #C7A96B;
+      padding-bottom:5px;
+      text-align:left;
+    }
+    .footer-col a{
+      color:#555;
+      font-size:0.9rem;
+      font-weight:400;
+      padding:5px 0;
+      transition:color 0.3s;
+      display:block;
+    }
+    .footer-col a:hover{ color:#C7A96B; }
+    .footer-social-contact a{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      justify-content:center;
+    }
+    .footer-social-contact i{
+      color:#C7A96B;
+      font-size:1rem;
+    }
+    .footer-bottom-line{
+      padding-top:20px;
+      border-top:1px solid #EEE;
+      color:#999;
+      font-size:0.85rem;
+      text-align:center;
+    }
+    .footer-bottom-line p{ margin:5px 0; }
+    .footer-bottom-line .copyright{
+      font-size:0.9rem;
+      color:#666;
+    }
+    footer a{ text-decoration:none; }
+    footer a:visited{ color:#555; }
+
+    /* Safety: this template has no nav menu */
+    nav{ display:none !important; }
+  
+    /* Footer typography refinement (premium) */
+    footer .copyright{
+      font-size:0.9rem;
+      color:#666;
+      line-height:1.6;
+      letter-spacing:0.3px;
+    }
+    footer .copyright strong{
+      font-weight:500;
+      color:#444;
+    }
+    footer .powered-by{
+      font-size:0.75rem;
+      color:#999;
+      letter-spacing:0.6px;
+      display:inline-block;
+      margin-top:4px;
+    }
+    footer .brand-soft{
+      font-weight:500;
+      color:#777;
+    }
+
+  </style>
+</head>
+
+<body id="top">
+<header>
+  <div class="header-container">
+    <div class="header-top-row">
+      <div class="header-col-left"></div>
+
+      <a class="logo-link" href="/">
+        <img alt="MCM Services Logo" src="../../images/FODA.png" />
+      </a>
+<div class="lang-switcher">
+        <img src="../../images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active" />
+        <img src="../../images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')" />
+        <img src="../../images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')" />
+      </div>
+    </div>
+</div>
+</header>
+
+<main>
+  <div class="project-box">
+    <h1 data-translate="project-title">Galeria Privada do Projeto</h1>
+    <p data-translate="project-desc">Você está acessando uma área privada da <strong>MCM Services</strong>. Esta página reúne fotos, documentos e atualizações do andamento do projeto.</p>
+
+    <div class="actions">
+      <a class="primary" href="https://www.notion.so/PROJECT-KHOUDARI-CORAL-GABLES-2dc62b9dd158800a9aa9cda472672bcb?source=copy_link" rel="noopener" target="_blank">
+        <span data-translate="project-open">Abrir Galeria do Projeto</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo-container">
+    <img alt="MCM Services Logo Footer" src="../../images/transparent-logo-2.png" />
+  </div>
+
+  <p data-translate="footer-tagline" style="color:#666; font-size:.95rem; margin-bottom:15px;">
+    Management Excellence, Flawless Execution.
+  </p>
+
+  <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
+    <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#C7A96B; margin-right:5px;"></i>
+    <span data-translate="footer-location">Miami, FL</span>
+  </p>
+
+  <div class="footer-content-grid">
+    <div class="footer-col">
+      <h4 data-translate="footer-nav">Navigation</h4>
+      <a data-translate="nav-home" href="/">Home</a>
+      <a data-translate="nav-about" href="/#about">About</a>
+      <a data-translate="nav-contact" href="/#contact">Contact</a>
+      
+    </div>
+
+    <div class="footer-col footer-social-contact">
+      <h4 data-translate="footer-contact">Contact &amp; Connect</h4>
+      <a href="tel:+17862383386"><i class="fas fa-phone" aria-hidden="true"></i> +1 (786) 238-3386</a>
+      <a href="mailto:info@mcmprosolutions.com"><i class="fas fa-envelope" aria-hidden="true"></i> info@mcmprosolutions.com</a>
+      <a href="https://www.instagram.com/mcmservices.us" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> @mcmservices.us</a>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-translate="footer-legal">Legal</h4>
+      <a data-translate="footer-terms" href="#">Termos de Uso</a>
+      <a data-translate="footer-privacy" href="#">Política de Privacidade</a>
+</div>
+  </div>
+
+  <div class="footer-bottom-line">
+    <p class="copyright">
+      © <span id="currentYear"></span>
+      <strong>MCM Services USA Corporation</strong><br />
+      <span class="powered-by" data-translate="footer-powered">
+        Crafted &amp; Managed by <span class="brand-soft">mcmprosolutions.com</span>
+      </span>
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  // =========================
+  //  Year
+  // =========================
+  (function(){
+    const el = document.getElementById('currentYear');
+    if (el) el.textContent = new Date().getFullYear();
+  })();
+
+  // =========================
+  //  Mobile menu
+  // =========================
+  function toggleMenu(){
+    document.body.classList.toggle('menu-open');
+    const btn = document.querySelector('.hamburger-btn');
+    if (btn) btn.setAttribute('aria-expanded', document.body.classList.contains('menu-open') ? 'true' : 'false');
+  }
+  function closeMenu(){
+    document.body.classList.remove('menu-open');
+    const btn = document.querySelector('.hamburger-btn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  // =========================
+  //  i18n (EN / PT / ES)
+  // =========================
+  const I18N = {
+    en: {
+      "nav-home": "Home",
+      "nav-about": "About",
+      "nav-contact": "Contact",
+      "client-login": "Client Login",
+
+      "project-title": "Private Project Gallery",
+      "project-desc": "You are accessing a private area of <strong>MCM Services</strong>. This page gathers photos, documents, and project progress updates.",
+      "project-open": "Open Project Gallery",
+
+      "footer-tagline": "Management Excellence, Flawless Execution.",
+      "footer-location": "Miami, FL",
+      "footer-nav": "Navigation",
+      "footer-contact": "Contact & Connect",
+      "footer-legal": "Legal",
+      "footer-terms": "Terms of Use",
+      "footer-privacy": "Privacy Policy",
+      "footer-copy": "MCM Services USA Corp. All rights reserved.",
+      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+    },
+    pt: {
+      "nav-home": "Home",
+      "nav-about": "Sobre",
+      "nav-contact": "Contato",
+      "client-login": "Área do Cliente",
+
+      "project-title": "Galeria Privada do Projeto",
+      "project-desc": "Você está acessando uma área privada da <strong>MCM Services</strong>. Esta página reúne fotos, documentos e atualizações do andamento do projeto.",
+      "project-open": "Abrir Galeria do Projeto",
+
+      "footer-tagline": "Management Excellence, Flawless Execution.",
+      "footer-location": "Miami, FL",
+      "footer-nav": "Navegação",
+      "footer-contact": "Contato & Conexão",
+      "footer-legal": "Legal",
+      "footer-terms": "Termos de Uso",
+      "footer-privacy": "Política de Privacidade",
+      "footer-copy": "MCM Services USA Corp. Todos os direitos reservados.",
+      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+    },
+    es: {
+      "nav-home": "Inicio",
+      "nav-about": "Acerca de",
+      "nav-contact": "Contacto",
+      "client-login": "Acceso del Cliente",
+
+      "project-title": "Galería Privada del Proyecto",
+      "project-desc": "Estás accediendo a un área privada de <strong>MCM Services</strong>. Esta página reúne fotos, documentos y actualizaciones del progreso del proyecto.",
+      "project-open": "Abrir Galería del Proyecto",
+
+      "footer-tagline": "Management Excellence, Flawless Execution.",
+      "footer-location": "Miami, FL",
+      "footer-nav": "Navegación",
+      "footer-contact": "Contacto & Conexión",
+      "footer-legal": "Legal",
+      "footer-terms": "Términos de Uso",
+      "footer-privacy": "Política de Privacidad",
+      "footer-copy": "MCM Services USA Corp. Todos los derechos reservados.",
+      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+    }
+  };
+
+  function applyTranslations(lang){
+    const dict = I18N[lang] || I18N.en;
+
+    // update lang attribute
+    document.documentElement.setAttribute('lang', lang);
+
+    // replace text/HTML for any element with data-translate
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      const key = el.getAttribute('data-translate');
+      if (!key) return;
+      const val = dict[key];
+      if (typeof val === 'string') {
+        // allow <strong> etc. in specific strings
+        el.innerHTML = val;
+      }
+    });
+
+    // update active state on flags (desktop + mobile)
+    document.querySelectorAll('[data-lang]').forEach(img => {
+      img.classList.toggle('active', img.getAttribute('data-lang') === lang);
+    });
+
+    // persist
+    try { localStorage.setItem('mcm_lang', lang); } catch(e) {}
+  }
+
+  function setLanguage(lang){
+    applyTranslations(lang);
+  }
+
+  // Init language on load
+  (function initLanguage(){
+    let lang = 'en';
+    try {
+      const saved = localStorage.getItem('mcm_lang');
+      if (saved && I18N[saved]) lang = saved;
+    } catch(e) {}
+    applyTranslations(lang);
+  })();
+</script>
+
+</body>
+</html>
