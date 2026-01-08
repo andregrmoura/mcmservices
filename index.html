@@ -2002,5 +2002,59 @@ body.menu-open #menuOverlay{
   <!-- Language system (EN/PT/ES) -->
   <script src="i18n.patched.js"></script>
   <script src="lang-auto.js"></script>
+
+<script>
+/* ===== Services Carousel (Management Services) =====
+   Fix: ensures arrows scroll the horizontal card carousel reliably.
+   Relies on: .carousel-viewport wrapping .service-cards-carousel .card-style items.
+*/
+window.moveCarousel = function(direction) {
+  const viewport = document.querySelector('.carousel-viewport');
+  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
+  if (!viewport || !cards.length) return;
+
+  const isMobileLike = window.innerWidth <= 768;
+
+  // Focus point: center on mobile/tablet, left edge on desktop
+  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
+
+  let closestIndex = 0;
+  let closestDist = Infinity;
+
+  cards.forEach((card, i) => {
+    const point = isMobileLike
+      ? (card.offsetLeft + card.offsetWidth / 2) // center
+      : (card.offsetLeft);                       // start
+    const dist = Math.abs(point - focusX);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIndex = i;
+    }
+  });
+
+  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
+  const target = cards[targetIndex];
+
+  const targetLeft = isMobileLike
+    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
+    : (target.offsetLeft - 20);
+
+  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+};
+
+// Recalculate position after resize without extra movement
+let _carouselResizeTO;
+window.addEventListener('resize', () => {
+  clearTimeout(_carouselResizeTO);
+  _carouselResizeTO = setTimeout(() => window.moveCarousel(0), 100);
+});
+
+// Footer year (safe)
+document.addEventListener('DOMContentLoaded', () => {
+  const y = document.getElementById('currentYear');
+  if (y && !y.textContent.trim()) y.textContent = new Date().getFullYear();
+});
+</script>
+
 </body>
 </html>
