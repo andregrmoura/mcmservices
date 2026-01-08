@@ -245,8 +245,7 @@
             display: none; 
         }
         .logo-link {
-            text-align: left; 
-            flex-grow: 1;
+            text-align: center; flex-grow: 1;
         }
         .logo-link img {
             height: 70px !important; 
@@ -1232,3 +1231,15 @@
   }
 }
 
+
+/* === Mobile header logo centering (global) === */
+@media (max-width: 768px){
+  header .header-top-row{ position: relative; justify-content: center !important; }
+  header .logo-link{ text-align: center !important; }
+}
+
+/* === DISABLE LANGUAGE FLAGS (GLOBAL) === */
+.lang-switcher,
+.mobile-nav-flags {
+    display: none !important;
+}

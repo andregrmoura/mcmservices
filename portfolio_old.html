@@ -1081,7 +1081,7 @@ footer{
                 'footer-location': "Miami, FL"}
         };
 
-        let currentLang = localStorage.getItem('language');
+        let currentLang = localStorage.getItem('language') || 'en';
 
         // Funções de Lightbox
         function openLightbox(imgSrc) {
@@ -1175,12 +1175,16 @@ footer{
         
 
         document.addEventListener('DOMContentLoaded', () => {
-    // If the user previously chose a language, respect it.
-    // Otherwise, let the auto language script detect from the browser and call window.setLanguage().
-    if (currentLang) {
-      setLanguage(currentLang);
-    }
-  });
+            let initialLang = localStorage.getItem('language') || 'en';
+            if (!translations[initialLang]) { initialLang = 'en'; }
+            setLanguage(initialLang);
+            
+            // Lógica para fechar o menu após clicar em link no mobile
+            if (window.innerWidth <= 768) {
+                const menuLinks = document.querySelectorAll('#mainNavigation a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
                 // Garante que o ícone inicial seja o de barras no mobile
                 const hamburgerBtn = document.querySelector('.hamburger-btn');
                  if (hamburgerBtn) {
@@ -1199,8 +1203,5 @@ footer{
             }, 100); 
         });
     </script>
-  <!-- Language system (EN/PT/ES) -->
-  <script src="i18n.patched.js"></script>
-  <script src="lang-auto.js"></script>
 </body>
 </html>

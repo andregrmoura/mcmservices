@@ -12,3 +12,9 @@
   to = "/connect"
   status = 301
   force = true
+
+[[headers]]
+  for = "/projects/*"
+  [headers.values]
+    Basic-Auth = "mcmclient:MCM-Projects-2026!"
+    X-Robots-Tag = "noindex"

@@ -13,11 +13,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
-  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png?v=3" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
-  <link rel="shortcut icon" href="/favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3" />
+  <link rel="shortcut icon" href="../../favicon.ico?v=3" />
 
   <style>
     /* BASE (match your main page) */
@@ -168,15 +168,16 @@
         background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.0) 100%);
       }
       .header-container{ gap:0; }
-      .lang-switcher{ display:flex; width:auto; justify-content:flex-end; }
+      .lang-switcher{ display:flex; width:auto; justify-content:flex-end; position:absolute; right:55px; top:50%; transform:translateY(-50%); }
 
       .header-top-row{
-        padding-right:40px;
-        padding-left:20px;
+        padding-right:15px;
+        padding-left:15px;
         margin-bottom:0;
+        justify-content:center;
       }
       .header-col-left{ display:none; }
-      .logo-link{ text-align:left; flex-grow:1; }
+      .logo-link{ flex-grow:1; display:flex; justify-content:center; text-align:center; }
       .logo-link img{ height:70px !important; max-width:75%; }
 
       .hamburger-btn{
@@ -409,6 +410,21 @@
     }
 
   </style>
+
+<style>
+/* Project page guard: keep original header layout even if global CSS has centering overrides */
+header .header-top-row{
+  justify-content: center !important;
+  align-items: center !important;
+}
+header .logo-link{
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+</style>
+
 </head>
 
 <body id="top">
@@ -417,15 +433,10 @@
     <div class="header-top-row">
       <div class="header-col-left"></div>
 
-      <a class="logo-link" href="/">
+      <a class="logo-link" href="../../index.html">
         <img alt="MCM Services Logo" src="../../images/FODA.png" />
       </a>
-<div class="lang-switcher">
-        <img src="../../images/usa.jpeg.png" alt="English" data-lang="en" onclick="setLanguage('en')" class="active" />
-        <img src="../../images/brasil.jpeg.png" alt="Português" data-lang="pt" onclick="setLanguage('pt')" />
-        <img src="../../images/spain.png" alt="Español" data-lang="es" onclick="setLanguage('es')" />
-      </div>
-    </div>
+</div>
 </div>
 </header>
 
@@ -459,9 +470,9 @@
   <div class="footer-content-grid">
     <div class="footer-col">
       <h4 data-translate="footer-nav">Navigation</h4>
-      <a data-translate="nav-home" href="/">Home</a>
-      <a data-translate="nav-about" href="/#about">About</a>
-      <a data-translate="nav-contact" href="/#contact">Contact</a>
+      <a data-translate="nav-home" href="../../">Home</a>
+      <a data-translate="nav-about" href="../../#about">About</a>
+      <a data-translate="nav-contact" href="../../#contact">Contact</a>
       
     </div>
 
@@ -474,8 +485,8 @@
 
     <div class="footer-col">
       <h4 data-translate="footer-legal">Legal</h4>
-      <a data-translate="footer-terms" href="#">Termos de Uso</a>
-      <a data-translate="footer-privacy" href="#">Política de Privacidade</a>
+      <a id="link-terms" data-translate="footer-terms" href="../../terms.html" id="link-terms">Termos de Uso</a>
+      <a id="link-privacy" data-translate="footer-privacy" href="../../privacy.html" id="link-privacy">Política de Privacidade</a>
 </div>
   </div>
 
@@ -539,7 +550,7 @@
       "footer-terms": "Terms of Use",
       "footer-privacy": "Privacy Policy",
       "footer-copy": "MCM Services USA Corp. All rights reserved.",
-      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+      "footer-powered": "Crafted &amp; Managed by <span class='brand-soft'>mcmprosolutions.com</span>"
     },
     pt: {
       "nav-home": "Home",
@@ -559,7 +570,7 @@
       "footer-terms": "Termos de Uso",
       "footer-privacy": "Política de Privacidade",
       "footer-copy": "MCM Services USA Corp. Todos os direitos reservados.",
-      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+      "footer-powered": "Crafted &amp; Managed by <span class='brand-soft'>mcmprosolutions.com</span>"
     },
     es: {
       "nav-home": "Inicio",
@@ -579,7 +590,7 @@
       "footer-terms": "Términos de Uso",
       "footer-privacy": "Política de Privacidad",
       "footer-copy": "MCM Services USA Corp. Todos los derechos reservados.",
-      "footer-powered": "Crafted &amp; Managed by <span class=\"brand-soft\">mcmprosolutions.com</span>"
+      "footer-powered": "Crafted &amp; Managed by <span class='brand-soft'>mcmprosolutions.com</span>"
     }
   };
 
@@ -606,7 +617,7 @@
     });
 
     // persist
-    try { localStorage.setItem('mcm_lang', lang); } catch(e) {}
+    try { localStorage.setItem('language', lang); } catch(e) {}
   }
 
   function setLanguage(lang){
@@ -615,13 +626,184 @@
 
   // Init language on load
   (function initLanguage(){
-    let lang = 'en';
+  function normalize(raw){
+    if(!raw) return 'en';
+    raw = String(raw).toLowerCase();
+    if(raw.startsWith('pt')) return 'pt';
+    if(raw.startsWith('es')) return 'es';
+    return 'en';
+  }
+
+  let lang;
+  try {
+    const saved = localStorage.getItem('language');
+    if (saved && I18N[saved]) lang = normalize(saved);
+  } catch(e) {}
+
+  if (!lang) {
+    const browser = normalize((navigator.languages && navigator.languages[0]) || navigator.language || 'en');
+    lang = browser;
+    try { localStorage.setItem('language', lang); } catch(e) {}
+  }
+
+  applyTranslations(lang);
+
+  // Update legal links (project folder -> site root)
+  const termsMap = { en: '../../terms.html', pt: '../../terms-pt.html', es: '../../terms-es.html' };
+  const privMap  = { en: '../../privacy.html', pt: '../../privacy-pt.html', es: '../../privacy-es.html' };
+  const tEl = document.getElementById('link-terms');
+  const pEl = document.getElementById('link-privacy');
+  if (tEl) tEl.href = termsMap[lang] || termsMap.en;
+  if (pEl) pEl.href = privMap[lang]  || privMap.en;
+})();
+</script>
+<style>
+  /* ===============================
+     PROJECT PAGE – DESKTOP LOGO CENTER
+     (does NOT affect main index)
+     =============================== */
+  @media (min-width: 769px){
+  
+    header .header-top-row{
+      justify-content: center !important;
+    }
+  
+    header .header-col-left,
+    header .lang-switcher{
+      display: none !important;
+    }
+  
+    header .logo-link{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-grow: 0 !important;
+      text-align: center !important;
+    }
+  
+  }
+  </style>
+  <style>
+    /* =========================================
+       PROJECT PAGE – MOBILE: CENTER + BIGGER LOGO
+       ========================================= */
+    @media (max-width: 768px){
+    
+      header .header-top-row{
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 120px !important;  /* aumenta a “altura” do header no mobile */
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+      }
+    
+      /* some com o spacer da esquerda pra não empurrar nada */
+      header .header-col-left{
+        display: none !important;
+        width: 0 !important;
+      }
+    
+      /* logo fica no centro geométrico (não depende de flags/hamburger) */
+      header .logo-link{
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        text-align: center !important;
+        z-index: 120 !important;
+      }
+    
+      /* AQUI você controla o tamanho no mobile */
+      header .logo-link img{
+        height: 110px !important;     /* maior (igual/parecido com portfolio) */
+        width: auto !important;
+        max-width: 90vw !important;
+        object-fit: contain !important;
+      }
+    
+      /* se existir hamburger nessa página, ele não mexe no centro */
+      header .hamburger-btn{
+        position: absolute !important;
+        right: 15px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 130 !important;
+      }
+    }
+    </style>
+    
+
+
+<script>
+/* Legal links (Terms/Privacy) — works on any folder depth + follows current language */
+(function () {
+  function getLang() {
     try {
-      const saved = localStorage.getItem('mcm_lang');
-      if (saved && I18N[saved]) lang = saved;
-    } catch(e) {}
-    applyTranslations(lang);
-  })();
+      const v = (localStorage.getItem('language') || document.documentElement.lang || 'en').toLowerCase();
+      if (v.startsWith('pt')) return 'pt';
+      if (v.startsWith('es')) return 'es';
+      return 'en';
+    } catch (e) { return 'en'; }
+  }
+  function basePrefix() {
+    // depth = number of folders before the current file
+    const parts = (location.pathname || '/').split('/').filter(Boolean);
+    const depth = Math.max(0, parts.length - 1);
+    return '../'.repeat(depth);
+  }
+  function setLegalLinks(lang) {
+    const terms = { en: 'terms.html', pt: 'terms-pt.html', es: 'terms-es.html' };
+    const priv  = { en: 'privacy.html', pt: 'privacy-pt.html', es: 'privacy-es.html' };
+    const t = document.getElementById('link-terms');
+    const p = document.getElementById('link-privacy');
+    const base = basePrefix();
+    if (t) t.setAttribute('href', base + (terms[lang] || terms.en));
+    if (p) p.setAttribute('href', base + (priv[lang]  || priv.en));
+  }
+
+  setLegalLinks(getLang());
+
+  // If page has a language switch function, wrap it so links stay correct
+  if (typeof window.setLanguage === 'function' && !window.__legalLinksWrapped) {
+    const original = window.setLanguage;
+    window.setLanguage = function (lang) {
+      const out = original.apply(this, arguments);
+      setLegalLinks(getLang());
+      return out;
+    };
+    window.__legalLinksWrapped = true;
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  function getPrefixFromFavicon(){
+    var links = document.querySelectorAll('link[rel*="icon"][href], link[rel="apple-touch-icon"][href]');
+    for(var i=0;i<links.length;i++){
+      var href = links[i].getAttribute('href') || '';
+      if(!href) continue;
+      // prefer ones that include favicon or apple-touch-icon
+      if(href.indexOf('favicon')===-1 && href.indexOf('apple-touch-icon')===-1) continue;
+      href = href.split('?')[0];
+      // strip filename
+      return href.replace(/[^\/]+$/, '');
+    }
+    return '';
+  }
+  var prefix = getPrefixFromFavicon(); // e.g. ../../
+  var terms = document.getElementById('link-terms');
+  var priv = document.getElementById('link-privacy');
+  if(terms) terms.setAttribute('href', prefix + 'terms.html');
+  if(priv) priv.setAttribute('href', prefix + 'privacy.html');
+})();
 </script>
 
 </body>

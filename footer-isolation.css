@@ -1,0 +1,22 @@
+
+/* ==============================
+   FOOTER ISOLATION FIX
+   ============================== */
+.site-footer {
+  all: unset;
+  display: block;
+  width: 100%;
+  background: #ffffff;
+  color: #111111;
+  font-family: inherit;
+}
+
+.site-footer * {
+  all: revert;
+  box-sizing: border-box;
+}
+
+.site-footer img {
+  max-width: 100%;
+  height: auto;
+}

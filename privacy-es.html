@@ -123,7 +123,6 @@
     .header-col-left {
         width: 150px; 
     }
-.header-col-right { width: 150px; }
     
     /* Coluna do Centro para a Logo */
     .logo-link {
@@ -270,7 +269,7 @@
             display: none; 
         }
         .logo-link {
-            text-align: left; 
+            text-align: center; 
             flex-grow: 1;
         }
         .logo-link img {
@@ -1538,95 +1537,58 @@ body.menu-open #menuOverlay{
 </style>
 
 
-
-<style id="mobile-logo-center-fix">
-/* FORCE mobile header logo to be perfectly centered (all pages) */
-@media (max-width: 768px) {
-  header .header-top-row {
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 90px !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-  }
-  header .logo-link {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
-    text-align: center !important;
-    z-index: 120 !important;
-  }
-  header .hamburger-btn {
-    position: absolute !important;
-    right: 15px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    z-index: 130 !important;
-  }
-}
 </style>
-
 
 <style>
-/* =================================================
-   DESKTOP FIX — TRUE CENTER LOGO IN HEADER
-   Works even if .header-top-row uses space-between and extra elements exist.
-================================================= */
-@media (min-width: 769px) {
-  header .header-top-row {
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  /* keep left spacer pinned to left */
-  header .header-col-left {
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 150px !important;
-    height: 1px !important;
-  }
-
-  /* keep right spacer pinned to right (if present) */
-  header .header-col-right,
-  header .header-right {
-    position: absolute !important;
-    right: 0 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 150px !important;
-    height: 1px !important;
-  }
-
-  /* logo stays centered */
-  header .logo-link {
-    position: relative !important;
-    margin: 0 auto !important;
-    left: auto !important;
-    transform: none !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  /* hamburger should never affect centering */
-  header .hamburger-btn {
-    position: absolute !important;
-    right: 20px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-  }
+/* ===============================
+   HEADER LEGAL – DEFINITIVO
+   (sem menu, sem hamburger)
+   =============================== */
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.45);
+  padding: 20px 0;
+  z-index: 100;
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.header-top-row {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.logo-link {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+.logo-link img {
+  height: 120px !important;
+  width: auto !important;
+  max-width: 400px;
+}
+@media (max-width: 900px) {
+  .logo-link img { height: 100px !important; max-width: 90vw; }
+}
+nav,
+.hamburger-btn,
+.header-col-left,
+.header-col-right,
+.header-right,
+.lang-switcher,
+.mobile-nav-flags,
+#menuOverlay {
+  display: none !important;
 }
 </style>
+
 </head>
 
 <body id="top">
@@ -1653,303 +1615,576 @@ body.menu-open #menuOverlay{
 
 </div>
 <header>
-<div class="header-container">
-    
+  <div class="header-container">
     <div class="header-top-row">
-        <div class="header-col-left"></div>
-        
-        <a class="logo-link" href="#top">
-        <img src="images/FODA.png" alt="MCM Services Logo - Moura Consulting & Management" data-cms-img="brand.logo_header">
-        </a>
-        
-        <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        
+      <a class="logo-link" href="#top">
+        <img src="images/FODA.png" alt="MCM Services Logo">
+      </a>
     </div>
-    
-    <nav aria-label="Main Navigation" id="mainNavigation">
-    <ul>
-        <li><a href="#top" class="active" aria-current="page" data-translate="nav-home">Home</a></li>
-        <li><a href="#about" data-translate="nav-about">About</a></li>
-        <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
-        <li><a href="portfolio.html" data-translate="nav-gallery">Gallery</a></li>
-        <li>
-            <a href="login.html" class="client-login-link" data-translate="client-login">
-                Client Login
-            </a>
-        </li>
-    </ul>
-    
-    
-
-    </nav>
-    
-    <div class="header-right">
-    </div>
-
-</div>
+  </div>
 </header>
-<!-- Mobile menu overlay (click outside to close) -->
-<div id="menuOverlay"></div>
 
+<style>
+  /* Legal pages: ensure content starts below absolute header */
+  .legal-hero{
+    padding-top: 220px;
+    padding-bottom: 60px;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    text-align: center;
+  }
+  .legal-hero h1{
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    margin: 0;
+    font-size: 3rem;
+  }
+  .legal-wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: left;
+    line-height: 1.75;
+  }
+  .legal-wrap h2{
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    color: #C7A96B;
+    margin-top: 32px;
+  }
+  .legal-wrap p, .legal-wrap li{
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+  }
+  .legal-wrap ul{ padding-left: 22px; }
+</style>
 
-<div class="hero-container">
+<main>
+  <section class="legal-hero">
+    <h1>Política de Privacidad</h1>
+  </section>
 
-<div class="hero-gradient-overlay"></div>
-
-<div class="hero-slide active" 
-    style="background-image:url('images/bath_bg.jpg');" data-cms-bg=\"hero.slide1_bg\">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-    <h1 data-translate="hero1-title">Project Management for High-End Homes</h1>
-    <p data-translate="hero1-subtitle">From concept to completion — seamless coordination and quality control.</p>
+  <section class="legal-wrap">
     
-    <div class="hero-cta-buttons">
-        <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
-            View Portfolio
-        </a>
-        <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-            Request Exclusive Project
-        </button>
-    </div>
+<p><strong>Vigencia:</strong> Enero de 2026</p>
+<p>Esta Política de Privacidad explica cómo MCM Services Pro Solutions (“nosotros”) recopila y utiliza información cuando usted usa nuestro sitio web.</p>
 
-    </div>
-</div>
+<h2>1) Información que recopilamos</h2>
+<ul>
+  <li>Datos de contacto enviados por usted (nombre, correo, mensaje).</li>
+  <li>Datos técnicos básicos (IP, navegador, páginas visitadas) para seguridad y métricas.</li>
+</ul>
 
-<div class="hero-slide" 
-    style="background-image:url('images/hero2.jpeg');" data-cms-bg=\"hero.slide2_bg\">
-    <div class="hero-overlay"></div>
+<h2>2) Cómo usamos la información</h2>
+<ul>
+  <li>Para responder consultas y enviar presupuestos.</li>
+  <li>Para mejorar el Sitio y prevenir abuso/fraude.</li>
+</ul>
 
-    <div class="hero-content">
-    <h1 data-translate="hero2-title">Premium Residential Project Oversight</h1>
-    <p data-translate="hero2-subtitle">Flawless execution delivered with transparency and strategic planning.</p>
-    
-    <div class="hero-cta-buttons">
-        <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
-            View Portfolio
-        </a>
-        <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-            Request Exclusive Project
-        </button>
-    </div>
-    </div>
-</div>
+<h2>3) Compartir</h2>
+<p>No vendemos su información personal. Podemos compartir datos limitados con proveedores (p. ej., hosting/correo) solo cuando sea necesario para operar el Sitio.</p>
 
-<div class="hero-slide" 
-    style="background-image:url('images/hero3.jpeg');" data-cms-bg=\"hero.slide3_bg\">
-    <div class="hero-overlay"></div>
+<h2>4) Cookies</h2>
+<p>El Sitio puede usar cookies (o tecnologías similares) para funcionalidad y analítica. Puede controlar cookies en la configuración del navegador.</p>
 
-    <div class="hero-content">
-    <h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
-    <p data-translate="hero3-subtitle">Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.</p>
-    
-    <div class="hero-cta-buttons">
-        <a href="portfolio.html" class="hero-btn secondary" data-translate="hero-btn-portfolio">
-            View Portfolio
-        </a>
-        <button class="hero-btn" onclick="window.location.href='https://wa.me/17862383386'" data-translate="hero-btn">
-            Request Exclusive Project
-        </button>
-    </div>
-    </div>
-</div>
+<h2>5) Contacto</h2>
+<p>Preguntas de privacidad: <a href="mailto:info@mcmprosolutions.com">info@mcmprosolutions.com</a></p>
 
-<div class="hero-dots">
-    <div class="dot active" data-slide="0"></div>
-    <div class="dot" data-slide="1"></div>
-    <div class="dot" data-slide="2"></div>
-</div>
-
-</div>
+  </section>
+</main>
 
 
-<section id="services">
-<div class="content-max-width">
-    
-    <h2 class="section-title" data-translate="services-title">Our Project Management Services</h2>
-    <p class="section-subtitle" data-translate="contact-subtitle" style="margin-bottom: 50px; opacity: 0.9;">
-        Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
-    </p>
 
-    <div class="carousel-container">
+<script>
+// ============================
+// 1. OBJETO DE TRADUÇÃO (COMPLETO E ATUALIZADO)
+// ============================
+const translations = {
+    'en': {
+        // Modal Pop-up
+        'modal-title': 'Elevated Residential Projects',
+        'modal-text': 'Exclusive consulting and management for high-end homes in Miami',
+        'modal-btn': 'Schedule NowBook a Elevated Residential Projects',
         
-        <button type="button" class="carousel-btn prev-btn" aria-label="Previous service" onclick="moveCarousel(-1)">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+        // Hero Titles (Premium)
+        'hero1-title': 'Project Management for High-End Homes',
+        'hero1-subtitle': 'From concept to completion — seamless coordination and quality control.',
+        'hero2-title': 'Premium Residential Project Oversight', 
+        'hero2-subtitle': 'Flawless execution delivered with transparency and strategic planning.',
+        'hero3-title': 'Structure and Precision for Your Vision',
+        'hero3-subtitle': 'Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.',
+        'hero-btn': 'Request Exclusive Project',
+        'hero-btn-portfolio': 'View Portfolio', 
+        
+        // About Section (Premium)
+        'about-title': 'Why Choose Us', 
+        'about-p1': 'We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.',
+        'about-p2': 'Our approach is focused on structure, **communication** and **risk control**, offering homeowners peace of mind while every phase of the project is managed with precision.',
+        'about-p3': 'Our founder holds **qualifications in Project Management from FIU (Florida International University)**, and important **certifications** in **OSHA** and **NCCER**, reinforcing our commitment to safety, quality, and professional standards.',
 
-        <div class="carousel-viewport">
-            <div class="service-cards-carousel"> 
-                
-                <div class="card-style">
-                    <img src="images/pm22.jpg" alt="Project Initiation and Scope Definition" data-cms-img="services[0].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service1-title">Initiation & Scope</h3>
-                    <p data-translate="service1-text">We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.</p>
-                    </div>
-                </div>
 
-                <div class="card-style">
-                    <img src="images/pm24.png" alt="Project Schedules and Time Management" data-cms-img="services[1].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service2-title">Schedules & Time Management</h3>
-                    <p data-translate="service2-text">We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.</p>
-                    </div>
-                </div>
+        // Default (Mantido)
+        'nav-home': 'Home', 'nav-about': 'About', 'nav-contact': 'Contact', 'nav-gallery': 'Gallery', 'client-login': 'Client Login',
+        'services-title': 'Our Project Management Services',
+        'service1-title': 'Initiation & Scope', 'service1-text': 'We clearly define the **scope**, establishing measurable **goals** and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.',
+        'service2-title': 'Schedules & Time Management', 'service2-text': 'We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of **resources** (team, materials, budget) to keep the project on track and maximize efficiency.',
+        'service3-title': 'Risk & Quality', 'service3-text': 'We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.',
+        'service4-title': 'Stakeholders', 'service4-text': 'We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.',
+        'service5-title': 'Budget & Cost Control', 'service5-text': 'We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.',
+        'service6-title': 'Final Delivery', 'service6-text': 'We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.',
+        'testimonials-title': 'Client Testimonials',
+        'testimonial1-text': 'MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.',
+        'testimonial2-text': 'They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.',
+        'testimonial3-text': 'Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.',
+        'contact-title': 'Submit a Project Inquiry', 'contact-subtitle': 'Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.',
+        'contact-input-name': 'Your Name', 'contact-input-email': 'Your Email', 'contact-input-msg': 'Describe your project, timeline, and location',
+        'contact-btn-submit': 'Request Estimate', 'contact-btn-whatsapp': 'Contact via WhatsApp',
+        'footer-tagline': 'Management Excellence, Flawless Execution.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 
+        'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy', 'footer-dev': 'Developed by Andre Moura',
+        'footer-copy': 'MCM Services Pro Solutions. All rights reserved.',
+        'footer-powered': 'Crafted & Managed by <span class="brand-soft">mcmprosolutions.com</span>',
+    },
+    'pt': {
+        // Modal Pop-up
+        'modal-title': 'Bem-vindo(a) à MCM Services',
+        'modal-text': 'Agende uma consulta exclusiva para discutir seu projeto residencial de alto padrão em Miami-Dade ou Broward.',
+        'modal-btn': 'Agendar Agora',
 
-                <div class="card-style">
-                    <img src="images/pm23.jpg" alt="Risk Management and Quality Control" data-cms-img="services[2].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service3-title">Risk & Quality</h3>
-                    <p data-translate="service3-text">We perform proactive **risk** identification, analysis, and monitoring to mitigate impacts. We implement rigorous **quality** control to ensure all deliverables meet defined standards.</p>
-                    </div>
-                </div>
+        // Hero Titles (Premium)
+        'hero1-title': 'Gerenciamento de Projetos para Residências de Alto Padrão',
+        'hero1-subtitle': 'Do conceito à conclusão — coordenação e controle de qualidade impecáveis.',
+        'hero2-title': 'Supervisão Premium de Projetos Residenciais', 
+        'hero2-subtitle': 'Execução impecável entregue com transparência e planejamento estratégico.',
+        'hero3-title': 'Estrutura e Precisão para a Sua Visão',
+        'hero3-subtitle': 'Mitigação de riscos, controle de orçamento e acabamento de alta qualidade, garantidos.',
+        'hero-btn': 'Solicitar Projeto Exclusivo',
+        'hero-btn-portfolio': 'Ver Portfólio', 
+        
+        // About Section (Premium)
+        'about-title': 'Por Que Nos Escolher', 
+        'about-p1': 'Gerenciamos cada etapa do seu projeto residencial com precisão, transparência e alta qualidade de execução — garantindo que sua casa receba a expertise que merece.',
+        'about-p2': 'Nossa abordagem foca em estrutura, **comunicação** e **controle de risco**, oferecendo tranquilidade aos proprietários enquanto cada fase do projeto é gerenciada com precisão.',
+        'about-p3': 'Nosso fundador possui **qualificação em Gerenciamento de Projetos pela FIU (Universidade Internacional da Florida)**, e importantes **certificações** em **OSHA** e **NCCER**, o que reforça nosso compromisso com segurança, qualidade e padrões profissionais.',
 
-                <div class="card-style">
-                    <img src="images/pm30.jpg" alt="Stakeholder and Communication Management" data-cms-img="services[3].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service4-title">Stakeholders</h3>
-                    <p data-translate="service4-text">We maintain transparent and constant **communication** with everyone involved. We prepare clear status reports and manage **stakeholder** expectations to ensure continuous satisfaction and collaboration.</p>
-                    </div>
-                </div>
+        // Default (Mantido)
+        'nav-home': 'Início', 'nav-about': 'Sobre', 'nav-contact': 'Contato', 'nav-gallery': 'Galeria', 'client-login': 'Login do Cliente',
+        'services-title': 'Nossos Serviços de Gerenciamento',
+        'service1-title': 'Iniciação e Escopo', 'service1-text': 'Definimos claramente o **escopo**, estabelecendo **metas** e objetivos mensuráveis. Criamos a documentação inicial, identificamos stakeholders e estruturamos o plano de trabalho para alinhamento total desde o início.',
+        'service2-title': 'Cronograma e Tempo', 'service2-text': 'Desenvolvemos cronogramas detalhados e realistas (Gantt/PERT). Otimizamos a alocação de **recursos** (equipe, materiais, orçamento) para manter o projeto no prazo e maximizar a eficiência.',
+        'service3-title': 'Risco e Qualidade', 'service3-text': 'Realizamos identificação, análise e monitoramento proativos de **riscos** para mitigar impactos. Implementamos um rigoroso controle de **qualidade** para garantir que todas as entregas atendam aos padrões definidos.',
+        'service4-title': 'Partes Interessadas (Stakeholders)', 'service4-text': 'Mantemos **comunicação** transparente e constante com todos os envolvidos. Preparamos relatórios de status claros e gerenciamos as expectativas das **partes interessadas** para garantir satisfação e colaboração contínuas.',
+        'service5-title': 'Orçamento e Custos', 'service5-text': 'Gerenciamos o **orçamento** do projeto com precisão. Monitoramos custos, controlamos o fluxo de caixa e usamos técnicas de Valor Agregado (EVA) para garantir que o projeto seja concluído dentro das restrições financeiras.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Lidamos com a entrega final, aceitação formal do cliente e **encerramento** administrativo. Coletamos **lições aprendidas** para refinar processos e garantir a melhoria contínua em projetos futuros.',
+        'testimonials-title': 'Depoimentos de Clientes',
+        'testimonial1-text': 'A MCM Services entregou um gerenciamento excepcional. O **cronograma** foi preciso e o **controle de orçamento** manteve tudo tranquilo. Profissionalismo total.',
+        'testimonial2-text': 'Eles coordenaram nossa reforma com precisão. Excelente **comunicação**, **controle de risco** e resultado final de alta qualidade.',
+        'testimonial3-text': 'Coordenação de **stakeholders** excepcional em um projeto complexo de design de interiores. Serviço de alto padrão do início ao fim.',
+        'contact-title': 'Enviar consulta do Projeto', 'contact-subtitle': 'Compartilhe os detalhes básicos do seu projeto. As solicitações qualificadas serão avaliadas antes da consulta.',
+        'contact-input-name': 'Seu Nome', 'contact-input-email': 'Seu E-mail', 'contact-input-msg': 'Descreva seu projeto, cronograma e localização',
+        'contact-btn-submit': 'Enviar consulta', 'contact-btn-whatsapp': 'Contato via WhatsApp',
+        'footer-tagline': 'Excelência em Gestão, Execução Impecável.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navegação', 'footer-contact': 'Contato e Conexão', 'footer-legal': 'Legal', 
+        'footer-terms': 'Termos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desenvolvido por Andre Moura',
+        'footer-copy': 'MCM Services Pro Solutions. Todos os direitos reservados.',
+        'footer-powered': 'Operado por mcmprosolutions.com',
+    },
+    'es': {
+        // Modal Pop-up
+        'modal-title': 'Bienvenido(a) a MCM Services',
+        'modal-text': 'Agende una consulta exclusiva para discutir su proyecto residencial de alta gama en Miami-Dade o Broward.',
+        'modal-btn': 'Agendar Ahora',
+        
+        // Hero Titles (Premium)
+        'hero1-title': 'Gestión de Proyectos para Residencias de Alta Gama',
+        'hero1-subtitle': 'Desde el concepto hasta la finalización — coordinación y control de calidad impecables.',
+        'hero2-title': 'Supervisión Premium de Proyectos Residenciales', 
+        'hero2-subtitle': 'Ejecución impecable entregada con transparencia y planificación estratégica.',
+        'hero3-title': 'Estrutura y Precisión para Su Visión',
+        'hero3-subtitle': 'Mitigación de riesgos, control de presupuesto y artesanía de alta calidad, garantizados.',
+        'hero-btn': 'Solicitar Proyecto Exclusivo',
+        'hero-btn-portfolio': 'Ver Portafolio', 
+        
+        // About Section (Premium)
+        'about-title': 'Por Qué Elegirnos', 
+        'about-p1': 'Gestionamos cada paso de su proyecto residencial con precisión, transparencia y alta calidad de ejecución, garantizando que su hogar reciba la experiencia que merece.',
+        'about-p2': 'Nuestro enfoque se centra en la estructura, la **comunicação** y el **control de riesgos**, ofreciendo tranquilidad a los propietarios mientras cada fase del proyecto se gestiona con precisión.',
+        'about-p3': 'Nuestro fundador posee **calificación en Gestión de Proyectos por la FIU (Universidad Internacional de Florida)**, y importantes **certificaciones** en **OSHA** y **NCCER**, lo que refuerza nuestro compromiso con seguridad, calidad y estándares profesionales.',
 
-                <div class="card-style">
-                    <img src="images/pm25.jpg" alt="Budget and Cost Control" data-cms-img="services[4].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service5-title">Budget & Cost Control</h3>
-                    <p data-translate="service5-text">We manage the project **budget** with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.</p>
-                    </div>
-                </div>
+        // Default (Mantido)
+        'nav-home': 'Inicio', 'nav-about': 'Nosotros', 'nav-contact': 'Contacto', 'nav-gallery': 'Galería', 'client-login': 'Acceso Clientes',
+        'services-title': 'Nuestros Servicios de Gestión',
+        'service1-title': 'Iniciación y Alcance', 'service1-text': 'Definimos claramente el **alcance**, estableciendo **metas** y objetivos medibles. Creamos la documentación inicial, identificamos a los stakeholders y estructuramos el plan de trabajo para una alineação total desde el inicio.',
+        'service2-title': 'Cronogramas y Tiempo', 'service2-text': 'Desarrollamos cronogramas detallados y realistas (Gantt/PERT). Optimizamos la asignación de **recursos** (equipo, materiales, presupuesto) para mantener el proyecto a tiempo y maximizar la eficiencia.',
+        'service3-title': 'Riesgo y Calidad', 'service3-text': 'Realizamos identificación, análisis y monitoreo proactivo de **riesgos** para mitigar impactos. Implementamos um rigoroso control de **calidad** para asegurar que todas las entregas cumplan con los estándares definidos.',
+        'service4-title': 'Partes Interesadas (Stakeholders)', 'service4-text': 'Mantemos **comunicación** transparente e constante con todos los involucrados. Preparamos informes de estado claros e gerenciamos las expectativas de las **partes interesadas** para garantir a satisfação e colaboração continuas.',
+        'service5-title': 'Presupuesto y Costos', 'service5-text': 'Gestionamos el **presupuesto** del proyecto con precisión. Monitoreamos los costos, controlamos el flujo de caixa e utilizamos técnicas de Valor Ganado (EVA) para asegurar que o projeto se complete dentro de las restricciones financieras.',
+        'service6-title': 'Entrega Final', 'service6-text': 'Manejamos la entrega final, la aceptación formal del cliente y el **cierre** administrativo. Recopilamos **lições aprendidas** para refinar processos e garantir a melhora continua em projetos futuros.',
+        'testimonials-title': 'Testimonios de Clientes',
+        'testimonial1-text': 'MCM Services brindó una gestión excepcional. El **cronograma** fue preciso y el **control de presupuesto** mantuvo todo fluido. Profesionalismo total.',
+        'testimonial2-text': 'Coordinaron nuestra renovación con precisión. Excelente **comunicação**, **control de riesgos** y un resultado final de alta calidad.',
+        'testimonial3-text': 'Excelente **coordinación de stakeholders** en un proyecto complejo de diseño de interiores. High-end service from start to finish.',
+        'contact-title': 'Enviar consulta del Proyecto', 'contact-subtitle': 'Comparta los detalles básicos de su proyecto. Las consultas calificadas serán revisadas antes de la consulta.',
+        'contact-input-name': 'Su Nombre', 'contact-input-email': 'Su Correo Electrónico', 'contact-input-msg': 'Describa su proyecto, cronograma y ubicación',
+        'contact-btn-submit': 'Enviar consulta', 'contact-btn-whatsapp': 'Contactar vía WhatsApp',
+        'footer-tagline': 'Excelência en la Gestión, Ejecución Impecável.', 'footer-location': 'Miami, FL', 
+        'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 
+        'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade', 'footer-dev': 'Desarrollado por Andre Moura',
+        'footer-copy': 'MCM Services Pro Solutions. Todos los derechos reservados.',
+        'footer-powered': 'Operado por mcmprosolutions.com',
+    }
+};
 
-                <div class="card-style">
-                    <img src="images/pm26.jpg" alt="Final Project Delivery and Closure" data-cms-img="services[5].image">
-                    <div class="card-content">
-                    <h3 role="heading" aria-level="3" data-translate="service6-title">Final Delivery</h3>
-                    <p data-translate="service6-text">We handle the final delivery, formal client acceptance, and administrative **closure**. We collect **lessons learned** to refine processes and ensure continuous improvement in future projects.</p>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
+let currentLang = localStorage.getItem('language') || 'en';
+const supportedLangs = ['en', 'pt', 'es'];
 
-        <button type="button" class="carousel-btn next-btn" aria-label="Next service" onclick="moveCarousel(1)">
-            <i class="fas fa-chevron-right"></i>
-        </button>
 
-    </div>
-</div>
-</section>
+// ===================================
+// 2. FUNÇÕES GERAIS E DE TRADUÇÃO
+// ===================================
 
-<section id="about" class="section-light">
-<div class="about-content">
+function updateTexts(lang) {
+    const dictionary = translations[lang];
+    if (!dictionary) return;
 
-    <img src="images/andre-bg-white-v2.jpg?v=20251228" alt="Professional Project Manager Portrait">
+    document.getElementById("currentYear").textContent = new Date().getFullYear(); 
 
-    <div class="about-text">
-    <h2 class="section-title" style="text-align:left; margin-bottom: 20px;" data-translate="about-title">Why Choose Us</h2>
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        const translation = dictionary[key];
 
-    <p data-translate="about-p1">
-        We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.
-    </p>
+        if (translation) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.setAttribute('placeholder', translation);
+            } 
+            else {
+                // Substitui **texto** por <strong>texto</strong> e insere o HTML
+                element.innerHTML = translation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            }
+        }
+    });
+}
 
-    <p data-translate="about-p2">
-        Our approach is focused on structure, **communication** and **risk control**, offering homeowners peace of mind while every phase of the project is managed with precision.
-    </p>
-
-    <p data-translate="about-p3">
-        Our founder holds **qualifications in Project Management from FIU (Florida International University)**, and important **certifications** in **OSHA** and **NCCER**, reinforcing our commitment to safety, quality, and professional standards.
-    </p>
-
-    <div class="certifications">
-        <span title="Certified Project Manager" aria-label="FIU Project Management Credential">PM</span>
-        <img src="images/nccer.jpeg" alt="NCCER Certification Logo" id="nccer-logo">
-        <img src="images/osha.jpeg" alt="OSHA Certification Logo">
-    </div>
-
-<div class="about-cta">
-    <a 
-      href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl"
-      target="_blank"
-      rel="noopener"
-    >
-        Private Consultation
-    </a>
-</div>
-    </div>
-</div>
-</section>
-
-<section id="testimonials" class="section-light">
-
-<h2 class="section-title" style="margin-bottom:30px;" data-translate="testimonials-title">Client Testimonials</h2>
-
-<div class="testimonial-card-container">
-
-    <div class="testimonial-card" role="blockquote" aria-label="Testimonial by Mr. B. Mendes">
-    <p data-translate="testimonial1-text">
-        MCM Services delivered outstanding management. The **schedule** was precise and the **budget** control kept everything smooth. Total professionalism.
-    </p>
-    <p class="testimonial-author">
-        — Mr. B. Mendes, Miami
-    </p>
-    </div>
-
-    <div class="testimonial-card" role="blockquote" aria-label="Testimonial by Mrs. C. Oliveira">
-    <p data-translate="testimonial2-text">
-        They coordinated our renovation with precision. Excellent **communication**, **risk control** and high-quality final result.
-    </p>
-    <p class="testimonial-author">
-        — Mrs. C. Oliveira, Coral Gables
-    </p>
-    </div>
-
-    <div class="testimonial-card" role="blockquote" aria-label="Testimonial by Arch. D. Freitas">
-    <p data-translate="testimonial3-text">
-        Outstanding **stakeholder coordination** on a complex interior design project. High-end service from start to finish.
-    </p>
-    <p class="testimonial-author">
-        — Arch. D. Freitas, Broward
-    </p>
-    </div>
-
-</div>
-</section>
-
-<section id="contact" class="section-gray">
-
-<h2 class="section-title" style="font-family:'Montserrat', sans-serif; font-weight:600;" data-translate="contact-title">Submit a Project Inquiry</h2>
-
-<p class="section-subtitle" style="text-align: center;" data-translate="contact-subtitle">
-    Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
-</p>
-
-<form action="submit_form.php" method="POST" class="contact-form">
+window.setLanguage = function(lang) {
+    if (!translations[lang]) { lang = 'en'; }
+    localStorage.setItem('language', lang);
+    currentLang = lang;
+    updateTexts(lang);
     
-    <label for="name" class="sr-only">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required aria-required="true" data-translate="contact-input-name">
+    // Atualiza o estado ativo de todas as bandeiras (desktop e mobile)
+    document.querySelectorAll('.lang-switcher img, .mobile-nav-flags img').forEach(img => {
+        img.classList.remove("active");
+        if (img.getAttribute('data-lang') === lang) {
+            img.classList.add("active");
+        }
+    });
+    
+    document.documentElement.lang = lang;
+}
 
-    <label for="email" class="sr-only">Your Email</label>
-    <input type="email" id="email" name="email" placeholder="Your Email" required aria-required="true" data-translate="contact-input-email">
+// Função para abrir/fechar o menu sanduíche
+window.toggleMenu = function() {
+    const body = document.body;
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const isMenuOpen = body.classList.contains('menu-open');
+    
+    if (isMenuOpen) {
+        body.classList.remove('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        // Mudar ícone para barras
+        hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    } else {
+        body.classList.add('menu-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        // Mudar ícone para X (fechar)
+        hamburgerBtn.innerHTML = '<i class="fas fa-times"></i>';
+    }
+}
 
-    <label for="message" class="sr-only">Project Description</label>
-    <textarea id="message" name="message" rows="5" placeholder="Describe your project, timeline, and location" required aria-required="true" data-translate="contact-input-msg"></textarea>
 
-    <button type="submit" data-translate="contact-btn-submit">Submit Inquiry</button>
+// ============================
+// HERO Slider (100vh Fade Suave)
+// ============================
+let currentSlide = 0;
+const slides = document.querySelectorAll(".hero-slide");
+const dots = document.querySelectorAll(".dot");
 
-</form>
+function showSlide(index) {
+// Reset animations by removing/re-adding the active class
+slides.forEach(slide => slide.classList.remove("active"));
+dots.forEach(dot => dot.classList.remove("active"));
 
-<div class="whatsapp-btn-container">
-    <a href="https://wa.me/17862383386" target="_blank" class="whatsapp-btn" data-translate="contact-btn-whatsapp">
-    <i class="fab fa-whatsapp" aria-hidden="true"></i> Contact via WhatsApp
-    </a>
-</div>
+if (slides[index]) slides[index].classList.add("active");
+if (dots[index]) dots[index].classList.add("active");
 
-</section>
+currentSlide = index;
+}
+
+function nextSlide() {
+currentSlide = (currentSlide + 1) % slides.length;
+showSlide(currentSlide);
+}
+
+let slideInterval = setInterval(nextSlide, 9000);
+
+dots.forEach(dot => {
+dot.addEventListener("click", () => {
+    clearInterval(slideInterval);
+    showSlide(parseInt(dot.dataset.slide));
+    slideInterval = setInterval(nextSlide, 9000);
+});
+});
+
+// Initial calls
+showSlide(0); 
+
+
+/// ============================
+// Carousel de Serviços (FINAL – viewport scroll)
+// ============================
+window.moveCarousel = function(direction) {
+  const viewport = document.querySelector('.carousel-viewport');
+  const cards = document.querySelectorAll('.service-cards-carousel .card-style');
+  if (!viewport || !cards.length) return;
+
+  const isMobileLike = window.innerWidth <= 768;
+
+  // Focus point: center on mobile/tablet, left edge on desktop
+  const focusX = viewport.scrollLeft + (isMobileLike ? viewport.clientWidth / 2 : 10);
+
+  let closestIndex = 0;
+  let closestDist = Infinity;
+
+  cards.forEach((card, i) => {
+    const point = isMobileLike
+      ? (card.offsetLeft + card.offsetWidth / 2) // center
+      : (card.offsetLeft);                       // start
+    const dist = Math.abs(point - focusX);
+    if (dist < closestDist) {
+      closestDist = dist;
+      closestIndex = i;
+    }
+  });
+
+  const targetIndex = Math.max(0, Math.min(cards.length - 1, closestIndex + direction));
+  const target = cards[targetIndex];
+
+  const targetLeft = isMobileLike
+    ? (target.offsetLeft - (viewport.clientWidth / 2 - target.offsetWidth / 2))
+    : (target.offsetLeft - 20);
+
+  viewport.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+};
+
+// Adiciona um listener para atualizar a largura quando a tela for redimensionada
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    // Atraso de 100ms para evitar recálculos excessivos durante o redimensionamento
+    resizeTimeout = setTimeout(() => {
+        // Chamada com direction=0 para forçar o recálculo e o posicionamento
+        // do card atualmente visível, sem efetuar movimento extra.
+        window.moveCarousel(0); 
+    }, 100); 
+});
+</script>
+
+<script>
+function toggleMenu() {
+  const body = document.body;
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+
+  body.classList.toggle('menu-open');
+
+  const isOpen = body.classList.contains('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', isOpen);
+
+  hamburgerBtn.innerHTML = isOpen
+    ? '<i class="fas fa-times"></i>'
+    : '<i class="fas fa-bars"></i>';
+}
+
+function closeMobileMenu(){
+  const body = document.body;
+  const hamburgerBtn = document.querySelector('.hamburger-btn');
+
+  body.classList.remove('menu-open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
+}
+
+document.querySelectorAll('#mainNavigation a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 768) closeMobileMenu();
+  });
+});
+
+document.getElementById('menuOverlay')
+  .addEventListener('click', closeMobileMenu);
+</script>
+
+
+<script>
+/* ======================================
+   MODAL POPUP (Timing + anti-loop)
+   - Shows after a short delay OR after user scrolls a bit (whichever comes first)
+   - Shows max once per 24h per device (localStorage)
+   - Optional: add ?nopopup=1 to suppress (useful for testing)
+====================================== */
+(function () {
+  const MODAL_ID = 'welcomeModal';
+  const DELAY_MS = 7000;             // 7s after page load
+  const COOLDOWN_HOURS = 24;         // won't show again for 24h
+  const STORAGE_KEY = 'mcm_welcomeModal_lastShown';
+  const SCROLL_TRIGGER_RATIO = 0.35; // or show after ~35% scroll
+
+  const modal = document.getElementById(MODAL_ID);
+  if (!modal) return;
+
+  const now = () => Date.now();
+  const hoursSince = (ts) => (now() - ts) / 36e5;
+
+  function isSuppressedByUrl() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('nopopup') === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function canShow() {
+    if (isSuppressedByUrl()) return false;
+    const last = Number(localStorage.getItem(STORAGE_KEY) || 0);
+    if (last && hoursSince(last) < COOLDOWN_HOURS) return false;
+    return true;
+  }
+
+  function lockScroll(lock) {
+    document.body.classList.toggle('menu-open', !!lock);
+  }
+
+  window.openWelcomeModal = function () {
+    if (!canShow()) return;
+    modal.classList.add('open');
+    lockScroll(true);
+    localStorage.setItem(STORAGE_KEY, String(now()));
+  };
+
+  window.closeModal = function () {
+    modal.classList.remove('open');
+    lockScroll(false);
+    localStorage.setItem(STORAGE_KEY, String(now()));
+  };
+
+  let opened = false;
+  function openOnce() {
+    if (opened) return;
+    opened = true;
+    window.openWelcomeModal();
+    cleanup();
+  }
+
+  const timer = setTimeout(openOnce, DELAY_MS);
+
+  function onScroll() {
+    const doc = document.documentElement;
+    const max = (doc.scrollHeight - doc.clientHeight) || 1;
+    const ratio = doc.scrollTop / max;
+    if (ratio >= SCROLL_TRIGGER_RATIO) openOnce();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  function cleanup() {
+    clearTimeout(timer);
+    window.removeEventListener('scroll', onScroll);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // if user lands mid-page (anchor), evaluate scroll quickly
+    setTimeout(onScroll, 50);
+  });
+})();
+</script>
+
+<script>
+/**
+ * CMS CONTENT LOADER
+ * Loads /content/site.json and applies:
+ *   data-cms-img="path"  and  data-cms-bg="path"
+ * Also merges optional translation overrides from /content/translations/{en|pt|es}.json into window.translations (if present).
+ */
+(async function(){
+  async function safeFetchJson(url){
+    try{
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) return null;
+      return await res.json();
+    }catch(e){ return null; }
+  }
+  function getByPath(obj, path){
+    return path.split('.').reduce((acc, part) => {
+      if(!acc) return null;
+      const m = part.match(/^([a-zA-Z0-9_-]+)\[(\d+)\]$/);
+      if(m){
+        const key = m[1], idx = Number(m[2]);
+        return (acc[key] && acc[key][idx] != null) ? acc[key][idx] : null;
+      }
+      return (acc[part] != null) ? acc[part] : null;
+    }, obj);
+  }
+  const site = await safeFetchJson('/content/site.json');
+  if(site){
+    document.querySelectorAll('[data-cms-img]').forEach(el=>{
+      const p = el.getAttribute('data-cms-img');
+      const v = getByPath(site, p);
+      if(v) el.setAttribute('src', v);
+    });
+    document.querySelectorAll('[data-cms-bg]').forEach(el=>{
+      const p = el.getAttribute('data-cms-bg');
+      const v = getByPath(site, p);
+      if(v) el.style.backgroundImage = `url('${v}')`;
+    });
+  }
+  if(window.translations){
+    for(const lang of ['en','pt','es']){
+      const t = await safeFetchJson(`/content/translations/${lang}.json`);
+      if(t){
+        window.translations[lang] = Object.assign({}, window.translations[lang] || {}, t);
+      }
+    }
+  }
+})();
+</script>
 
 
 
+  <!-- FOOTER (loaded via /footer-loader.js) -->
+  <div id="site-footer"></div>
+  <script src="/footer-loader.js"></script>
+
+<script>
+  // On legal pages, switching language should also switch the file.
+  (function(){
+    const pageMap = {
+      terms: { en: "/terms.html", pt: "/terms-pt.html", es: "/terms-es.html" },
+      privacy: { en: "/privacy.html", pt: "/privacy-pt.html", es: "/privacy-es.html" }
+    };
+    const kind = "privacy";
+    const map = pageMap[kind] || pageMap.terms;
+
+    // force current language for this page (so footer links match)
+    localStorage.setItem("language", "es");
+
+    window.setLanguage = function(lang){
+      lang = (lang || "en").toLowerCase();
+      if(!map[lang]) lang = "en";
+      localStorage.setItem("language", lang);
+      window.location.href = map[lang];
+    };
+  })();
+</script>
 
 <footer>
   <div class="footer-logo-container">
@@ -1983,8 +2218,8 @@ body.menu-open #menuOverlay{
 
     <div class="footer-col">
       <h4 data-translate="footer-legal">Legal</h4>
-      <a id="link-terms" data-translate="footer-terms" href="terms.html" id="link-terms">Termos de Uso</a>
-      <a id="link-privacy" data-translate="footer-privacy" href="privacy.html" id="link-privacy">Política de Privacidade</a>
+      <a id="link-terms" data-translate="footer-terms" href="terms.html">Terms of Use</a>
+      <a id="link-privacy" data-translate="footer-privacy" href="privacy.html">Privacy Policy</a>
 </div>
   </div>
 
@@ -1998,9 +2233,5 @@ body.menu-open #menuOverlay{
     </p>
   </div>
 </footer>
-
-  <!-- Language system (EN/PT/ES) -->
-  <script src="i18n.patched.js"></script>
-  <script src="lang-auto.js"></script>
 </body>
 </html>

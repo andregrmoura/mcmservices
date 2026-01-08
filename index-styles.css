@@ -483,3 +483,96 @@ footer .footer-tagline {
     justify-content: center !important;
   }
 }
+
+/* === MOBILE HEADER SYNC (match Portfolio header layout) === */
+@media (max-width: 768px) {
+  /* Keep header spacing consistent */
+  header {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+  }
+
+  /* Container side padding (same feel as Portfolio) */
+  .header-container{
+    padding: 0 20px !important;
+    gap: 0 !important;
+  }
+
+  
+  /* Layout: logo centered + hamburger right (mobile) */
+  .header-top-row{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* hide side columns/switchers so they don't push center */
+  .header-col-left,
+  .header-col-right,
+  .lang-switcher,
+  .desktop-lang-switcher,
+  .mobile-nav-flags,
+  .mobile-lang-switcher{
+    display: none !important;
+    width: 0 !important;
+  }
+
+  /* force logo to true center */
+  .logo-link{
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    flex-grow: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+    z-index: 120 !important;
+  }
+
+  /* keep hamburger on right */
+  .hamburger-btn{
+    position: absolute !important;
+    right: 20px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 130 !important;
+  }
+.header-col-left{
+    display: none !important;
+    width: 0 !important;
+  }
+
+  .logo-link{
+    flex: 0 0 auto !important;
+    text-align: left !important;
+    margin: 0 !important;
+    margin-right: auto !important;
+    padding: 0 !important;
+  }
+
+  .logo-link img{
+    height: 110px !important;   /* adjust if you want even bigger */
+    width: auto !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    display: block !important;
+  }
+
+  .lang-switcher{
+    display: flex !important;
+    gap: 10px !important;
+    width: auto !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+  }
+
+  /* No hamburger + no off-canvas menu on Index */
+  .hamburger-btn{ display: none !important; }
+  nav{ display: none !important; }
+  body.menu-open nav{ transform: translateX(100%) !important; }
+}

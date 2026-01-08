@@ -319,3 +319,89 @@ document.addEventListener('DOMContentLoaded', () => {
   if (viewport) viewport.addEventListener('scroll', () => updateServiceCarouselButtons(), { passive: true });
   updateServiceCarouselButtons();
 });
+
+
+/* =========================================================
+   FOOTER LEGAL LINKS FIX (Terms / Privacy)
+   - Does NOT change header/footer structure
+   - Sets correct hrefs on all pages (root and nested /projects/*)
+   ========================================================= */
+(function () {
+  function normalizeLang(raw) {
+    var v = (raw || '').toLowerCase();
+    if (v.indexOf('pt') === 0) return 'pt';
+    if (v.indexOf('es') === 0) return 'es';
+    return 'en';
+  }
+
+  function getLang() {
+    try {
+      var ls = localStorage.getItem('language');
+      if (ls) return normalizeLang(ls);
+    } catch (e) {}
+    return normalizeLang(document.documentElement.lang || (navigator.language || 'en'));
+  }
+
+  function getRootPrefix() {
+    // build prefix to site root based on current path depth
+    // e.g. /portfolio.html -> ""
+    //      /projects/index.html -> "../"
+    //      /projects/khoudari/index.html -> "../../"
+    var path = (window.location && window.location.pathname) ? window.location.pathname : '';
+    path = path.split('?')[0].split('#')[0];
+
+    var parts = path.split('/').filter(Boolean);
+    if (parts.length <= 1) return ''; // at root
+
+    // remove the file name
+    parts.pop();
+    var depth = parts.length;
+    var prefix = '';
+    for (var i = 0; i < depth; i++) prefix += '../';
+    return prefix;
+  }
+
+  function setHref(sel, href) {
+    var nodes = document.querySelectorAll(sel);
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].setAttribute('href', href);
+    }
+  }
+
+  function applyFix() {
+    var lang = getLang();
+    var prefix = getRootPrefix();
+
+    var termsFile = (lang === 'pt') ? 'terms-pt.html' : (lang === 'es') ? 'terms-es.html' : 'terms.html';
+    var privFile  = (lang === 'pt') ? 'privacy-pt.html' : (lang === 'es') ? 'privacy-es.html' : 'privacy.html';
+
+    var termsHref = prefix + termsFile;
+    var privHref  = prefix + privFile;
+
+    // Supports both patterns used across your pages
+    setHref('#link-terms', termsHref);
+    setHref('#link-privacy', privHref);
+    setHref('a[data-translate="footer-terms"]', termsHref);
+    setHref('a[data-translate="footer-privacy"]', privHref);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyFix);
+  } else {
+    applyFix();
+  }
+
+  // If your site switches language dynamically, keep links synced
+  try {
+    if (typeof window.setLanguage === 'function' && !window.__footerLegalFixWrapped) {
+      var originalSetLanguage = window.setLanguage;
+      window.setLanguage = function () {
+        var out = originalSetLanguage.apply(this, arguments);
+        applyFix();
+        return out;
+      };
+      window.__footerLegalFixWrapped = true;
+    }
+  } catch (e) {}
+})();
+
