@@ -1,21 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MCM Services - Completed Projects Gallery</title>
-
-  <meta name="description" content="Nossa galeria de projetos concluídos. Veja a excelência em gerenciamento e execução de reformas e reparos residenciais de alto padrão em Miami-Dade e Broward.">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <link rel="icon" type="image/png" href="images/favicon.png?v=4"> 
-  
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MCM Services - Completed Projects Gallery</title>
+<meta content="Nossa galeria de projetos concluídos. Veja a excelência em gerenciamento e execução de reformas e reparos residenciais de alto padrão em Miami-Dade e Broward." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="images/favicon.png?v=4" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
+<style>
     /*
     ====================================
     CSS GERAL E BASE (GLOBAL) - PADRONIZADO INDEX.HTML (DARK/ABSOLUTO)
@@ -763,8 +759,6 @@ footer{
 
 }
 </style>
-
-
 <style id="mobile-logo-center-fix">
 /* FORCE mobile header logo to be perfectly centered (all pages) */
 @media (max-width: 768px) {
@@ -798,8 +792,6 @@ footer{
   }
 }
 </style>
-
-
 <style>
 /* =================================================
    DESKTOP FIX — TRUE CENTER LOGO IN HEADER
@@ -854,187 +846,158 @@ footer{
 }
 </style>
 </head>
-
 <body id="top">
-
 <header>
-  <div class="header-container">
-    
-    <div class="header-top-row">
-        <div class="header-col-left"></div>
-        
-        <a class="logo-link" href="index.html">
-          <img src="images/FODA.png" alt="MCM Services Logo - Moura Consulting & Management">
-        </a>
-        
-        <button class="hamburger-btn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="mainNavigation" onclick="toggleMenu()">
-             <i class="fas fa-bars"></i>
-        </button>
-        
-        
-    </div>
-    
-    <nav aria-label="Main Navigation" id="mainNavigation">
-      <ul>
-        <li><a href="index.html#top" data-key="navHome">Home</a></li>
-        <li><a href="index.html#about" data-key="navAbout">About</a></li>
-        <li><a href="index.html#contact" data-key="navContact">Contact</a></li>
-        <li><a href="portfolio.html" data-key="navPortfolioLink" class="active" aria-current="page">Gallery</a></li>
-        <li>
-            <a href="login.html" data-key="navPortal" class="client-login-link">
-                <i class="fas fa-lock" aria-hidden="true"></i> Client Login
+<div class="header-container">
+<div class="header-top-row">
+<div class="header-col-left"></div>
+<a class="logo-link" href="index.html">
+<img alt="MCM Services Logo - Moura Consulting &amp; Management" src="images/FODA.png"/>
+</a>
+<button aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle Navigation" class="hamburger-btn" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</button>
+</div>
+<nav aria-label="Main Navigation" id="mainNavigation">
+<ul>
+<li><a data-key="navHome" href="index.html#top">Home</a></li>
+<li><a data-key="navAbout" href="index.html#about">About</a></li>
+<li><a data-key="navContact" href="index.html#contact">Contact</a></li>
+<li><a aria-current="page" class="active" data-key="navPortfolioLink" href="portfolio.html">Gallery</a></li>
+<li>
+<a class="client-login-link" data-key="navPortal" href="login.html">
+<i aria-hidden="true" class="fas fa-lock"></i> Client Login
             </a>
-        </li>
-      </ul>
-      
-      
-    </nav>
-    
-    <div class="header-right">
-      </div>
-
-  </div>
+</li>
+</ul>
+</nav>
+<div class="header-right">
+</div>
+</div>
 </header>
-    
 <main>
-        <section id="sobre">
-            
-            <h2 data-key="portfolioTitle" class="hero-animate" style="z-index: 2;">Gallery</h2>
-            <p data-key="portfolioSubtitle" class="hero-animate" style="animation-delay: 0.3s; z-index: 2;">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
-        </section>
-
-        <section id="portfolio">
-            <div class="project-grid-container">
-                
-                <h2 class="section-title-light" data-key="portfolioSectionTitle">Projetos Ilustrados</h2>
-
-                <div class="project-grid">
-
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
-                            <img src="images/card1.jpg" alt="Cozinha moderna e luxuosa com ilha central" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project1Title">Cozinha Moderna e Luxuosa</h3>
-                            <p data-key="project1Desc">Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.</p>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                         <div class="project-image-container" onclick="openLightbox('images/card2.jpg')">
-                            <img src="images/card2.jpg" alt="Espaço Gourmet de Alto Padrão" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project2Title">Espaço Gourmet de Alto Padrão</h3>
-                            <p data-key="project2Desc">Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.</p>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('images/card3.jpg')">
-                            <img src="images/card3.jpg" alt="Banheiro com design clean e funcional" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project3Title">Banheiro com Design Clean</h3>
-                            <p data-key="project3Desc">Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.</p>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('images/card4.jpg')">
-                            <img src="images/card4.jpg" alt="Banheiro master de luxo com metais dourados" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project4Title">Banheiro Master de Luxo</h3>
-                            <p data-key="project4Desc">Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.</p>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('images/card5.png')">
-                            <img src="images/card5.png" alt="Suíte master aconchegante com mobiliário sob medida" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project5Title">Suíte Master Aconchegante</h3>
-                            <p data-key="project5Desc">Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.</p>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image-container" onclick="openLightbox('images/card6.jpg')">
-                            <img src="images/card6.jpg" alt="Living room integrado e moderno" class="project-img">
-                            <i class="fas fa-search-plus expand-icon"></i>
-                        </div>
-                        <div class="card-content-portfolio">
-                            <h3 data-key="project6Title">Living Room Integrado</h3>
-                            <p data-key="project6Desc">Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.</p>
-                        </div>
-                    </div>
-                </div>
-                <p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
-            </div>
-        </section>
-
-        <section id="contato" style="text-align: center;">
-             <h2 data-key="interestedTitle">Excellence in Every Detail.</h2>
-             <a href="index.html#contact" class="contact-btn-style" data-key="requestQuote">Request a Private Consultation</a>
-        </section>
-    </main>
-
-    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)" style="display: none;">
-        <span class="close-btn" onclick="closeLightbox(event)">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-    </div>
-
-    <footer>
-  <div class="footer-logo-container">
-    <img alt="MCM Services Logo Footer" src="images/transparent-logo-2.png" />
-  </div>
-
-  <p data-translate="footer-tagline" style="color:#666; font-size:.95rem; margin-bottom:15px;">
+<section id="sobre">
+<h2 class="hero-animate" data-key="portfolioTitle" style="z-index: 2;">Gallery</h2>
+<p class="hero-animate" data-key="portfolioSubtitle" style="animation-delay: 0.3s; z-index: 2;">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
+</section>
+<section id="portfolio">
+<div class="project-grid-container">
+<h2 class="section-title-light" data-key="portfolioSectionTitle">Projetos Ilustrados</h2>
+<div class="project-grid">
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
+<img alt="Cozinha moderna e luxuosa com ilha central" class="project-img" src="images/card1.jpg"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project1Title">Cozinha Moderna e Luxuosa</h3>
+<p data-key="project1Desc">Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.</p>
+</div>
+</div>
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card2.jpg')">
+<img alt="Espaço Gourmet de Alto Padrão" class="project-img" src="images/card2.jpg"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project2Title">Espaço Gourmet de Alto Padrão</h3>
+<p data-key="project2Desc">Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.</p>
+</div>
+</div>
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card3.jpg')">
+<img alt="Banheiro com design clean e funcional" class="project-img" src="images/card3.jpg"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project3Title">Banheiro com Design Clean</h3>
+<p data-key="project3Desc">Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.</p>
+</div>
+</div>
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card4.jpg')">
+<img alt="Banheiro master de luxo com metais dourados" class="project-img" src="images/card4.jpg"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project4Title">Banheiro Master de Luxo</h3>
+<p data-key="project4Desc">Reforma completa utilizando revestimentos de grande formato, metais dourados e box espaçoso para um spa privativo.</p>
+</div>
+</div>
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card5.png')">
+<img alt="Suíte master aconchegante com mobiliário sob medida" class="project-img" src="images/card5.png"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project5Title">Suíte Master Aconchegante</h3>
+<p data-key="project5Desc">Quarto projetado para máximo conforto, com paleta de cores neutras e mobiliário sob medida para otimizar o descanso.</p>
+</div>
+</div>
+<div class="project-card">
+<div class="project-image-container" onclick="openLightbox('images/card6.jpg')">
+<img alt="Living room integrado e moderno" class="project-img" src="images/card6.jpg"/>
+<i class="fas fa-search-plus expand-icon"></i>
+</div>
+<div class="card-content-portfolio">
+<h3 data-key="project6Title">Living Room Integrado</h3>
+<p data-key="project6Desc">Sala de estar que se conecta harmoniosamente a outros ambientes, utilizando sofás modernos e iluminação cênica.</p>
+</div>
+</div>
+</div>
+<p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
+</div>
+</section>
+<section id="contato" style="text-align: center;">
+<h2 data-key="interestedTitle">Excellence in Every Detail.</h2>
+<a class="contact-btn-style" data-key="requestQuote" href="index.html#contact">Request a Private Consultation</a>
+</section>
+</main>
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)" style="display: none;">
+<span class="close-btn" onclick="closeLightbox(event)">×</span>
+<img class="lightbox-content" id="lightbox-img"/>
+</div>
+<footer>
+<div class="footer-logo-container">
+<img alt="MCM Services Logo Footer" src="images/transparent-logo-2.png">
+</img></div>
+<p data-translate="footer-tagline" style="color:#666; font-size:.95rem; margin-bottom:15px;">
     Management Excellence, Flawless Execution.
   </p>
-
-  <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
-    <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#C7A96B; margin-right:5px;"></i>
-    <span data-translate="footer-location">Miami, FL</span>
-  </p>
-
-  <div class="footer-content-grid">
-    <div class="footer-col">
-      <h4 data-translate="footer-nav">Navigation</h4>
-      <a data-translate="nav-home" href="/">Home</a>
-      <a data-translate="nav-about" href="/#about">About</a>
-      <a data-translate="nav-contact" href="/#contact">Contact</a>
-      
-    </div>
-
-    <div class="footer-col footer-social-contact">
-      <h4 data-translate="footer-contact">Contact &amp; Connect</h4>
-      <a href="tel:+17862383386"><i class="fas fa-phone" aria-hidden="true"></i> +1 (786) 238-3386</a>
-      <a href="mailto:info@mcmprosolutions.com"><i class="fas fa-envelope" aria-hidden="true"></i> info@mcmprosolutions.com</a>
-      <a href="https://www.instagram.com/mcmservices.us" target="_blank" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i> @mcmservices.us</a>
-    </div>
-
-    <div class="footer-col">
-      <h4 data-translate="footer-legal">Legal</h4>
-      <a data-translate="footer-terms" href="terms.html">Termos de Uso</a>
-      <a data-translate="footer-privacy" href="privacy.html">Política de Privacidade</a>
+<p style="color:#666; font-size:.9rem; margin-bottom:30px;">
+<i aria-hidden="true" class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:5px;"></i>
+<span data-translate="footer-location">Miami, FL</span>
+</p>
+<div class="footer-content-grid">
+<div class="footer-col">
+<h4 data-translate="footer-nav">Navigation</h4>
+<a data-translate="nav-home" href="/">Home</a>
+<a data-translate="nav-about" href="/#about">About</a>
+<a data-translate="nav-contact" href="/#contact">Contact</a>
 </div>
-  </div>
-
-  <div class="footer-bottom-line">
-    <p class="copyright">
+<div class="footer-col footer-social-contact">
+<h4 data-translate="footer-contact">Contact &amp; Connect</h4>
+<a href="tel:+17862383386"><i aria-hidden="true" class="fas fa-phone"></i> +1 (786) 238-3386</a>
+<a href="mailto:info@mcmprosolutions.com"><i aria-hidden="true" class="fas fa-envelope"></i> info@mcmprosolutions.com</a>
+<a href="https://www.instagram.com/mcmservices.us" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i> @mcmservices.us</a>
+</div>
+<div class="footer-col">
+<h4 data-translate="footer-legal">Legal</h4>
+<a data-translate="footer-terms" href="terms.html">Terms of Use</a>
+<a data-translate="footer-privacy" href="privacy.html">Privacy Policy</a>
+</div>
+</div>
+<div class="footer-bottom-line">
+<p class="copyright">
       © <span id="currentYear"></span>
-      <strong>MCM Services USA Corporation</strong><br />
-      <span class="powered-by" data-translate="footer-powered">
+<strong>MCM Services USA Corporation</strong><br/>
+<span class="powered-by" data-translate="footer-powered">
         Crafted &amp; Managed by <span class="brand-soft">mcmprosolutions.com</span>
-      </span>
-    </p>
-  </div>
+</span>
+</p>
+</div>
 </footer>
-    
-    <script>
+<script>
         
         const translations = {
             en: {
@@ -1081,7 +1044,7 @@ footer{
                 'footer-location': "Miami, FL"}
         };
 
-        let currentLang = localStorage.getItem('language');
+        let currentLang = localStorage.getItem('language') || 'en';
 
         // Funções de Lightbox
         function openLightbox(imgSrc) {
@@ -1175,18 +1138,22 @@ footer{
         
 
         document.addEventListener('DOMContentLoaded', () => {
-    // If the user previously chose a language, respect it.
-    // Otherwise, let the auto language script detect from the browser and call window.setLanguage().
-    if (currentLang) {
-      setLanguage(currentLang);
-    }
-  });
+            let initialLang = localStorage.getItem('language') || 'en';
+            if (!translations[initialLang]) { initialLang = 'en'; }
+            setLanguage(initialLang);
+            
+            // Lógica para fechar o menu após clicar em link no mobile
+            if (window.innerWidth <= 768) {
+                const menuLinks = document.querySelectorAll('#mainNavigation a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
                 // Garante que o ícone inicial seja o de barras no mobile
                 const hamburgerBtn = document.querySelector('.hamburger-btn');
                  if (hamburgerBtn) {
                      hamburgerBtn.innerHTML = '<i class="fas fa-bars"></i>';
                  }
-            
+            }
 
             // Garante que "Gallery" esteja ativo
             document.querySelectorAll('nav ul a').forEach(link => link.classList.remove('active'));
@@ -1197,10 +1164,7 @@ footer{
                    galleryLink.classList.add('active'); 
                 }
             }, 100); 
-        ;
+        });
     </script>
-  <!-- Language system (EN/PT/ES) -->
-  <script src="i18n.patched.js"></script>
-  <script src="lang-auto.js"></script>
 </body>
 </html>

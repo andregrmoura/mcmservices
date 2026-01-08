@@ -271,7 +271,7 @@
             display: none; 
         }
         .logo-link {
-            text-align: center; 
+            text-align: left; 
             flex-grow: 1;
         }
         .logo-link img {
@@ -1581,62 +1581,6 @@ body.menu-open #menuOverlay{
 })();
 </script>
 
-
-<style>
-/* ===============================
-   HEADER LEGAL – DEFINITIVO
-   (sem menu, sem hamburger)
-   =============================== */
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.45);
-  padding: 20px 0;
-  z-index: 100;
-}
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-.header-top-row {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-.logo-link {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  flex: 0 0 auto !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-}
-.logo-link img {
-  height: 120px !important;
-  width: auto !important;
-  max-width: 400px;
-  object-fit: contain;
-}
-@media (max-width: 900px) {
-  header { padding: 15px 0; }
-  .logo-link img { height: 100px !important; max-width: 90vw; }
-}
-/* Segurança total: páginas legais não têm menu */
-nav,
-.hamburger-btn,
-.header-col-left,
-.header-col-right,
-.header-right,
-.lang-switcher,
-.mobile-nav-flags,
-#menuOverlay {
-  display: none !important;
-}
-</style>
-
 </head>
 
 <body id="top">
@@ -1663,13 +1607,51 @@ nav,
 
 </div>
 <header>
-  <div class="header-container">
+<div class="header-container">
+    
     <div class="header-top-row">
-      <a class="logo-link" href="#top">
-        <img src="images/FODA.png" alt="MCM Services Logo">
-      </a>
+        <div class="header-col-left"></div>
+        
+        <a class="logo-link" href="#top">
+        <img src="images/FODA.png" alt="MCM Services Logo - Moura Consulting & Management" data-cms-img="brand.logo_header">
+        </a>
+        
+        <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="lang-switcher">
+            
+            
+            
+        </div>
     </div>
-  </div>
+    
+    <nav aria-label="Main Navigation" id="mainNavigation">
+    <ul>
+        <li><a href="#top" class="active" aria-current="page" data-translate="nav-home">Home</a></li>
+        <li><a href="#about" data-translate="nav-about">About</a></li>
+        <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
+        <li><a href="portfolio.html" data-translate="nav-gallery">Gallery</a></li>
+        <li>
+            <a href="login.html" class="client-login-link" data-translate="client-login">
+                Client Login
+            </a>
+        </li>
+    </ul>
+    
+    <div class="mobile-nav-flags">
+        
+        
+        
+    </div>
+
+    </nav>
+    
+    <div class="header-right">
+    </div>
+
+</div>
 </header>
 
 <style>
@@ -2205,13 +2187,6 @@ document.getElementById('menuOverlay')
   }
 })();
 </script>
-
-
-
-  <!-- FOOTER (loaded via /footer-loader.js) -->
-  <div id="site-footer"></div>
-  <script src="/footer-loader.js"></script>
-
 <script>
   // On legal pages, switching language should also switch the file.
   (function(){
