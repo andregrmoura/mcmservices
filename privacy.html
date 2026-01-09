@@ -21,8 +21,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-
-    /* BASE AND UTILITIES */
+/* BASE AND UTILITIES */
     *, *::before, *::after { box-sizing: border-box; }
     body {
     margin: 0;
@@ -114,7 +113,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between; 
+        justify-content: center; 
         margin-bottom: 5px; 
         position: relative; 
     }
@@ -122,16 +121,24 @@
     /* Coluna vazia para alinhar a logo no centro */
     .header-col-left {
         width: 150px; 
-    }
+    
+        display: none;
+     }
     
     
-    .header-col-right { width: 150px; }
+    .header-col-right { width: 150px; 
+        display: none;
+     }
 /* Coluna do Centro para a Logo */
     .logo-link {
         flex-grow: 1;
         text-align: center;
         margin: 0; 
-    }
+    
+         display: flex;
+         justify-content: center;
+         align-items: center;
+     }
     
     .logo-link img {
         height: 120px !important; 
@@ -228,7 +235,10 @@
     
     /* NOVAS CLASSES MOBILE */
     .mobile-nav-flags { display: none; }
-    .hamburger-btn { display: none; } 
+    .hamburger-btn { display: none; }
+    /* FORCE: language buttons and hamburger removed */
+    .lang-switcher, .mobile-nav-flags, .hamburger-btn { display: none !important; }
+ 
 
 
     /* ====================================
@@ -271,7 +281,7 @@
             display: none; 
         }
         .logo-link {
-            text-align: left; 
+            text-align: center; 
             flex-grow: 1;
         }
         .logo-link img {
@@ -1612,20 +1622,9 @@ body.menu-open #menuOverlay{
     <div class="header-top-row">
         <div class="header-col-left"></div>
         
-        <a class="logo-link" href="#top">
+        <a class="logo-link" href="/">
         <img src="images/FODA.png" alt="MCM Services Logo - Moura Consulting & Management" data-cms-img="brand.logo_header">
-        </a>
-        
-        <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="lang-switcher">
-            
-            
-            
-        </div>
-    </div>
+        </a></div>
     
     <nav aria-label="Main Navigation" id="mainNavigation">
     <ul>
@@ -1638,15 +1637,7 @@ body.menu-open #menuOverlay{
                 Client Login
             </a>
         </li>
-    </ul>
-    
-    <div class="mobile-nav-flags">
-        
-        
-        
-    </div>
-
-    </nav>
+    </ul></nav>
     
     <div class="header-right">
     </div>
