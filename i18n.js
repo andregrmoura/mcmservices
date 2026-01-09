@@ -23,6 +23,10 @@ window.translations = window.translations || {
     "footer-location": "Miami, FL",
     "footer-powered": "Crafted & Managed by mcmprosolutions.com",
     "footer-copyright": "MCM Services USA Corporation",
+    "pay-invoice": "Pay Invoice",
+    "payments-secure": "Payments are securely processed through our invoicing platform.",
+
+
   },
   pt: {
     "footer-nav": "Navegação",
@@ -39,6 +43,10 @@ window.translations = window.translations || {
     "footer-location": "Miami, FL",
     "footer-powered": "Criado & gerenciado por mcmprosolutions.com",
     "footer-copyright": "MCM Services USA Corporation",
+    "pay-invoice": "Pagar Fatura",
+    "payments-secure": "Os pagamentos são processados com segurança pela nossa plataforma de faturamento.",
+
+
   },
   es: {
     "footer-nav": "Navegación",
@@ -55,6 +63,10 @@ window.translations = window.translations || {
     "footer-location": "Miami, FL",
     "footer-powered": "Creado y gestionado por mcmprosolutions.com",
     "footer-copyright": "MCM Services USA Corporation",
+    "pay-invoice": "Pagar Factura",
+    "payments-secure": "Los pagos se procesan de forma segura a través de nuestra plataforma de facturación.",
+
+
   }
 };
 
