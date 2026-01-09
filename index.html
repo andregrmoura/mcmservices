@@ -1940,5 +1940,42 @@ document.addEventListener('DOMContentLoaded', () => {
   if (y && !y.textContent.trim()) y.textContent = new Date().getFullYear();
 });
 </script>
+<script>
+    /* ===============================
+       HERO SLIDER – AUTO PLAY (FIX)
+       =============================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.hero-dots .dot');
+      let currentSlide = 0;
+      const intervalTime = 6000;
+    
+      if (!slides.length) return;
+    
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+    
+      function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      }
+    
+      // Auto play
+      setInterval(nextSlide, intervalTime);
+    
+      // Dot navigation
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+      });
+    });
+    </script>
+    
 </body>
 </html>
