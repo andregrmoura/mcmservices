@@ -1980,34 +1980,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <script>
         (function () {
+          function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS
+          }
         
-          function resetIOSState() {
-            // 1) Força fechar modal se existir
+          function cameFromBFCache(event) {
+            // 1) pageshow.persisted (clássico)
+            if (event && event.persisted) return true;
+        
+            // 2) PerformanceNavigationTiming (muito útil quando persisted vem false)
+            try {
+              const nav = performance.getEntriesByType('navigation')[0];
+              if (nav && nav.type === 'back_forward') return true;
+            } catch (e) {}
+        
+            return false;
+          }
+        
+          function hardResetUIState() {
+            // --- 1) Fecha modal (se existir) ---
             const modal = document.getElementById('welcomeModal');
             if (modal) {
               modal.classList.remove('open');
               modal.style.visibility = 'hidden';
               modal.style.opacity = '0';
+              // evita qualquer captura de toque acidental
+              modal.style.pointerEvents = 'none';
             }
         
-            // 2) Garante que o body esteja visível
+            // --- 2) Fecha menu off-canvas / overlay ---
+            document.body.classList.remove('menu-open');
+        
+            const overlay = document.getElementById('menuOverlay');
+            if (overlay) overlay.style.display = 'none';
+        
+            const nav = document.getElementById('mainNavigation');
+            if (nav) {
+              // garante estado fechado no mobile
+              nav.style.transform = 'translateX(100%)';
+            }
+        
+            const hamburger = document.querySelector('.hamburger-btn');
+            if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+        
+            // --- 3) Garante que o body apareça ---
             document.body.style.opacity = '1';
             document.body.style.visibility = 'visible';
           }
         
           // Primeira carga
-          document.addEventListener('DOMContentLoaded', resetIOSState);
+          document.addEventListener('DOMContentLoaded', hardResetUIState);
         
-          // Safari iOS BFCache (ESSENCIAL)
+          // iOS BFCache
           window.addEventListener('pageshow', function (event) {
-            resetIOSState();
+            hardResetUIState();
         
-            // fallback extremo (se ainda falhar)
-            // if (event.persisted) window.location.reload();
+            // Se veio do back/forward cache no iOS, recarrega (solução "à prova de Safari")
+            if (isIOS() && cameFromBFCache(event)) {
+              window.location.reload();
+            }
           });
         
         })();
         </script>
+        
 
 
 
