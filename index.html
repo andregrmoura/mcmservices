@@ -1977,5 +1977,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     </script>
     
+
+    <script>
+        (function () {
+        
+          function resetIOSState() {
+            // 1) Força fechar modal se existir
+            const modal = document.getElementById('welcomeModal');
+            if (modal) {
+              modal.classList.remove('open');
+              modal.style.visibility = 'hidden';
+              modal.style.opacity = '0';
+            }
+        
+            // 2) Garante que o body esteja visível
+            document.body.style.opacity = '1';
+            document.body.style.visibility = 'visible';
+          }
+        
+          // Primeira carga
+          document.addEventListener('DOMContentLoaded', resetIOSState);
+        
+          // Safari iOS BFCache (ESSENCIAL)
+          window.addEventListener('pageshow', function (event) {
+            resetIOSState();
+        
+            // fallback extremo (se ainda falhar)
+            // if (event.persisted) window.location.reload();
+          });
+        
+        })();
+        </script>
+
+
+
 </body>
 </html>
