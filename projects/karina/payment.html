@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Payment | MCM Services</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3">
+  <link rel="shortcut icon" href="../../favicon.ico?v=3">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:#F7F7F7;
+      color:#333;
+      overflow-x:hidden;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    a{ text-decoration:none; color:#333; }
+
+    /* HEADER (same structure) */
+    header{
+      width:100%;
+      background:rgba(0,0,0,0.4);
+      box-shadow:0 5px 15px rgba(0,0,0,0.4);
+      position:absolute;
+      top:0; left:0;
+      z-index:100;
+      padding:25px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .logo-link img{
+      height:120px;
+      max-width:320px;
+      object-fit:contain;
+    }
+
+    /* MAIN */
+    main{
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:220px 20px 80px;
+    }
+
+    .content-box{
+      max-width:760px;
+      text-align:left;
+    }
+
+    h1{
+      font-family:'Playfair Display',serif;
+      color:#C7A96B;
+      font-size:3rem;
+      margin:0 0 18px 0;
+    }
+
+    .subtitle{
+      margin:0 0 28px 0;
+      color:#555;
+      font-size:1.05rem;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:10px;
+      padding:22px;
+      margin-top:18px;
+    }
+
+    .row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+    }
+
+    .primary{
+      display:inline-block;
+      padding:14px 32px;
+      border-radius:8px;
+      border:2px solid #C7A96B;
+      background:#C7A96B;
+      color:#333;
+      font-weight:500;
+      cursor:pointer;
+    }
+
+    .secondary{
+      display:inline-block;
+      padding:14px 32px;
+      border-radius:8px;
+      border:1px solid #DDD;
+      background:#fff;
+      color:#333;
+      font-weight:500;
+    }
+
+    .hint{
+      font-size:.9rem;
+      color:#777;
+      margin-top:14px;
+    }
+
+    .small{
+      font-size:.9rem;
+      color:#666;
+      margin:0;
+    }
+
+    .divider{
+      height:1px;
+      background:#EEE;
+      margin:18px 0;
+    }
+
+    /* FOOTER (INTACT) */
+    footer{
+      background:white;
+      padding:40px 20px;
+      text-align:center;
+      border-top:1px solid #DDD;
+    }
+    .footer-logo-container{
+      display:block;
+      margin:0 auto 15px;
+      text-align:center;
+    }
+    .footer-logo-container img{
+      height:60px;
+      width:180px;
+      object-fit:contain;
+    }
+    .footer-content-grid{
+      max-width:1200px;
+      margin:0 auto 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      text-align:left;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+    .footer-col{
+      display:flex;
+      flex-direction:column;
+      min-width:150px;
+      padding:0 10px;
+      align-items:flex-start;
+    }
+    .footer-col h4{
+      font-size:1rem;
+      font-weight:600;
+      color:#333;
+      margin-top:0;
+      margin-bottom:15px;
+      border-bottom:2px solid #C7A96B;
+      padding-bottom:5px;
+      text-align:left;
+    }
+    .footer-col a{
+      color:#555;
+      font-size:0.9rem;
+      font-weight:400;
+      padding:5px 0;
+      transition:color 0.3s;
+      display:block;
+    }
+    .footer-col a:hover{ color:#C7A96B; }
+    .footer-social-contact a{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      justify-content:center;
+    }
+    .footer-social-contact i{
+      color:#C7A96B;
+      font-size:1rem;
+    }
+    .footer-bottom-line{
+      padding-top:20px;
+      border-top:1px solid #EEE;
+      color:#999;
+      font-size:0.85rem;
+      text-align:center;
+    }
+    .footer-bottom-line p{ margin:5px 0; }
+    .footer-bottom-line .copyright{
+      font-size:0.9rem;
+      color:#666;
+      line-height:1.6;
+      letter-spacing:0.3px;
+    }
+    .footer-bottom-line strong{ font-weight:500; color:#444; }
+    .powered-by{
+      font-size:0.75rem;
+      color:#999;
+      letter-spacing:0.6px;
+      display:inline-block;
+      margin-top:4px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo-link" href="../../index.html">
+    <img src="../../images/FODA.png" alt="MCM Services Logo">
+  </a>
+</header>
+
+<main>
+  <div class="content-box">
+    <h1>Secure Payment</h1>
+    <p class="subtitle">
+      Use the secure payment link below to complete your payment by credit card. If you have any questions,
+      please contact <strong>MCM Services</strong>.
+    </p>
+
+    <div class="card">
+      <p class="small" style="margin-bottom:10px;">
+        <strong>Payment Link (Simple Invoices)</strong>
+      </p>
+
+      <div class="row">
+        <a class="primary" href="PASTE_SIMPLE_INVOICES_PAYMENT_LINK_HERE" target="_blank" rel="noopener">
+          Proceed to Secure Payment
+        </a>
+
+        <a class="secondary" href="./index.html">
+          Back to Project Portal
+        </a>
+      </div>
+
+      <p class="hint">
+        For your security, payments are processed on the provider’s secure checkout page.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="small">
+        Need to review the documents first?
+      </p>
+      <div class="row" style="margin-top:10px;">
+        <a class="secondary" href="./invoice.pdf" target="_blank" rel="noopener">View Invoice (PDF)</a>
+        <a class="secondary" href="./estimate.pdf" target="_blank" rel="noopener">View Estimate (PDF)</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo-container">
+    <img alt="MCM Services Logo Footer" src="../../images/transparent-logo-2.png" />
+  </div>
+
+  <p style="color:#666; font-size:.95rem; margin-bottom:15px;">
+    Management Excellence, Flawless Execution.
+  </p>
+
+  <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
+    <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#C7A96B; margin-right:5px;"></i>
+    Miami, FL
+  </p>
+
+  <div class="footer-content-grid">
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="../../">Home</a>
+      <a href="../../#about">About</a>
+      <a href="../../#contact">Contact</a>
+    </div>
+
+    <div class="footer-col footer-social-contact">
+      <h4>Contact &amp; Connect</h4>
+      <a href="tel:+17862383386"><i class="fas fa-phone"></i> +1 (786) 238-3386</a>
+      <a href="mailto:info@mcmprosolutions.com"><i class="fas fa-envelope"></i> info@mcmprosolutions.com</a>
+      <a href="https://www.instagram.com/mcmservices.us" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i> @mcmservices.us
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="../../terms.html">Terms of Use</a>
+      <a href="../../privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom-line">
+    <p class="copyright">
+      © <span id="year"></span>
+      <strong>MCM Services USA Corporation</strong>. All rights reserved.<br />
+      <span class="powered-by">Crafted &amp; Managed by mcmprosolutions.com</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // SAFETY: remove any invisible overlays (if this page is ever combined with menu scripts elsewhere)
+  document.body.classList.remove('menu-open');
+  const overlay = document.getElementById('menuOverlay');
+  if (overlay) overlay.style.display = 'none';
+</script>
+
+</body>
+</html>
