@@ -3,27 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Private Project Portal | MCM Services</title>
+  <title>Project Gallery | MCM Services</title>
   <meta name="robots" content="noindex, nofollow" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
   <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3">
-  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3">
-  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
-  <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3">
-  <link rel="shortcut icon" href="../../favicon.ico?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3" />
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3" />
+  <link rel="shortcut icon" href="../../favicon.ico?v=3" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-
     body{
       margin:0;
       font-family:'Montserrat',sans-serif;
@@ -33,31 +30,27 @@
       line-height:1.6;
       text-align:center;
     }
-
     a{ text-decoration:none; color:#333; }
 
-    /* HEADER */
+    /* HEADER (same as project portal) */
     header{
       width:100%;
       background:rgba(0,0,0,0.4);
       box-shadow:0 5px 15px rgba(0,0,0,0.4);
       position:absolute;
-      top:0;
-      left:0;
+      top:0; left:0;
       z-index:100;
-      padding:25px;
+      padding:25px 25px;
       display:flex;
       justify-content:center;
       align-items:center;
     }
-
     .logo-link img{
       height:120px;
       max-width:320px;
       object-fit:contain;
     }
 
-    /* MAIN */
     main{
       min-height:80vh;
       display:flex;
@@ -65,80 +58,28 @@
       justify-content:center;
       padding:220px 20px 80px;
     }
-
-    .project-box{
-      max-width:900px;
-      text-align:left;
+    .content-box{
+      max-width:720px;
+      text-align:center;
     }
-
-    h1,h2{
+    h1{
       font-family:'Playfair Display',serif;
       color:#C7A96B;
-    }
-
-    h1{
       font-size:3rem;
       margin-bottom:20px;
     }
-
-    h2{
-      margin-top:40px;
+    p{
+      font-size:1.05rem;
+      color:#555;
+      margin-bottom:30px;
     }
-
-    .pdf-box{
-      width:100%;
-      height:70vh;
-      border:1px solid #DDD;
-      border-radius:8px;
-      overflow:hidden;
-      background:#FFF;
-      margin-bottom:40px;
-    }
-
-    .pdf-box iframe{
-      width:100%;
-      height:100%;
-      border:none;
-    }
-
-    .primary{
-      display:inline-block;
-      padding:14px 32px;
-      border-radius:8px;
-      border:2px solid #C7A96B;
-      background:#C7A96B;
-      color:#333;
-      font-weight:500;
-      margin-top:15px;
-      cursor:pointer;
-    }
-
-    /* Friendly placeholders (when PDFs are not available yet) */
-    .pdf-placeholder{
-      background:#fff;
-      border:1px dashed #DDD;
-      border-radius:10px;
-      padding:40px 20px;
-      text-align:center;
-      margin-bottom:40px;
-    }
-    .placeholder-icon{
-      font-size:2.5rem;
+    .icon{
+      font-size:3.5rem;
       color:#C7A96B;
-      margin-bottom:15px;
-    }
-    .pdf-placeholder h3{
-      margin:0 0 10px 0;
-      font-weight:500;
-      color:#333;
-    }
-    .pdf-placeholder p{
-      margin:0;
-      font-size:.95rem;
-      color:#666;
+      margin-bottom:20px;
     }
 
-    /* FOOTER – INTACT */
+    /* FOOTER (identical to project portal) */
     footer{
       background:white;
       padding:40px 20px;
@@ -209,14 +150,12 @@
       font-size:0.85rem;
       text-align:center;
     }
-    .footer-bottom-line p{ margin:5px 0; }
     .footer-bottom-line .copyright{
       font-size:0.9rem;
       color:#666;
       line-height:1.6;
       letter-spacing:0.3px;
     }
-    .footer-bottom-line strong{ font-weight:500; color:#444; }
     .powered-by{
       font-size:0.75rem;
       color:#999;
@@ -236,53 +175,15 @@
 </header>
 
 <main>
-  <div class="project-box">
-    <h1>Private Project Portal</h1>
+  <div class="content-box">
+    <div class="icon">
+      <i class="fas fa-camera"></i>
+    </div>
+    <h1>Project Gallery</h1>
     <p>
-      You are accessing a private project portal by <strong>MCM Services</strong>.<br>
-      This page provides access to project photos, documents, updates, and secure payment options.
+      Project photos will be added as the work progresses.<br>
+      Please check back soon for updates.
     </p>
-
-    <h2>Estimate</h2>
-
-    <!--
-      TEMPLATE NOTE:
-      - If estimate.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="estimate.pdf" loading="lazy"></iframe>
-        </div>
-    -->
-    <div class="pdf-placeholder">
-      <div class="placeholder-icon"><i class="fas fa-file-lines"></i></div>
-      <h3>Documents will be available soon</h3>
-      <p>Project documents are currently being prepared and will appear here once finalized.</p>
-    </div>
-
-    <h2>Down Payment Invoice</h2>
-
-    <!--
-      TEMPLATE NOTE:
-      - If invoice.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="invoice.pdf" loading="lazy"></iframe>
-        </div>
-    -->
-    <div class="pdf-placeholder">
-      <div class="placeholder-icon"><i class="fas fa-hourglass-half"></i></div>
-      <h3>Invoice will be available soon</h3>
-      <p>This section will be updated as the project progresses.</p>
-    </div>
-
-    <h2>Project Gallery</h2>
-
-    <!--
-      TEMPLATE NOTE:
-      - During early phase (no photos): keep gallery-coming-soon.html
-      - When photos are ready: replace href with the Notion share link and add target/_blank + rel/noopener
-    -->
-    <a class="primary" href="./gallery-coming-soon.html">Open Project Gallery</a>
   </div>
 </main>
 
@@ -335,11 +236,6 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // SAFETY: remove any invisible overlays (if this page is ever combined with menu scripts elsewhere)
-  document.body.classList.remove('menu-open');
-  const overlay = document.getElementById('menuOverlay');
-  if (overlay) overlay.style.display = 'none';
 </script>
 
 </body>

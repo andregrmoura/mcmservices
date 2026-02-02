@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Private Project Portal | MCM Services</title>
+  <title>Secure Payment | MCM Services</title>
   <meta name="robots" content="noindex, nofollow" />
 
   <!-- Fonts -->
@@ -17,6 +17,7 @@
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3">
   <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
   <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3">
   <link rel="shortcut icon" href="../../favicon.ico?v=3">
@@ -36,14 +37,13 @@
 
     a{ text-decoration:none; color:#333; }
 
-    /* HEADER */
+    /* HEADER (same structure) */
     header{
       width:100%;
       background:rgba(0,0,0,0.4);
       box-shadow:0 5px 15px rgba(0,0,0,0.4);
       position:absolute;
-      top:0;
-      left:0;
+      top:0; left:0;
       z-index:100;
       padding:25px;
       display:flex;
@@ -66,39 +66,38 @@
       padding:220px 20px 80px;
     }
 
-    .project-box{
-      max-width:900px;
+    .content-box{
+      max-width:760px;
       text-align:left;
     }
 
-    h1,h2{
+    h1{
       font-family:'Playfair Display',serif;
       color:#C7A96B;
-    }
-
-    h1{
       font-size:3rem;
-      margin-bottom:20px;
+      margin:0 0 18px 0;
     }
 
-    h2{
-      margin-top:40px;
+    .subtitle{
+      margin:0 0 28px 0;
+      color:#555;
+      font-size:1.05rem;
     }
 
-    .pdf-box{
-      width:100%;
-      height:70vh;
+    .card{
+      background:#fff;
       border:1px solid #DDD;
-      border-radius:8px;
-      overflow:hidden;
-      background:#FFF;
-      margin-bottom:40px;
+      border-radius:10px;
+      padding:22px;
+      margin-top:18px;
     }
 
-    .pdf-box iframe{
-      width:100%;
-      height:100%;
-      border:none;
+    .row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
     }
 
     .primary{
@@ -109,36 +108,38 @@
       background:#C7A96B;
       color:#333;
       font-weight:500;
-      margin-top:15px;
       cursor:pointer;
     }
 
-    /* Friendly placeholders (when PDFs are not available yet) */
-    .pdf-placeholder{
+    .secondary{
+      display:inline-block;
+      padding:14px 32px;
+      border-radius:8px;
+      border:1px solid #DDD;
       background:#fff;
-      border:1px dashed #DDD;
-      border-radius:10px;
-      padding:40px 20px;
-      text-align:center;
-      margin-bottom:40px;
-    }
-    .placeholder-icon{
-      font-size:2.5rem;
-      color:#C7A96B;
-      margin-bottom:15px;
-    }
-    .pdf-placeholder h3{
-      margin:0 0 10px 0;
-      font-weight:500;
       color:#333;
-    }
-    .pdf-placeholder p{
-      margin:0;
-      font-size:.95rem;
-      color:#666;
+      font-weight:500;
     }
 
-    /* FOOTER – INTACT */
+    .hint{
+      font-size:.9rem;
+      color:#777;
+      margin-top:14px;
+    }
+
+    .small{
+      font-size:.9rem;
+      color:#666;
+      margin:0;
+    }
+
+    .divider{
+      height:1px;
+      background:#EEE;
+      margin:18px 0;
+    }
+
+    /* FOOTER (INTACT) */
     footer{
       background:white;
       padding:40px 20px;
@@ -236,53 +237,42 @@
 </header>
 
 <main>
-  <div class="project-box">
-    <h1>Private Project Portal</h1>
-    <p>
-      You are accessing a private project portal by <strong>MCM Services</strong>.<br>
-      This page provides access to project photos, documents, updates, and secure payment options.
+  <div class="content-box">
+    <h1>Secure Payment</h1>
+    <p class="subtitle">
+      Use the secure payment link below to complete your payment by credit card. If you have any questions,
+      please contact <strong>MCM Services</strong>.
     </p>
 
-    <h2>Estimate</h2>
+    <div class="card">
+      <p class="small" style="margin-bottom:10px;">
+        <strong>Payment Link (Simple Invoices)</strong>
+      </p>
 
-    <!--
-      TEMPLATE NOTE:
-      - If estimate.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="estimate.pdf" loading="lazy"></iframe>
-        </div>
-    -->
-    <div class="pdf-placeholder">
-      <div class="placeholder-icon"><i class="fas fa-file-lines"></i></div>
-      <h3>Documents will be available soon</h3>
-      <p>Project documents are currently being prepared and will appear here once finalized.</p>
+      <div class="row">
+        <a class="primary" href="PASTE_SIMPLE_INVOICES_PAYMENT_LINK_HERE" target="_blank" rel="noopener">
+          Proceed to Secure Payment
+        </a>
+
+        <a class="secondary" href="./index.html">
+          Back to Project Portal
+        </a>
+      </div>
+
+      <p class="hint">
+        For your security, payments are processed on the provider’s secure checkout page.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="small">
+        Need to review the documents first?
+      </p>
+      <div class="row" style="margin-top:10px;">
+        <a class="secondary" href="./invoice.pdf" target="_blank" rel="noopener">View Invoice (PDF)</a>
+        <a class="secondary" href="./estimate.pdf" target="_blank" rel="noopener">View Estimate (PDF)</a>
+      </div>
     </div>
-
-    <h2>Down Payment Invoice</h2>
-
-    <!--
-      TEMPLATE NOTE:
-      - If invoice.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="invoice.pdf" loading="lazy"></iframe>
-        </div>
-    -->
-    <div class="pdf-placeholder">
-      <div class="placeholder-icon"><i class="fas fa-hourglass-half"></i></div>
-      <h3>Invoice will be available soon</h3>
-      <p>This section will be updated as the project progresses.</p>
-    </div>
-
-    <h2>Project Gallery</h2>
-
-    <!--
-      TEMPLATE NOTE:
-      - During early phase (no photos): keep gallery-coming-soon.html
-      - When photos are ready: replace href with the Notion share link and add target/_blank + rel/noopener
-    -->
-    <a class="primary" href="./gallery-coming-soon.html">Open Project Gallery</a>
   </div>
 </main>
 
