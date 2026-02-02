@@ -343,6 +343,74 @@
       main{ padding: 200px 16px 70px; }
       .pdf-box{ height: 70vh; }
     }
+
+    /* Premium hero layout with right-aligned project meta */
+    .hero-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:40px;
+      margin-bottom: 10px;
+    }
+    .hero-copy{
+      flex:1 1 auto;
+      min-width: 0;
+    }
+    .hero-meta{
+      flex:0 0 280px;
+      margin-top: 92px;
+      text-align: right;
+    }
+    .hero-meta .meta-item{
+      padding: 4px 0;
+    }
+    .hero-meta .meta-label{
+      font-size: 0.80rem;
+      letter-spacing: .02em;
+      color: #777;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hero-meta .meta-value{
+      font-size: 0.98rem;
+      color:#222;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .hero-meta .meta-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display:inline-block;
+      background:#1DB954;
+      box-shadow: 0 0 0 3px rgba(29,185,84,.14);
+    }
+    .hero-meta .meta-dot.pending{ background:#F4B400; box-shadow:0 0 0 3px rgba(244,180,0,.16); }
+    .hero-meta .meta-dot.completed{ background:#2E7D32; box-shadow:0 0 0 3px rgba(46,125,50,.16); }
+    .hero-meta .meta-dot.inactive{ background:#999; box-shadow:0 0 0 3px rgba(153,153,153,.14); }
+
+    @media (max-width: 1024px){
+      .hero-row{
+        flex-direction: column;
+        gap: 18px;
+      }
+      .hero-meta{
+        flex: 0 0 auto;
+        width: 100%;
+        text-align: left;
+        margin-top: 0;
+        border-top: 1px solid rgba(0,0,0,.06);
+        padding-top: 12px;
+      }
+      .hero-meta .meta-value{
+        justify-content: flex-start;
+      }
+    }
+
 </style>
 </head>
 
@@ -358,11 +426,31 @@
   <div class="project-box">
   <div class="content-wide">
 
-    <h1 data-translate="portal-title">Private Project Portal</h1>
+    
+    <div class="hero-row">
+      <div class="hero-copy">
+<h1 data-translate="portal-title">Private Project Portal</h1>
     <p data-translate="portal-intro">
       You are accessing a private project portal by <strong>MCM Services</strong>.<br>
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
+      </div>
+
+      <aside class="hero-meta" aria-label="Project status">
+        <div class="meta-item">
+          <div class="meta-label" data-translate="project-status-label">Project Status</div>
+          <div class="meta-value">
+            <span class="meta-dot active" aria-hidden="true"></span>
+            <span data-translate="project-status-value">Active</span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label" data-translate="project-date-label">Last Update</div>
+          <div class="meta-value meta-date" data-translate="project-date-value">Feb 02, 2026</div>
+        </div>
+      </aside>
+    </div>
+
 
     <h2 data-translate="current-estimate">Current Estimate</h2>
 
@@ -388,7 +476,17 @@
       <iframe src="./invoices/INV041.pdf" loading="lazy"></iframe>
     </div>
 
-    <h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
+    
+
+    <h2 data-translate="secure-payment">Secure Payment</h2>
+    <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
+      Proceed with payment using a secure method.
+    </p>
+    <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
+      <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
+    </a>
+
+<h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
 
     <div class="history-card" style="margin-top:18px;">
       <h3 data-translate="insurance-status-title">Insurance Status</h3>
@@ -418,13 +516,13 @@
     </div>
 
 
-    <h2 data-translate="project-gallery">Project Gallery</h2>
+    <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
 
     <!-- TEMPLATE NOTE:
          Early phase: keep gallery-coming-soon.html
          When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
     -->
-    <a class="primary" href="./gallery-coming-soon.html" data-translate="open-project-gallery">Open Project Gallery</a>
+    <a class="primary" href="./gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
 
     <h2 data-translate="document-history">Document History</h2>
 
@@ -535,7 +633,14 @@
       "footer-legal": "Legal",
       "terms": "Terms of Use",
       "privacy": "Privacy Policy"
-    });
+      "secure-payment": "Secure Payment",
+      "secure-payment-sub": "Proceed with payment using a secure method.",
+      "secure-payment-btn": "Secure Payment",
+      "project-status-label": "Project Status",
+      "project-status-value": "Active",
+      "project-date-label": "Last Update",
+      "project-date-value": "Feb 02, 2026",
+});
 
     add("es", {
       "portal-title": "Portal Privado del Proyecto",
@@ -558,7 +663,14 @@
       "footer-legal": "Legal",
       "terms": "Términos de Uso",
       "privacy": "Política de Privacidad"
-    });
+      "secure-payment": "Pago Seguro",
+      "secure-payment-sub": "Proceda con el pago mediante un método seguro.",
+      "secure-payment-btn": "Pago Seguro",
+      "project-status-label": "Estado del Proyecto",
+      "project-status-value": "Activo",
+      "project-date-label": "Última Actualización",
+      "project-date-value": "2 Feb, 2026",
+});
 
     add("pt", {
       "portal-title": "Portal Privado do Projeto",
@@ -581,7 +693,14 @@
       "footer-legal": "Legal",
       "terms": "Termos de Uso",
       "privacy": "Política de Privacidade"
-    });
+      "secure-payment": "Pagamento Seguro",
+      "secure-payment-sub": "Prossiga com o pagamento usando um método seguro.",
+      "secure-payment-btn": "Pagamento Seguro",
+      "project-status-label": "Status do Projeto",
+      "project-status-value": "Ativo",
+      "project-date-label": "Última Atualização",
+      "project-date-value": "02 Fev, 2026",
+});
   })();
 
   // Auto language selection with PT priority (override legacy ES cache)
