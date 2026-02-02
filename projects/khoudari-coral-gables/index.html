@@ -131,6 +131,7 @@
       margin:0 0 10px 0;
       font-weight:500;
       color:#333;
+      font-family:'Montserrat',sans-serif;
     }
     .pdf-placeholder p{
       margin:0;
@@ -138,7 +139,39 @@
       color:#666;
     }
 
-    /* FOOTER – INTACT */
+    /* History */
+    .history-card{
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:10px;
+      padding:18px 18px 10px;
+      margin:18px 0;
+    }
+    .history-card h3{
+      margin:0 0 10px;
+      font-size:1rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .doc-list{
+      margin:0;
+      padding-left:18px;
+    }
+    .doc-list li{
+      margin:10px 0;
+    }
+    .doc-list a{
+      color:#333;
+      text-decoration:none;
+      border-bottom:1px solid rgba(199,169,107,.35);
+    }
+    .doc-list a:hover{
+      color:#C7A96B;
+      border-bottom-color:#C7A96B;
+    }
+
+
     footer{
       background:white;
       padding:40px 20px;
@@ -224,6 +257,7 @@
       display:inline-block;
       margin-top:4px;
     }
+
   </style>
 </head>
 
@@ -243,15 +277,13 @@
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
 
-    <h2>Estimate</h2>
+    <h2>Current Estimate</h2>
 
-    <!--
-      TEMPLATE NOTE:
-      - If estimate.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="estimate.pdf" loading="lazy"></iframe>
-        </div>
+    <!-- TEMPLATE NOTE:
+         If estimate.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="estimate.pdf" loading="lazy"></iframe>
+         </div>
     -->
     <div class="pdf-placeholder">
       <div class="placeholder-icon"><i class="fas fa-file-lines"></i></div>
@@ -259,15 +291,13 @@
       <p>Project documents are currently being prepared and will appear here once finalized.</p>
     </div>
 
-    <h2>Down Payment Invoice</h2>
+    <h2>Current Invoice</h2>
 
-    <!--
-      TEMPLATE NOTE:
-      - If invoice.pdf exists, replace the placeholder block below with the PDF embed block.
-      - PDF embed block (copy/paste):
-        <div class="pdf-box">
-          <iframe src="invoice.pdf" loading="lazy"></iframe>
-        </div>
+    <!-- TEMPLATE NOTE:
+         If invoice.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="invoice.pdf" loading="lazy"></iframe>
+         </div>
     -->
     <div class="pdf-placeholder">
       <div class="placeholder-icon"><i class="fas fa-hourglass-half"></i></div>
@@ -275,12 +305,31 @@
       <p>This section will be updated as the project progresses.</p>
     </div>
 
+    <h2>Document History</h2>
+
+    <div class="history-card">
+      <h3>Estimates</h3>
+      <ul class="doc-list">
+        <!-- Example:
+        <li><a href="./docs/estimates/2026-02-01_Estimate_v1.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
+        -->
+      </ul>
+    </div>
+
+    <div class="history-card">
+      <h3>Invoices</h3>
+      <ul class="doc-list">
+        <!-- Example:
+        <li><a href="./docs/invoices/2026-02-01_Invoice_Deposit_50.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
+        -->
+      </ul>
+    </div>
+
     <h2>Project Gallery</h2>
 
-    <!--
-      TEMPLATE NOTE:
-      - During early phase (no photos): keep gallery-coming-soon.html
-      - When photos are ready: replace href with the Notion share link and add target/_blank + rel/noopener
+    <!-- TEMPLATE NOTE:
+         Early phase: keep gallery-coming-soon.html
+         When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
     -->
     <a class="primary" href="./gallery-coming-soon.html">Open Project Gallery</a>
   </div>
@@ -335,11 +384,6 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // SAFETY: remove any invisible overlays (if this page is ever combined with menu scripts elsewhere)
-  document.body.classList.remove('menu-open');
-  const overlay = document.getElementById('menuOverlay');
-  if (overlay) overlay.style.display = 'none';
 </script>
 
 </body>

@@ -113,7 +113,65 @@
       cursor:pointer;
     }
 
-    /* FOOTER – UNCHANGED */
+    /* Friendly placeholders (when PDFs are not available yet) */
+    .pdf-placeholder{
+      background:#fff;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      padding:40px 20px;
+      text-align:center;
+      margin-bottom:40px;
+    }
+    .placeholder-icon{
+      font-size:2.5rem;
+      color:#C7A96B;
+      margin-bottom:15px;
+    }
+    .pdf-placeholder h3{
+      margin:0 0 10px 0;
+      font-weight:500;
+      color:#333;
+      font-family:'Montserrat',sans-serif;
+    }
+    .pdf-placeholder p{
+      margin:0;
+      font-size:.95rem;
+      color:#666;
+    }
+
+    /* History */
+    .history-card{
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:10px;
+      padding:18px 18px 10px;
+      margin:18px 0;
+    }
+    .history-card h3{
+      margin:0 0 10px;
+      font-size:1rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .doc-list{
+      margin:0;
+      padding-left:18px;
+    }
+    .doc-list li{
+      margin:10px 0;
+    }
+    .doc-list a{
+      color:#333;
+      text-decoration:none;
+      border-bottom:1px solid rgba(199,169,107,.35);
+    }
+    .doc-list a:hover{
+      color:#C7A96B;
+      border-bottom-color:#C7A96B;
+    }
+
+
     footer{
       background:white;
       padding:40px 20px;
@@ -199,6 +257,7 @@
       display:inline-block;
       margin-top:4px;
     }
+
   </style>
 </head>
 
@@ -218,20 +277,59 @@
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
 
-    <h2>Estimate</h2>
+    <h2>Current Estimate</h2>
+
+    <!-- TEMPLATE NOTE:
+         If estimate.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="estimate.pdf" loading="lazy"></iframe>
+         </div>
+    -->
     <div class="pdf-box">
-      <iframe src="estimate.pdf" loading="lazy"></iframe>
+      <iframe src="./estimates/estimate.pdf" loading="lazy"></iframe>
+    </div>
+    
+
+    <h2>Current Invoice</h2>
+
+    <!-- TEMPLATE NOTE:
+         If invoice.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="invoice.pdf" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box">
+      <iframe src="./invoices/invoice.pdf" loading="lazy"></iframe>
+    </div>
+    
+
+    <h2>Document History</h2>
+
+    <div class="history-card">
+      <h3>Estimates</h3>
+      <ul class="doc-list">
+        <!-- Example:
+        <li><a href="./docs/estimates/2026-02-01_Estimate_v1.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
+        -->
+      </ul>
     </div>
 
-    <h2>Down Payment Invoice</h2>
-    <div class="pdf-box">
-      <iframe src="invoice.pdf" loading="lazy"></iframe>
+    <div class="history-card">
+      <h3>Invoices</h3>
+      <ul class="doc-list">
+        <!-- Example:
+        <li><a href="./docs/invoices/2026-02-01_Invoice_Deposit_50.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
+        -->
+      </ul>
     </div>
 
     <h2>Project Gallery</h2>
-    <a class="primary" href="https://jungle-bougon-797.notion.site/Mostek-s-Residence-Ave-Maria-2f862b9dd15880f48710dbd3bab77efb">
-      Open Project Gallery
-    </a>
+
+    <!-- TEMPLATE NOTE:
+         Early phase: keep gallery-coming-soon.html
+         When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
+    -->
+    <a class="primary" href="https://jungle-bougon-797.notion.site/Mostek-s-Residence-Ave-Maria-2f862b9dd15880f48710dbd3bab77efb">Open Project Gallery</a>
   </div>
 </main>
 
@@ -284,9 +382,6 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-  document.body.classList.remove('menu-open');
-  const overlay = document.getElementById('menuOverlay');
-  if (overlay) overlay.style.display = 'none';
 </script>
 
 </body>
