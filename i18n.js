@@ -9,10 +9,10 @@
 window.translations = window.translations || {
   en: {
 
-  "payment-title": "Secure Payment",
-  "payment-subtitle": "Use the secure payment link below to complete your payment by credit card.",
-  "payment-proceed": "Proceed to Secure Payment",
-  "payment-back": "Back to Project Portal",
+    "payment-title": "Secure Payment",
+    "payment-subtitle": "Use the secure payment link below to complete your payment by credit card.",
+    "payment-proceed": "Proceed to Secure Payment",
+    "payment-back": "Back to Project Portal",
 
     // Footer / common
     "footer-nav": "Navigation",
@@ -36,10 +36,10 @@ window.translations = window.translations || {
   },
   pt: {
 
-  "payment-title": "Pagamento Seguro",
-  "payment-subtitle": "Utilize o link de pagamento seguro abaixo para concluir o pagamento com cartão de crédito.",
-  "payment-proceed": "Prosseguir para Pagamento Seguro",
-  "payment-back": "Voltar ao Portal do Projeto",
+    "payment-title": "Pagamento Seguro",
+    "payment-subtitle": "Utilize o link de pagamento seguro abaixo para concluir o pagamento com cartão de crédito.",
+    "payment-proceed": "Prosseguir para Pagamento Seguro",
+    "payment-back": "Voltar ao Portal do Projeto",
 
     "footer-nav": "Navegação",
     "footer-contact": "Contato & Conexões",
@@ -62,10 +62,10 @@ window.translations = window.translations || {
   },
   es: {
 
-  "payment-title": "Pago Seguro",
-  "payment-subtitle": "Utilice el enlace de pago seguro a continuación para completar el pago con tarjeta de crédito.",
-  "payment-proceed": "Continuar al Pago Seguro",
-  "payment-back": "Volver al Portal del Proyecto",
+    "payment-title": "Pago Seguro",
+    "payment-subtitle": "Utilice el enlace de pago seguro a continuación para completar el pago con tarjeta de crédito.",
+    "payment-proceed": "Continuar al Pago Seguro",
+    "payment-back": "Volver al Portal del Proyecto",
 
     "footer-nav": "Navegación",
     "footer-contact": "Contacto y Conexión",
@@ -148,6 +148,21 @@ window.translations = window.translations || {
     const stored = normalize(storedRaw);
     window.addEventListener("DOMContentLoaded", () => window.setLanguage(stored));
   }
+
+  // Fallback: if no stored language and lang-auto.js is not present,
+  // auto-pick language from the browser once on load.
+  if (!storedRaw) {
+    try {
+      const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+      const auto = nav.startsWith("pt") ? "pt" : nav.startsWith("es") ? "es" : "en";
+      // Only apply if the document doesn't already have an explicit lang set
+      const current = (document.documentElement.getAttribute("lang") || "").toLowerCase();
+      if (!current || current === "en") {
+        window.applyI18nTranslations(auto);
+      }
+    } catch(e) {}
+  }
+
 })();
 
 
