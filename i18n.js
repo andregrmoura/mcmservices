@@ -131,3 +131,11 @@ window.translations = window.translations || {
     window.addEventListener("DOMContentLoaded", () => window.setLanguage(stored));
   }
 })();
+
+
+// Fallback: use browser language if nothing is stored
+if (!localStorage.getItem("language")) {
+  const browserLang = (navigator.language || navigator.userLanguage || "en");
+  window.addEventListener("DOMContentLoaded", () => window.setLanguage(browserLang));
+}
+

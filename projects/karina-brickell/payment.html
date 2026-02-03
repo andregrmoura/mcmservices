@@ -17,10 +17,7 @@
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3">
   <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3">
-  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
-  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3">
-  <link rel="shortcut icon" href="../../favicon.ico?v=3">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -35,9 +32,6 @@
       text-align:center;
     }
 
-    a{ text-decoration:none; color:#333; }
-
-    /* HEADER (same structure) */
     header{
       width:100%;
       background:rgba(0,0,0,0.4);
@@ -57,7 +51,6 @@
       object-fit:contain;
     }
 
-    /* MAIN */
     main{
       min-height:80vh;
       display:flex;
@@ -66,8 +59,9 @@
       padding:220px 20px 80px;
     }
 
-    .content-box{
-      max-width:760px;
+    .project-box{
+      max-width:1200px;
+      width:100%;
       text-align:left;
     }
 
@@ -75,11 +69,11 @@
       font-family:'Playfair Display',serif;
       color:#C7A96B;
       font-size:3rem;
-      margin:0 0 18px 0;
+      margin-bottom:18px;
     }
 
     .subtitle{
-      margin:0 0 28px 0;
+      margin-bottom:28px;
       color:#555;
       font-size:1.05rem;
     }
@@ -97,49 +91,28 @@
       gap:14px;
       flex-wrap:wrap;
       align-items:center;
-      justify-content:flex-start;
     }
 
     .primary{
-      display:inline-block;
       padding:14px 32px;
       border-radius:8px;
       border:2px solid #C7A96B;
       background:#C7A96B;
       color:#333;
       font-weight:500;
-      cursor:pointer;
+      text-decoration:none;
     }
 
     .secondary{
-      display:inline-block;
       padding:14px 32px;
       border-radius:8px;
       border:1px solid #DDD;
       background:#fff;
       color:#333;
       font-weight:500;
+      text-decoration:none;
     }
 
-    .hint{
-      font-size:.9rem;
-      color:#777;
-      margin-top:14px;
-    }
-
-    .small{
-      font-size:.9rem;
-      color:#666;
-      margin:0;
-    }
-
-    .divider{
-      height:1px;
-      background:#EEE;
-      margin:18px 0;
-    }
-
-    /* FOOTER (INTACT) */
     footer{
       background:white;
       padding:40px 20px;
@@ -181,15 +154,11 @@
       margin-bottom:15px;
       border-bottom:2px solid #C7A96B;
       padding-bottom:5px;
-      text-align:left;
     }
     .footer-col a{
       color:#555;
       font-size:0.9rem;
-      font-weight:400;
       padding:5px 0;
-      transition:color 0.3s;
-      display:block;
     }
     .footer-col a:hover{ color:#C7A96B; }
     .footer-social-contact a{
@@ -197,33 +166,19 @@
       align-items:center;
       gap:8px;
       margin-bottom:10px;
-      justify-content:center;
     }
     .footer-social-contact i{
       color:#C7A96B;
-      font-size:1rem;
     }
     .footer-bottom-line{
       padding-top:20px;
       border-top:1px solid #EEE;
       color:#999;
       font-size:0.85rem;
-      text-align:center;
     }
-    .footer-bottom-line p{ margin:5px 0; }
-    .footer-bottom-line .copyright{
-      font-size:0.9rem;
-      color:#666;
-      line-height:1.6;
-      letter-spacing:0.3px;
-    }
-    .footer-bottom-line strong{ font-weight:500; color:#444; }
     .powered-by{
       font-size:0.75rem;
       color:#999;
-      letter-spacing:0.6px;
-      display:inline-block;
-      margin-top:4px;
     }
   </style>
 </head>
@@ -237,35 +192,23 @@
 </header>
 
 <main>
-  <div class="content-box">
+  <div class="project-box">
     <h1>Secure Payment</h1>
     <p class="subtitle">
-      Use the secure payment link below to complete your payment by credit card. If you have any questions,
-      please contact <strong>MCM Services</strong>.
+      Use the secure payment link below to complete your payment by credit card.
+      If you have any questions, please contact <strong>MCM Services</strong>.
     </p>
 
     <div class="card">
-      <p class="small" style="margin-bottom:10px;">
-        <strong>Payment Link (Simple Invoices)</strong>
-      </p>
-
+      <strong>Payment Link (Simple Invoices)</strong><br><br>
       <div class="row">
         <a class="primary" href="https://app.invoicesimple.com/v/WB4F0ebBxn" target="_blank" rel="noopener">
           Proceed to Secure Payment
         </a>
-
         <a class="secondary" href="./index.html">
           Back to Project Portal
         </a>
       </div>
-
-      <p class="hint">
-        For your security, payments are processed on the provider’s secure checkout page.
-      </p>
-
-      <div class="divider"></div>
-<div class="row" style="margin-top:10px;">
-</div>
     </div>
   </div>
 </main>
@@ -280,7 +223,7 @@
   </p>
 
   <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
-    <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#C7A96B; margin-right:5px;"></i>
+    <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:5px;"></i>
     Miami, FL
   </p>
 
@@ -309,21 +252,13 @@
   </div>
 
   <div class="footer-bottom-line">
-    <p class="copyright">
-      © <span id="year"></span>
-      <strong>MCM Services USA Corporation</strong>. All rights reserved.<br />
-      <span class="powered-by">Crafted &amp; Managed by mcmprosolutions.com</span>
-    </p>
+    © <span id="year"></span> <strong>MCM Services USA Corporation</strong>. All rights reserved.<br>
+    <span class="powered-by">Crafted &amp; Managed by mcmprosolutions.com</span>
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // SAFETY: remove any invisible overlays (if this page is ever combined with menu scripts elsewhere)
-  document.body.classList.remove('menu-open');
-  const overlay = document.getElementById('menuOverlay');
-  if (overlay) overlay.style.display = 'none';
 </script>
 
 </body>
