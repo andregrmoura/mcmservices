@@ -473,8 +473,8 @@
         <div class="meta-item">
           <div class="meta-label" data-translate="project-status-label">Project Status</div>
           <div class="meta-value">
-            <span class="meta-dot active" aria-hidden="true"></span>
-            <span data-status-base="Active">Ativo</span>
+            <span class="meta-dot completed" aria-hidden="true"></span>
+            <span data-translate="project-status-value" data-status-base="Completed">Completed</span>
           </div>
           <div data-translate="project-status-sub-dynamic" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
         </div>
@@ -491,11 +491,11 @@
     <!-- TEMPLATE NOTE:
          If estimate.pdf exists, replace the placeholder block below with:
          <div class="pdf-box">
-           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
+           <iframe src="estimate.pdf" loading="lazy"></iframe>
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./estimates/estimate.pdf" loading="lazy"></iframe>
+      <iframe src="./estimates/EST0025.pdf" loading="lazy"></iframe>
     </div>    
 
     <h2 data-translate="current-invoice">Current Invoice</h2>
@@ -503,11 +503,11 @@
     <!-- TEMPLATE NOTE:
          If invoice.pdf exists, replace the placeholder block below with:
          <div class="pdf-box">
-           <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
+           <iframe src="invoice.pdf" loading="lazy"></iframe>
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./invoices/invoice.pdf" loading="lazy"></iframe>
+      <iframe src="./invoices/INV036.pdf" loading="lazy"></iframe>
     </div>
 
     
@@ -639,7 +639,26 @@
 
 
 <script src="../../i18n.js"></script>
+<script>
+  // Status-aware subline (keeps messaging coherent with the project status)
+  function setProjectStatusSubline(){
+    var statusEl = document.querySelector('[data-translate="project-status-value"]');
+    var subEl = document.querySelector('[data-translate="project-status-sub-dynamic"]');
+    if(!statusEl || !subEl) return;
 
+    var base = (statusEl.getAttribute('data-status-base') || '').trim();
+    var key = (base === 'Completed') ? 'project-status-sub-completed' : 'project-status-sub-active';
+    subEl.setAttribute('data-translate', key);
+
+    // If i18n.js already applied translations, refresh this node only (fallback)
+    try{
+      if(window.applyTranslations) window.applyTranslations();
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded', setProjectStatusSubline);
+  window.addEventListener('languageChanged', setProjectStatusSubline);
+</script>
 <script>
   // Page-specific translations for the Private Project Portal
   (function addPortalTranslations(){
@@ -678,11 +697,11 @@
       "project-date-label": "Last Update",
       "project-date-value": "Feb 02, 2026",
       "portal-operated-by": "Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.",
-      "project-status-sub": "",
+      "project-status-sub": "Initial coordination, building requirements and scheduling in progress.",
       "next-step-note": "",
-      "project-status-sub-active": "",
+      "project-status-sub-active": "Initial coordination, building requirements and scheduling in progress.",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "Initial coordination, building requirements and scheduling in progress."});
 
     add("es", {
       "portal-title": "Portal Privado del Proyecto",
@@ -713,11 +732,11 @@
       "project-date-label": "Última Actualización",
       "project-date-value": "2 Feb, 2026",
       "portal-operated-by": "Moura Consulting &amp; Management es operada por <strong>MCM Services USA Corporation</strong>.",
-      "project-status-sub": "",
+      "project-status-sub": "Coordinación inicial, requisitos del edificio y programación en curso.",
       "next-step-note": "",
-      "project-status-sub-active": "",
+      "project-status-sub-active": "Coordinación inicial, requisitos del edificio y programación en curso.",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "Coordinación inicial, requisitos del edificio y programación en curso."});
 
     add("pt", {
       "portal-title": "Portal Privado do Projeto",
@@ -748,11 +767,11 @@
       "project-date-label": "Última Atualização",
       "project-date-value": "02 Fev, 2026",
       "portal-operated-by": "Moura Consulting &amp; Management é operada por <strong>MCM Services USA Corporation</strong>.",
-      "project-status-sub": "",
+      "project-status-sub": "Coordenação inicial, requisitos do condomínio e agendamento em andamento.",
       "next-step-note": "",
-      "project-status-sub-active": "",
+      "project-status-sub-active": "Coordenação inicial, requisitos do condomínio e agendamento em andamento.",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "Coordenação inicial, requisitos do condomínio e agendamento em andamento."});
   })();
 
   // Auto language selection with PT priority (override legacy ES cache)
@@ -775,7 +794,7 @@
 <script>
   // Auto-fill Invoice History list (edit the array only)
   (function () {
-    var invoices = [];
+    var invoices = ["INV012","INV013","INV016","INV021","INV029","INV030","INV031","INV032","INV035","INV036"];
     var ul = document.getElementById("invoice-list");
     if (!ul) return;
     // If the list already has items, don't duplicate
@@ -798,7 +817,7 @@
 <script>
   // Auto-fill Estimate History list (edit the array only)
   (function () {
-    var estimates = [];
+    var estimates = ["EST0024","EST0025"];
 
     function renderEstimates() {
       var ul = document.getElementById("estimate-list");

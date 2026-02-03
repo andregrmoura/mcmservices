@@ -296,8 +296,9 @@
     
     /* PDF embed: mobile-first, viewport-safe */
 .pdf-box{
-  width: min(1280px, calc(100vw - 40px));
-  /* Desktop/tablet default */
+  width: 100%;
+  max-width: 1200px;
+/* Desktop/tablet default */
   height: 75vh;
   min-height: 560px;
   max-height: 900px;
@@ -317,7 +318,7 @@
 /* iPhone/Safari: use dynamic viewport height (dvh) so it stays fully visible */
 @media (max-width: 768px){
   .pdf-box{
-    width: calc(100vw - 32px);
+    width: 100%;
     height: calc(100dvh - 260px); /* header + spacing */
     min-height: 520px;
     max-height: 78dvh;
@@ -325,20 +326,7 @@
 }
 
 
-    /* Subtle wide alignment for content (titles, text, tables) */
-    .content-wide{
-      width: calc(100% + 120px);
-      margin-left: -60px;
-      margin-right: -60px;
-    }
-
-    @media (max-width: 1024px){
-      .content-wide{
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
+    
 
   
     /* Align titles with PDF/content margins */
@@ -352,8 +340,7 @@
     @media (max-width: 768px){
       h1{ font-size: 2.2rem; }
       main{ padding: 200px 16px 70px; }
-      .pdf-box{ height: 70vh; }
-    }
+      }
 
     /* Premium hero layout with right-aligned project meta */
     .hero-row{
@@ -392,27 +379,6 @@
       justify-content: flex-end;
       gap: 10px;
     }
-
-    .hero-meta .meta-note{
-      margin-top: 6px;
-      font-size: 0.78rem;
-      color:#666;
-      font-weight: 500;
-      text-align: right;
-      line-height: 1.35;
-    }
-    .operated-by{
-      margin: 10px 0 0;
-      font-size: 0.86rem;
-      color:#666;
-      font-weight: 500;
-    }
-    .next-step-note{
-      color:#666;
-      font-size: 0.92rem;
-      margin-top: 6px;
-      margin-bottom: 22px;
-    }
     .hero-meta .meta-dot{
       width: 10px;
       height: 10px;
@@ -444,6 +410,7 @@
     }
 
 
+
 @media (min-width: 1200px) {
   .container,
   .content,
@@ -452,6 +419,28 @@
     padding-left: 48px;
     padding-right: 48px;
   }
+}
+
+
+
+
+    /* Mobile text flow refinements (mobile-only) */
+    @media (max-width: 768px){
+      .hero-copy p{
+        hyphens: none;
+        word-break: normal;
+        overflow-wrap: normal;
+        text-wrap: pretty;
+      }
+      .hero-copy strong{ white-space: nowrap; }
+    }
+
+
+/* Desktop margins aligned with PDF frame */
+.content-wide{
+  width:100%;
+  margin-left:0;
+  margin-right:0;
 }
 
 </style>
@@ -474,25 +463,24 @@
       <div class="hero-copy">
 <h1 data-translate="portal-title">Private Project Portal</h1>
     <p data-translate="portal-intro">
-      You are accessing a private project portal by <strong>MCM Services</strong>.<br>
+      You are accessing a private project portal by <strong>MCM Services</strong>. 
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
-    <p class="operated-by" data-translate="operated-by">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
-
+      <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
       </div>
 
-      <aside class="hero-meta" aria-label="Project status" data-status="completed" data-last-update="2026-02-02">
+      <aside class="hero-meta" aria-label="Project status">
         <div class="meta-item">
           <div class="meta-label" data-translate="project-status-label">Project Status</div>
           <div class="meta-value">
-            <span class="meta-dot" aria-hidden="true"></span>
-            <span class="js-project-status">Completed</span>
+            <span class="meta-dot completed" aria-hidden="true"></span>
+            <span data-status-base="Completed">Completado</span>
           </div>
-          <div class="meta-note js-project-status-note"></div>
+          <div data-translate="project-status-sub-dynamic" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
         </div>
         <div class="meta-item">
           <div class="meta-label" data-translate="project-date-label">Last Update</div>
-          <div class="meta-value meta-date js-project-date">Feb 02, 2026</div>
+          <div class="meta-value meta-date" data-translate="project-date-value">Feb 02, 2026</div>
         </div>
       </aside>
     </div>
@@ -507,7 +495,7 @@
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./estimates/estimate.pdf#zoom=page-width" loading="lazy"></iframe>
+      <iframe src="./estimates/estimate.pdf" loading="lazy"></iframe>
     </div>    
 
     <h2 data-translate="current-invoice">Current Invoice</h2>
@@ -519,7 +507,7 @@
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./invoices/invoice.pdf#zoom=page-width" loading="lazy"></iframe>
+      <iframe src="./invoices/invoice.pdf" loading="lazy"></iframe>
     </div>
 
     
@@ -528,7 +516,7 @@
     <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
       Proceed with payment using a secure method.
     </p>
-    <p class="next-step-note" data-translate="next-step-note">You will be notified as soon as the next step is required.</p>
+    <p data-translate="next-step-note" style="color:#666; margin-top:12px;"></p>
     <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a>
@@ -563,7 +551,7 @@
     </div>
 
 
-    <h2 data-translate="project-gallery">Project Photos</h2>
+    <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
 
     <!-- TEMPLATE NOTE:
          Early phase: keep gallery-coming-soon.html
@@ -575,18 +563,18 @@
 
     <div class="history-card">
       <h3>Estimates</h3>
-      <ul class="doc-list">
+      <ul class="doc-list" id="estimate-list">
         <!-- Example:
-        <li><a href="./docs/estimates/2026-02-01_Estimate_v1.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
+        <li><a href="./estimates/ESTXXXX.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
         -->
       </ul>
     </div>
 
     <div class="history-card">
       <h3>Invoices</h3>
-      <ul class="doc-list">
+      <ul class="doc-list" id="invoice-list">
         <!-- Example:
-        <li><a href="./docs/invoices/2026-02-01_Invoice_Deposit_50.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
+        <li><a href="./invoices/INV0XX.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
         -->
       </ul>
     </div>
@@ -644,128 +632,14 @@
   </div>
 </footer>
 
+
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 
 <script src="../../i18n.js"></script>
-<script>
-  // Definitive project status controller (status is edited in ONE place: data-status on .hero-meta)
-  (function(){
-    const STATUS = {
-      active:{
-        dotClass:"pending",
-        label:{en:"Active",es:"Activo",pt:"Ativo"},
-        note:{
-          en:"Initial coordination, building requirements and scheduling in progress.",
-          es:"Coordinación inicial, requisitos del edificio y programación en curso.",
-          pt:"Coordenação inicial, requisitos do condomínio e agendamento em andamento."
-        }
-      },
-      scheduled:{
-        dotClass:"pending",
-        label:{en:"Scheduled",es:"Programado",pt:"Agendado"},
-        note:{
-          en:"Project scheduled. Next steps will be confirmed soon.",
-          es:"Proyecto programado. Los próximos pasos se confirmarán pronto.",
-          pt:"Projeto agendado. Os próximos passos serão confirmados em breve."
-        }
-      },
-      "on-hold":{
-        dotClass:"inactive",
-        label:{en:"On Hold",es:"En pausa",pt:"Em pausa"},
-        note:{
-          en:"Project temporarily on hold. Updates will be provided as soon as it resumes.",
-          es:"Proyecto en pausa temporalmente. Se informará cuando se reanude.",
-          pt:"Projeto temporariamente em pausa. Informarei assim que for retomado."
-        }
-      },
-      completed:{
-        dotClass:"completed",
-        label:{en:"Completed",es:"Completado",pt:"Concluído"},
-        note:{
-          en:"Project completed. Final documents and photos remain available below.",
-          es:"Proyecto completado. Los documentos finales y fotos permanecen disponibles abajo.",
-          pt:"Projeto concluído. Documentos finais e fotos permanecem disponíveis abaixo."
-        }
-      }
-    };
 
-    function detectLang(){
-      // Prefer explicit page language if set by i18n.js
-      const htmlLang = (document.documentElement.getAttribute("lang") || "").toLowerCase();
-      if(htmlLang.startsWith("pt")) return "pt";
-      if(htmlLang.startsWith("es")) return "es";
-
-      const langs = (navigator.languages && navigator.languages.length)
-        ? navigator.languages.map(l => (l||"").toLowerCase())
-        : [(navigator.language||"en").toLowerCase()];
-
-      if(langs.some(l => l.startsWith("pt"))) return "pt";
-      if(langs.some(l => l.startsWith("es"))) return "es";
-      return "en";
-    }
-
-    function formatISODate(iso, lang){
-      try{
-        const [y,m,d] = iso.split("-").map(Number);
-        const dt = new Date(y, m-1, d);
-        const locale = (lang==="pt") ? "pt-BR" : (lang==="es") ? "es-ES" : "en-US";
-        return dt.toLocaleDateString(locale, {year:"numeric", month:"short", day:"2-digit"}).replace(",", "");
-      }catch(e){
-        return iso;
-      }
-    }
-
-    function apply(){
-      const meta = document.querySelector(".hero-meta[data-status]");
-      if(!meta) return;
-
-      const key = (meta.getAttribute("data-status") || "active").toLowerCase();
-      const cfg = STATUS[key] || STATUS.active;
-      const lang = detectLang();
-
-      const statusEl = meta.querySelector(".js-project-status");
-      const noteEl = meta.querySelector(".js-project-status-note");
-      const dotEl = meta.querySelector(".meta-dot");
-      const dateEl = meta.querySelector(".js-project-date");
-
-      if(statusEl) statusEl.textContent = cfg.label[lang] || cfg.label.en;
-      if(noteEl) noteEl.textContent = cfg.note[lang] || cfg.note.en;
-
-      if(dotEl){
-        dotEl.classList.remove("pending","completed","inactive");
-        dotEl.classList.add(cfg.dotClass);
-      }
-
-      const iso = meta.getAttribute("data-last-update");
-      if(dateEl && iso) dateEl.textContent = formatISODate(iso, lang);
-    }
-
-    // Apply on load
-    document.addEventListener("DOMContentLoaded", apply);
-
-    // If i18n.js exposes setLanguage, wrap it so status stays in sync
-    const wrap = () => {
-      if(typeof window.setLanguage === "function" && !window.setLanguage.__statusWrapped){
-        const orig = window.setLanguage;
-        const wrapped = function(lang){
-          const r = orig.apply(this, arguments);
-          // allow DOM to update, then apply status
-          setTimeout(apply, 0);
-          return r;
-        };
-        wrapped.__statusWrapped = true;
-        window.setLanguage = wrapped;
-      }
-    };
-
-    // Try wrap immediately and also after DOMContentLoaded
-    wrap();
-    window.addEventListener("load", wrap);
-  })();
-</script>
 <script>
   // Page-specific translations for the Private Project Portal
   (function addPortalTranslations(){
@@ -776,9 +650,8 @@
     };
 
     add("en", {
-
       "portal-title": "Private Project Portal",
-      "portal-intro": "You are accessing a private project portal by <strong>MCM Services</strong>.<br>This page provides access to project photos, documents, updates, and secure payment options.",
+      "portal-intro": "You are accessing a private project portal by <strong>MCM Services</strong>. This page provides access to project photos, documents, updates, and secure payment options.",
       "current-estimate": "Current Estimate",
       "current-invoice": "Current Invoice",
       "insurance-title": "Insurance &amp; Professional Coverage",
@@ -801,15 +674,19 @@
       "secure-payment-sub": "Proceed with payment using a secure method.",
       "secure-payment-btn": "Secure Payment",
       "project-status-label": "Project Status",
+      "project-status-value": "Completed",
       "project-date-label": "Last Update",
-      "operated-by": "Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.",
-      "next-step-note": "You will be notified as soon as the next step is required."
-});
+      "project-date-value": "Feb 02, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
 
     add("es", {
-
       "portal-title": "Portal Privado del Proyecto",
-      "portal-intro": "Está accediendo a un portal privado de proyectos de <strong>MCM Services</strong>.<br>Esta página proporciona acceso a fotos, documentos, actualizaciones y opciones de pago seguras.",
+      "portal-intro": "Está accediendo a un portal privado de proyectos de <strong>MCM Services</strong>. Esta página proporciona acceso a fotos, documentos, actualizaciones y opciones de pago seguras.",
       "current-estimate": "Presupuesto Actual",
       "current-invoice": "Factura Actual",
       "insurance-title": "Seguro y Cobertura Profesional",
@@ -832,15 +709,19 @@
       "secure-payment-sub": "Proceda con el pago mediante un método seguro.",
       "secure-payment-btn": "Pago Seguro",
       "project-status-label": "Estado del Proyecto",
+      "project-status-value": "Completado",
       "project-date-label": "Última Actualización",
-      "operated-by": "Moura Consulting &amp; Management es operada por <strong>MCM Services USA Corporation</strong>.",
-      "next-step-note": "Se le notificará tan pronto como se requiera el próximo paso."
-});
+      "project-date-value": "2 Feb, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management es operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
 
     add("pt", {
-
       "portal-title": "Portal Privado do Projeto",
-      "portal-intro": "Você está acessando um portal privado de projetos da <strong>MCM Services</strong>.<br>Esta página oferece acesso a fotos, documentos, atualizações e opções seguras de pagamento.",
+      "portal-intro": "Você está acessando um portal privado de projetos da <strong>MCM Services</strong>. Esta página oferece acesso a fotos, documentos, atualizações e opções seguras de pagamento.",
       "current-estimate": "Estimativa Atual",
       "current-invoice": "Fatura Atual",
       "insurance-title": "Seguro e Cobertura Profissional",
@@ -863,10 +744,15 @@
       "secure-payment-sub": "Prossiga com o pagamento usando um método seguro.",
       "secure-payment-btn": "Pagamento Seguro",
       "project-status-label": "Status do Projeto",
+      "project-status-value": "Concluído",
       "project-date-label": "Última Atualização",
-      "operated-by": "Moura Consulting &amp; Management é operada por <strong>MCM Services USA Corporation</strong>.",
-      "next-step-note": "Você será notificado assim que o próximo passo for necessário."
-});
+      "project-date-value": "02 Fev, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management é operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
   })();
 
   // Auto language selection with PT priority (override legacy ES cache)
@@ -884,6 +770,63 @@
     });
   })();
 </script>
+
+
+<script>
+  // Auto-fill Invoice History list (edit the array only)
+  (function () {
+    var invoices = [];
+    var ul = document.getElementById("invoice-list");
+    if (!ul) return;
+    // If the list already has items, don't duplicate
+    if (ul.querySelector("li")) return;
+
+    invoices.forEach(function (inv) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "./invoices/" + inv + ".pdf";
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "Invoice " + inv;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  })();
+</script>
+
+
+<script>
+  // Auto-fill Estimate History list (edit the array only)
+  (function () {
+    var estimates = [];
+
+    function renderEstimates() {
+      var ul = document.getElementById("estimate-list");
+      if (!ul) return;
+
+      // clear only if it's empty or contains only comments/whitespace (safe)
+      if (!ul.querySelector("li")) {
+        estimates.forEach(function (est) {
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.href = "./estimates/" + est + ".pdf";
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.textContent = "Estimate " + est;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderEstimates);
+    } else {
+      renderEstimates();
+    }
+  })();
+</script>
+
 
 </body>
 </html>
