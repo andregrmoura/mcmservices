@@ -392,6 +392,27 @@
       justify-content: flex-end;
       gap: 10px;
     }
+
+    .hero-meta .meta-note{
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color:#666;
+      font-weight: 500;
+      text-align: right;
+      line-height: 1.35;
+    }
+    .operated-by{
+      margin: 10px 0 0;
+      font-size: 0.86rem;
+      color:#666;
+      font-weight: 500;
+    }
+    .next-step-note{
+      color:#666;
+      font-size: 0.92rem;
+      margin-top: 6px;
+      margin-bottom: 22px;
+    }
     .hero-meta .meta-dot{
       width: 10px;
       height: 10px;
@@ -422,6 +443,17 @@
       }
     }
 
+
+@media (min-width: 1200px) {
+  .container,
+  .content,
+  .project-container {
+    max-width: 1200px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
 </style>
 </head>
 
@@ -445,6 +477,8 @@
       You are accessing a private project portal by <strong>MCM Services</strong>.<br>
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
+    <p class="operated-by" data-translate="operated-by">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
+
       </div>
 
       <aside class="hero-meta" aria-label="Project status">
@@ -454,6 +488,7 @@
             <span class="meta-dot active" aria-hidden="true"></span>
             <span data-translate="project-status-value">Active</span>
           </div>
+          <div class="meta-note" data-translate="project-status-note">Initial coordination, building requirements and scheduling in progress.</div>
         </div>
         <div class="meta-item">
           <div class="meta-label" data-translate="project-date-label">Last Update</div>
@@ -472,7 +507,7 @@
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./estimates/estimate.pdf" loading="lazy"></iframe>
+      <iframe src="./estimates/estimate.pdf#zoom=page-width" loading="lazy"></iframe>
     </div>    
 
     <h2 data-translate="current-invoice">Current Invoice</h2>
@@ -484,7 +519,7 @@
          </div>
     -->
     <div class="pdf-box">
-      <iframe src="./invoices/invoice.pdf" loading="lazy"></iframe>
+      <iframe src="./invoices/invoice.pdf#zoom=page-width" loading="lazy"></iframe>
     </div>
 
     
@@ -493,6 +528,7 @@
     <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
       Proceed with payment using a secure method.
     </p>
+    <p class="next-step-note" data-translate="next-step-note">You will be notified as soon as the next step is required.</p>
     <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a>
@@ -527,7 +563,7 @@
     </div>
 
 
-    <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
+    <h2 data-translate="project-gallery">Project Photos</h2>
 
     <!-- TEMPLATE NOTE:
          Early phase: keep gallery-coming-soon.html
@@ -624,6 +660,7 @@
     };
 
     add("en", {
+
       "portal-title": "Private Project Portal",
       "portal-intro": "You are accessing a private project portal by <strong>MCM Services</strong>.<br>This page provides access to project photos, documents, updates, and secure payment options.",
       "current-estimate": "Current Estimate",
@@ -636,14 +673,14 @@
       "insurance-status": "Status",
       "insurance-active": "Active",
       "insurance-note": "Insurance documentation is available upon request.",
-      "project-gallery": "Project Gallery",
-      "open-project-gallery": "Open Project Gallery",
+      "project-gallery": "Project Photos",
+      "open-project-gallery": "View Project Photos",
       "document-history": "Document History",
       "footer-nav": "Navigation",
       "footer-contact": "Contact &amp; Connect",
       "footer-legal": "Legal",
       "terms": "Terms of Use",
-      "privacy": "Privacy Policy"
+      "privacy": "Privacy Policy",
       "secure-payment": "Secure Payment",
       "secure-payment-sub": "Proceed with payment using a secure method.",
       "secure-payment-btn": "Secure Payment",
@@ -651,9 +688,13 @@
       "project-status-value": "Active",
       "project-date-label": "Last Update",
       "project-date-value": "Feb 02, 2026",
+      "operated-by": "Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.",
+      "project-status-note": "Initial coordination, building requirements and scheduling in progress.",
+      "next-step-note": "You will be notified as soon as the next step is required."
 });
 
     add("es", {
+
       "portal-title": "Portal Privado del Proyecto",
       "portal-intro": "Está accediendo a un portal privado de proyectos de <strong>MCM Services</strong>.<br>Esta página proporciona acceso a fotos, documentos, actualizaciones y opciones de pago seguras.",
       "current-estimate": "Presupuesto Actual",
@@ -666,14 +707,14 @@
       "insurance-status": "Estado",
       "insurance-active": "Activo",
       "insurance-note": "La documentación del seguro está disponible a solicitud.",
-      "project-gallery": "Galería del Proyecto",
-      "open-project-gallery": "Abrir Galería del Proyecto",
+      "project-gallery": "Fotos del Proyecto",
+      "open-project-gallery": "Ver Fotos del Proyecto",
       "document-history": "Historial de Documentos",
       "footer-nav": "Navegación",
       "footer-contact": "Contacto y Conexión",
       "footer-legal": "Legal",
       "terms": "Términos de Uso",
-      "privacy": "Política de Privacidad"
+      "privacy": "Política de Privacidad",
       "secure-payment": "Pago Seguro",
       "secure-payment-sub": "Proceda con el pago mediante un método seguro.",
       "secure-payment-btn": "Pago Seguro",
@@ -681,9 +722,13 @@
       "project-status-value": "Activo",
       "project-date-label": "Última Actualización",
       "project-date-value": "2 Feb, 2026",
+      "operated-by": "Moura Consulting &amp; Management es operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-note": "Coordinación inicial, requisitos del edificio y programación en curso.",
+      "next-step-note": "Se le notificará tan pronto como se requiera el próximo paso."
 });
 
     add("pt", {
+
       "portal-title": "Portal Privado do Projeto",
       "portal-intro": "Você está acessando um portal privado de projetos da <strong>MCM Services</strong>.<br>Esta página oferece acesso a fotos, documentos, atualizações e opções seguras de pagamento.",
       "current-estimate": "Estimativa Atual",
@@ -696,14 +741,14 @@
       "insurance-status": "Status",
       "insurance-active": "Ativo",
       "insurance-note": "A documentação do seguro está disponível mediante solicitação.",
-      "project-gallery": "Galeria do Projeto",
-      "open-project-gallery": "Abrir Galeria do Projeto",
+      "project-gallery": "Fotos do Projeto",
+      "open-project-gallery": "Ver Fotos do Projeto",
       "document-history": "Histórico de Documentos",
       "footer-nav": "Navegação",
       "footer-contact": "Contato &amp; Conexão",
       "footer-legal": "Legal",
       "terms": "Termos de Uso",
-      "privacy": "Política de Privacidade"
+      "privacy": "Política de Privacidade",
       "secure-payment": "Pagamento Seguro",
       "secure-payment-sub": "Prossiga com o pagamento usando um método seguro.",
       "secure-payment-btn": "Pagamento Seguro",
@@ -711,6 +756,9 @@
       "project-status-value": "Ativo",
       "project-date-label": "Última Atualização",
       "project-date-value": "02 Fev, 2026",
+      "operated-by": "Moura Consulting &amp; Management é operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-note": "Coordenação inicial, requisitos do condomínio e agendamento em andamento.",
+      "next-step-note": "Você será notificado assim que o próximo passo for necessário."
 });
   })();
 
