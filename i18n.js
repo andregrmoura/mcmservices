@@ -8,6 +8,12 @@
 
 window.translations = window.translations || {
   en: {
+
+  "payment-title": "Secure Payment",
+  "payment-subtitle": "Use the secure payment link below to complete your payment by credit card.",
+  "payment-proceed": "Proceed to Secure Payment",
+  "payment-back": "Back to Project Portal",
+
     // Footer / common
     "footer-nav": "Navigation",
     "footer-contact": "Contact & Connect",
@@ -29,6 +35,12 @@ window.translations = window.translations || {
 
   },
   pt: {
+
+  "payment-title": "Pagamento Seguro",
+  "payment-subtitle": "Utilize o link de pagamento seguro abaixo para concluir o pagamento com cartão de crédito.",
+  "payment-proceed": "Prosseguir para Pagamento Seguro",
+  "payment-back": "Voltar ao Portal do Projeto",
+
     "footer-nav": "Navegação",
     "footer-contact": "Contato & Conexões",
     "footer-legal": "Legal",
@@ -49,6 +61,12 @@ window.translations = window.translations || {
 
   },
   es: {
+
+  "payment-title": "Pago Seguro",
+  "payment-subtitle": "Utilice el enlace de pago seguro a continuación para completar el pago con tarjeta de crédito.",
+  "payment-proceed": "Continuar al Pago Seguro",
+  "payment-back": "Volver al Portal del Proyecto",
+
     "footer-nav": "Navegación",
     "footer-contact": "Contacto y Conexión",
     "footer-legal": "Legal",
