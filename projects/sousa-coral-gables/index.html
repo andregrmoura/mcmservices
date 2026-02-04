@@ -85,7 +85,6 @@
       margin-top:40px;
     }
 
-    
     .pdf-box iframe{
       width:100%;
       height:100%;
@@ -161,7 +160,6 @@
       color:#C7A96B;
       border-bottom-color:#C7A96B;
     }
-
 
     footer{
       background:white;
@@ -249,7 +247,6 @@
       margin-top:4px;
     }
 
-  
     /* Insurance status */
     .insurance-row{
       display:flex;
@@ -291,44 +288,34 @@
       box-shadow:0 0 0 3px rgba(29,185,84,.15);
     }
 
-
-  
-    
     /* PDF embed: mobile-first, viewport-safe */
-.pdf-box{
-  width: 100%;
-  max-width: 1200px;
-/* Desktop/tablet default */
-  height: 75vh;
-  min-height: 560px;
-  max-height: 900px;
-  border:1px solid #DDD;
-  border-radius:8px;
-  overflow:hidden;
-  background:#FFF;
-  margin: 0 auto 40px;
-}
-.pdf-box iframe{
-  width:100%;
-  height:100%;
-  border:none;
-  display:block;
-}
+    .pdf-box{
+      width: 100%;
+      max-width: 1200px;
+      height: 75vh;
+      min-height: 560px;
+      max-height: 900px;
+      border:1px solid #DDD;
+      border-radius:8px;
+      overflow:hidden;
+      background:#FFF;
+      margin: 0 auto 40px;
+    }
+    .pdf-box iframe{
+      width:100%;
+      height:100%;
+      border:none;
+      display:block;
+    }
+    @media (max-width: 768px){
+      .pdf-box{
+        width: 100%;
+        height: calc(100dvh - 260px);
+        min-height: 520px;
+        max-height: 78dvh;
+      }
+    }
 
-/* iPhone/Safari: use dynamic viewport height (dvh) so it stays fully visible */
-@media (max-width: 768px){
-  .pdf-box{
-    width: 100%;
-    height: calc(100dvh - 260px); /* header + spacing */
-    min-height: 520px;
-    max-height: 78dvh;
-  }
-}
-
-
-    
-
-  
     /* Align titles with PDF/content margins */
     .content-wide h1,
     .content-wide h2{
@@ -336,11 +323,10 @@
       margin-left: 0;
     }
 
-
     @media (max-width: 768px){
       h1{ font-size: 2.2rem; }
       main{ padding: 200px 16px 70px; }
-      }
+    }
 
     /* Premium hero layout with right-aligned project meta */
     .hero-row{
@@ -409,20 +395,15 @@
       }
     }
 
-
-
-@media (min-width: 1200px) {
-  .container,
-  .content,
-  .project-container {
-    max-width: 1200px;
-    padding-left: 48px;
-    padding-right: 48px;
-  }
-}
-
-
-
+    @media (min-width: 1200px) {
+      .container,
+      .content,
+      .project-container {
+        max-width: 1200px;
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+    }
 
     /* Mobile text flow refinements (mobile-only) */
     @media (max-width: 768px){
@@ -435,15 +416,13 @@
       .hero-copy strong{ white-space: nowrap; }
     }
 
-
-/* Desktop margins aligned with PDF frame */
-.content-wide{
-  width:100%;
-  margin-left:0;
-  margin-right:0;
-}
-
-</style>
+    /* Desktop margins aligned with PDF frame */
+    .content-wide{
+      width:100%;
+      margin-left:0;
+      margin-right:0;
+    }
+  </style>
 </head>
 
 <body>
@@ -458,70 +437,55 @@
   <div class="project-box">
   <div class="content-wide">
 
-    
     <div class="hero-row">
       <div class="hero-copy">
-<h1 data-translate="portal-title">Private Project Portal</h1>
-    <p data-translate="portal-intro">
-      You are accessing a private project portal by <strong>MCM Services</strong>. 
-      This page provides access to project photos, documents, updates, and secure payment options.
-    </p>
-      <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
+        <h1 data-translate="portal-title">Private Project Portal</h1>
+        <p data-translate="portal-intro">
+          You are accessing a private project portal by <strong>MCM Services</strong>.
+          This page provides access to project photos, documents, updates, and secure payment options.
+        </p>
+        <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
       </div>
 
       <aside class="hero-meta" aria-label="Project status">
         <div class="meta-item">
           <div class="meta-label" data-translate="project-status-label">Project Status</div>
           <div class="meta-value">
-            <span class="meta-dot active" aria-hidden="true"></span>
-            <span data-status-base="Active">Ativo</span>
+            <!-- Mantém fallback (active), mas permite JSON mudar -->
+            <span class="meta-dot active" data-status-dot aria-hidden="true"></span>
+            <!-- Mantém atributo existente + adiciona data-var -->
+            <span data-status-base="Active" data-var="projectStatus">Ativo</span>
           </div>
-          <div data-translate="project-status-sub-dynamic" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
+          <div data-translate="project-status-sub-dynamic" data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
         </div>
         <div class="meta-item">
           <div class="meta-label" data-translate="project-date-label">Last Update</div>
-          <div class="meta-value meta-date" data-translate="project-date-value">Feb 02, 2026</div>
+          <div class="meta-value meta-date" data-translate="project-date-value" data-var="lastUpdate">Feb 02, 2026</div>
         </div>
       </aside>
     </div>
 
-
     <h2 data-translate="current-estimate">Current Estimate</h2>
-
-    <!-- TEMPLATE NOTE:
-         If estimate.pdf exists, replace the placeholder block below with:
-         <div class="pdf-box">
-           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
-         </div>
-    -->
     <div class="pdf-box">
-      <iframe src="./estimates/estimate.pdf" loading="lazy"></iframe>
-    </div>    
-
-    <h2 data-translate="current-invoice">Current Invoice</h2>
-
-    <!-- TEMPLATE NOTE:
-         If invoice.pdf exists, replace the placeholder block below with:
-         <div class="pdf-box">
-           <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
-         </div>
-    -->
-    <div class="pdf-box">
-      <iframe src="./invoices/invoice.pdf" loading="lazy"></iframe>
+      <!-- fallback src mantido + JSON pode sobrescrever -->
+      <iframe src="./estimates/EST0031.pdf" data-src="currentEstimate" loading="lazy"></iframe>
     </div>
 
-    
+    <h2 data-translate="current-invoice">Current Invoice</h2>
+    <div class="pdf-box">
+      <iframe src="./invoices/INV042.pdf" data-src="currentInvoice" loading="lazy"></iframe>
+    </div>
 
     <h2 data-translate="secure-payment">Secure Payment</h2>
     <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
       Proceed with payment using a secure method.
     </p>
-    <p data-translate="next-step-note" style="color:#666; margin-top:12px;"></p>
+    <p data-translate="next-step-note" data-var="nextStepNote" style="color:#666; margin-top:12px;"></p>
     <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a>
 
-<h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
+    <h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
 
     <div class="history-card" style="margin-top:18px;">
       <h3 data-translate="insurance-status-title">Insurance Status</h3>
@@ -550,14 +514,8 @@
       </p>
     </div>
 
-
     <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
-
-    <!-- TEMPLATE NOTE:
-         Early phase: keep gallery-coming-soon.html
-         When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
-    -->
-    <a class="primary" href="https://www.notion.so/Khoudari-s-Residence-Coral-Gables-2dc62b9dd158800a9aa9cda472672bcb?source=copy_link" data-translate="open-project-gallery">View Project Photos</a>
+    <a class="primary" href="gallery-coming-soon.html" data-href="galleryLink" data-translate="open-project-gallery">View Project Photos</a>
 
     <h2 data-translate="document-history">Document History</h2>
 
@@ -579,8 +537,6 @@
       </ul>
     </div>
 
-    
-  
   </div>
 </div>
 </main>
@@ -632,11 +588,9 @@
   </div>
 </footer>
 
-
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
 
 <script src="../../i18n.js"></script>
 
@@ -771,7 +725,6 @@
   })();
 </script>
 
-
 <script>
   // Auto-fill Invoice History list (edit the array only)
   (function () {
@@ -793,7 +746,6 @@
     });
   })();
 </script>
-
 
 <script>
   // Auto-fill Estimate History list (edit the array only)
@@ -827,6 +779,8 @@
   })();
 </script>
 
+<!-- ✅ Loader do JSON (sempre por último) -->
+<script src="./js/vars-loader.js"></script>
 
 </body>
 </html>

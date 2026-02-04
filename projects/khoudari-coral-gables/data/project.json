@@ -1,0 +1,70 @@
+{
+  "projectStatus": "Completed",
+  "projectStatusDot": "completed",
+  "projectStatusSub": "",
+  "lastUpdate": "Feb 03, 2026",
+
+  "currentEstimate": "./estimates/EST0025.pdf",
+  "currentInvoice": "./invoices/INV036.pdf",
+
+  "nextStepNote": "",
+  "galleryLink": "https://www.notion.so/Khoudari-s-Residence-Coral-Gables-2dc62b9dd158800a9aa9cda472672bcb?source=copy_link",
+
+  "estimatesHistory": [
+    {
+      "file": "EST0024.pdf",
+      "label": "EST024"
+    },
+    {
+      "file": "EST0025.pdf",
+      "label": "EST025"
+    }
+  ],
+
+  "invoicesHistory": [
+    {
+      "file": "INV012.pdf",
+      "label": "INV012"
+    },
+    {
+      "file": "INV013.pdf",
+      "label": "INV013"
+    },
+    {
+      "file": "INV016.pdf",
+      "label": "INV016"
+    },
+    {
+      "file": "INV021.pdf",
+      "label": "INV021"
+    },
+    {
+      "file": "INV029.pdf",
+      "label": "INV029"
+    },
+    {
+      "file": "INV030.pdf",
+      "label": "INV030"
+    },
+    {
+      "file": "INV031.pdf",
+      "label": "INV031"
+    },
+    {
+      "file": "INV032.pdf",
+      "label": "INV032"
+    },
+    {
+      "file": "INV035.pdf",
+      "label": "INV035"
+    },
+    {
+      "file": "INV036.pdf",
+      "label": "INV036"
+    }
+
+
+
+
+  ]
+}
