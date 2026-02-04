@@ -85,6 +85,7 @@
       margin-top:40px;
     }
 
+    
     .pdf-box iframe{
       width:100%;
       height:100%;
@@ -160,6 +161,7 @@
       color:#C7A96B;
       border-bottom-color:#C7A96B;
     }
+
 
     footer{
       background:white;
@@ -247,6 +249,7 @@
       margin-top:4px;
     }
 
+  
     /* Insurance status */
     .insurance-row{
       display:flex;
@@ -288,34 +291,44 @@
       box-shadow:0 0 0 3px rgba(29,185,84,.15);
     }
 
-    /* PDF embed: mobile-first, viewport-safe */
-    .pdf-box{
-      width: 100%;
-      max-width: 1200px;
-      height: 75vh;
-      min-height: 560px;
-      max-height: 900px;
-      border:1px solid #DDD;
-      border-radius:8px;
-      overflow:hidden;
-      background:#FFF;
-      margin: 0 auto 40px;
-    }
-    .pdf-box iframe{
-      width:100%;
-      height:100%;
-      border:none;
-      display:block;
-    }
-    @media (max-width: 768px){
-      .pdf-box{
-        width: 100%;
-        height: calc(100dvh - 260px);
-        min-height: 520px;
-        max-height: 78dvh;
-      }
-    }
 
+  
+    
+    /* PDF embed: mobile-first, viewport-safe */
+.pdf-box{
+  width: 100%;
+  max-width: 1200px;
+/* Desktop/tablet default */
+  height: 75vh;
+  min-height: 560px;
+  max-height: 900px;
+  border:1px solid #DDD;
+  border-radius:8px;
+  overflow:hidden;
+  background:#FFF;
+  margin: 0 auto 40px;
+}
+.pdf-box iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  display:block;
+}
+
+/* iPhone/Safari: use dynamic viewport height (dvh) so it stays fully visible */
+@media (max-width: 768px){
+  .pdf-box{
+    width: 100%;
+    height: calc(100dvh - 260px); /* header + spacing */
+    min-height: 520px;
+    max-height: 78dvh;
+  }
+}
+
+
+    
+
+  
     /* Align titles with PDF/content margins */
     .content-wide h1,
     .content-wide h2{
@@ -323,10 +336,11 @@
       margin-left: 0;
     }
 
+
     @media (max-width: 768px){
       h1{ font-size: 2.2rem; }
       main{ padding: 200px 16px 70px; }
-    }
+      }
 
     /* Premium hero layout with right-aligned project meta */
     .hero-row{
@@ -395,15 +409,20 @@
       }
     }
 
-    @media (min-width: 1200px) {
-      .container,
-      .content,
-      .project-container {
-        max-width: 1200px;
-        padding-left: 48px;
-        padding-right: 48px;
-      }
-    }
+
+
+@media (min-width: 1200px) {
+  .container,
+  .content,
+  .project-container {
+    max-width: 1200px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+
+
 
     /* Mobile text flow refinements (mobile-only) */
     @media (max-width: 768px){
@@ -416,12 +435,66 @@
       .hero-copy strong{ white-space: nowrap; }
     }
 
-    /* Desktop margins aligned with PDF frame */
-    .content-wide{
+
+/* Desktop margins aligned with PDF frame */
+.content-wide{
+  width:100%;
+  margin-left:0;
+  margin-right:0;
+}
+
+
+    /* ===== Dynamic placeholders / helpers (do not alter layout) ===== */
+    .is-hidden{ display:none !important; }
+
+    .pdf-placeholder{
       width:100%;
-      margin-left:0;
-      margin-right:0;
+      max-width:1200px;
+      min-height:140px;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      background:#FFF;
+      margin:0 auto 40px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:28px 18px;
+      text-align:center;
     }
+    .pdf-placeholder .placeholder-icon{
+      font-size:2.2rem;
+      color:#C7A96B;
+    }
+    .pdf-placeholder h3{
+      margin:0;
+      font-weight:600;
+      color:#333;
+      font-family:'Montserrat',sans-serif;
+      font-size:1.05rem;
+    }
+    .pdf-placeholder p{
+      margin:0;
+      font-size:.95rem;
+      color:#666;
+      max-width:620px;
+    }
+
+    .empty-note{
+      margin:10px 0 14px;
+      padding:14px 14px;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      background:#FAFAFA;
+      color:#666;
+      font-size:.95rem;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .empty-note i{ color:#C7A96B; margin-top:2px; }
+
   </style>
 </head>
 
@@ -437,55 +510,78 @@
   <div class="project-box">
   <div class="content-wide">
 
+    
     <div class="hero-row">
       <div class="hero-copy">
-        <h1 data-translate="portal-title">Private Project Portal</h1>
-        <p data-translate="portal-intro">
-          You are accessing a private project portal by <strong>MCM Services</strong>.
-          This page provides access to project photos, documents, updates, and secure payment options.
-        </p>
-        <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
+<h1 data-translate="portal-title">Private Project Portal</h1>
+    <p data-translate="portal-intro">
+      You are accessing a private project portal by <strong>MCM Services</strong>. 
+      This page provides access to project photos, documents, updates, and secure payment options.
+    </p>
+      <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
       </div>
 
       <aside class="hero-meta" aria-label="Project status">
         <div class="meta-item">
           <div class="meta-label" data-translate="project-status-label">Project Status</div>
           <div class="meta-value">
-            <!-- Mantém fallback (active), mas permite JSON mudar -->
-            <span class="meta-dot active" data-status-dot aria-hidden="true"></span>
-            <!-- Mantém atributo existente + adiciona data-var -->
-            <span data-status-base="Active" data-var="projectStatus">Ativo</span>
+            <span class="meta-dot" aria-hidden="true"></span>
+            <span data-var="projectStatus"></span>
           </div>
-          <div data-translate="project-status-sub-dynamic" data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
+          <div data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
         </div>
         <div class="meta-item">
           <div class="meta-label" data-translate="project-date-label">Last Update</div>
-          <div class="meta-value meta-date" data-translate="project-date-value" data-var="lastUpdate">Feb 02, 2026</div>
+          <div class="meta-value meta-date" data-var="lastUpdate"></div>
         </div>
       </aside>
     </div>
 
+
     <h2 data-translate="current-estimate">Current Estimate</h2>
-    <div class="pdf-box">
-      <!-- fallback src mantido + JSON pode sobrescrever -->
-      <iframe src="./estimates/EST0031.pdf" data-src="currentEstimate" loading="lazy"></iframe>
+
+    <!-- TEMPLATE NOTE:
+         If estimate.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box" data-pdf-box="currentEstimate">
+      <iframe data-src="currentEstimate" loading="lazy"></iframe>
+    </div>
+    <div class="pdf-placeholder" data-placeholder-for="currentEstimate">
+      <div class="placeholder-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
+      <h3>Estimate in preparation</h3>
+      <p>The current estimate is being prepared and will be available here once completed.</p>
     </div>
 
-    <h2 data-translate="current-invoice">Current Invoice</h2>
-    <div class="pdf-box">
-      <iframe src="./invoices/INV042.pdf" data-src="currentInvoice" loading="lazy"></iframe>
+<h2 data-translate="current-invoice">Current Invoice</h2>
+
+    <!-- TEMPLATE NOTE:
+         If invoice.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box" data-pdf-box="currentInvoice">
+      <iframe data-src="currentInvoice" loading="lazy"></iframe>
+    </div>
+    <div class="pdf-placeholder" data-placeholder-for="currentInvoice">
+      <div class="placeholder-icon"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></div>
+      <h3>Invoice in preparation</h3>
+      <p>The current invoice will be available here as soon as it is issued.</p>
     </div>
 
-    <h2 data-translate="secure-payment">Secure Payment</h2>
+<h2 data-translate="secure-payment">Secure Payment</h2>
     <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
       Proceed with payment using a secure method.
     </p>
-    <p data-translate="next-step-note" data-var="nextStepNote" style="color:#666; margin-top:12px;"></p>
+    <p data-translate="next-step-note" style="color:#666; margin-top:12px;"></p>
     <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a>
 
-    <h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
+<h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
 
     <div class="history-card" style="margin-top:18px;">
       <h3 data-translate="insurance-status-title">Insurance Status</h3>
@@ -514,13 +610,26 @@
       </p>
     </div>
 
+
     <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
-    <a class="primary" href="gallery-coming-soon.html" data-href="galleryLink" data-translate="open-project-gallery">View Project Photos</a>
+
+    <!-- TEMPLATE NOTE:
+         Early phase: keep gallery-coming-soon.html
+         When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
+    -->
+    <a class="primary" href="gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
 
     <h2 data-translate="document-history">Document History</h2>
 
     <div class="history-card">
       <h3>Estimates</h3>
+      <div class="empty-note is-hidden" id="estimate-empty">
+        <i class="fas fa-folder-open" aria-hidden="true"></i>
+        <div>
+          <strong>No estimates yet.</strong><br>
+          <span>As documents are issued, they will appear here automatically.</span>
+        </div>
+      </div>
       <ul class="doc-list" id="estimate-list">
         <!-- Example:
         <li><a href="./estimates/ESTXXXX.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
@@ -530,6 +639,13 @@
 
     <div class="history-card">
       <h3>Invoices</h3>
+      <div class="empty-note is-hidden" id="invoice-empty">
+        <i class="fas fa-receipt" aria-hidden="true"></i>
+        <div>
+          <strong>No invoices yet.</strong><br>
+          <span>As invoices are issued, they will appear here automatically.</span>
+        </div>
+      </div>
       <ul class="doc-list" id="invoice-list">
         <!-- Example:
         <li><a href="./invoices/INV0XX.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
@@ -537,6 +653,8 @@
       </ul>
     </div>
 
+    
+  
   </div>
 </div>
 </main>
@@ -588,9 +706,11 @@
   </div>
 </footer>
 
+
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
+
 
 <script src="../../i18n.js"></script>
 
@@ -725,6 +845,7 @@
   })();
 </script>
 
+
 <script>
   // Auto-fill Invoice History list (edit the array only)
   (function () {
@@ -746,6 +867,7 @@
     });
   })();
 </script>
+
 
 <script>
   // Auto-fill Estimate History list (edit the array only)
@@ -779,7 +901,7 @@
   })();
 </script>
 
-<!-- ✅ Loader do JSON (sempre por último) -->
+
 <script src="./js/vars-loader.js"></script>
 
 </body>
