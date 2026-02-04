@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Private Project Portal | MCM Services</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="64x64" href="../../favicon-64x64.png?v=3">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png?v=3">
+  <link rel="shortcut icon" href="../../favicon.ico?v=3">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:#F7F7F7;
+      color:#333;
+      overflow-x:hidden;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    a{ text-decoration:none; color:#333; }
+
+    /* HEADER */
+    header{
+      width:100%;
+      background:rgba(0,0,0,0.4);
+      box-shadow:0 5px 15px rgba(0,0,0,0.4);
+      position:absolute;
+      top:0;
+      left:0;
+      z-index:100;
+      padding:25px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .logo-link img{
+      height:120px;
+      max-width:320px;
+      object-fit:contain;
+    }
+
+    /* MAIN */
+    main{
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:220px 20px 80px;
+    }
+
+    .project-box{
+      max-width:1200px;
+      text-align:left;
+    }
+
+    h1,h2{
+      font-family:'Playfair Display',serif;
+      color:#C7A96B;
+    }
+
+    h1{
+      font-size:3rem;
+      margin-bottom:20px;
+    }
+
+    h2{
+      margin-top:40px;
+    }
+
+    
+    .pdf-box iframe{
+      width:100%;
+      height:100%;
+      border:none;
+    }
+
+    .primary{
+      display:inline-block;
+      padding:14px 32px;
+      border-radius:8px;
+      border:2px solid #C7A96B;
+      background:#C7A96B;
+      color:#333;
+      font-weight:500;
+      margin-top:15px;
+      cursor:pointer;
+    }
+
+    /* Friendly placeholders (when PDFs are not available yet) */
+    .pdf-placeholder{
+      background:#fff;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      padding:40px 20px;
+      text-align:center;
+      margin-bottom:40px;
+    }
+    .placeholder-icon{
+      font-size:2.5rem;
+      color:#C7A96B;
+      margin-bottom:15px;
+    }
+    .pdf-placeholder h3{
+      margin:0 0 10px 0;
+      font-weight:500;
+      color:#333;
+      font-family:'Montserrat',sans-serif;
+    }
+    .pdf-placeholder p{
+      margin:0;
+      font-size:.95rem;
+      color:#666;
+    }
+
+    /* History */
+    .history-card{
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:10px;
+      padding:18px 18px 10px;
+      margin:18px 0;
+    }
+    .history-card h3{
+      margin:0 0 10px;
+      font-size:1rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .doc-list{
+      margin:0;
+      padding-left:18px;
+    }
+    .doc-list li{
+      margin:10px 0;
+    }
+    .doc-list a{
+      color:#333;
+      text-decoration:none;
+      border-bottom:1px solid rgba(199,169,107,.35);
+    }
+    .doc-list a:hover{
+      color:#C7A96B;
+      border-bottom-color:#C7A96B;
+    }
+
+
+    footer{
+      background:white;
+      padding:40px 20px;
+      text-align:center;
+      border-top:1px solid #DDD;
+    }
+    .footer-logo-container{
+      display:block;
+      margin:0 auto 15px;
+      text-align:center;
+    }
+    .footer-logo-container img{
+      height:60px;
+      width:180px;
+      object-fit:contain;
+    }
+    .footer-content-grid{
+      max-width:1200px;
+      margin:0 auto 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      text-align:left;
+      gap:30px;
+      flex-wrap:wrap;
+    }
+    .footer-col{
+      display:flex;
+      flex-direction:column;
+      min-width:150px;
+      padding:0 10px;
+      align-items:flex-start;
+    }
+    .footer-col h4{
+      font-size:1rem;
+      font-weight:600;
+      color:#333;
+      margin-top:0;
+      margin-bottom:15px;
+      border-bottom:2px solid #C7A96B;
+      padding-bottom:5px;
+      text-align:left;
+    }
+    .footer-col a{
+      color:#555;
+      font-size:0.9rem;
+      font-weight:400;
+      padding:5px 0;
+      transition:color 0.3s;
+      display:block;
+    }
+    .footer-col a:hover{ color:#C7A96B; }
+    .footer-social-contact a{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      justify-content:center;
+    }
+    .footer-social-contact i{
+      color:#C7A96B;
+      font-size:1rem;
+    }
+    .footer-bottom-line{
+      padding-top:20px;
+      border-top:1px solid #EEE;
+      color:#999;
+      font-size:0.85rem;
+      text-align:center;
+    }
+    .footer-bottom-line p{ margin:5px 0; }
+    .footer-bottom-line .copyright{
+      font-size:0.9rem;
+      color:#666;
+      line-height:1.6;
+      letter-spacing:0.3px;
+    }
+    .footer-bottom-line strong{ font-weight:500; color:#444; }
+    .powered-by{
+      font-size:0.75rem;
+      color:#999;
+      letter-spacing:0.6px;
+      display:inline-block;
+      margin-top:4px;
+    }
+
+  
+    /* Insurance status */
+    .insurance-row{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      padding:10px 0;
+      border-top:1px solid #EEE;
+      align-items:flex-start;
+    }
+    .insurance-row:first-child{ border-top:none; padding-top:0; }
+    .insurance-label{
+      color:#666;
+      font-size:.9rem;
+      min-width:140px;
+    }
+    .insurance-value{
+      color:#333;
+      font-size:.95rem;
+      text-align:right;
+      flex:1;
+    }
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid #DDD;
+      background:#FAFAFA;
+      font-size:.9rem;
+      font-weight:500;
+      justify-content:flex-end;
+    }
+    .status-dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#1DB954; /* green */
+      box-shadow:0 0 0 3px rgba(29,185,84,.15);
+    }
+
+
+  
+    
+    /* PDF embed: mobile-first, viewport-safe */
+.pdf-box{
+  width: 100%;
+  max-width: 1200px;
+/* Desktop/tablet default */
+  height: 75vh;
+  min-height: 560px;
+  max-height: 900px;
+  border:1px solid #DDD;
+  border-radius:8px;
+  overflow:hidden;
+  background:#FFF;
+  margin: 0 auto 40px;
+}
+.pdf-box iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  display:block;
+}
+
+/* iPhone/Safari: use dynamic viewport height (dvh) so it stays fully visible */
+@media (max-width: 768px){
+  .pdf-box{
+    width: 100%;
+    height: calc(100dvh - 260px); /* header + spacing */
+    min-height: 520px;
+    max-height: 78dvh;
+  }
+}
+
+
+    
+
+  
+    /* Align titles with PDF/content margins */
+    .content-wide h1,
+    .content-wide h2{
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+
+    @media (max-width: 768px){
+      h1{ font-size: 2.2rem; }
+      main{ padding: 200px 16px 70px; }
+      }
+
+    /* Premium hero layout with right-aligned project meta */
+    .hero-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:40px;
+      margin-bottom: 10px;
+    }
+    .hero-copy{
+      flex:1 1 auto;
+      min-width: 0;
+    }
+    .hero-meta{
+      flex:0 0 280px;
+      margin-top: 92px;
+      text-align: right;
+    }
+    .hero-meta .meta-item{
+      padding: 4px 0;
+    }
+    .hero-meta .meta-label{
+      font-size: 0.80rem;
+      letter-spacing: .02em;
+      color: #777;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hero-meta .meta-value{
+      font-size: 0.98rem;
+      color:#222;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .hero-meta .meta-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display:inline-block;
+      background:#1DB954;
+      box-shadow: 0 0 0 3px rgba(29,185,84,.14);
+    }
+    .hero-meta .meta-dot.pending{ background:#F4B400; box-shadow:0 0 0 3px rgba(244,180,0,.16); }
+    .hero-meta .meta-dot.completed{ background:#2E7D32; box-shadow:0 0 0 3px rgba(46,125,50,.16); }
+    .hero-meta .meta-dot.inactive{ background:#999; box-shadow:0 0 0 3px rgba(153,153,153,.14); }
+
+    @media (max-width: 1024px){
+      .hero-row{
+        flex-direction: column;
+        gap: 18px;
+      }
+      .hero-meta{
+        flex: 0 0 auto;
+        width: 100%;
+        text-align: left;
+        margin-top: 0;
+        border-top: 1px solid rgba(0,0,0,.06);
+        padding-top: 12px;
+      }
+      .hero-meta .meta-value{
+        justify-content: flex-start;
+      }
+    }
+
+
+
+@media (min-width: 1200px) {
+  .container,
+  .content,
+  .project-container {
+    max-width: 1200px;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+
+
+
+    /* Mobile text flow refinements (mobile-only) */
+    @media (max-width: 768px){
+      .hero-copy p{
+        hyphens: none;
+        word-break: normal;
+        overflow-wrap: normal;
+        text-wrap: pretty;
+      }
+      .hero-copy strong{ white-space: nowrap; }
+    }
+
+
+/* Desktop margins aligned with PDF frame */
+.content-wide{
+  width:100%;
+  margin-left:0;
+  margin-right:0;
+}
+
+
+    /* ===== Dynamic placeholders / helpers (do not alter layout) ===== */
+    .is-hidden{ display:none !important; }
+
+    .pdf-placeholder{
+      width:100%;
+      max-width:1200px;
+      min-height:140px;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      background:#FFF;
+      margin:0 auto 40px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:28px 18px;
+      text-align:center;
+    }
+    .pdf-placeholder .placeholder-icon{
+      font-size:2.2rem;
+      color:#C7A96B;
+    }
+    .pdf-placeholder h3{
+      margin:0;
+      font-weight:600;
+      color:#333;
+      font-family:'Montserrat',sans-serif;
+      font-size:1.05rem;
+    }
+    .pdf-placeholder p{
+      margin:0;
+      font-size:.95rem;
+      color:#666;
+      max-width:620px;
+    }
+
+    .empty-note{
+      margin:10px 0 14px;
+      padding:14px 14px;
+      border:1px dashed #DDD;
+      border-radius:10px;
+      background:#FAFAFA;
+      color:#666;
+      font-size:.95rem;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .empty-note i{ color:#C7A96B; margin-top:2px; }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo-link" href="../../index.html">
+    <img src="../../images/FODA.png" alt="MCM Services Logo">
+  </a>
+</header>
+
+<main>
+  <div class="project-box">
+  <div class="content-wide">
+
+    
+    <div class="hero-row">
+      <div class="hero-copy">
+<h1 data-translate="portal-title">Private Project Portal</h1>
+    <p data-translate="portal-intro">
+      You are accessing a private project portal by <strong>MCM Services</strong>. 
+      This page provides access to project photos, documents, updates, and secure payment options.
+    </p>
+      <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
+      </div>
+
+      <aside class="hero-meta" aria-label="Project status">
+        <div class="meta-item">
+          <div class="meta-label" data-translate="project-status-label">Project Status</div>
+          <div class="meta-value">
+            <span class="meta-dot" aria-hidden="true"></span>
+            <span data-var="projectStatus"></span>
+          </div>
+          <div data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label" data-translate="project-date-label">Last Update</div>
+          <div class="meta-value meta-date" data-var="lastUpdate"></div>
+        </div>
+      </aside>
+    </div>
+
+
+    <h2 data-translate="current-estimate">Current Estimate</h2>
+
+    <!-- TEMPLATE NOTE:
+         If estimate.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box" data-pdf-box="currentEstimate">
+      <iframe data-src="currentEstimate" loading="lazy"></iframe>
+    </div>
+    <div class="pdf-placeholder" data-placeholder-for="currentEstimate">
+      <div class="placeholder-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
+      <h3>Estimate in preparation</h3>
+      <p>The current estimate is being prepared and will be available here once completed.</p>
+    </div>
+
+<h2 data-translate="current-invoice">Current Invoice</h2>
+
+    <!-- TEMPLATE NOTE:
+         If invoice.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box" data-pdf-box="currentInvoice">
+      <iframe data-src="currentInvoice" loading="lazy"></iframe>
+    </div>
+    <div class="pdf-placeholder" data-placeholder-for="currentInvoice">
+      <div class="placeholder-icon"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></div>
+      <h3>Invoice in preparation</h3>
+      <p>The current invoice will be available here as soon as it is issued.</p>
+    </div>
+
+<h2 data-translate="secure-payment">Secure Payment</h2>
+    <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
+      Proceed with payment using a secure method.
+    </p>
+    <p data-translate="next-step-note" style="color:#666; margin-top:12px;"></p>
+    <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
+      <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
+    </a>
+
+<h2 data-translate="insurance-title">Insurance &amp; Professional Coverage</h2>
+
+    <div class="history-card" style="margin-top:18px;">
+      <h3 data-translate="insurance-status-title">Insurance Status</h3>
+      <ul class="doc-list" style="list-style:none; padding-left:0; margin:0;">
+        <li class="insurance-row">
+          <span class="insurance-label" data-translate="insurance-operated-by">Operated by</span>
+          <span class="insurance-value"><strong>MCM Services USA Corporation</strong></span>
+        </li>
+        <li class="insurance-row">
+          <span class="insurance-label" data-translate="insurance-coverage">Coverage</span>
+          <span class="insurance-value" data-translate="insurance-coverage-value">General Liability • Workers’ Compensation (as required)</span>
+        </li>
+        <li class="insurance-row">
+          <span class="insurance-label" data-translate="insurance-status">Status</span>
+          <span class="insurance-value">
+            <span class="status-pill active">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span data-translate="insurance-active">Active</span>
+            </span>
+          </span>
+        </li>
+      </ul>
+
+      <p style="margin:14px 0 0; color:#666; font-size:.95rem;" data-translate="insurance-note">
+        Insurance documentation is available upon request.
+      </p>
+    </div>
+
+
+    <h2 data-translate="project-gallery">Photos from the Latest Project</h2>
+
+    <!-- TEMPLATE NOTE:
+         Early phase: keep gallery-coming-soon.html
+         When photos are ready: replace href with Notion share link + target/_blank + rel/noopener
+    -->
+    <a class="primary" href="gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
+
+    <h2 data-translate="document-history">Document History</h2>
+
+    <div class="history-card">
+      <h3>Estimates</h3>
+      <div class="empty-note is-hidden" id="estimate-empty">
+        <i class="fas fa-folder-open" aria-hidden="true"></i>
+        <div>
+          <strong>No estimates yet.</strong><br>
+          <span>As documents are issued, they will appear here automatically.</span>
+        </div>
+      </div>
+      <ul class="doc-list" id="estimate-list">
+        <!-- Example:
+        <li><a href="./estimates/ESTXXXX.pdf" target="_blank" rel="noopener">Estimate v1 — Feb 1, 2026</a></li>
+        -->
+      </ul>
+    </div>
+
+    <div class="history-card">
+      <h3>Invoices</h3>
+      <div class="empty-note is-hidden" id="invoice-empty">
+        <i class="fas fa-receipt" aria-hidden="true"></i>
+        <div>
+          <strong>No invoices yet.</strong><br>
+          <span>As invoices are issued, they will appear here automatically.</span>
+        </div>
+      </div>
+      <ul class="doc-list" id="invoice-list">
+        <!-- Example:
+        <li><a href="./invoices/INV0XX.pdf" target="_blank" rel="noopener">Deposit (50%) — Feb 1, 2026</a></li>
+        -->
+      </ul>
+    </div>
+
+    
+  
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="footer-logo-container">
+    <img alt="MCM Services Logo Footer" src="../../images/transparent-logo-2.png" />
+  </div>
+
+  <p style="color:#666; font-size:.95rem; margin-bottom:15px;">
+    Management Excellence, Flawless Execution.
+  </p>
+
+  <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
+    <i class="fas fa-map-marker-alt" aria-hidden="true" style="color:#C7A96B; margin-right:5px;"></i>
+    Miami, FL
+  </p>
+
+  <div class="footer-content-grid">
+    <div class="footer-col">
+      <h4 data-translate="footer-nav">Navigation</h4>
+      <a href="../../">Home</a>
+      <a href="../../#about">About</a>
+      <a href="../../#contact">Contact</a>
+    </div>
+
+    <div class="footer-col footer-social-contact">
+      <h4 data-translate="footer-contact">Contact &amp; Connect</h4>
+      <a href="tel:+17862383386"><i class="fas fa-phone"></i> +1 (786) 238-3386</a>
+      <a href="mailto:info@mcmprosolutions.com"><i class="fas fa-envelope"></i> info@mcmprosolutions.com</a>
+      <a href="https://www.instagram.com/mcmservices.us" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i> @mcmservices.us
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-translate="footer-legal">Legal</h4>
+      <a id="link-terms" href="../../terms.html" data-translate="terms">Terms of Use</a>
+      <a id="link-privacy" href="../../privacy.html" data-translate="privacy">Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom-line">
+    <p class="copyright">
+      © <span id="year"></span>
+      <strong>MCM Services USA Corporation</strong>. All rights reserved.<br />
+      <span class="powered-by">Crafted &amp; Managed by mcmprosolutions.com</span>
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
+<script src="../../i18n.js"></script>
+
+<script>
+  // Page-specific translations for the Private Project Portal
+  (function addPortalTranslations(){
+    window.translations = window.translations || {};
+    const add = (lang, dict) => {
+      window.translations[lang] = window.translations[lang] || {};
+      Object.assign(window.translations[lang], dict);
+    };
+
+    add("en", {
+      "portal-title": "Private Project Portal",
+      "portal-intro": "You are accessing a private project portal by <strong>MCM Services</strong>. This page provides access to project photos, documents, updates, and secure payment options.",
+      "current-estimate": "Current Estimate",
+      "current-invoice": "Current Invoice",
+      "insurance-title": "Insurance &amp; Professional Coverage",
+      "insurance-status-title": "Insurance Status",
+      "insurance-operated-by": "Operated by",
+      "insurance-coverage": "Coverage",
+      "insurance-coverage-value": "General Liability • Workers’ Compensation (as required)",
+      "insurance-status": "Status",
+      "insurance-active": "Active",
+      "insurance-note": "Insurance documentation is available upon request.",
+      "project-gallery": "Project Photos",
+      "open-project-gallery": "View Project Photos",
+      "document-history": "Document History",
+      "footer-nav": "Navigation",
+      "footer-contact": "Contact &amp; Connect",
+      "footer-legal": "Legal",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "secure-payment": "Secure Payment",
+      "secure-payment-sub": "Proceed with payment using a secure method.",
+      "secure-payment-btn": "Secure Payment",
+      "project-status-label": "Project Status",
+      "project-status-value": "Completed",
+      "project-date-label": "Last Update",
+      "project-date-value": "Feb 02, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
+
+    add("es", {
+      "portal-title": "Portal Privado del Proyecto",
+      "portal-intro": "Está accediendo a un portal privado de proyectos de <strong>MCM Services</strong>. Esta página proporciona acceso a fotos, documentos, actualizaciones y opciones de pago seguras.",
+      "current-estimate": "Presupuesto Actual",
+      "current-invoice": "Factura Actual",
+      "insurance-title": "Seguro y Cobertura Profesional",
+      "insurance-status-title": "Estado del Seguro",
+      "insurance-operated-by": "Operado por",
+      "insurance-coverage": "Cobertura",
+      "insurance-coverage-value": "Responsabilidad Civil • Compensación de Trabajadores (según sea requerido)",
+      "insurance-status": "Estado",
+      "insurance-active": "Activo",
+      "insurance-note": "La documentación del seguro está disponible a solicitud.",
+      "project-gallery": "Fotos del Proyecto",
+      "open-project-gallery": "Ver Fotos del Proyecto",
+      "document-history": "Historial de Documentos",
+      "footer-nav": "Navegación",
+      "footer-contact": "Contacto y Conexión",
+      "footer-legal": "Legal",
+      "terms": "Términos de Uso",
+      "privacy": "Política de Privacidad",
+      "secure-payment": "Pago Seguro",
+      "secure-payment-sub": "Proceda con el pago mediante un método seguro.",
+      "secure-payment-btn": "Pago Seguro",
+      "project-status-label": "Estado del Proyecto",
+      "project-status-value": "Completado",
+      "project-date-label": "Última Actualización",
+      "project-date-value": "2 Feb, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management es operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
+
+    add("pt", {
+      "portal-title": "Portal Privado do Projeto",
+      "portal-intro": "Você está acessando um portal privado de projetos da <strong>MCM Services</strong>. Esta página oferece acesso a fotos, documentos, atualizações e opções seguras de pagamento.",
+      "current-estimate": "Estimativa Atual",
+      "current-invoice": "Fatura Atual",
+      "insurance-title": "Seguro e Cobertura Profissional",
+      "insurance-status-title": "Status do Seguro",
+      "insurance-operated-by": "Operado por",
+      "insurance-coverage": "Cobertura",
+      "insurance-coverage-value": "Responsabilidade Civil • Workers’ Compensation (quando aplicável)",
+      "insurance-status": "Status",
+      "insurance-active": "Ativo",
+      "insurance-note": "A documentação do seguro está disponível mediante solicitação.",
+      "project-gallery": "Fotos do Projeto",
+      "open-project-gallery": "Ver Fotos do Projeto",
+      "document-history": "Histórico de Documentos",
+      "footer-nav": "Navegação",
+      "footer-contact": "Contato &amp; Conexão",
+      "footer-legal": "Legal",
+      "terms": "Termos de Uso",
+      "privacy": "Política de Privacidade",
+      "secure-payment": "Pagamento Seguro",
+      "secure-payment-sub": "Prossiga com o pagamento usando um método seguro.",
+      "secure-payment-btn": "Pagamento Seguro",
+      "project-status-label": "Status do Projeto",
+      "project-status-value": "Concluído",
+      "project-date-label": "Última Atualização",
+      "project-date-value": "02 Fev, 2026",
+      "portal-operated-by": "Moura Consulting &amp; Management é operada por <strong>MCM Services USA Corporation</strong>.",
+      "project-status-sub": "",
+      "next-step-note": "",
+      "project-status-sub-active": "",
+      "project-status-sub-completed": "",
+      "project-status-sub-dynamic": ""});
+  })();
+
+  // Auto language selection with PT priority (override legacy ES cache)
+  (function autoPickLanguage(){
+    const langs = (navigator.languages && navigator.languages.length)
+      ? navigator.languages.map(l => (l || "").toLowerCase())
+      : [(navigator.language || "en").toLowerCase()];
+
+    let picked = "en";
+    if (langs.some(l => l.startsWith("pt"))) picked = "pt";
+    else if (langs.some(l => l.startsWith("es"))) picked = "es";
+
+    window.addEventListener("DOMContentLoaded", function(){
+      if (typeof window.setLanguage === "function") window.setLanguage(picked);
+    });
+  })();
+</script>
+
+
+<script>
+  // Auto-fill Invoice History list (edit the array only)
+  (function () {
+    var invoices = [];
+    var ul = document.getElementById("invoice-list");
+    if (!ul) return;
+    // If the list already has items, don't duplicate
+    if (ul.querySelector("li")) return;
+
+    invoices.forEach(function (inv) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "./invoices/" + inv + ".pdf";
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "Invoice " + inv;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  })();
+</script>
+
+
+<script>
+  // Auto-fill Estimate History list (edit the array only)
+  (function () {
+    var estimates = [];
+
+    function renderEstimates() {
+      var ul = document.getElementById("estimate-list");
+      if (!ul) return;
+
+      // clear only if it's empty or contains only comments/whitespace (safe)
+      if (!ul.querySelector("li")) {
+        estimates.forEach(function (est) {
+          var li = document.createElement("li");
+          var a = document.createElement("a");
+          a.href = "./estimates/" + est + ".pdf";
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.textContent = "Estimate " + est;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", renderEstimates);
+    } else {
+      renderEstimates();
+    }
+  })();
+</script>
+
+
+<script src="./js/vars-loader.js"></script>
+
+</body>
+</html>
