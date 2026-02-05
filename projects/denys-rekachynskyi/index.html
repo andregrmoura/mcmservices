@@ -663,6 +663,15 @@ section + h2{
       margin-top: 0 !important; /* overrides inline negative margin */
       color: #777 !important;   /* overrides inline color */
     }
+/* Mobile only — inverter ordem dos sheets sem mexer no layout */
+@media (max-width: 768px) {
+
+.status-sheet {
+  order: -1;
+}
+
+}
+
 
 </style>
 </head>
