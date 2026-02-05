@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -193,20 +193,17 @@
 
 <main>
   <div class="project-box">
-    <h1>Secure Payment</h1>
-    <p class="subtitle">
-      Use the secure payment link below to complete your payment by credit card.
-      If you have any questions, please contact <strong>MCM Services</strong>.
-    </p>
+    <h1 data-translate="payment-title">Secure Payment</h1>
+    <p class="subtitle" data-translate="payment-subtitle">Use the secure payment link below to complete your payment by credit card.</p>
 
     <div class="card">
       <strong>Payment Link</strong><br><br>
       <div class="row">
         <a class="primary" href="https://app.invoicesimple.com/v/WB4F0ebBxn" target="_blank" rel="noopener">
-          Proceed to Secure Payment
+          <span data-translate="payment-proceed">Proceed to Secure Payment</span>
         </a>
         <a class="secondary" href="./index.html">
-          Back to Project Portal
+          <span data-translate="payment-back">Back to Project Portal</span>
         </a>
       </div>
     </div>
@@ -261,5 +258,6 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
+  <script src="/js/i18n.js?v=20260203b"></script>
 </body>
 </html>

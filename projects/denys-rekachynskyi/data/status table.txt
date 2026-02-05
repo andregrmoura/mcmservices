@@ -1,0 +1,21 @@
+/* =====================================================
+   MCM PROJECT STATUS REFERENCE TABLE
+   -----------------------------------------------------
+   Source of truth: project.json -> "projectStatus"
+   Dot color is derived automatically from the status text.
+   DO NOT use "projectStatusDot" (deprecated).
+   
+   OFFICIAL STATUS STANDARD – MCM PORTALS
+   - Pending Deposit  -> Yellow dot
+   - Scheduled        -> Green dot
+   - In Progress      -> Green dot
+   - Completed        -> Dark Green dot
+   - On Hold          -> Gray dot
+   - Cancelled        -> Gray dot
+   - Inactive         -> Gray dot
+
+   Examples in project.json:
+   "projectStatus": "Pending Deposit"
+   "projectStatus": "In Progress"
+   "projectStatus": "Completed"
+   ===================================================== */

@@ -24,18 +24,109 @@
     });
   }
 
-  function setStatusDot(data) {
-    // CSS expects: active | pending | completed | inactive
-    var dot = document.querySelector('.meta-dot');
-    if (!dot) return;
+  
 
-    var val = (data.projectStatusDot || '').toString().toLowerCase().trim();
-    if (!val) return;
+  
+  
+  function renderInsuranceStatus(data){
+    if (!data) return;
 
-    dot.className = 'meta-dot ' + val;
+    // Find the insurance card pill (the one under Insurance Status section)
+    var cardTitle = document.querySelector('[data-translate="insurance-status-title"]');
+    var scope = cardTitle ? cardTitle.closest('.history-card') : document;
+    if (!scope) scope = document;
+
+    var pill = scope.querySelector('.status-pill');
+    var dot = scope.querySelector('.status-dot');
+    var textEl = scope.querySelector('[data-var="insuranceStatus"]');
+    if (!pill || !dot) return;
+
+    // Text controlled by project.json (fallback keeps whatever is in HTML)
+    var txt = (typeof data.insuranceStatus === 'string') ? data.insuranceStatus.trim() : '';
+    if (textEl && txt) textEl.textContent = txt;
+
+    // Dot color key: manual override via insuranceStatusDot OR inferred from text
+    var key = (typeof data.insuranceStatusDot === 'string') ? data.insuranceStatusDot.trim().toLowerCase() : '';
+    if (!key){
+      var base = (txt || (textEl ? textEl.textContent : '') || '').toLowerCase();
+      if (base.includes('pending') || base.includes('await') || base.includes('review') || base.includes('processing')) key = 'pending';
+      else if (base.includes('inactive') || base.includes('expired') || base.includes('hold') || base.includes('cancel')) key = 'inactive';
+      else key = 'active';
+    }
+
+    // Keep pill style; only adjust classes for dot (and optional pill marker)
+    pill.classList.remove('active','pending','inactive');
+    dot.classList.remove('active','pending','inactive');
+
+    if (key === 'pending' || key === 'inactive' || key === 'active'){
+      pill.classList.add(key);
+      dot.classList.add(key);
+    }
   }
 
-  function togglePdf(key, showPdf) {
+function renderInsuranceRequirements(data){
+    var list = document.getElementById('insuranceCoverageList');
+    if (!list || !data) return;
+
+    // Clear previous items
+    list.innerHTML = '';
+
+    var items = Array.isArray(data.insuranceRequirements) ? data.insuranceRequirements : [];
+    items = items.map(function(x){ return (x || '').toString().trim(); }).filter(Boolean);
+
+    // Hide fallback text if present (we keep it empty in HTML)
+    var fallback = document.getElementById('insuranceCoverageFallback');
+    if (fallback) fallback.style.display = items.length ? 'none' : 'none';
+
+    if (!items.length) return;
+
+    items.forEach(function(txt){
+      var li = document.createElement('li');
+      li.textContent = txt;
+      list.appendChild(li);
+    });
+  }
+
+
+  function renderProjectStatusDot(data){
+    try{
+      var dot = document.querySelector('.status-sheet .meta-dot');
+      if (!dot || !data) return;
+
+      dot.classList.remove('pending','completed','inactive');
+
+      var status = (data.projectStatus || '').toString().toLowerCase();
+
+      if (
+        status.includes('pending') ||
+        status.includes('awaiting') ||
+        status.includes('waiting') ||
+        status.includes('payment') ||
+        status.includes('deposit')
+      ){
+        dot.classList.add('pending');
+      } else if (
+        status.includes('complete') ||
+        status.includes('completed') ||
+        status.includes('done') ||
+        status.includes('finalized') ||
+        status.includes('finished')
+      ){
+        dot.classList.add('completed');
+      } else if (
+        status.includes('inactive') ||
+        status.includes('on hold') ||
+        status.includes('paused') ||
+        status.includes('cancel') ||
+        status.includes('canceled') ||
+        status.includes('expired')
+      ){
+        dot.classList.add('inactive');
+      }
+    }catch(e){}
+  }
+
+function togglePdf(key, showPdf) {
     var box = document.querySelector('[data-pdf-box="' + key + '"]');
     var ph  = document.querySelector('[data-placeholder-for="' + key + '"]');
 
@@ -118,8 +209,9 @@
 
   function apply(data) {
     setTextVars(data);
-    setHrefVars(data);
-    setStatusDot(data);
+        renderInsuranceRequirements(data);
+    renderInsuranceStatus(data);
+setHrefVars(data);
     renderHistory(data);
 
     // PDFs (show placeholder when empty OR missing file)
@@ -128,7 +220,7 @@
       .then(function () { return handlePdf('currentInvoice', data.currentInvoice); })
       .then(function () {
         // Re-apply dynamic text once more (guards against late i18n repaint)
-        setTimeout(function () { setTextVars(data); setStatusDot(data); }, 250);
+        setTimeout(function () { setTextVars(data);  }, 250);
       });
   }
 
@@ -137,7 +229,19 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         if (!data) return;
-        setTimeout(function () { apply(data); }, 50);
+                window.projectData = data;
+        try{ window.dispatchEvent(new CustomEvent('projectDataLoaded', { detail: data })); }catch(e){}
+setTimeout(function () { apply(data);
+
+        // Expose loaded data for any page scripts
+        window.projectData = data;
+
+        // Ensure Project Status dot updates AFTER data is applied
+        renderProjectStatusDot(data);
+
+        // Notify listeners that data is applied (timing-safe)
+        try{ window.dispatchEvent(new Event("projectDataApplied")); }catch(e){}
+}, 50);
       })
       .catch(function (err) { console.error(err); });
   }

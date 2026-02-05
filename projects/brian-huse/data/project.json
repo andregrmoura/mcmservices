@@ -1,10 +1,23 @@
 {
-  "projectStatus": "Active",
-  "projectStatusDot": "active",
+  "projectStatus": "Pending",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
+  "lastUpdate": "Feb 04, 2026",
   "currentEstimate": "./estimates/EST0031.pdf",
   "currentInvoice": "./invoices/INV042.pdf",
   "nextStepNote": "",
-  "galleryLink": "gallery-coming-soon.html"
+  "galleryLink": "gallery-coming-soon.html",
+
+  "projectName": "Huse's Residence",
+  "clientName": "Brian Huse",
+  "projectAddress": "88 SW 7th St #907, Miami, FL 33130",
+  "startDate": "Fev 17, 2026",
+  "statusDetails": "Scheduled to start mid february",
+
+  "insuranceRequirements": [
+    "COI - General Liability",
+    ""
+  ],
+
+  "insuranceStatus": "Inactive"
+  
 }

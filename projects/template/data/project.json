@@ -1,10 +1,23 @@
 {
-  "projectStatus": "Inactive",
-  "projectStatusDot": "inactive",
+  "projectStatus": "Pending",
   "projectStatusSub": "",
   "lastUpdate": "Feb 02, 2026",
   "currentEstimate": "./estimates/estimate.pdf",
   "currentInvoice": "./invoices/INV018.pdf",
   "nextStepNote": "",
-  "galleryLink": "gallery-coming-soon.html"
+  "galleryLink": "gallery-coming-soon.html",
+
+  "projectName": "teste",
+  "clientName": "teste",
+  "projectAddress": "teste",
+  "startDate": "09/07/1982",
+  "statusDetails": "teste",
+
+  "insuranceRequirements": [
+    "General Liability",
+    "Work Exceptions"
+  ],
+
+  "insuranceStatus": "Active"
+  
 }

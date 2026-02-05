@@ -1,0 +1,77 @@
+/* =====================================================
+   MCM PROJECT & INSURANCE STATUS REFERENCE TABLE
+   -----------------------------------------------------
+
+   Status indicators are AUTOMATIC.
+   The dot color is derived from the status text.
+
+   The system searches for keywords inside the status text
+   to determine the correct indicator color.
+
+   -----------------------------------------------------
+   PROJECT STATUS
+   Controlled by:
+
+   "projectStatus": "..."
+
+   -----------------------------------------------------
+   INSURANCE STATUS
+   Controlled by:
+
+   "insuranceStatus": "..."
+
+   -----------------------------------------------------
+   COLOR RULES (Automatic Detection)
+   -----------------------------------------------------
+
+   🟢 ACTIVE / DEFAULT
+   Keywords:
+   - Active
+   - Approved
+   - Scheduled
+   - In Progress
+   - Completed
+   - Confirmed
+
+   -----------------------------------------------------
+
+   🟡 PENDING / WAITING
+   Keywords:
+   - Pending
+   - Awaiting
+   - Review
+   - Approval
+   - Deposit
+   - Payment
+
+   -----------------------------------------------------
+
+   ⚪ INACTIVE / HOLD / EXPIRED
+   Keywords:
+   - Inactive
+   - Expired
+   - Cancelled
+   - On Hold
+   - Suspended
+
+   -----------------------------------------------------
+   HOW TO UPDATE STATUS
+   -----------------------------------------------------
+
+   Example:
+
+   "projectStatus": "In Progress"
+   "insuranceStatus": "Pending Approval"
+
+   The indicator dot will update automatically.
+
+   -----------------------------------------------------
+   IMPORTANT RULES
+   -----------------------------------------------------
+
+   • DO NOT use manual dot fields anymore
+   • Status color is automatic
+   • Keep status text clear and descriptive
+   • Keeps all portals visually standardized
+
+   ===================================================== */

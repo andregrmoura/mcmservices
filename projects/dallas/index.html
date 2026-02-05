@@ -259,7 +259,22 @@
       border-top:1px solid #EEE;
       align-items:flex-start;
     }
-    .insurance-row:first-child{ border-top:none; padding-top:0; }
+    
+    /* Insurance dynamic list (driven by project.json) */
+    .insurance-req-list{
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+    .insurance-req-list li{
+      margin: 2px 0;
+      line-height: 1.35;
+    }
+    @media (max-width: 768px){
+      .insurance-req-list{ padding-left: 16px; }
+    }
+.insurance-row:first-child{ border-top:none; padding-top:0; }
     .insurance-label{
       color:#666;
       font-size:.9rem;
@@ -284,6 +299,7 @@
       justify-content:flex-end;
     }
     .status-dot{
+
       width:10px;
       height:10px;
       border-radius:50%;
@@ -294,7 +310,17 @@
 
   
     
-    /* PDF embed: mobile-first, viewport-safe */
+    
+    /* Insurance status dot variants (color only; keeps same pill style) */
+    .status-dot.pending{
+      background:#F4B400;
+      box-shadow:0 0 0 3px rgba(244,180,0,.16);
+    }
+    .status-dot.inactive{
+      background:#999;
+      box-shadow:0 0 0 3px rgba(153,153,153,.14);
+    }
+/* PDF embed: mobile-first, viewport-safe */
 .pdf-box{
   width: 100%;
   max-width: 1200px;
@@ -390,6 +416,24 @@
     .hero-meta .meta-dot.pending{ background:#F4B400; box-shadow:0 0 0 3px rgba(244,180,0,.16); }
     .hero-meta .meta-dot.completed{ background:#2E7D32; box-shadow:0 0 0 3px rgba(46,125,50,.16); }
     .hero-meta .meta-dot.inactive{ background:#999; box-shadow:0 0 0 3px rgba(153,153,153,.14); }
+    /* Status sheet dot (Project Status card) */
+    .status-sheet .meta-value{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-sheet .meta-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display:inline-block;
+      background:#1DB954;
+      box-shadow: 0 0 0 3px rgba(29,185,84,.14);
+    }
+    .status-sheet .meta-dot.pending{ background:#F4B400; box-shadow:0 0 0 3px rgba(244,180,0,.16); }
+    .status-sheet .meta-dot.completed{ background:#2E7D32; box-shadow:0 0 0 3px rgba(46,125,50,.16); }
+    .status-sheet .meta-dot.inactive{ background:#999; box-shadow:0 0 0 3px rgba(153,153,153,.14); }
+
 
     @media (max-width: 1024px){
       .hero-row{
@@ -495,6 +539,93 @@
     }
     .empty-note i{ color:#C7A96B; margin-top:2px; }
 
+    /* ===== Sheets row: Project Details + Status Card (keeps existing layout) ===== */
+    .sheets-row{
+      width:100%;
+      max-width:1200px;
+      margin:18px auto 40px;
+      display:flex;
+      gap:18px;
+      align-items:stretch;
+    }
+    .project-sheet{
+      flex:1 1 auto;
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:12px;
+      padding:18px 18px 6px;
+      margin:0;
+    }
+    .project-sheet h3{
+      margin:0 0 12px;
+      font-size:1.05rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .project-sheet-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px 18px;
+    }
+    .sheet-item{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      padding:10px 0;
+      border-top:1px solid #EEE;
+    }
+    .sheet-item:nth-child(-n+2){ border-top:none; padding-top:0; }
+    .sheet-label{
+      font-size:.78rem;
+      letter-spacing:.03em;
+      color:#777;
+      font-weight:600;
+      text-transform:uppercase;
+    }
+    .sheet-value{
+      font-size:.98rem;
+      color:#222;
+      font-weight:600;
+    }
+
+    .status-sheet{
+      flex:0 0 320px;
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:12px;
+      padding:18px 18px 14px;
+      margin:0;
+      text-align:left;
+    }
+    .status-sheet .meta-item{
+      padding: 8px 0;
+    }
+    .status-sheet .meta-label{
+      font-size: 0.80rem;
+      letter-spacing: .02em;
+      color: #777;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .status-sheet .meta-value{
+      font-size: 1.00rem;
+      color:#222;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media (max-width: 1024px){
+      .sheets-row{
+        flex-direction:column;
+        gap:12px;
+      }
+      .status-sheet{ flex:0 0 auto; width:100%; }
+    }
+
   </style>
 </head>
 
@@ -519,40 +650,58 @@
       This page provides access to project photos, documents, updates, and secure payment options.
     </p>
       <p data-translate="portal-operated-by" style="color:#666; margin-top:-6px;">Moura Consulting &amp; Management is operated by <strong>MCM Services USA Corporation</strong>.</p>
+
+      <!-- Project Details + Status (values come from ./data/project.json) -->
+      <div class="sheets-row" aria-label="Project overview">
+        <section class="project-sheet" aria-label="Project details">
+          <h3 data-translate="project-details-title">Project Details</h3>
+
+          <div class="project-sheet-grid">
+            <div class="sheet-item">
+              <span class="sheet-label" data-translate="project-name-label">Project</span>
+              <span class="sheet-value" data-var="projectName"></span>
+            </div>
+
+            <div class="sheet-item">
+              <span class="sheet-label" data-translate="client-name-label">Client</span>
+              <span class="sheet-value" data-var="clientName"></span>
+            </div>
+
+            <div class="sheet-item">
+              <span class="sheet-label" data-translate="project-address-label">Address</span>
+              <span class="sheet-value" data-var="projectAddress"></span>
+            </div>
+
+            <div class="sheet-item">
+              <span class="sheet-label" data-translate="start-date-label">Scheduled Start</span>
+              <span class="sheet-value" data-var="startDate"></span>
+            </div>
+
+            <div class="sheet-item" style="grid-column:1 / -1;">
+              <span class="sheet-label" data-translate="status-details-label">Status Details</span>
+              <span class="sheet-value" data-var="statusDetails"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="status-sheet" aria-label="Project status">
+          <div class="meta-item">
+            <div class="meta-label" data-translate="project-status-label">Project Status</div>
+            <div class="meta-value">
+              <span class="meta-dot" aria-hidden="true"></span>
+              <span data-var="projectStatus"></span>
+            </div>
+            <div data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
+          </div>
+
+          <div class="meta-item" style="border-top:1px solid #EEE; padding-top:12px; margin-top:10px;">
+            <div class="meta-label" data-translate="project-date-label">Last Update</div>
+            <div class="meta-value meta-date" data-var="lastUpdate"></div>
+          </div>
+        </section>
       </div>
 
-      <aside class="hero-meta" aria-label="Project status">
-        <div class="meta-item">
-          <div class="meta-label" data-translate="project-status-label">Project Status</div>
-          <div class="meta-value">
-            <span class="meta-dot" aria-hidden="true"></span>
-            <span data-var="projectStatus"></span>
-          </div>
-          <div data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label" data-translate="project-date-label">Last Update</div>
-          <div class="meta-value meta-date" data-var="lastUpdate"></div>
-        </div>
-      </aside>
-    </div>
-
-
-    <h2 data-translate="current-estimate">Current Estimate</h2>
-
-    <!-- TEMPLATE NOTE:
-         If estimate.pdf exists, replace the placeholder block below with:
-         <div class="pdf-box">
-           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
-         </div>
-    -->
-    <div class="pdf-box" data-pdf-box="currentEstimate">
-      <iframe data-src="currentEstimate" loading="lazy"></iframe>
-    </div>
-    <div class="pdf-placeholder" data-placeholder-for="currentEstimate">
-      <div class="placeholder-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
-      <h3>Estimate in preparation</h3>
-      <p>The current estimate is being prepared and will be available here once completed.</p>
+      </div>
     </div>
 
 <h2 data-translate="current-invoice">Current Invoice</h2>
@@ -563,13 +712,30 @@
            <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
          </div>
     -->
-    <div class="pdf-box" data-pdf-box="currentInvoice">
+    <div class="pdf-box is-hidden" data-pdf-box="currentInvoice">
       <iframe data-src="currentInvoice" loading="lazy"></iframe>
     </div>
     <div class="pdf-placeholder" data-placeholder-for="currentInvoice">
       <div class="placeholder-icon"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></div>
       <h3>Invoice in preparation</h3>
       <p>The current invoice will be available here as soon as it is issued.</p>
+    </div>
+
+    <h2 data-translate="current-estimate">Estimate</h2>
+
+    <!-- TEMPLATE NOTE:
+         If estimate.pdf exists, replace the placeholder block below with:
+         <div class="pdf-box">
+           <iframe src="estimate.pdf#zoom=page-width" loading="lazy"></iframe>
+         </div>
+    -->
+    <div class="pdf-box is-hidden" data-pdf-box="currentEstimate">
+      <iframe data-src="currentEstimate" loading="lazy"></iframe>
+    </div>
+    <div class="pdf-placeholder" data-placeholder-for="currentEstimate">
+      <div class="placeholder-icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></div>
+      <h3>Estimate in preparation</h3>
+      <p>The current estimate is being prepared and will be available here once completed.</p>
     </div>
 
 <h2 data-translate="secure-payment">Secure Payment</h2>
@@ -592,14 +758,17 @@
         </li>
         <li class="insurance-row">
           <span class="insurance-label" data-translate="insurance-coverage">Coverage</span>
-          <span class="insurance-value" data-translate="insurance-coverage-value">General Liability • Workers’ Compensation (as required)</span>
+          <span class="insurance-value">
+            <ul id="insuranceCoverageList" class="insurance-req-list" aria-label="Insurance coverage requirements"></ul>
+            <span id="insuranceCoverageFallback" data-translate="insurance-coverage-value"></span>
+          </span>
         </li>
         <li class="insurance-row">
           <span class="insurance-label" data-translate="insurance-status">Status</span>
           <span class="insurance-value">
             <span class="status-pill active">
               <span class="status-dot" aria-hidden="true"></span>
-              <span data-translate="insurance-active">Active</span>
+              <span data-var="insuranceStatus">Active</span>
             </span>
           </span>
         </li>
@@ -756,7 +925,14 @@
       "next-step-note": "",
       "project-status-sub-active": "",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "",
+      "project-details-title": "Project Details",
+      "project-name-label": "Project",
+      "client-name-label": "Client",
+      "project-address-label": "Address",
+      "start-date-label": "Scheduled Start",
+      "status-details-label": "Status Details"
+    }});
 
     add("es", {
       "portal-title": "Portal Privado del Proyecto",
@@ -791,7 +967,14 @@
       "next-step-note": "",
       "project-status-sub-active": "",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "",
+      "project-details-title": "Detalles del Proyecto",
+      "project-name-label": "Proyecto",
+      "client-name-label": "Cliente",
+      "project-address-label": "Dirección",
+      "start-date-label": "Inicio Programado",
+      "status-details-label": "Detalles del Estado"
+    }});
 
     add("pt", {
       "portal-title": "Portal Privado do Projeto",
@@ -826,7 +1009,14 @@
       "next-step-note": "",
       "project-status-sub-active": "",
       "project-status-sub-completed": "",
-      "project-status-sub-dynamic": ""});
+      "project-status-sub-dynamic": "",
+      "project-details-title": "Detalhes do Projeto",
+      "project-name-label": "Projeto",
+      "client-name-label": "Cliente",
+      "project-address-label": "Endereço",
+      "start-date-label": "Início Programado",
+      "status-details-label": "Detalhes do Status"
+    }});
   })();
 
   // Auto language selection with PT priority (override legacy ES cache)
@@ -903,6 +1093,124 @@
 
 
 <script src="./js/vars-loader.js"></script>
+
+
+<script>
+  // Dynamic UI helpers (keeps layout intact)
+  (function(){
+    function normalizeStatus(s){
+      return (s || "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+
+    function applyProjectStatusDot(){
+      var dot = document.querySelector(".status-sheet .meta-dot");
+      var statusEl = document.querySelector('.status-sheet [data-var="projectStatus"]');
+      if (!dot || !statusEl) return;
+
+      var status = normalizeStatus(statusEl.textContent);
+
+      dot.classList.remove("pending", "completed", "inactive");
+
+      if (
+        status.includes("pending") ||
+        status.includes("awaiting") ||
+        status.includes("waiting") ||
+        status.includes("payment") ||
+        status.includes("deposit")
+      ){
+        dot.classList.add("pending");
+      } else if (
+        status.includes("complete") ||
+        status.includes("completed") ||
+        status.includes("done") ||
+        status.includes("finalized") ||
+        status.includes("finished")
+      ){
+        dot.classList.add("completed");
+      } else if (
+        status.includes("inactive") ||
+        status.includes("on hold") ||
+        status.includes("paused") ||
+        status.includes("cancel") ||
+        status.includes("canceled")
+      ){
+        dot.classList.add("inactive");
+      }
+    }
+
+    function renderInsuranceList(projectData){
+      var list = document.getElementById("insuranceCoverageList");
+      var fallback = document.getElementById("insuranceCoverageFallback");
+      if (!list || !fallback) return;
+
+      // Clear
+      list.innerHTML = "";
+
+      var items = null;
+
+      if (projectData && Array.isArray(projectData.insuranceRequirements) && projectData.insuranceRequirements.length){
+        items = projectData.insuranceRequirements;
+      } else if (projectData && typeof projectData.insuranceNote === "string" && projectData.insuranceNote.trim()){
+        // Allow a single string too
+        items = [projectData.insuranceNote.trim()];
+      }
+
+      if (!items){
+        // Use fallback static text (translated)
+        fallback.style.display = "inline";
+        return;
+      }
+
+      fallback.style.display = "none";
+
+      items
+        .map(function(x){ return (x || "").toString().trim(); })
+        .filter(Boolean)
+        .forEach(function(text){
+          var li = document.createElement("li");
+          li.textContent = text;
+          list.appendChild(li);
+        });
+    }
+
+    function loadProjectData(cb){
+      if (window.projectData && typeof window.projectData === "object"){
+        cb(window.projectData);
+        return;
+      }
+      fetch("./data/project.json", { cache: "no-store" })
+        .then(function(r){
+          if (r && r.ok) return r.json();
+          return fetch("./project.json", { cache: "no-store" })
+            .then(function(r2){ return (r2 && r2.ok) ? r2.json() : null; });
+        })
+        .then(function(data){ cb(data); })
+        .catch(function(){ cb(null); }); })
+        .catch(function(){ cb(null); });
+    }
+
+    function run(){
+      applyProjectStatusDot();
+      setTimeout(applyProjectStatusDot, 250);
+      setTimeout(applyProjectStatusDot, 750);
+
+      loadProjectData(function(data){
+        renderInsuranceList(data);
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", run);
+    } else {
+      run();
+    }
+  })();
+</script>
+
 
 </body>
 </html>

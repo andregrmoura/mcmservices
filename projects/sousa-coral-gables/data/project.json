@@ -1,10 +1,23 @@
 {
   "projectStatus": "Active",
-  "projectStatusDot": "active",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
+  "lastUpdate": "Feb 04, 2026",
   "currentEstimate": "./estimates/estimate.pdf",
-  "currentInvoice": "./invoices/invoice.pdf",
+  "currentInvoice": "./invoices/INV040.pdf",
   "nextStepNote": "",
-  "galleryLink": "gallery-coming-soon.html"
+  "galleryLink": "gallery-coming-soon.html",
+
+  "projectName": "Sousa's Residence",
+  "clientName": "Yve Sousa",
+  "projectAddress": "338 Majorca Ave, Cocunut Grove, FL 33133",
+  "startDate": "Fev 06, 2026",
+  "statusDetails": "",
+
+  "insuranceRequirements": [
+    "COI - General Liability",
+    ""
+  ],
+
+  "insuranceStatus": "Inactive"
+  
 }
