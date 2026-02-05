@@ -169,38 +169,71 @@ function togglePdf(key, showPdf) {
     var estEmpty = document.getElementById('estimate-empty');
     var invEmpty = document.getElementById('invoice-empty');
 
-    var estArr = Array.isArray(data.estimatesHistory) ? data.estimatesHistory : [];
-    var invArr = Array.isArray(data.invoicesHistory) ? data.invoicesHistory : [];
+    // Support both old and new schemas:
+    // - estimatesHistory / invoicesHistory: [{file:"EST0024.pdf" or "EST0024", label:"..."}]
+    // - estimateHistory / invoiceHistory:  [{file:"./estimates/EST0024.pdf", title:"EST0024", date:"..."}]
+    var estArr =
+      Array.isArray(data.estimatesHistory) ? data.estimatesHistory :
+      Array.isArray(data.estimateHistory) ? data.estimateHistory : [];
+    var invArr =
+      Array.isArray(data.invoicesHistory) ? data.invoicesHistory :
+      Array.isArray(data.invoiceHistory) ? data.invoiceHistory : [];
 
     if (estUL) estUL.innerHTML = '';
     if (invUL) invUL.innerHTML = '';
 
-    if (estEmpty) estEmpty.classList.toggle('is-hidden', estArr.length > 0);
-    if (invEmpty) invEmpty.classList.toggle('is-hidden', invArr.length > 0);
+    var hasEst = Array.isArray(estArr) && estArr.length > 0;
+    var hasInv = Array.isArray(invArr) && invArr.length > 0;
 
-    if (estUL && estArr.length) {
+    if (estEmpty) estEmpty.classList.toggle('is-hidden', hasEst);
+    if (invEmpty) invEmpty.classList.toggle('is-hidden', hasInv);
+
+    function resolveHref(folder, fileVal){
+      if (!fileVal) return '';
+      var f = String(fileVal).trim();
+      // If file is already a path or URL, use it as-is
+      if (/^https?:\/\//i.test(f) || f.startsWith('./') || f.startsWith('../') || f.startsWith('/')) return f;
+      // If missing .pdf extension, add it
+      if (!/\.pdf$/i.test(f)) f = f + '.pdf';
+      return folder + f;
+    }
+
+    function resolveLabel(item){
+      if (!item) return '';
+      if (item.label) return String(item.label);
+      var title = item.title ? String(item.title) : '';
+      var date = item.date ? String(item.date) : '';
+      if (title && date) return title + ' — ' + date;
+      return title || (item.file ? String(item.file) : '');
+    }
+
+    if (estUL && hasEst) {
       estArr.forEach(function (item) {
-        if (!item || !item.file) return;
+        if (!item) return;
+        var href = resolveHref('./estimates/', item.file);
+        if (!href) return;
         var li = document.createElement('li');
         var a = document.createElement('a');
-        a.href = './estimates/' + item.file;
+        a.href = href;
         a.target = '_blank';
         a.rel = 'noopener';
-        a.textContent = item.label || item.file;
+        a.textContent = resolveLabel(item) || href;
         li.appendChild(a);
         estUL.appendChild(li);
       });
     }
 
-    if (invUL && invArr.length) {
+    if (invUL && hasInv) {
       invArr.forEach(function (item) {
-        if (!item || !item.file) return;
+        if (!item) return;
+        var href = resolveHref('./invoices/', item.file);
+        if (!href) return;
         var li = document.createElement('li');
         var a = document.createElement('a');
-        a.href = './invoices/' + item.file;
+        a.href = href;
         a.target = '_blank';
         a.rel = 'noopener';
-        a.textContent = item.label || item.file;
+        a.textContent = resolveLabel(item) || href;
         li.appendChild(a);
         invUL.appendChild(li);
       });

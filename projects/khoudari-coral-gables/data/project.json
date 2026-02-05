@@ -8,14 +8,13 @@
   "galleryLink": "https://jungle-bougon-797.notion.site/Khoudari-s-Residence-Coral-Gables-2dc62b9dd158800a9aa9cda472672bcb?pvs=73",
 
   "projectName": "Khoudari's Residence",
-  "clientName": "Ernestor Khoudari",
+  "clientName": "Khoudari, Ernestor",
   "projectAddress": "8901 Ponde de Leon Rd, Coral Gables, FL 33134",
   "startDate": "",
   "statusDetails": "",
 
   "insuranceRequirements": [
-    "COI - General Liability",
-    ""
+    "COI - General Liability"
   ],
   "insuranceStatus": "Inactive",
 
@@ -25,8 +24,15 @@
   ],
 
   "invoiceHistory": [
-    { "title": "Deposit Invoice", "date": "Jan 30, 2026", "file": "./invoices/INV017.pdf" },
-    { "title": "Final Invoice", "date": "Feb 02, 2026", "file": "./invoices/INV018.pdf" },
-    { "title": "INV036", "date": "Feb 04, 2026", "file": "./invoices/INV036.pdf" }
+    { "title": "INV012","file": "./invoices/INV012.pdf" },
+    { "title": "INV013","file": "./invoices/INV013.pdf" },
+    { "title": "INV016","file": "./invoices/INV016.pdf" },
+    { "title": "INV021","file": "./invoices/INV021.pdf" },
+    { "title": "INV029","file": "./invoices/INV029.pdf" },
+    { "title": "INV030","file": "./invoices/INV030.pdf" },
+    { "title": "INV031","file": "./invoices/INV031.pdf" },
+    { "title": "INV032","file": "./invoices/INV032.pdf" },
+    { "title": "INV035","file": "./invoices/INV035.pdf" },
+    { "title": "INV036","file": "./invoices/INV036.pdf" }
   ]
 }
