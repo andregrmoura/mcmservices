@@ -10,7 +10,7 @@
   "projectName": "teste",
   "clientName": "teste",
   "projectAddress": "teste",
-  "startDate": "09/07/1982",
+  "startDate": "Sep 07, 1982",
   "statusDetails": "teste",
 
   "insuranceRequirements": [
@@ -18,6 +18,23 @@
     "Work Exceptions"
   ],
 
-  "insuranceStatus": "Active"
-  
+  "insuranceStatus": "Active",
+
+  "milestones": [
+    {
+      "title": "Project Activated",
+      "date": "MMM DD, YYYY"
+    },
+    {
+      "title": "Deposit Received",
+      "date": "MMM DD, YYYY"
+    },
+    {
+      "title": "Work Started",
+      "date": "MMM DD, YYYY"
+    }
+  ],
+
+  "estimateHistory": [],
+  "invoiceHistory": []
 }

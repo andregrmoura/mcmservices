@@ -16,23 +16,79 @@
   "insuranceRequirements": [
     "COI - General Liability"
   ],
+
   "insuranceStatus": "Inactive",
 
+  "milestones": [
+    {
+      "title": "Project Completed",
+      "date": ""
+    },
+    {
+      "title": "Work Started",
+      "date": ""
+    },
+    {
+      "title": "Project Activated",
+      "date": ""
+    },
+    {
+      "title": "Deposit Received",
+      "date": ""
+    }
+  ],
+
   "estimateHistory": [
-    { "title": "EST0024", "file": "./estimates/EST0024.pdf" },
-    { "title": "EST0025", "file": "./estimates/EST0025.pdf" }
+    {
+      "title": "EST0024",
+      "file": "./estimates/EST0024.pdf"
+    },
+    {
+      "title": "EST0025",
+      "file": "./estimates/EST0025.pdf"
+    }
   ],
 
   "invoiceHistory": [
-    { "title": "INV012","file": "./invoices/INV012.pdf" },
-    { "title": "INV013","file": "./invoices/INV013.pdf" },
-    { "title": "INV016","file": "./invoices/INV016.pdf" },
-    { "title": "INV021","file": "./invoices/INV021.pdf" },
-    { "title": "INV029","file": "./invoices/INV029.pdf" },
-    { "title": "INV030","file": "./invoices/INV030.pdf" },
-    { "title": "INV031","file": "./invoices/INV031.pdf" },
-    { "title": "INV032","file": "./invoices/INV032.pdf" },
-    { "title": "INV035","file": "./invoices/INV035.pdf" },
-    { "title": "INV036","file": "./invoices/INV036.pdf" }
+    {
+      "title": "INV012",
+      "file": "./invoices/INV012.pdf"
+    },
+    {
+      "title": "INV013",
+      "file": "./invoices/INV013.pdf"
+    },
+    {
+      "title": "INV016",
+      "file": "./invoices/INV016.pdf"
+    },
+    {
+      "title": "INV021",
+      "file": "./invoices/INV021.pdf"
+    },
+    {
+      "title": "INV029",
+      "file": "./invoices/INV029.pdf"
+    },
+    {
+      "title": "INV030",
+      "file": "./invoices/INV030.pdf"
+    },
+    {
+      "title": "INV031",
+      "file": "./invoices/INV031.pdf"
+    },
+    {
+      "title": "INV032",
+      "file": "./invoices/INV032.pdf"
+    },
+    {
+      "title": "INV035",
+      "file": "./invoices/INV035.pdf"
+    },
+    {
+      "title": "INV036",
+      "file": "./invoices/INV036.pdf"
+    }
   ]
 }

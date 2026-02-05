@@ -10,7 +10,7 @@
   "projectName": "One Miami Tower",
   "clientName": "Rekachynskyi, Denys",
   "projectAddress": "335 South Biscayne Blvd, Miami, FL 33131",
-  "startDate": "Fev 09, 2026",
+  "startDate": "Feb 09, 2026",
   "statusDetails": "Work is scheduled to begin next week",
 
   "insuranceRequirements": [
@@ -18,6 +18,24 @@
     "Work Exception"
   ],
 
-  "insuranceStatus": "Active"
-  
+  "insuranceStatus": "Active",
+
+  "milestones": [
+    {
+      "title": "Work Starting",
+      "date": "Fev 09, 2026"
+    },
+    {
+      "title": "Project Activated",
+      "date": "Fev 04, 2026"
+    },
+    {
+      "title": "Deposit Received",
+      "date": "Fev 04, 2026"
+    }
+  ],
+
+  "estimateHistory": [],
+
+  "invoiceHistory": []
 }

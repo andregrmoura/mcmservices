@@ -9,15 +9,31 @@
 
   "projectName": "Sousa's Residence",
   "clientName": "Sousa, Yve",
-  "projectAddress": "338 Majorca Ave, Cocunut Grove, FL 33133",
-  "startDate": "Fev 06, 2026",
+  "projectAddress": "338 Majorca Ave, Coconut Grove, FL 33133",
+  "startDate": "Feb 06, 2026",
   "statusDetails": "",
 
   "insuranceRequirements": [
-    "COI - General Liability",
-    ""
+    "COI - General Liability"
   ],
 
-  "insuranceStatus": "Inactive"
-  
+  "insuranceStatus": "Inactive",
+
+  "milestones": [
+    {
+      "title": "Work Started",
+      "date": "Fev 06, 2026"
+    },
+    {
+      "title": "Project Activated",
+      "date": "Jan 27, 2026"
+    },
+    {
+      "title": "Deposit Received",
+      "date": "Jan 27, 2026"
+    }
+  ],
+
+  "estimateHistory": [],
+  "invoiceHistory": []
 }

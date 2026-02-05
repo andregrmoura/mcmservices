@@ -1,23 +1,44 @@
 {
-  "projectStatus": "Pending",
+  "projectStatus": "Planning",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
-  "currentEstimate": "./estimates/estimate.pdf",
-  "currentInvoice": "./invoices/INV018.pdf",
+  "lastUpdate": "MMM DD, YYYY",
+  "currentEstimate": "",
+  "currentInvoice": "",
   "nextStepNote": "",
-  "galleryLink": "gallery-coming-soon.html",
-
-  "projectName": "teste",
-  "clientName": "teste",
-  "projectAddress": "teste",
-  "startDate": "09/07/1982",
-  "statusDetails": "teste",
-
+  "galleryLink": "",
+  "projectName": "Client Project Name",
+  "clientName": "Last, First",
+  "projectAddress": "Street, City, State ZIP",
+  "startDate": "",
+  "statusDetails": "",
   "insuranceRequirements": [
-    "General Liability",
-    "Work Exceptions"
+    "COI - General Liability"
   ],
-
-  "insuranceStatus": "Active"
-  
+  "insuranceStatus": "Pending",
+  "milestones": [
+    {
+      "title": "Project Activated",
+      "date": "MMM DD, YYYY"
+    },
+    {
+      "title": "Deposit Received",
+      "date": "MMM DD, YYYY"
+    },
+    {
+      "title": "Work Started",
+      "date": "MMM DD, YYYY"
+    }
+  ],
+  "estimateHistory": [
+    {
+      "title": "EST0001",
+      "file": "./estimates/EST0001.pdf"
+    }
+  ],
+  "invoiceHistory": [
+    {
+      "title": "INV0001",
+      "file": "./invoices/INV0001.pdf"
+    }
+  ]
 }

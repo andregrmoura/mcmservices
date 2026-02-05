@@ -673,6 +673,112 @@ section + h2{
 }
 
 
+
+    /* ===== Premium micro-interactions (no layout changes) ===== */
+    .primary{
+      transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, border-color .12s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+    }
+    .primary:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,.14);
+      border-color: rgba(199,169,107,.95);
+    }
+    .primary:active{
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+    }
+    .primary:focus-visible{
+      outline: none;
+
+    .primary{
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(199,169,107,.10), rgba(199,169,107,.02));
+    }
+
+      box-shadow: 0 0 0 4px rgba(199,169,107,.22), 0 12px 26px rgba(0,0,0,.12);
+    }
+
+    /* ===== Next step as concierge card (wrap only; no layout changes) ===== */
+    .nextstep-card{
+      width:100%;
+      max-width:1200px;
+      margin: 10px auto 22px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,0));
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .nextstep-card .nextstep-sub{
+      margin:0 0 8px;
+      color:#666;
+      font-size:.95rem;
+    }
+    .nextstep-card .nextstep-note{
+      margin:0;
+      color:#444;
+    }
+    .nextstep-card.is-hidden{ display:none !important; }
+
+    /* ===== Activity timeline (optional, additive) ===== */
+    .timeline-card{
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:12px;
+      padding:18px 18px 10px;
+      margin:18px 0;
+    }
+    .timeline-card h3{
+      margin:0 0 10px;
+      font-size:1rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .timeline{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .timeline li{
+      display:flex;
+      gap:12px;
+      padding:12px 0;
+      border-top:1px solid #EEE;
+      align-items:flex-start;
+    }
+    .timeline li:first-child{ border-top:none; padding-top:0; }
+    .timeline-empty{
+      margin: 10px 0 8px;
+      color:#777;
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    .timeline-empty code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92em;
+      background: rgba(0,0,0,.04);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color:#555;
+    }
+
+    .tl-dot{
+      width:10px; height:10px; border-radius:50%;
+      margin-top:6px;
+      background:#C7A96B;
+      box-shadow: 0 0 0 3px rgba(199,169,107,.18);
+      flex:0 0 auto;
+    }
+    .tl-body{ min-width:0; }
+    .tl-title{
+      font-weight:600; color:#222; font-size:.98rem; line-height:1.25;
+    }
+    .tl-meta{
+      color:#777; font-size:.90rem; margin-top:3px; line-height:1.35;
+    }
+
 </style>
 </head>
 
@@ -785,7 +891,7 @@ section + h2{
 
 
 
-    <h2 data-translate="current-estimate">Current Invoice</h2>
+    <h2 data-translate="current-estimate">Current Estimate</h2>
 
     <!-- TEMPLATE NOTE:
          If estimate.pdf exists, replace the placeholder block below with:
@@ -802,7 +908,7 @@ section + h2{
       <p>The current estimate is being prepared and will be available here once completed.</p>
     </div>
 
-<h2 data-translate="current-invoice">Current Estimate</h2>
+<h2 data-translate="current-invoice">Current Invoice</h2>
 
     <!-- TEMPLATE NOTE:
          If invoice.pdf exists, replace the placeholder block below with:
@@ -820,11 +926,16 @@ section + h2{
     </div>
 
 <h2 data-translate="secure-payment">Secure Payment</h2>
-    <p data-translate="secure-payment-sub" style="color:#666; margin-top:-10px;">
+    
+    <div class="nextstep-card is-hidden" id="nextstepCard">
+      <p data-translate="secure-payment-sub" class="nextstep-sub" style="color:#666; margin-top:-10px;">
       Proceed with payment using a secure method.
     </p>
-    <p data-translate="next-step-note" style="color:#666; margin-top:12px;"></p>
-    <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
+    
+      <p data-translate="next-step-note" class="nextstep-note" style="color:#666; margin-top:12px;"></p>
+    
+    </div>
+<a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a><h2 data-translate="project-gallery">Photos from the Latest Project</h2>
 
@@ -834,7 +945,14 @@ section + h2{
     -->
     <a id="galleryBtn" class="primary" href="gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
 
-    <h2 data-translate="document-history">Document History</h2>
+    
+    <div class="timeline-card is-hidden" id="timelineCard">
+      <h3 data-translate="timeline-title">Activity Timeline</h3>
+      <ul class="timeline" id="timelineList" aria-label="Project activity timeline"></ul>
+      <p class="timeline-empty is-hidden" id="timelineEmpty" data-translate="timeline-empty">No milestones added yet. You can add them in project.json under "milestones".</p>
+    </div>
+
+<h2 data-translate="document-history">Document History</h2>
 
     <div class="history-card">
       <h3>Estimates</h3>
@@ -954,7 +1072,9 @@ section + h2{
       "project-gallery": "Project Photos",
       "open-project-gallery": "View Project Photos",
       "document-history": "Document History",
-      "footer-nav": "Navigation",
+            "timeline-title": "Activity Timeline",
+      "timeline-empty": "No milestones added yet. Add them in <code>project.json</code> under <code>"milestones"</code>.",
+"footer-nav": "Navigation",
       "footer-contact": "Contact &amp; Connect",
       "footer-legal": "Legal",
       "terms": "Terms of Use",
@@ -996,7 +1116,9 @@ section + h2{
       "project-gallery": "Fotos del Proyecto",
       "open-project-gallery": "Ver Fotos del Proyecto",
       "document-history": "Historial de Documentos",
-      "footer-nav": "Navegación",
+            "timeline-title": "Cronología de Actividad",
+      "timeline-empty": "Aún no hay hitos. Agréguelos en <code>project.json</code> bajo <code>"milestones"</code>.",
+"footer-nav": "Navegación",
       "footer-contact": "Contacto y Conexión",
       "footer-legal": "Legal",
       "terms": "Términos de Uso",
@@ -1038,7 +1160,9 @@ section + h2{
       "project-gallery": "Fotos do Projeto",
       "open-project-gallery": "Ver Fotos do Projeto",
       "document-history": "Histórico de Documentos",
-      "footer-nav": "Navegação",
+            "timeline-title": "Linha do Tempo",
+      "timeline-empty": "Ainda não há marcos. Adicione em <code>project.json</code> dentro de <code>"milestones"</code>.",
+"footer-nav": "Navegação",
       "footer-contact": "Contato &amp; Conexão",
       "footer-legal": "Legal",
       "terms": "Termos de Uso",
@@ -1270,6 +1394,115 @@ section + h2{
       loadProjectData(function(data){
         renderInsuranceList(data);
       applyGalleryLink(data);
+
+                try{
+// ===== Next step card visibility (hide if empty) =====
+        (function(){
+          var card = document.getElementById("nextstepCard");
+          if (!card) return;
+          var note = card.querySelector('[data-translate="next-step-note"]');
+          var sub = card.querySelector('[data-translate="secure-payment-sub"]');
+          var noteText = (note && (note.textContent || "").trim()) || "";
+          var subText = (sub && (sub.textContent || "").trim()) || "";
+          // Show only if at least one has meaningful text beyond the default
+          if (noteText || subText){
+            card.classList.remove("is-hidden");
+          } else {
+            card.classList.add("is-hidden");
+          }
+        })();
+
+        // ===== Activity Timeline (milestones only; avoids redundancy with Document History) =====
+        (function renderTimeline(projectData){
+          var card = document.getElementById("timelineCard");
+          var ul = document.getElementById("timelineList");
+          if (!card || !ul) return;
+
+          var events = [];
+
+          // Optional: read explicit milestones from project.json
+          // Expected format:
+          // "milestones": [{"title":"Project Activated","date":"Jan 12, 2026"},{"title":"Work Started","date":"Feb 01, 2026"}]
+          if (projectData && Array.isArray(projectData.milestones)) {
+            projectData.milestones.forEach(function(m){
+              if (!m) return;
+              var title = (m.title || m.name || "").toString().trim();
+              var date = (m.date || m.when || "").toString().trim();
+              if (!title && !date) return;
+              events.push({ title: title || "Milestone", date: date, href: (m.href || "").toString().trim() });
+            });
+          }
+
+          // Fallback: show status change as a milestone (keeps the section useful even without milestones)
+          var status = (projectData && projectData.projectStatus) ? projectData.projectStatus.toString().trim() : "";
+          var lastUpdate = (projectData && projectData.lastUpdate) ? projectData.lastUpdate.toString().trim() : "";
+          if (status) {
+            events.push({ title: "Status updated: " + status, date: lastUpdate, href: "" });
+          }
+
+          // If nothing to show, show friendly empty state
+          if (!events.length) {
+            var empty = document.getElementById("timelineEmpty");
+            ul.innerHTML = "";
+            if (empty) empty.classList.remove("is-hidden");
+            card.classList.remove("is-hidden");
+            return;
+          }
+          var empty2 = document.getElementById("timelineEmpty");
+          if (empty2) empty2.classList.add("is-hidden");
+// Sort newest first when date is parseable; otherwise keep original order
+          events.sort(function(a,b){
+            var da = new Date(a.date || "");
+            var db = new Date(b.date || "");
+            var ta = isNaN(da.getTime()) ? -1 : da.getTime();
+            var tb = isNaN(db.getTime()) ? -1 : db.getTime();
+            if (ta === tb) return 0;
+            if (ta === -1) return 1;
+            if (tb === -1) return -1;
+            return tb - ta;
+          });
+
+          ul.innerHTML = "";
+          events.forEach(function(ev){
+            var li = document.createElement("li");
+
+            var dot = document.createElement("span");
+            dot.className = "tl-dot";
+            dot.setAttribute("aria-hidden", "true");
+
+            var body = document.createElement("div");
+            body.className = "tl-body";
+
+            var title = document.createElement("div");
+            title.className = "tl-title";
+
+            if (ev.href) {
+              var a = document.createElement("a");
+              a.href = ev.href;
+              a.target = "_blank";
+              a.rel = "noopener";
+              a.textContent = ev.title;
+              title.appendChild(a);
+            } else {
+              title.textContent = ev.title;
+            }
+
+            var meta = document.createElement("div");
+            meta.className = "tl-meta";
+            meta.textContent = ev.date ? ev.date : " ";
+
+            body.appendChild(title);
+            body.appendChild(meta);
+
+            li.appendChild(dot);
+            li.appendChild(body);
+            ul.appendChild(li);
+          });
+
+          card.classList.remove("is-hidden");
+        })(data);
+}catch(e){ console.warn('UI enhancements error', e); }
+
       });
     }
 

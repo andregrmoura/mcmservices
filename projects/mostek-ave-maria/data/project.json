@@ -14,10 +14,30 @@
   "statusDetails": "",
 
   "insuranceRequirements": [
-    "COI - General Liability",
-    ""
+    "COI - General Liability"
   ],
 
-  "insuranceStatus": "Inactive"
-  
+  "insuranceStatus": "Inactive",
+
+  "milestones": [
+    {
+      "title": "Project Completed",
+      "date": "Jan 28, 2026"
+    },
+    {
+      "title": "Work Started",
+      "date": "Jan 22, 2026"
+    },
+    {
+      "title": "Project Activated",
+      "date": "Jan 21, 2026"
+    },
+    {
+      "title": "Deposit Received",
+      "date": "No deposit received"
+    }
+  ],
+
+  "estimateHistory": [],
+  "invoiceHistory": []
 }
