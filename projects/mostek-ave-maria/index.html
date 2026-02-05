@@ -1273,5 +1273,31 @@ section + h2{
 </script>
 
 
+
+  <script>
+    // Mobile typography refinement: avoid awkward wraps in "MCM Services USA Corporation"
+    (function(){
+      function run(){
+        var p = document.querySelector('.hero-copy p[data-translate="portal-operated-by"] strong');
+        if (!p) return;
+        var t = p.textContent || "";
+        // Normalize whitespace
+        t = t.replace(/\s+/g, " ").trim();
+        if (!t) return;
+
+        // Only apply when it matches the expected phrase
+        if (/^MCM Services USA Corporation$/i.test(t)){
+          // Keep "MCM Services" together and "USA Corporation" together
+          p.innerHTML = "MCM&nbsp;Services USA&nbsp;Corporation";
+        }
+      }
+      if (document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", run);
+      } else {
+        run();
+      }
+    })();
+  </script>
+
 </body>
 </html>
