@@ -779,6 +779,26 @@ section + h2{
       color:#777; font-size:.90rem; margin-top:3px; line-height:1.35;
     }
 
+
+    /* ===== Fix: timeline title outside card + remove auto "Status updated" row ===== */
+    .timeline-title{
+      margin-top:40px;
+      margin-bottom:14px;
+      text-align:left;
+    }
+    /* If any legacy status-update row slips in, hide it */
+    .timeline-item.status-update,
+    .timeline-item[data-kind="status-update"]{
+      display:none !important;
+    }
+
+
+    /* ===== Premium Progress Bar (additive) ===== */
+    .progress-row{ display:flex; align-items:center; gap:12px; }
+    .progress-bar{ flex:1; height:8px; border-radius:999px; background:#efefef; overflow:hidden; }
+    .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
+    .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
+
 </style>
 </head>
 
@@ -846,7 +866,18 @@ section + h2{
             <div data-var="projectStatusSub" style="color:#666; font-size:.9rem; font-weight:500; margin-top:6px;"></div>
           </div>
 
-          <div class="meta-item" style="border-top:1px solid #EEE; padding-top:12px; margin-top:10px;">
+          
+          <div class="meta-item" style="margin-top:14px;">
+            <div class="meta-label">Project Progress</div>
+            <div class="progress-row">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-pct" id="progressPct">0%</div>
+            </div>
+          </div>
+
+<div class="meta-item" style="border-top:1px solid #EEE; padding-top:12px; margin-top:10px;">
             <div class="meta-label" data-translate="project-date-label">Last Update</div>
             <div class="meta-value meta-date" data-var="lastUpdate"></div>
           </div>
@@ -926,15 +957,6 @@ section + h2{
     </div>
 
 <h2 data-translate="secure-payment">Secure Payment</h2>
-    
-    <div class="nextstep-card is-hidden" id="nextstepCard">
-      <p data-translate="secure-payment-sub" class="nextstep-sub" style="color:#666; margin-top:-10px;">
-      Proceed with payment using a secure method.
-    </p>
-    
-      <p data-translate="next-step-note" class="nextstep-note" style="color:#666; margin-top:12px;"></p>
-    
-    </div>
 <a class="primary" href="./payment.html" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
     </a><h2 data-translate="project-gallery">Photos from the Latest Project</h2>
@@ -946,8 +968,12 @@ section + h2{
     <a id="galleryBtn" class="primary" href="gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
 
     
+    <h2 class="timeline-title" data-translate="timeline-title">Activity Timeline</h2>
+
+
+
+    
     <div class="timeline-card is-hidden" id="timelineCard">
-      <h3 data-translate="timeline-title">Activity Timeline</h3>
       <ul class="timeline" id="timelineList" aria-label="Project activity timeline"></ul>
       <p class="timeline-empty is-hidden" id="timelineEmpty" data-translate="timeline-empty">No milestones added yet. You can add them in project.json under "milestones".</p>
     </div>
@@ -1353,6 +1379,42 @@ section + h2{
         return;
       }
 
+
+function applyProgressBar(){
+  var fill = document.getElementById("progressFill");
+  var pctEl = document.getElementById("progressPct");
+  if (!fill || !pctEl) return;
+
+  function getStatus(){
+    var el = document.querySelector('[data-var="projectStatus"]');
+    return el ? (el.textContent || "").trim().toLowerCase() : "";
+  }
+
+  function progressFromStatus(status){
+    if (status.indexOf("completed") !== -1) return 100;
+    if (status.indexOf("in progress") !== -1) return 75;
+    if (status.indexOf("work started") !== -1) return 40;
+    if (status.indexOf("activated") !== -1) return 25;
+    if (status.indexOf("active") !== -1) return 25;
+    if (status.indexOf("approved") !== -1) return 10;
+    return 0;
+  }
+
+  function update(){
+    var status = getStatus();
+    var pct = progressFromStatus(status);
+    fill.style.width = pct + "%";
+    pctEl.textContent = pct + "%";
+  }
+
+  // Sync with vars-loader timing
+  update();
+  setTimeout(update, 200);
+  setTimeout(update, 600);
+  setTimeout(update, 1200);
+}
+
+
       fetch("./data/project.json", { cache: "no-store" })
         .then(function(r){
           if (r && r.ok) return r.json();
@@ -1394,60 +1456,6 @@ section + h2{
       loadProjectData(function(data){
         renderInsuranceList(data);
       applyGalleryLink(data);
-      // ===== Stakeholder-friendly empty states for Document History =====
-      (function(){
-        function isBogusFolderLink(a, kind){
-          if (!a) return false;
-          var href = (a.getAttribute("href") || "").trim();
-          var txt  = (a.textContent || "").trim();
-          // common bogus outputs we want to suppress
-          if (kind === "estimate"){
-            return href === "./estimates/" || href === "estimates/" || txt === "./estimates/" || txt === "estimates/";
-          }
-          if (kind === "invoice"){
-            return href === "./invoices/" || href === "invoices/" || txt === "./invoices/" || txt === "invoices/";
-          }
-          return false;
-        }
-
-        function cleanList(ulId, kind){
-          var ul = document.getElementById(ulId);
-          if (!ul) return;
-          var lis = ul.querySelectorAll("li");
-          // Remove bogus single folder link items (./estimates/ or ./invoices/)
-          lis.forEach(function(li){
-            var a = li.querySelector("a");
-            if (isBogusFolderLink(a, kind)) li.remove();
-          });
-        }
-
-        function toggleEmpty(ulId, emptyId, hasItems){
-          var ul = document.getElementById(ulId);
-          var empty = document.getElementById(emptyId);
-          if (!ul || !empty) return;
-
-          var visibleItems = ul.querySelectorAll("li").length > 0;
-          // If data says no items, or list has none, show empty note
-          if (!hasItems || !visibleItems){
-            empty.classList.remove("is-hidden");
-          } else {
-            empty.classList.add("is-hidden");
-          }
-        }
-
-        // Run after vars-loader has had a chance to populate lists
-        window.requestAnimationFrame(function(){
-          cleanList("estimate-list", "estimate");
-          cleanList("invoice-list", "invoice");
-
-          var hasEst = Array.isArray(data.estimateHistory) && data.estimateHistory.length > 0;
-          var hasInv = Array.isArray(data.invoiceHistory) && data.invoiceHistory.length > 0;
-
-          toggleEmpty("estimate-list", "estimate-empty", hasEst);
-          toggleEmpty("invoice-list", "invoice-empty", hasInv);
-        });
-      })();
-
 
                 try{
 // ===== Next step card visibility (hide if empty) =====
@@ -1466,42 +1474,48 @@ section + h2{
           }
         })();
 
-        // ===== Activity Timeline (respects JSON order) =====
+        // ===== Activity Timeline (milestones only; avoids redundancy with Document History) =====
         (function renderTimeline(projectData){
           var card = document.getElementById("timelineCard");
           var ul = document.getElementById("timelineList");
-          var empty = document.getElementById("timelineEmpty");
           if (!card || !ul) return;
 
           var events = [];
 
-          // Preferred: explicit milestones in project.json (ORDER IS RESPECTED)
-          if (projectData && Array.isArray(projectData.milestones) && projectData.milestones.length){
+          // Optional: read explicit milestones from project.json
+          // Expected format:
+          // "milestones": [{"title":"Project Activated","date":"Jan 12, 2026"},{"title":"Work Started","date":"Feb 01, 2026"}]
+          if (projectData && Array.isArray(projectData.milestones)) {
             projectData.milestones.forEach(function(m){
               if (!m) return;
               var title = (m.title || m.name || "").toString().trim();
               var date = (m.date || m.when || "").toString().trim();
-              var href = (m.href || "").toString().trim();
               if (!title && !date) return;
-              events.push({ title: title || "Milestone", date: date, href: href });
+              events.push({ title: title || "Milestone", date: date, href: (m.href || "").toString().trim() });
             });
-          } else {
-            // Fallback: show current status only (no history)
-            var status = (projectData && projectData.projectStatus) ? projectData.projectStatus.toString().trim() : "";
-            var lastUpdate = (projectData && projectData.lastUpdate) ? projectData.lastUpdate.toString().trim() : "";
-            if (status) events.push({ title: "Status: " + status, date: lastUpdate, href: "" });
           }
-
-          // Friendly empty state
-          if (!events.length){
+// If nothing to show, show friendly empty state
+          if (!events.length) {
+            var empty = document.getElementById("timelineEmpty");
             ul.innerHTML = "";
             if (empty) empty.classList.remove("is-hidden");
             card.classList.remove("is-hidden");
             return;
           }
-          if (empty) empty.classList.add("is-hidden");
+          var empty2 = document.getElementById("timelineEmpty");
+          if (empty2) empty2.classList.add("is-hidden");
+// Sort newest first when date is parseable; otherwise keep original order
+          events.sort(function(a,b){
+            var da = new Date(a.date || "");
+            var db = new Date(b.date || "");
+            var ta = isNaN(da.getTime()) ? -1 : da.getTime();
+            var tb = isNaN(db.getTime()) ? -1 : db.getTime();
+            if (ta === tb) return 0;
+            if (ta === -1) return 1;
+            if (tb === -1) return -1;
+            return tb - ta;
+          });
 
-          // IMPORTANT: No sorting — respects JSON order.
           ul.innerHTML = "";
           events.forEach(function(ev){
             var li = document.createElement("li");
@@ -1516,7 +1530,7 @@ section + h2{
             var title = document.createElement("div");
             title.className = "tl-title";
 
-            if (ev.href){
+            if (ev.href) {
               var a = document.createElement("a");
               a.href = ev.href;
               a.target = "_blank";
@@ -1580,6 +1594,50 @@ section + h2{
       }
     })();
   </script>
+
+
+<script>document.addEventListener("DOMContentLoaded", applyProgressBar);</script>
+
+<script>
+(function(){
+  function progressFromStatus(status){
+    var s = (status || "").toString().toLowerCase().trim();
+    if (s.indexOf("completed") !== -1) return 100;
+    if (s.indexOf("in progress") !== -1) return 75;
+    if (s.indexOf("work started") !== -1) return 40;
+    if (s.indexOf("activated") !== -1) return 25;
+    if (s.indexOf("active") !== -1) return 25;
+    if (s.indexOf("approved") !== -1) return 10;
+    return 0;
+  }
+
+  function update(){
+    var statusEl = document.querySelector('[data-var="projectStatus"]');
+    var fill = document.getElementById("progressFill");
+    var pctEl = document.getElementById("progressPct");
+    if (!statusEl || !fill || !pctEl) return;
+
+    var pct = progressFromStatus(statusEl.textContent);
+    fill.style.width = pct + "%";
+    pctEl.textContent = pct + "%";
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    update();
+
+    var statusEl = document.querySelector('[data-var="projectStatus"]');
+    if (!statusEl || !window.MutationObserver) return;
+
+    var obs = new MutationObserver(update);
+    obs.observe(statusEl, { childList:true, characterData:true, subtree:true });
+
+    // safety retries (mobile Safari can delay DOM updates)
+    setTimeout(update, 300);
+    setTimeout(update, 900);
+    setTimeout(update, 1500);
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -799,6 +799,7 @@ section + h2{
     .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
+
 </style>
 </head>
 
@@ -877,7 +878,8 @@ section + h2{
             </div>
           </div>
 
-<div class="meta-item" style="border-top:1px solid #EEE; padding-top:12px; margin-top:10px;">
+
+          <div class="meta-item" style="border-top:1px solid #EEE; padding-top:12px; margin-top:10px;">
             <div class="meta-label" data-translate="project-date-label">Last Update</div>
             <div class="meta-value meta-date" data-var="lastUpdate"></div>
           </div>
@@ -1380,39 +1382,36 @@ section + h2{
       }
 
 
-function applyProgressBar(){
-  var fill = document.getElementById("progressFill");
-  var pctEl = document.getElementById("progressPct");
-  if (!fill || !pctEl) return;
+    function progressFromStatus(status){
+      var s = (status || "").toString().toLowerCase().trim();
+      if (s.includes("completed")) return 100;
+      if (s.includes("in progress")) return 75;
+      if (s.includes("work started")) return 40;
+      if (s.includes("activated")) return 25;
+      if (s.includes("active")) return 25;
+      if (s.includes("approved")) return 10;
+      return 0;
+    }
 
-  function getStatus(){
-    var el = document.querySelector('[data-var="projectStatus"]');
-    return el ? (el.textContent || "").trim().toLowerCase() : "";
-  }
+    function applyProgressBar(projectData){
+      var fill = document.getElementById("progressFill");
+      var pctEl = document.getElementById("progressPct");
+      if (!fill || !pctEl) return;
 
-  function progressFromStatus(status){
-    if (status.indexOf("completed") !== -1) return 100;
-    if (status.indexOf("in progress") !== -1) return 75;
-    if (status.indexOf("work started") !== -1) return 40;
-    if (status.indexOf("activated") !== -1) return 25;
-    if (status.indexOf("active") !== -1) return 25;
-    if (status.indexOf("approved") !== -1) return 10;
-    return 0;
-  }
+      // Optional override: set "projectProgress": 25 in project.json
+      var override = projectData && (projectData.projectProgress ?? projectData.project_progress ?? projectData.progress);
+      if (typeof override === "number" && isFinite(override)){
+        var o = Math.max(0, Math.min(100, Math.round(override)));
+        fill.style.width = o + "%";
+        pctEl.textContent = o + "%";
+        return;
+      }
 
-  function update(){
-    var status = getStatus();
-    var pct = progressFromStatus(status);
-    fill.style.width = pct + "%";
-    pctEl.textContent = pct + "%";
-  }
-
-  // Sync with vars-loader timing
-  update();
-  setTimeout(update, 200);
-  setTimeout(update, 600);
-  setTimeout(update, 1200);
-}
+      var status = projectData && (projectData.projectStatus || projectData.project_status || projectData.status);
+      var pct = progressFromStatus(status);
+      fill.style.width = pct + "%";
+      pctEl.textContent = pct + "%";
+    }
 
 
       fetch("./data/project.json", { cache: "no-store" })
@@ -1457,7 +1456,9 @@ function applyProgressBar(){
         renderInsuranceList(data);
       applyGalleryLink(data);
 
-                try{
+                
+        applyProgressBar(data);
+try{
 // ===== Next step card visibility (hide if empty) =====
         (function(){
           var card = document.getElementById("nextstepCard");
@@ -1594,50 +1595,6 @@ function applyProgressBar(){
       }
     })();
   </script>
-
-
-<script>document.addEventListener("DOMContentLoaded", applyProgressBar);</script>
-
-<script>
-(function(){
-  function progressFromStatus(status){
-    var s = (status || "").toString().toLowerCase().trim();
-    if (s.indexOf("completed") !== -1) return 100;
-    if (s.indexOf("in progress") !== -1) return 75;
-    if (s.indexOf("work started") !== -1) return 40;
-    if (s.indexOf("activated") !== -1) return 25;
-    if (s.indexOf("active") !== -1) return 25;
-    if (s.indexOf("approved") !== -1) return 10;
-    return 0;
-  }
-
-  function update(){
-    var statusEl = document.querySelector('[data-var="projectStatus"]');
-    var fill = document.getElementById("progressFill");
-    var pctEl = document.getElementById("progressPct");
-    if (!statusEl || !fill || !pctEl) return;
-
-    var pct = progressFromStatus(statusEl.textContent);
-    fill.style.width = pct + "%";
-    pctEl.textContent = pct + "%";
-  }
-
-  document.addEventListener("DOMContentLoaded", function(){
-    update();
-
-    var statusEl = document.querySelector('[data-var="projectStatus"]');
-    if (!statusEl || !window.MutationObserver) return;
-
-    var obs = new MutationObserver(update);
-    obs.observe(statusEl, { childList:true, characterData:true, subtree:true });
-
-    // safety retries (mobile Safari can delay DOM updates)
-    setTimeout(update, 300);
-    setTimeout(update, 900);
-    setTimeout(update, 1500);
-  });
-})();
-</script>
 
 </body>
 </html>
