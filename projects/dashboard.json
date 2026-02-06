@@ -1,0 +1,22 @@
+{
+  "settings": { "attentionDays": 14 },
+  "legend": {
+    "Planning": "Project in planning/approval",
+    "Active": "Work in progress",
+    "Completed": "Project completed",
+    "On Hold": "Paused / waiting"
+  },
+  "projects": [
+    { "slug": "brian-huse", "pinned": false, "city": "Miami" },
+    { "slug": "dallas", "pinned": false, "city": "Miami" },
+    { "slug": "denys-rekachynskyi", "pinned": false, "city": "Miami" },
+    { "slug": "jp-general-construction", "pinned": false, "city": "Miami" },
+    { "slug": "khoudari-coral-gables", "pinned": false, "city": "Coral Gables" },
+    { "slug": "luciana-ferraz", "pinned": false, "city": "Miami" },
+    { "slug": "mostek-ave-maria", "pinned": false, "city": "Ave Maria" },
+    { "slug": "oceanis-rental", "pinned": false, "city": "Miami" },
+    { "slug": "regina-visio", "pinned": false, "city": "Miami" },
+    { "slug": "richard-betor", "pinned": false, "city": "Miami" },
+    { "slug": "sousa-coral-gables", "pinned": false, "city": "Coral Gables" }
+  ]
+}

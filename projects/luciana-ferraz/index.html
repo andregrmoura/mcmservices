@@ -799,12 +799,6 @@ section + h2{
     .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
-
-    /* Address line break support */
-    .sheet-value[data-var="projectAddress"]{
-      white-space: pre-line;
-    }
-
 </style>
 </head>
 
@@ -1643,6 +1637,54 @@ function applyProgressBar(){
     setTimeout(update, 1500);
   });
 })();
+</script>
+
+<script>
+  // Real-time Last Update (date + time) — robust against vars-loader updates
+  (function(){
+    function formatNow(){
+      return new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function setText(el, text){
+      if (!el) return;
+      // Avoid thrashing if already correct
+      if ((el.textContent || "").trim() === text) return;
+      el.textContent = text;
+    }
+
+    function update(){
+      var el = document.querySelector('[data-var="lastUpdate"]');
+      if (!el) return;
+      setText(el, formatNow());
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      // 1) Update immediately
+      update();
+
+      // 2) Retry shortly after (vars-loader often populates async)
+      setTimeout(update, 250);
+      setTimeout(update, 800);
+      setTimeout(update, 1500);
+
+      // 3) Keep it fresh every minute
+      setInterval(update, 60000);
+
+      // 4) If vars-loader changes the field later, re-apply
+      var el = document.querySelector('[data-var="lastUpdate"]');
+      if (el && window.MutationObserver){
+        var obs = new MutationObserver(function(){ update(); });
+        obs.observe(el, { childList:true, characterData:true, subtree:true });
+      }
+    });
+  })();
 </script>
 
 </body>
