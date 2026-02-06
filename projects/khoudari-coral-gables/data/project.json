@@ -2,7 +2,7 @@
   "projectStatus": "Completed",
   "projectStatusSub": "",
   "lastUpdate": "Feb 04, 2026",
-  "currentEstimate": "./estimates/EST0025.pdf",
+  "currentEstimate": "",
   "currentInvoice": "./invoices/INV036.pdf",
   "nextStepNote": "",
   "galleryLink": "https://jungle-bougon-797.notion.site/Khoudari-s-Residence-Coral-Gables-2dc62b9dd158800a9aa9cda472672bcb?pvs=73",
@@ -21,19 +21,19 @@
 
   "milestones": [
     {
-      "title": "Project Completed",
+      "title": "  ",
+      "date": "  "
+    },
+    {
+      "title": "   ",
       "date": ""
     },
     {
-      "title": "Work Started",
+      "title": "  ",
       "date": ""
     },
     {
-      "title": "Project Activated",
-      "date": ""
-    },
-    {
-      "title": "Deposit Received",
+      "title": "   ",
       "date": ""
     }
   ],
