@@ -6,19 +6,15 @@
   "currentInvoice": "./invoices/INV036.pdf",
   "nextStepNote": "",
   "galleryLink": "https://jungle-bougon-797.notion.site/Khoudari-s-Residence-Coral-Gables-2dc62b9dd158800a9aa9cda472672bcb?pvs=73",
-
   "projectName": "Khoudari's Residence",
   "clientName": "Khoudari, Ernestor",
   "projectAddress": "8901 Ponde de Leon Rd, Coral Gables, FL 33134",
   "startDate": "",
   "statusDetails": "",
-
   "insuranceRequirements": [
     "COI - General Liability"
   ],
-
   "insuranceStatus": "Inactive",
-
   "milestones": [
     {
       "title": "  ",
@@ -37,7 +33,6 @@
       "date": ""
     }
   ],
-
   "estimateHistory": [
     {
       "title": "EST0024",
@@ -48,7 +43,6 @@
       "file": "./estimates/EST0025.pdf"
     }
   ],
-
   "invoiceHistory": [
     {
       "title": "INV012",
