@@ -609,10 +609,122 @@
 .legend-item.active .legend-dot{ background: #10b981; }
 .legend-item.completed .legend-dot{ background: #3b82f6; }
 .legend-item.hold .legend-dot{ background: #ef4444; }
+
+/* Dashboard login overlay */
+body.is-locked { overflow: hidden; }
+#dashboardApp { display: block; }
+body.is-locked #dashboardApp { display: none !important; }
+
+#loginScreen{
+  position: fixed;
+  inset: 0;
+  background: rgba(246, 246, 244, 0.98);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+body.is-locked #loginScreen{ display: flex; }
+
+.login-box{
+  width: min(420px, 92vw);
+  background: #fff;
+  border-radius: 16px;
+  padding: 42px 34px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.10);
+  text-align: center;
+}
+.login-logo{
+  width: 72px;
+  height: auto;
+  margin: 0 auto 18px;
+  display:block;
+}
+.login-box h1{
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  color: #b89b5e;
+  font-size: 30px;
+  letter-spacing: .2px;
+}
+.login-box p{
+  margin: 0 0 18px;
+  color: #666;
+  font-size: 14px;
+}
+.login-input{
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+.login-input:focus{
+  border-color: rgba(184,155,94,.65);
+  box-shadow: 0 0 0 4px rgba(184,155,94,.12);
+}
+.login-actions{
+  display:flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.login-button{
+  flex:1;
+  padding: 12px 14px;
+  background: #b89b5e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.login-button:hover{ background:#a88c52; }
+.login-secondary{
+  flex:1;
+  padding: 12px 14px;
+  background: #111;
+  color:#fff;
+  border:none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor:pointer;
+  font-weight:600;
+  opacity:.92;
+}
+.login-secondary:hover{ opacity:1; }
+
+.login-error{
+  min-height: 18px;
+  margin-top: 10px;
+  color: #d33;
+  font-size: 13px;
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="loginScreen" class="login-screen" aria-hidden="true">
+  <div class="login-box" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <img src="../images/mcm-monogram.png" alt="MCM" class="login-logo" onerror="this.style.display='none'">
+    <h1 id="loginTitle">Projects Dashboard</h1>
+    <p>Enter your access password to continue.</p>
+
+    <input type="password" id="loginPassword" class="login-input" placeholder="Password" autocomplete="current-password" />
+
+    <div class="login-actions">
+      <button id="loginButton" class="login-button" type="button">Access Dashboard</button>
+      <button id="loginClear" class="login-secondary" type="button">Clear</button>
+    </div>
+
+    <div id="loginError" class="login-error" aria-live="polite"></div>
+  </div>
+</div>
+
 
 <!-- BASIC PASSWORD (simple) -->
 <script>
@@ -686,24 +798,13 @@ function renderLegend(legend){
   }).join("");
 }
 
-const DASH_PASSWORD = "mcm2026"; // <-- change here
-  const access = prompt("Enter access password:");
-  if (access !== DASH_PASSWORD) {
-    document.body.innerHTML = `
-      <div style="font-family:sans-serif;text-align:center;margin-top:120px;color:#111;">
-        <h1>Access denied</h1>
-        
-<div id="legend" class="dashboard-legend" aria-label="Project status legend"></div>
-<p>Incorrect password.</p>
-      </div>
-    `;
-  }
 
 setInterval(() => {
   setLastRefresh(new Date());
 }, 60000);
 </script>
 
+<div id="dashboardApp">
 <header>
   <a class="logo-link" href="../index.html">
     <img src="../images/FODA.png" alt="MCM Services Logo">
@@ -827,8 +928,37 @@ setInterval(() => {
     </p>
   </div>
 </footer>
+</div>
 
 <script>
+  // Dashboard login (simple UI gate)
+  const DASH_PASSWORD = "Andre0848"; // change here if you want
+  const AUTH_KEY = "mcmDashAuth";
+
+  const loginScreen = document.getElementById("loginScreen");
+  const loginInput  = document.getElementById("loginPassword");
+  const loginBtn    = document.getElementById("loginButton");
+  const loginClear  = document.getElementById("loginClear");
+  const loginError  = document.getElementById("loginError");
+
+  function lock(message=""){
+    document.body.classList.add("is-locked");
+    loginScreen.setAttribute("aria-hidden","false");
+    if (message) loginError.textContent = message;
+    if (loginInput) {
+      loginInput.value = "";
+      loginInput.focus();
+    }
+  }
+
+  function unlock(){
+    document.body.classList.remove("is-locked");
+    loginScreen.setAttribute("aria-hidden","true");
+    loginError.textContent = "";
+    sessionStorage.setItem(AUTH_KEY, "true");
+  }
+
+  async function bootDashboard(){
   document.getElementById('year').textContent = new Date().getFullYear();
   document.getElementById('refTime').textContent = new Date().toLocaleString();
 
@@ -1075,7 +1205,7 @@ const statusSubRank = (s) => {
           </div>
 
           <div class="actions">
-            <a class="btn primary" href="${projectUrl}">
+            <a class="btn primary" href="${projectUrl}" target="_blank" rel="noopener">
               <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
               Open Project
             </a>
@@ -1228,6 +1358,44 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 setInterval(() => {
   setLastRefresh(new Date());
 }, 60000);
+
+  }
+
+  function tryLogin(){
+    const val = (loginInput?.value || "").trim();
+    if (val === DASH_PASSWORD) {
+      unlock();
+      // start dashboard only after unlock -> avoids slow load before auth
+      bootDashboard().catch(err => {
+        console.error(err);
+        lock("Dashboard error. Check Netlify logs.");
+      });
+    } else {
+      // wrong password -> stay on login screen
+      lock("Incorrect password.");
+    }
+  }
+
+  loginBtn?.addEventListener("click", tryLogin);
+  loginClear?.addEventListener("click", () => {
+    loginError.textContent = "";
+    loginInput.value = "";
+    loginInput.focus();
+  });
+  loginInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") tryLogin();
+  });
+
+  // On load
+  if (sessionStorage.getItem(AUTH_KEY) === "true") {
+    unlock();
+    bootDashboard().catch(err => {
+      console.error(err);
+      lock("Dashboard error. Check Netlify logs.");
+    });
+  } else {
+    lock("");
+  }
 </script>
 
 </body>
