@@ -616,37 +616,6 @@
 
 <!-- BASIC PASSWORD (simple) -->
 <script>
-  function clamp(n,min,max){ return Math.min(max, Math.max(min, n)); }
-
-function progressPercent(p){
-  // Priority: explicit numeric progress from project.json
-  const candidates = [
-    p?.projectProgress,
-    p?.progress,
-    p?.progressPercent,
-    p?.projectProgressPercent,
-    p?.projectProgressPct,
-    p?.projectProgressValue
-  ];
-
-  for (const v of candidates){
-    if (typeof v === "number" && isFinite(v)) return clamp(v, 0, 100);
-    if (typeof v === "string"){
-      const num = parseFloat(v.replace("%","").trim());
-      if (!isNaN(num) && isFinite(num)) return clamp(num, 0, 100);
-    }
-  }
-
-  // Fallback: infer from status
-  const s = (p?.projectStatus || p?.status || "").toLowerCase().trim();
-  if (s.includes("complete")) return 100;
-  if (s.includes("in progress")) return 75;
-  if (s === "active") return 40;
-  if (s.includes("planning") || s.includes("pending") || s.includes("await")) return 10;
-  return 0;
-}
-
-
 function setLastRefresh(date){
   const el = document.getElementById('lastRefresh') || document.getElementById('refTime');
   if(!el) return;
@@ -945,50 +914,30 @@ const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same fold
     document.getElementById("kpiCompleted").textContent = completed;
     document.getElementById("kpiAttention").textContent = attention;
   }
-function sortProjects(projects){
-  const statusRank = (s) => {
-    const x = (s||"").toLowerCase().trim();
 
-    // 1) Active first (including "in progress")
-    if (x === "active" || x.includes("in progress")) return 1;
+  function sortProjects(projects){
+    const statusRank = (s) => {
+      const x = (s||"").toLowerCase().trim();
+      if (x === "active") return 1;
+      if (x === "planning") return 2;
+      if (x === "on hold" || x === "onhold") return 3;
+      if (x === "completed") return 4;
+      return 9;
+    };
 
-    // 2) Pending second (Planning / Pending / Awaiting / Approval etc.)
-    if (x === "planning" || x.includes("pending") || x.includes("await") || x.includes("review") || x.includes("approval")) return 2;
-
-    // 3) Completed third
-    if (x === "completed" || x.includes("complete")) return 3;
-
-    // 4) Inactive last (Inactive / On Hold / Expired / Cancelled / Suspended)
-    if (x.includes("inactive") || x.includes("on hold") || x.includes("onhold") || x.includes("expired") || x.includes("cancel") || x.includes("suspend")) return 4;
-
-    return 9;
-  };
-
-  // Sort by your requested status priority first, then pinned, then needs-attention, then lastUpdate (newest first)
-  
-const statusSubRank = (s) => {
-  const x = (s||"").toLowerCase().trim();
-  // within Active group, show "In progress" before "Active"
-  if (x.includes("in progress")) return 1;
-  if (x === "active") return 2;
-  return 9;
-};
     return projects.slice().sort((a,b) => {
-    const sr = statusRank(a.status) - statusRank(b.status);
-    if (sr !== 0) return sr;
+      const ap = !!a.pinned, bp = !!b.pinned;
+      if (ap !== bp) return ap ? -1 : 1;
 
-    const ssr = statusSubRank(a.status) - statusSubRank(b.status);
-    if (ssr !== 0) return ssr;
+      const aa = needsAttention(a), ba = needsAttention(b);
+      if (aa !== ba) return aa ? -1 : 1;
 
-    const ap = !!a.pinned, bp = !!b.pinned;
-    if (ap !== bp) return ap ? -1 : 1;
+      const sr = statusRank(a.status) - statusRank(b.status);
+      if (sr !== 0) return sr;
 
-    const aa = needsAttention(a), ba = needsAttention(b);
-    if (aa !== ba) return aa ? -1 : 1;
-
-    return new Date(b.lastUpdate || 0) - new Date(a.lastUpdate || 0);
-  });
-}
+      return (a.name || "").localeCompare(b.name || "");
+    });
+  }
 
   function render(projects){
     const query = (q.value || "").trim().toLowerCase();
@@ -1132,7 +1081,7 @@ const statusSubRank = (s) => {
     const city = registry?.city || cityFromAddress(projectAddress);
 
     // progress: optional number in project.json; else derived by status
-    const progress = progressPercent(pj ?? { projectStatus: status });
+    const progress = (typeof pj?.progress === "number") ? pj.progress : statusToProgress(status);
 
     return {
       slug,
@@ -1191,8 +1140,36 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 
       const cleanProjects = projects.filter(Boolean);
       buildCityOptions(cleanProjects);
+      
+      // Sort projects by status priority
+      const statusOrder = {
+        "active": 1,
+        "in progress": 1,
+        "planning": 2,
+        "pending": 2,
+        "awaiting": 2,
+        "completed": 3,
+        "inactive": 4,
+        "on hold": 4,
+        "expired": 4
+      };
+
+      cleanProjects.sort((a, b) => {
+        const sa = (a.projectStatus || "").toLowerCase();
+        const sb = (b.projectStatus || "").toLowerCase();
+
+        const pa = statusOrder[sa] || 99;
+        const pb = statusOrder[sb] || 99;
+
+        if (pa !== pb) return pa - pb;
+
+        // secondary: most recently updated first
+        return new Date(b.lastUpdate || 0) - new Date(a.lastUpdate || 0);
+      });
+
       render(cleanProjects);
       setLastRefresh(new Date());
+(new Date());
 
       if (!window.__filtersBound){
         window.__filtersBound = true;

@@ -1504,18 +1504,7 @@ function applyProgressBar(){
           }
           var empty2 = document.getElementById("timelineEmpty");
           if (empty2) empty2.classList.add("is-hidden");
-// Sort newest first when date is parseable; otherwise keep original order
-          events.sort(function(a,b){
-            var da = new Date(a.date || "");
-            var db = new Date(b.date || "");
-            var ta = isNaN(da.getTime()) ? -1 : da.getTime();
-            var tb = isNaN(db.getTime()) ? -1 : db.getTime();
-            if (ta === tb) return 0;
-            if (ta === -1) return 1;
-            if (tb === -1) return -1;
-            return tb - ta;
-          });
-
+          // Keep the same order as project.json (no auto-sorting)
           ul.innerHTML = "";
           events.forEach(function(ev){
             var li = document.createElement("li");

@@ -616,37 +616,6 @@
 
 <!-- BASIC PASSWORD (simple) -->
 <script>
-  function clamp(n,min,max){ return Math.min(max, Math.max(min, n)); }
-
-function progressPercent(p){
-  // Priority: explicit numeric progress from project.json
-  const candidates = [
-    p?.projectProgress,
-    p?.progress,
-    p?.progressPercent,
-    p?.projectProgressPercent,
-    p?.projectProgressPct,
-    p?.projectProgressValue
-  ];
-
-  for (const v of candidates){
-    if (typeof v === "number" && isFinite(v)) return clamp(v, 0, 100);
-    if (typeof v === "string"){
-      const num = parseFloat(v.replace("%","").trim());
-      if (!isNaN(num) && isFinite(num)) return clamp(num, 0, 100);
-    }
-  }
-
-  // Fallback: infer from status
-  const s = (p?.projectStatus || p?.status || "").toLowerCase().trim();
-  if (s.includes("complete")) return 100;
-  if (s.includes("in progress")) return 75;
-  if (s === "active") return 40;
-  if (s.includes("planning") || s.includes("pending") || s.includes("await")) return 10;
-  return 0;
-}
-
-
 function setLastRefresh(date){
   const el = document.getElementById('lastRefresh') || document.getElementById('refTime');
   if(!el) return;
@@ -1132,7 +1101,7 @@ const statusSubRank = (s) => {
     const city = registry?.city || cityFromAddress(projectAddress);
 
     // progress: optional number in project.json; else derived by status
-    const progress = progressPercent(pj ?? { projectStatus: status });
+    const progress = (typeof pj?.progress === "number") ? pj.progress : statusToProgress(status);
 
     return {
       slug,
