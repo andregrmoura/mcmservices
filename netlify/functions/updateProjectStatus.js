@@ -1,164 +1,125 @@
-// netlify/functions/updateProjectStatus.js
-
-exports.handler = async (event) => {
+export async function handler(event) {
   try {
-    // CORS / preflight
-    if (event.httpMethod === "OPTIONS") {
-      return {
-        statusCode: 200,
-        headers: corsHeaders(),
-        body: "",
-      };
-    }
-
-    // Auth
-    const adminKey = (event.headers["x-admin-key"] || event.headers["X-Admin-Key"] || "").trim();
-    if (!process.env.ADMIN_KEY || adminKey !== process.env.ADMIN_KEY) {
-      return {
-        statusCode: 401,
-        headers: corsHeaders(),
-        body: JSON.stringify({ ok: false, error: "Unauthorized" }),
-      };
-    }
-
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
-        headers: corsHeaders(),
-        body: JSON.stringify({ ok: false, error: "Method not allowed" }),
+        body: JSON.stringify({ ok: false, error: "Method not allowed" })
       };
     }
 
-    const body = safeJson(event.body);
-    const slug = (body.slug || "").trim();
-    const projectStatus = (body.projectStatus || "").trim();
-    const projectStatusSub = (body.projectStatusSub ?? "").toString();
+    const ADMIN_KEY = process.env.ADMIN_KEY;
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+    const REPO_OWNER = "andregrmoura";
+    const REPO_NAME = "mcmservices";
+    const BRANCH = "main";
 
-    if (!slug) return resp(400, { ok: false, error: "Missing slug" });
-    if (!projectStatus) return resp(400, { ok: false, error: "Missing projectStatus" });
+    const headers = event.headers || {};
+    const adminKey = headers["x-admin-key"];
 
-    const allowed = new Set(["Planning", "Active", "On Hold", "Completed", "Canceled"]);
-    if (!allowed.has(projectStatus)) return resp(400, { ok: false, error: "Invalid status" });
-
-    const OWNER = process.env.GITHUB_OWNER;
-    const REPO = process.env.GITHUB_REPO;
-    const BRANCH = process.env.GITHUB_BRANCH || "main";
-    const TOKEN = process.env.GITHUB_TOKEN;
-
-    if (!OWNER || !REPO || !TOKEN) {
-      return resp(500, {
-        ok: false,
-        error: "Missing GitHub env vars",
-        missing: {
-          GITHUB_OWNER: !OWNER,
-          GITHUB_REPO: !REPO,
-          GITHUB_TOKEN: !TOKEN,
-          GITHUB_BRANCH: !process.env.GITHUB_BRANCH,
-        },
-      });
+    if (!ADMIN_KEY || adminKey !== ADMIN_KEY) {
+      return {
+        statusCode: 401,
+        body: JSON.stringify({ ok: false, error: "Unauthorized" })
+      };
     }
 
-    const path = `projects/${slug}/project.json`;
+    const body = JSON.parse(event.body || "{}");
+    const { slug, projectStatus, projectStatusSub } = body;
 
-    const getUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(
-      path
-    )}?ref=${encodeURIComponent(BRANCH)}`;
+    if (!slug || !projectStatus) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ ok: false, error: "Missing slug or projectStatus" })
+      };
+    }
 
-    const getRes = await fetch(getUrl, {
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/vnd.github+json",
-        "User-Agent": "netlify-function",
-      },
-    });
+    // 🔧 CAMINHO CORRIGIDO AQUI
+    const filePath = `projects/${slug}/data/project.json`;
 
-    const getText = await getRes.text();
+    // 1) Ler o arquivo atual do GitHub
+    const getRes = await fetch(
+      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`,
+      {
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json"
+        }
+      }
+    );
+
     if (!getRes.ok) {
-      return resp(getRes.status, {
-        ok: false,
-        error: "Failed to read file",
-        path,
-        branch: BRANCH,
-        details: getText,
-      });
+      const text = await getRes.text();
+      return {
+        statusCode: getRes.status,
+        body: JSON.stringify({
+          ok: false,
+          error: "Failed to read file",
+          path: filePath,
+          branch: BRANCH,
+          details: text
+        })
+      };
     }
 
-    const file = JSON.parse(getText);
-    const sha = file.sha;
-    const raw = Buffer.from(file.content, "base64").toString("utf8");
+    const fileData = await getRes.json();
+    const currentContent = JSON.parse(
+      Buffer.from(fileData.content, "base64").toString("utf8")
+    );
 
-    // Atualiza só as linhas (não reordena JSON)
-    const updated1 = updateJsonLine(raw, "projectStatus", projectStatus);
-    const updated2 = updateJsonLine(updated1, "projectStatusSub", projectStatusSub);
+    // 2) Atualizar status
+    currentContent.projectStatus = projectStatus;
+    currentContent.projectStatusSub = projectStatusSub || "";
 
-    const newBase64 = Buffer.from(updated2, "utf8").toString("base64");
+    const updatedContent = Buffer.from(
+      JSON.stringify(currentContent, null, 2)
+    ).toString("base64");
 
-    const putUrl = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${encodeURIComponent(path)}`;
-    const putRes = await fetch(putUrl, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/vnd.github+json",
-        "User-Agent": "netlify-function",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `Update projectStatus to "${projectStatus}" for ${slug}`,
-        content: newBase64,
-        sha,
-        branch: BRANCH,
-      }),
-    });
+    // 3) Enviar atualização para o GitHub
+    const putRes = await fetch(
+      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json"
+        },
+        body: JSON.stringify({
+          message: `Update project status: ${slug} → ${projectStatus}`,
+          content: updatedContent,
+          sha: fileData.sha,
+          branch: BRANCH
+        })
+      }
+    );
 
-    const putText = await putRes.text();
     if (!putRes.ok) {
-      return resp(putRes.status, {
-        ok: false,
-        error: "Failed to commit file",
-        path,
-        branch: BRANCH,
-        details: putText,
-      });
+      const text = await putRes.text();
+      return {
+        statusCode: putRes.status,
+        body: JSON.stringify({
+          ok: false,
+          error: "Failed to update file",
+          details: text
+        })
+      };
     }
 
-    return resp(200, { ok: true, slug, projectStatus, projectStatusSub, path });
-  } catch (err) {
-    return resp(500, { ok: false, error: "Server error", details: String(err?.message || err) });
-  }
-
-  function resp(statusCode, obj) {
-    return { statusCode, headers: corsHeaders(), body: JSON.stringify(obj) };
-  }
-
-  function corsHeaders() {
     return {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type, x-admin-key",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      statusCode: 200,
+      body: JSON.stringify({
+        ok: true,
+        slug,
+        projectStatus,
+        projectStatusSub
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        ok: false,
+        error: err.message
+      })
     };
   }
-
-  function safeJson(s) {
-    try {
-      return JSON.parse(s || "{}");
-    } catch {
-      return {};
-    }
-  }
-
-  function updateJsonLine(text, key, value) {
-    const safeValue = escapeJsonString(value);
-    const re = new RegExp(`(^[\\t ]*"${escapeRegExp(key)}"\\s*:\\s*)"([^"]*)"(\\s*,?\\s*$)`, "m");
-    if (!re.test(text)) return text;
-    return text.replace(re, `$1"${safeValue}"$3`);
-  }
-
-  function escapeJsonString(s) {
-    return String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-  }
-
-  function escapeRegExp(s) {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-};
+}
