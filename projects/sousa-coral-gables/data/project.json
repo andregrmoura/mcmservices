@@ -50,5 +50,14 @@
       "title": "INV046",
       "file": "./invoices/INV046.pdf"
     }
-  ]
+  ],
+  
+  "otherDocuments": [
+  "./docs/homedepot1.pdf",
+  "./docs/homedepot2.pdf",
+  "./docs/homedepot3.pdf",
+  "./docs/homedepot4.pdf",
+  "./docs/homedepot5.pdf"
+]
+
 }
