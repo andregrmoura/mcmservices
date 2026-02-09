@@ -1,11 +1,11 @@
 {
-  "projectStatus": "In progress",
+  "projectStatus": "Completed",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 04, 2026",
+  "lastUpdate": "Feb 08, 2026",
   "currentEstimate": "./estimates/estimate.pdf",
-  "currentInvoice": "./invoices/INV040.pdf",
+  "currentInvoice": "./invoices/INV046.pdf",
   "nextStepNote": "",
-  "galleryLink": "gallery-coming-soon.html",
+  "galleryLink": "https://jungle-bougon-797.notion.site/Souza-s-Residence-Cocunut-Grove-2dc62b9dd158800a9aa9cda472672bcb",
 
   "projectName": "Sousa's Residence",
   "clientName": "Sousa, Yve",
@@ -21,6 +21,14 @@
 
   "milestones": [
     {
+      "title": "Work Completed",
+      "date": "Fev 08, 2026"
+    },
+    {
+      "title": "Work in progress",
+      "date": "Fev 06, 2026"
+    },
+    {
       "title": "Work Started",
       "date": "Fev 06, 2026"
     },
@@ -35,5 +43,5 @@
   ],
 
   "estimateHistory": [],
-  "invoiceHistory": []
+  "invoiceHistory": ["./invoices/INV040.pdf"]
 }

@@ -418,19 +418,40 @@
       align-items:center;
       gap:12px;
     }
-    .bar{
+    \.bar{
       flex:1;
       height:8px;
       border-radius:999px;
       background:var(--barBg);
       overflow:hidden;
+      position:relative;
+    }
+    /* Smooth progress animation + subtle shine sweep when status changes */
+    .bar::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+      transform: translateX(-120%);
+      opacity:0;
+      pointer-events:none;
+    }
+    .progress.status-changed .bar::after{
+      opacity:1;
+      animation: mcmBarSweep .85s ease-out 1;
+    }
+    @keyframes mcmBarSweep{
+      0%{ transform: translateX(-120%); opacity:0; }
+      10%{ opacity:1; }
+      100%{ transform: translateX(120%); opacity:0; }
     }
     .fill{
       height:100%;
       width:0%;
       border-radius:999px;
       background:linear-gradient(90deg,#d7b97a,#c8a76a);
-      transition:width .5s ease;
+      transition:width .65s ease, background .35s ease;
+      will-change: width;
     }
     .pct{
       min-width:44px;
@@ -1295,6 +1316,37 @@ const statusSubRank = (s) => {
   });
 }
 
+
+  // Track previous statuses to animate progress bar smoothly on status changes
+  const __prevStatusBySlug = Object.create(null);
+
+  function animateProgressOnStatusChange(renderedProjects){
+    if (!Array.isArray(renderedProjects)) return;
+
+    for (const p of renderedProjects){
+      const slug = String(p?.slug || "");
+      if (!slug) continue;
+
+      const current = String(p?.status || "");
+      const prev = __prevStatusBySlug[slug];
+
+      // Only animate when we have a previous value and it changed
+      if (prev && prev !== current){
+        const card = grid.querySelector(`.card.is-clickable[data-slug="${CSS.escape(slug)}"]`);
+        const prog = card ? card.querySelector(".progress") : null;
+        if (prog){
+          prog.classList.remove("status-changed");
+          // reflow to restart animation
+          void prog.offsetWidth;
+          prog.classList.add("status-changed");
+          setTimeout(() => prog.classList.remove("status-changed"), 950);
+        }
+      }
+
+      __prevStatusBySlug[slug] = current;
+    }
+  }
+
   function render(projects){
     const query = (q.value || "").trim().toLowerCase();
     const st = statusSel.value;
@@ -1383,7 +1435,9 @@ const statusSubRank = (s) => {
           </div>
         </article>
       `;
-    }).join("");
+    }).join(\"\");
+
+    animateProgressOnStatusChange(filtered);
 
     if (!filtered.length){
       empty.style.display = "block";
