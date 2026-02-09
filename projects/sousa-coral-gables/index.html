@@ -1317,6 +1317,71 @@ section + h2{
 
 
 <script src="./js/vars-loader.js"></script>
+<script>
+/* ===== FIX (Mobile Safari PDF cache): force-refresh embedded PDFs when project.json changes ===== */
+(function(){
+  function makeVersion(){
+    // Prefer lastUpdate from the page (set by vars-loader). Fallback to timestamp.
+    var el = document.querySelector('[data-var="lastUpdate"]');
+    var v = el ? (el.textContent || "").trim() : "";
+    if (!v) v = String(Date.now());
+    // Keep it URL-safe and stable
+    return encodeURIComponent(v.replace(/\s+/g,'_'));
+  }
+
+  function withCacheBuster(url){
+    if (!url) return url;
+    var parts = url.split('#');
+    var base = parts[0];
+    var hash = parts[1] ? ('#' + parts[1]) : '';
+    var v = makeVersion();
+
+    // Remove any previous v=
+    base = base.replace(/([?&])v=[^&]*(&?)/, function(_, p1, p2){
+      return p2 ? p1 : '';
+    }).replace(/[?&]$/,'');
+
+    var joiner = base.indexOf('?') >= 0 ? '&' : '?';
+    return base + joiner + 'v=' + v + hash;
+  }
+
+  function refreshPdfBox(key){
+    var iframe = document.querySelector('.pdf-box[data-pdf-box="'+key+'"] iframe');
+    if (!iframe) return;
+
+    var src = iframe.getAttribute('src') || '';
+    // If vars-loader hasn't set src yet, nothing to do.
+    if (!src) return;
+
+    var next = withCacheBuster(src);
+    if (next && next !== src){
+      iframe.setAttribute('src', next);
+    }
+  }
+
+  function run(){
+    // Apply to both embeds (estimate + invoice)
+    refreshPdfBox('currentEstimate');
+    refreshPdfBox('currentInvoice');
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    run();
+    // vars-loader populates async; retry a few times
+    setTimeout(run, 350);
+    setTimeout(run, 900);
+    setTimeout(run, 1600);
+  });
+
+  // If user switches tabs and comes back (common on mobile), refresh again
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible') {
+      setTimeout(run, 120);
+    }
+  });
+})();
+</script>
+
 
 
 <script>
