@@ -797,7 +797,7 @@ section + h2{
     /* ===== Premium Progress Bar (additive) ===== */
     .progress-row{ display:flex; align-items:center; gap:12px; }
     .progress-bar{ flex:1; height:8px; border-radius:999px; background:#efefef; overflow:hidden; }
-    .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
+    .progress-fill{ height:100%; width:0%; border-radius:999px; background: linear-gradient(90deg, var(--c1, #d7b97a), var(--c2, #c8a76a)); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
 </style>
@@ -1410,19 +1410,91 @@ function applyProgressBar(){
   }
 
   function progressFromStatus(status){
-    if (status.indexOf("completed") !== -1) return 100;
-    if (status.indexOf("in progress") !== -1) return 75;
-    if (status.indexOf("work started") !== -1) return 40;
-    if (status.indexOf("activated") !== -1) return 25;
-    if (status.indexOf("active") !== -1) return 25;
-    if (status.indexOf("approved") !== -1) return 10;
+    status = (status || "").toLowerCase().trim();
+
+    // Completed
+    if (status.indexOf("completed") !== -1 || status.indexOf("complete") !== -1 || status.indexOf("done") !== -1 || status.indexOf("finalized") !== -1 || status.indexOf("finished") !== -1) return 100;
+
+    // In Progress
+    if (status.indexOf("in progress") !== -1) return 50;
+
+    // Work Started
+    if (status.indexOf("work started") !== -1) return 35;
+
+    // Active / Activated
+    if (status.indexOf("activated") !== -1 || status.indexOf("active") !== -1) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (status.indexOf("approved") !== -1 || status.indexOf("planning") !== -1 || status.indexOf("pending") !== -1 || status.indexOf("await") !== -1 || status.indexOf("review") !== -1 || status.indexOf("deposit") !== -1 || status.indexOf("payment") !== -1) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (status.indexOf("on hold") !== -1 || status.indexOf("paused") !== -1 || status.indexOf("cancel") !== -1 || status.indexOf("inactive") !== -1 || status.indexOf("expired") !== -1 || status.indexOf("suspend") !== -1) return 0;
+
     return 0;
   }
 
-  function update(){
+  
+    // --- Progress bar colors (match dashboard EXACTLY) ---
+  // Dashboard flow/colors:
+  // pending (#f59e0b) → active (#22c55e) → inprogress (#84cc16) → completed (#477c3d)
+  // inactive (#9ca3af) is solid
+  var STATUS_FLOW = ["pending","active","inprogress","completed"];
+
+  var STATUS_COLOR = {
+    pending:    "#f59e0b",
+    active:     "#22c55e",
+    inprogress: "#84cc16",
+    completed:  "#477c3d",
+    inactive:   "#9ca3af"
+  };
+
+  function statusKeyForProgress(status){
+    var s = (status || "").toLowerCase().trim();
+
+    // Completed
+    if (s.indexOf("complete") !== -1) return "completed";
+
+    // Inactive bucket (match your 0% statuses)
+    if (s.indexOf("inactive") !== -1 || s.indexOf("on hold") !== -1 || s.indexOf("paused") !== -1 || s.indexOf("cancel") !== -1 || s.indexOf("canceled") !== -1) return "inactive";
+
+    // Pending bucket (planning/approved/awaiting/etc)
+    if (s.indexOf("pending") !== -1 || s.indexOf("planning") !== -1 || s.indexOf("approved") !== -1 || s.indexOf("await") !== -1 || s.indexOf("review") !== -1 || s.indexOf("deposit") !== -1 || s.indexOf("payment") !== -1) return "pending";
+
+    // In progress
+    if (s.indexOf("in progress") !== -1) return "inprogress";
+
+    // Active (includes activated)
+    if (s.indexOf("active") !== -1) return "active";
+
+    // Anything else: pending
+    return "pending";
+  }
+
+  function nextStatusKey(key){
+    var i = STATUS_FLOW.indexOf(key);
+    if (i < 0) return key;
+    if (i === STATUS_FLOW.length - 1) return key;
+    return STATUS_FLOW[i + 1];
+  }
+
+  function progressGradientForStatus(status){
+    var k1 = statusKeyForProgress(status);
+    if (k1 === "inactive") return { c1: STATUS_COLOR.inactive, c2: STATUS_COLOR.inactive };
+    var k2 = nextStatusKey(k1);
+    var c1 = STATUS_COLOR[k1] || "#22c55e";
+    var c2 = STATUS_COLOR[k2] || c1;
+    return { c1: c1, c2: c2 };
+  }
+
+function update(){
     var status = getStatus();
     var pct = progressFromStatus(status);
     fill.style.width = pct + "%";
+    var g = progressGradientForStatus(status);
+    fill.style.setProperty("--c1", g.c1);
+    fill.style.setProperty("--c2", g.c2);
+    // Inline background as a fallback (ensures sync even if CSS vars are ignored/cached)
+    fill.style.background = `linear-gradient(90deg, ${g.c1}, ${g.c2})`;
     pctEl.textContent = pct + "%";
   }
 
@@ -1434,17 +1506,10 @@ function applyProgressBar(){
 }
 
 
-      // Always fetch fresh JSON (avoid CDN cache)
-      var url = new URL("./data/project.json", window.location.href);
-      url.searchParams.set("v", Date.now());
-
-      fetch(url.href, { cache: "no-store" })
+      fetch("./data/project.json", { cache: "no-store" })
         .then(function(r){
           if (r && r.ok) return r.json();
-          var url2 = new URL("./project.json", window.location.href);
-            url2.searchParams.set("v", Date.now());
-
-            return fetch(url2.href, { cache: "no-store" })
+          return fetch("./project.json", { cache: "no-store" })
             .then(function(r2){
               return (r2 && r2.ok) ? r2.json() : null;
             });
@@ -1763,15 +1828,11 @@ function applyProgressBar(){
     }
 
     function load(cb){
-      var u3 = new URL("./data/project.json", window.location.href);
-      u3.searchParams.set("v", Date.now());
-      fetch(u3.href, { cache: "no-store" })
+      fetch("./data/project.json", { cache: "no-store" })
         .then(function(r){ if (r && r.ok) return r.json(); throw new Error("no json"); })
         .then(cb)
         .catch(function(){
-          var u4 = new URL("./project.json", window.location.href);
-          u4.searchParams.set("v", Date.now());
-          fetch(u4.href, { cache: "no-store" })
+          fetch("./project.json", { cache: "no-store" })
             .then(function(r2){ return (r2 && r2.ok) ? r2.json() : null; })
             .then(cb)
             .catch(function(){ cb(null); });

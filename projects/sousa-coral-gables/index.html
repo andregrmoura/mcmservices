@@ -1410,12 +1410,26 @@ function applyProgressBar(){
   }
 
   function progressFromStatus(status){
-    if (status.indexOf("completed") !== -1) return 100;
-    if (status.indexOf("in progress") !== -1) return 75;
-    if (status.indexOf("work started") !== -1) return 40;
-    if (status.indexOf("activated") !== -1) return 25;
-    if (status.indexOf("active") !== -1) return 25;
-    if (status.indexOf("approved") !== -1) return 10;
+    status = (status || "").toLowerCase().trim();
+
+    // Completed
+    if (status.indexOf("completed") !== -1 || status.indexOf("complete") !== -1 || status.indexOf("done") !== -1 || status.indexOf("finalized") !== -1 || status.indexOf("finished") !== -1) return 100;
+
+    // In Progress
+    if (status.indexOf("in progress") !== -1) return 50;
+
+    // Work Started
+    if (status.indexOf("work started") !== -1) return 35;
+
+    // Active / Activated
+    if (status.indexOf("activated") !== -1 || status.indexOf("active") !== -1) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (status.indexOf("approved") !== -1 || status.indexOf("planning") !== -1 || status.indexOf("pending") !== -1 || status.indexOf("await") !== -1 || status.indexOf("review") !== -1 || status.indexOf("deposit") !== -1 || status.indexOf("payment") !== -1) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (status.indexOf("on hold") !== -1 || status.indexOf("paused") !== -1 || status.indexOf("cancel") !== -1 || status.indexOf("inactive") !== -1 || status.indexOf("expired") !== -1 || status.indexOf("suspend") !== -1) return 0;
+
     return 0;
   }
 

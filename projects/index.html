@@ -282,6 +282,17 @@
       overflow:hidden;
       transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
+
+    /* Card open overlay: reliable new-tab navigation (avoids popup blockers) */
+    .card{ position: relative; }
+    .card-open-link{
+      position:absolute;
+      inset:0;
+      z-index: 1;
+      border-radius: 26px; /* matches card radius */
+    }
+    /* Keep status editor controls above overlay */
+    .status-pill{ position: relative; z-index: 2; }
     .card::before{
       content:"";
       position:absolute;
@@ -890,14 +901,28 @@
       }
     }
 
-    // Fallback: infer from status
+    // Fallback: infer from status (SYNC with project pages)
     const s = (p?.projectStatus || p?.status || "").toLowerCase().trim();
-    if (s.includes("complete")) return 100;
-    if (s.includes("in progress")) return 75;
-    if (s === "active") return 40;
-    if (s.includes("planning") || s.includes("pending") || s.includes("await")) return 10;
-    return 0;
-  }
+
+    // Completed
+    if (s.includes("complete") || s.includes("done") || s.includes("finalized") || s.includes("finished")) return 100;
+
+    // In progress
+    if (s.includes("in progress")) return 50;
+
+    // Work started
+    if (s.includes("work started")) return 35;
+
+    // Active / Activated
+    if (s.includes("activated") || s === "active" || s.includes("active")) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (s.includes("approved") || s.includes("planning") || s.includes("pending") || s.includes("await") || s.includes("review") || s.includes("deposit") || s.includes("payment")) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (s.includes("on hold") || s.includes("paused") || s.includes("cancel") || s.includes("inactive") || s.includes("expired") || s.includes("suspend")) return 0;
+
+    return 0;  }
 
   function setLastRefresh(date){
     const el = document.getElementById('lastRefresh') || document.getElementById('refTime');
@@ -944,6 +969,9 @@
 
   // ----- Access gate -----
   const DASH_PASSWORD = "mcm2026"; // <-- change here
+  // Admin key for status updates (Netlify function)
+  // IMPORTANT: this is embedded in the dashboard JS. If you prefer secure admin updates, keep the prompt version.
+  const ADMIN_KEY = DASH_PASSWORD; // or set a different value
   const ACCESS_KEY = "mcm_dash_access_ok";
 
   function unlockDashboard(){
@@ -1370,6 +1398,7 @@ const statusSubRank = (s) => {
 
       return `
         <article class="card is-clickable" data-project-url="${projectUrl}" data-slug="${slug}">
+          <a class="card-open-link" href="${projectUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open project"></a>
           <div class="topline">
             <h3 class="name">${esc(p.name)}</h3>
 
@@ -1428,13 +1457,8 @@ const statusSubRank = (s) => {
   const STATUS_OPTIONS = ["Planning", "Active", "On Hold", "Completed", "Canceled"];
 
   function getAdminKey(){
-    // Stored only for this browser session
-    const k = sessionStorage.getItem("mcm_admin_key");
-    if (k) return k;
-    const typed = prompt("Enter admin key to update project status:");
-    if (!typed) return "";
-    sessionStorage.setItem("mcm_admin_key", typed.trim());
-    return typed.trim();
+    // Auto-use embedded ADMIN_KEY (no pop-up prompt)
+    return (typeof ADMIN_KEY !== "undefined" ? String(ADMIN_KEY) : "").trim();
   }
 
   async function updateStatusViaFunction(slug, nextStatus){
@@ -1545,22 +1569,8 @@ const statusSubRank = (s) => {
   }
 
   // Make cards clickable (opens project in new tab when possible)
-  grid.addEventListener("click", (e) => {
-    // if clicking on status editor controls, do not navigate
-    if (e.target.closest('[data-action="status-menu"]') || e.target.closest("#statusMenu")) return;
-
-    const card = e.target.closest(".card.is-clickable");
-    if (!card) return;
-
-    const url = card.getAttribute("data-project-url");
-    if (!url) return;
-
-    // Only navigate when user clicked anywhere on the card (since Open Project button removed)
-    const w = window.open(url, "_blank", "noopener,noreferrer");
-    if (!w) window.location.href = url; // mobile fallback
-  });
-
-  // Open status menu when clicking pill/edit icon
+  // Card navigation handled by <a.card-open-link target=_blank> (no JS popups)
+// Open status menu when clicking pill/edit icon
   grid.addEventListener("click", (e) => {
     const pill = e.target.closest('[data-action="status-menu"]');
     if (!pill) return;
