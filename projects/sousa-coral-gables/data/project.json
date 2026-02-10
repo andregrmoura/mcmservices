@@ -6,19 +6,15 @@
   "currentInvoice": "./invoices/INV046-2.pdf",
   "nextStepNote": "",
   "galleryLink": "https://jungle-bougon-797.notion.site/Souza-s-Residence-Cocunut-Grove-1-30262b9dd1588086ba78dbe2d5cde11e",
-
   "projectName": "Sousa's Residence",
   "clientName": "Sousa, Yve",
   "projectAddress": "338 Majorca Ave, Coconut Grove, FL 33133",
   "startDate": "Feb 06, 2026",
   "statusDetails": "",
-
   "insuranceRequirements": [
     "COI - General Liability"
   ],
-
   "insuranceStatus": "Inactive",
-
   "milestones": [
     {
       "title": "Work Completed",
@@ -41,23 +37,18 @@
       "date": "Jan 27, 2026"
     }
   ],
-
- "estimateHistory": [
-   
-  ],
+  "estimateHistory": [],
   "invoiceHistory": [
     {
       "title": "INV046",
       "file": "./invoices/INV046.pdf"
     }
   ],
-  
   "otherDocuments": [
-  "./docs/homedepot1.pdf",
-  "./docs/homedepot2.pdf",
-  "./docs/homedepot3.pdf",
-  "./docs/homedepot4.pdf",
-  "./docs/homedepot5.pdf"
-]
-
+    "./docs/homedepot1.pdf",
+    "./docs/homedepot2.pdf",
+    "./docs/homedepot3.pdf",
+    "./docs/homedepot4.pdf",
+    "./docs/homedepot5.pdf"
+  ]
 }

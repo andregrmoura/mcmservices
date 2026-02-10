@@ -6,20 +6,16 @@
   "currentInvoice": "./invoices/INV041.pdf",
   "nextStepNote": "",
   "galleryLink": "https://jungle-bougon-797.notion.site/Rekachynskyi-s-Residence-One-Miami-Brickell-30262b9dd15880afbd49df752bd05def",
-
   "projectName": "One Miami Tower",
   "clientName": "Rekachynskyi, Denys",
   "projectAddress": "335 South Biscayne Blvd, Miami, FL 33131",
   "startDate": "Feb 09, 2026",
   "statusDetails": "",
-
   "insuranceRequirements": [
     "COI - General Liability",
     "Work Exception"
   ],
-
   "insuranceStatus": "Active",
-
   "milestones": [
     {
       "title": "Work in Progress",
@@ -38,8 +34,6 @@
       "date": "Fev 04, 2026"
     }
   ],
-
   "estimateHistory": [],
-
   "invoiceHistory": []
 }
