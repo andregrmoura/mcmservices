@@ -1,8 +1,20 @@
 export async function handler(event) {
+  const cors = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, x-admin-key",
+    "Access-Control-Allow-Methods": "POST, OPTIONS"
+  };
+
   try {
+    // Preflight
+    if (event.httpMethod === "OPTIONS") {
+      return { statusCode: 200, headers: cors, body: "" };
+    }
+
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 405,
+        headers: cors,
         body: JSON.stringify({ ok: false, error: "Method not allowed" })
       };
     }
@@ -19,6 +31,7 @@ export async function handler(event) {
     if (!ADMIN_KEY || adminKey !== ADMIN_KEY) {
       return {
         statusCode: 401,
+        headers: cors,
         body: JSON.stringify({ ok: false, error: "Unauthorized" })
       };
     }
@@ -29,14 +42,13 @@ export async function handler(event) {
     if (!slug || !projectStatus) {
       return {
         statusCode: 400,
+        headers: cors,
         body: JSON.stringify({ ok: false, error: "Missing slug or projectStatus" })
       };
     }
 
-    // 🔧 CAMINHO CORRIGIDO AQUI
     const filePath = `projects/${slug}/data/project.json`;
 
-    // 1) Ler o arquivo atual do GitHub
     const getRes = await fetch(
       `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}?ref=${BRANCH}`,
       {
@@ -51,6 +63,7 @@ export async function handler(event) {
       const text = await getRes.text();
       return {
         statusCode: getRes.status,
+        headers: cors,
         body: JSON.stringify({
           ok: false,
           error: "Failed to read file",
@@ -66,7 +79,6 @@ export async function handler(event) {
       Buffer.from(fileData.content, "base64").toString("utf8")
     );
 
-    // 2) Atualizar status
     currentContent.projectStatus = projectStatus;
     currentContent.projectStatusSub = projectStatusSub || "";
 
@@ -74,7 +86,6 @@ export async function handler(event) {
       JSON.stringify(currentContent, null, 2)
     ).toString("base64");
 
-    // 3) Enviar atualização para o GitHub
     const putRes = await fetch(
       `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
       {
@@ -96,6 +107,7 @@ export async function handler(event) {
       const text = await putRes.text();
       return {
         statusCode: putRes.status,
+        headers: cors,
         body: JSON.stringify({
           ok: false,
           error: "Failed to update file",
@@ -106,6 +118,7 @@ export async function handler(event) {
 
     return {
       statusCode: 200,
+      headers: cors,
       body: JSON.stringify({
         ok: true,
         slug,
@@ -116,6 +129,7 @@ export async function handler(event) {
   } catch (err) {
     return {
       statusCode: 500,
+      headers: cors,
       body: JSON.stringify({
         ok: false,
         error: err.message

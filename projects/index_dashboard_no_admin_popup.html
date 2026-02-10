@@ -890,12 +890,27 @@
       }
     }
 
-    // Fallback: infer from status
+    // Fallback: infer from status (match project portals)
     const s = (p?.projectStatus || p?.status || "").toLowerCase().trim();
-    if (s.includes("complete")) return 100;
+
+    // Completed
+    if (s.includes("complete") || s.includes("done") || s.includes("finalized") || s.includes("finished")) return 100;
+
+    // In progress
     if (s.includes("in progress")) return 75;
-    if (s === "active") return 40;
-    if (s.includes("planning") || s.includes("pending") || s.includes("await")) return 10;
+
+    // Work started
+    if (s.includes("work started")) return 40;
+
+    // Active / Activated
+    if (s.includes("activated") || s === "active" || s.includes("active")) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (s.includes("approved") || s.includes("planning") || s.includes("pending") || s.includes("await") || s.includes("review") || s.includes("deposit") || s.includes("payment")) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (s.includes("on hold") || s.includes("cancel") || s.includes("inactive") || s.includes("expired") || s.includes("suspend")) return 0;
+
     return 0;
   }
 
@@ -944,6 +959,9 @@
 
   // ----- Access gate -----
   const DASH_PASSWORD = "mcm2026"; // <-- change here
+  // Admin key for status updates (Netlify function)
+  // IMPORTANT: this is embedded in the dashboard JS. If you prefer secure admin updates, keep the prompt version.
+  const ADMIN_KEY = DASH_PASSWORD; // or set a different value
   const ACCESS_KEY = "mcm_dash_access_ok";
 
   function unlockDashboard(){
@@ -1428,13 +1446,8 @@ const statusSubRank = (s) => {
   const STATUS_OPTIONS = ["Planning", "Active", "On Hold", "Completed", "Canceled"];
 
   function getAdminKey(){
-    // Stored only for this browser session
-    const k = sessionStorage.getItem("mcm_admin_key");
-    if (k) return k;
-    const typed = prompt("Enter admin key to update project status:");
-    if (!typed) return "";
-    sessionStorage.setItem("mcm_admin_key", typed.trim());
-    return typed.trim();
+    // Auto-use embedded ADMIN_KEY (no pop-up prompt)
+    return (typeof ADMIN_KEY !== "undefined" ? String(ADMIN_KEY) : "").trim();
   }
 
   async function updateStatusViaFunction(slug, nextStatus){

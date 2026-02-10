@@ -1230,10 +1230,11 @@ function progressGradientForStatus(status){
 
 function statusToProgress(status){
     const s = (status||"").toLowerCase().trim();
-    if (s === "completed") return 100;
-    if (s === "active") return 40;
-    if (s === "planning") return 10;
-    if (s === "on hold" || s === "onhold") return 0;
+    if (s.includes("complete")) return 100;
+    if (s.includes("in progress")) return 50;
+    if (s.includes("active")) return 25;
+    if (s.includes("pending") || s.includes("planning")) return 10;
+    if (s.includes("inactive")) return 0;
     return 0;
   }
 
@@ -1352,7 +1353,7 @@ const statusSubRank = (s) => {
       const slug = String(p.slug || "").replace(/^\/+|\/+$/g, "");
       const projectUrl = `${BASE_PROJECTS_URL}${slug}/`;
 
-      const pct = Math.max(0, Math.min(100, Number(p.progress ?? 0)));
+      const pct = Math.max(0, Math.min(100, Number(statusToProgress(p.status))));
       const dClass = dotClass(p.status);
       const attn = needsAttention(p);
 
