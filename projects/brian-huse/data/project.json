@@ -1,25 +1,21 @@
 {
-  "projectStatus": "Active",
+  "projectStatus": "On Hold",
   "projectStatusSub": "",
   "lastUpdate": "Feb 04, 2026",
   "currentEstimate": "./estimates/EST0031.pdf",
   "currentInvoice": "./invoices/INV042.pdf",
   "nextStepNote": "",
   "galleryLink": "gallery-coming-soon.html",
-
   "projectName": "Rise Brickell City Center",
   "clientName": "Huse, Brian",
   "projectAddress": "88 SW 7th St #907, Miami, FL 33130",
   "startDate": "Feb 17, 2026",
   "statusDetails": "Scheduled to start mid-February",
-
   "insuranceRequirements": [
     "COI - General Liability"
   ],
   "insuranceStatus": "Inactive",
-
   "milestones": [
-
     {
       "title": "Starting Work",
       "date": "Feb 17, 2026"
@@ -33,7 +29,6 @@
       "date": "Jan 27, 2026"
     }
   ],
-
   "estimateHistory": [],
   "invoiceHistory": []
 }
