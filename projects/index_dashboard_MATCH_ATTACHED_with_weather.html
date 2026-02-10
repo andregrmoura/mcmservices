@@ -293,7 +293,12 @@
     }
     /* Keep status editor controls above overlay */
     .status-pill{ position: relative; z-index: 2; }
-    .card::before{
+    
+    /* Keep meta links (e.g., Google Maps address) above the full-card link overlay */
+    .meta{ position: relative; z-index: 2; }
+    .meta a{ position: relative; z-index: 3; }
+    .meta a:hover{ text-decoration: underline; }
+.card::before{
       content:"";
       position:absolute;
       inset:0 0 auto 0;
@@ -923,22 +928,7 @@
     }
 
 
-    /* Address link above card overlay */
-    .meta a.addr-link{
-      position: relative;
-      z-index: 3;
-      color: var(--text);
-      text-decoration: none;
-    }
-    body.dark .meta a.addr-link{
-      position: relative;
-      z-index: 3;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .meta a.addr-link:hover{ filter: brightness(0.95); }
-
-</style>
+    </style>
 </head>
 
 <body class="locked">
@@ -1624,7 +1614,14 @@ const statusSubRank = (s) => {
             </div>
             <div class="meta-item">
               <span class="meta-label">Address</span>
-              <a class="meta-value addr-link"><i class="fa-solid fa-location-dot" style="color: var(--gold); margin-right:6px;"></i><span href="${mapsUrl(p.projectAddress)}" target="_blank" rel="noopener noreferrer" aria-label="Open address in Google Maps">${esc(p.projectAddress || "—")}</a>
+              <span class="meta-value">
+                ${p.projectAddress 
+                  ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.projectAddress)}" target="_blank" rel="noopener noreferrer">
+                       <i class="fa-solid fa-location-dot" style="margin-right:6px; color:var(--gold);"></i>
+                       ${esc(p.projectAddress)}
+                     </a>`
+                  : "—"}
+              </span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Attention</span>
