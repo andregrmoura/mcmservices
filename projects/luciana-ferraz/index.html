@@ -842,7 +842,12 @@ section + h2{
 
             <div class="sheet-item">
               <span class="sheet-label" data-translate="project-address-label">Address</span>
-              <span class="sheet-value" data-var="projectAddress"></span>
+              <span class="sheet-value">
+                <a id="mapLink" target="_blank" rel="noopener">
+                  <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:6px;"></i>
+                  <span data-var="projectAddress"></span>
+                </a>
+              </span>
             </div>
 
             <div class="sheet-item">
@@ -1794,6 +1799,27 @@ function applyProgressBar(){
       run();
     }
   })();
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var addressEl = document.querySelector('[data-var="projectAddress"]');
+  var link = document.getElementById("mapLink");
+
+  function updateMapLink() {
+    if (!addressEl || !link) return;
+    var address = (addressEl.textContent || "").trim();
+    if (!address) return;
+
+    var url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+    link.href = url;
+  }
+
+  updateMapLink();
+  setTimeout(updateMapLink, 300);
+  setTimeout(updateMapLink, 800);
+});
 </script>
 
 </body>

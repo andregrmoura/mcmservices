@@ -797,7 +797,7 @@ section + h2{
     /* ===== Premium Progress Bar (additive) ===== */
     .progress-row{ display:flex; align-items:center; gap:12px; }
     .progress-bar{ flex:1; height:8px; border-radius:999px; background:#efefef; overflow:hidden; }
-    .progress-fill{ height:100%; width:0%; border-radius:999px; background: linear-gradient(90deg, var(--c1, #d7b97a), var(--c2, #c8a76a)); transition:width .6s ease; }
+    .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
 </style>
@@ -842,7 +842,12 @@ section + h2{
 
             <div class="sheet-item">
               <span class="sheet-label" data-translate="project-address-label">Address</span>
-              <span class="sheet-value" data-var="projectAddress"></span>
+              <span class="sheet-value">
+                <a id="mapLink" target="_blank" rel="noopener">
+                  <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:6px;"></i>
+                  <span data-var="projectAddress"></span>
+                </a>
+              </span>
             </div>
 
             <div class="sheet-item">
@@ -1433,68 +1438,10 @@ function applyProgressBar(){
     return 0;
   }
 
-  
-    // --- Progress bar colors (match dashboard EXACTLY) ---
-  // Dashboard flow/colors:
-  // pending (#f59e0b) → active (#22c55e) → inprogress (#84cc16) → completed (#477c3d)
-  // inactive (#9ca3af) is solid
-  var STATUS_FLOW = ["pending","active","inprogress","completed"];
-
-  var STATUS_COLOR = {
-    pending:    "#f59e0b",
-    active:     "#22c55e",
-    inprogress: "#84cc16",
-    completed:  "#477c3d",
-    inactive:   "#9ca3af"
-  };
-
-  function statusKeyForProgress(status){
-    var s = (status || "").toLowerCase().trim();
-
-    // Completed
-    if (s.indexOf("complete") !== -1) return "completed";
-
-    // Inactive bucket (match your 0% statuses)
-    if (s.indexOf("inactive") !== -1 || s.indexOf("on hold") !== -1 || s.indexOf("paused") !== -1 || s.indexOf("cancel") !== -1 || s.indexOf("canceled") !== -1) return "inactive";
-
-    // Pending bucket (planning/approved/awaiting/etc)
-    if (s.indexOf("pending") !== -1 || s.indexOf("planning") !== -1 || s.indexOf("approved") !== -1 || s.indexOf("await") !== -1 || s.indexOf("review") !== -1 || s.indexOf("deposit") !== -1 || s.indexOf("payment") !== -1) return "pending";
-
-    // In progress
-    if (s.indexOf("in progress") !== -1) return "inprogress";
-
-    // Active (includes activated)
-    if (s.indexOf("active") !== -1) return "active";
-
-    // Anything else: pending
-    return "pending";
-  }
-
-  function nextStatusKey(key){
-    var i = STATUS_FLOW.indexOf(key);
-    if (i < 0) return key;
-    if (i === STATUS_FLOW.length - 1) return key;
-    return STATUS_FLOW[i + 1];
-  }
-
-  function progressGradientForStatus(status){
-    var k1 = statusKeyForProgress(status);
-    if (k1 === "inactive") return { c1: STATUS_COLOR.inactive, c2: STATUS_COLOR.inactive };
-    var k2 = nextStatusKey(k1);
-    var c1 = STATUS_COLOR[k1] || "#22c55e";
-    var c2 = STATUS_COLOR[k2] || c1;
-    return { c1: c1, c2: c2 };
-  }
-
-function update(){
+  function update(){
     var status = getStatus();
     var pct = progressFromStatus(status);
     fill.style.width = pct + "%";
-    var g = progressGradientForStatus(status);
-    fill.style.setProperty("--c1", g.c1);
-    fill.style.setProperty("--c2", g.c2);
-    // Inline background as a fallback (ensures sync even if CSS vars are ignored/cached)
-    fill.style.background = `linear-gradient(90deg, ${g.c1}, ${g.c2})`;
     pctEl.textContent = pct + "%";
   }
 
@@ -1852,6 +1799,27 @@ function update(){
       run();
     }
   })();
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var addressEl = document.querySelector('[data-var="projectAddress"]');
+  var link = document.getElementById("mapLink");
+
+  function updateMapLink() {
+    if (!addressEl || !link) return;
+    var address = (addressEl.textContent || "").trim();
+    if (!address) return;
+
+    var url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+    link.href = url;
+  }
+
+  updateMapLink();
+  setTimeout(updateMapLink, 300);
+  setTimeout(updateMapLink, 800);
+});
 </script>
 
 </body>

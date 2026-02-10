@@ -349,9 +349,10 @@
 @media (max-width: 768px){
   .pdf-box{
     width: 100%;
-    height: calc(100dvh - 260px); /* header + spacing */
-    min-height: 520px;
-    max-height: 78dvh;
+    /* iPhone/Safari: give the PDF more vertical room and DO NOT cap max-height (it causes “cut off”) */
+    height: calc(100dvh - 200px);
+    min-height: 680px;
+    max-height: none;
   }
 }
 
@@ -841,7 +842,12 @@ section + h2{
 
             <div class="sheet-item">
               <span class="sheet-label" data-translate="project-address-label">Address</span>
-              <span class="sheet-value" data-var="projectAddress"></span>
+              <span class="sheet-value">
+                <a id="mapLink" target="_blank" rel="noopener">
+                  <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:6px;"></i>
+                  <span data-var="projectAddress"></span>
+                </a>
+              </span>
             </div>
 
             <div class="sheet-item">
@@ -1011,6 +1017,24 @@ section + h2{
         -->
       </ul>
     </div>
+
+
+<div class="history-card">
+  <h3>Other Documents</h3>
+  <div class="empty-note is-hidden" id="otherdocs-empty">
+    <i class="fas fa-folder-open" aria-hidden="true"></i>
+    <div>
+      <strong>No documents yet.</strong><br>
+      <span>Material receipts and additional files will appear here automatically.</span>
+    </div>
+  </div>
+  <ul class="doc-list" id="otherdocs-list">
+    <!-- Example:
+    <li><a href="./docs/receipt-01.pdf" target="_blank" rel="noopener">Material Receipt — Feb 08, 2026</a></li>
+    -->
+  </ul>
+</div>
+
 
     
   
@@ -1391,12 +1415,26 @@ function applyProgressBar(){
   }
 
   function progressFromStatus(status){
-    if (status.indexOf("completed") !== -1) return 100;
-    if (status.indexOf("in progress") !== -1) return 75;
-    if (status.indexOf("work started") !== -1) return 40;
-    if (status.indexOf("activated") !== -1) return 25;
-    if (status.indexOf("active") !== -1) return 25;
-    if (status.indexOf("approved") !== -1) return 10;
+    status = (status || "").toLowerCase().trim();
+
+    // Completed
+    if (status.indexOf("completed") !== -1 || status.indexOf("complete") !== -1 || status.indexOf("done") !== -1 || status.indexOf("finalized") !== -1 || status.indexOf("finished") !== -1) return 100;
+
+    // In Progress
+    if (status.indexOf("in progress") !== -1) return 50;
+
+    // Work Started
+    if (status.indexOf("work started") !== -1) return 35;
+
+    // Active / Activated
+    if (status.indexOf("activated") !== -1 || status.indexOf("active") !== -1) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (status.indexOf("approved") !== -1 || status.indexOf("planning") !== -1 || status.indexOf("pending") !== -1 || status.indexOf("await") !== -1 || status.indexOf("review") !== -1 || status.indexOf("deposit") !== -1 || status.indexOf("payment") !== -1) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (status.indexOf("on hold") !== -1 || status.indexOf("paused") !== -1 || status.indexOf("cancel") !== -1 || status.indexOf("inactive") !== -1 || status.indexOf("expired") !== -1 || status.indexOf("suspend") !== -1) return 0;
+
     return 0;
   }
 
@@ -1674,6 +1712,114 @@ function applyProgressBar(){
       }
     });
   })();
+</script>
+
+
+<script>
+  // Auto-fill Other Documents list from project.json: supports strings or {label,date,file}
+  (function(){
+    function ensurePath(p){
+      if (!p) return "";
+      var s = (p || "").toString().trim();
+      if (!s) return "";
+      return s;
+    }
+
+    function labelFromPath(path){
+      try{
+        var name = path.split("/").pop() || path;
+        return name.replace(/\.pdf$/i, "");
+      }catch(e){
+        return "Document";
+      }
+    }
+
+    function render(docs){
+      var ul = document.getElementById("otherdocs-list");
+      var empty = document.getElementById("otherdocs-empty");
+      if (!ul || !empty) return;
+
+      // clear (safe)
+      ul.innerHTML = "";
+
+      if (!Array.isArray(docs) || docs.length === 0){
+        empty.classList.remove("is-hidden");
+        return;
+      }
+      empty.classList.add("is-hidden");
+
+      docs.forEach(function(item){
+        var href = "";
+        var text = "";
+        if (typeof item === "string"){
+          href = ensurePath(item);
+          text = labelFromPath(href);
+        } else if (item && typeof item === "object"){
+          href = ensurePath(item.file || item.href || item.path || "");
+          var label = (item.label || item.title || "").toString().trim();
+          var date = (item.date || "").toString().trim();
+          text = label || labelFromPath(href);
+          if (date) text = text + " — " + date;
+        }
+        if (!href) return;
+
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = href;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = text;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    }
+
+    function load(cb){
+      fetch("./data/project.json", { cache: "no-store" })
+        .then(function(r){ if (r && r.ok) return r.json(); throw new Error("no json"); })
+        .then(cb)
+        .catch(function(){
+          fetch("./project.json", { cache: "no-store" })
+            .then(function(r2){ return (r2 && r2.ok) ? r2.json() : null; })
+            .then(cb)
+            .catch(function(){ cb(null); });
+        });
+    }
+
+    function run(){
+      load(function(data){
+        var docs = data && Array.isArray(data.otherDocuments) ? data.otherDocuments : [];
+        render(docs);
+      });
+    }
+
+    if (document.readyState === "loading"){
+      document.addEventListener("DOMContentLoaded", run);
+    } else {
+      run();
+    }
+  })();
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var addressEl = document.querySelector('[data-var="projectAddress"]');
+  var link = document.getElementById("mapLink");
+
+  function updateMapLink() {
+    if (!addressEl || !link) return;
+    var address = (addressEl.textContent || "").trim();
+    if (!address) return;
+
+    var url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(address);
+    link.href = url;
+  }
+
+  updateMapLink();
+  setTimeout(updateMapLink, 300);
+  setTimeout(updateMapLink, 800);
+});
 </script>
 
 </body>
