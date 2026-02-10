@@ -293,6 +293,11 @@
     }
     /* Keep status editor controls above overlay */
     .status-pill{ position: relative; z-index: 2; }
+
+    /* Keep meta links (e.g., Google Maps address) above the full-card link overlay */
+    .meta{ position: relative; z-index: 2; }
+    .meta a{ position: relative; z-index: 3; }
+    .meta a:hover{ text-decoration: underline; }
     .card::before{
       content:"";
       position:absolute;
@@ -834,56 +839,6 @@
 .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:6px; }
 .tag.attn::before, .tag.pin::before, .toggle::before{ content:none !important; display:none !important; }
 
-
-
-    /* Keep it clean on smaller screens */
-    @media (max-width: 980px){
-    }
-
-
-    /* ===== Click feedback / micro-interactions (fix "click seco") ===== */
-    .card.is-clickable{
-      -webkit-tap-highlight-color: rgba(199,169,107,.22);
-      touch-action: manipulation;
-    }
-    .card.is-clickable:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 42px rgba(0,0,0,.12);
-      border-color: rgba(199,169,107,.38);
-    }
-    .card.is-clickable:active,
-    .card.is-clickable.is-pressed{
-      transform: translateY(0);
-      box-shadow: 0 12px 26px rgba(0,0,0,.10);
-      border-color: rgba(199,169,107,.30);
-    }
-    .card.is-clickable:focus-visible{
-      outline: 3px solid rgba(199,169,107,.35);
-      outline-offset: 3px;
-    }
-
-    /* Buttons/links feedback */
-    a, button{ -webkit-tap-highlight-color: rgba(199,169,107,.22); }
-    .btn, .primary, .pill, .chip, .status-pill, .toggle, .linkbtn{
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background-color .12s ease;
-      touch-action: manipulation;
-    }
-    .btn:hover, .primary:hover, .pill:hover, .chip:hover, .status-pill:hover, .toggle:hover, .linkbtn:hover{
-      transform: translateY(-1px);
-    }
-    .btn:active, .primary:active, .pill:active, .chip:active, .status-pill:active, .toggle:active, .linkbtn:active{
-      transform: translateY(0);
-    }
-
-    /* Make the invisible overlay link feel responsive */
-    .card-open-link{
-      border-radius:16px;
-    }
-    .card-open-link:focus-visible{
-      outline: 3px solid rgba(199,169,107,.35);
-      outline-offset: 3px;
-    }
-
     /* Weather gadget */
     .weather-gadget{
       display:flex;
@@ -909,11 +864,6 @@
       white-space:nowrap;
     }
     .weather-pill i{ color: var(--gold); }
-    .weather-sub{
-      color:var(--muted2);
-      font-weight:600;
-      font-size:.88rem;
-    }
     @media (max-width: 620px){
       .weather-gadget{
         align-items:flex-start;
@@ -923,20 +873,24 @@
     }
 
 
-    /* Address link above card overlay */
-    .meta a.addr-link{
-      position: relative;
-      z-index: 3;
-      color: var(--text);
-      text-decoration: none;
+    /* === Mobile fix: allow Address (Google Maps) link above full-card overlay === */
+    .card-open-link{
+      position:absolute;
+      inset:0;
+      z-index:1;
     }
-    body.dark .meta a.addr-link{
-      position: relative;
-      z-index: 3;
-      color: var(--text);
-      text-decoration: none;
+    .meta{
+      position:relative;
+      z-index:2;
     }
-    .meta a.addr-link:hover{ filter: brightness(0.95); }
+    .meta a{
+      position:relative;
+      z-index:3;
+      pointer-events:auto;
+      display:inline-flex;
+      align-items:center;
+      padding:4px 0;
+    }
 
 </style>
 </head>
@@ -1150,13 +1104,15 @@
 <header>
   <a class="logo-link" href="../index.html">
     <img src="../images/FODA.png" alt="MCM Services Logo">
-  </span></a>
+  </a>
 </header>
 
 <main>
   <div class="wrap">
     <h1>Projects Dashboard</h1>
-<div class="top-actions">
+    
+
+    <div class="top-actions">
       </div>
 
     <div class="kpi-row" aria-label="KPIs">
@@ -1175,13 +1131,12 @@
         <div class="value" id="kpiCompleted">0</div>
         
       </div>
-    
       <div class="kpi">
         <div class="label">Needs Attention</div>
         <div class="value" id="kpiAttention">0</div>
         
       </div>
-</div>
+    </div>
 
     <div class="tools" aria-label="Tools">
       <div class="tools-left">
@@ -1273,7 +1228,7 @@
   document.getElementById('refTime').textContent = new Date().toLocaleString();
   
   // ===== Weather gadget (Miami, FL) =====
-  // Uses Open-Meteo (no API key). Change lat/lon to your preferred city if needed.
+  // Uses Open-Meteo (no API key). Change lat/lon if you want another city.
   const WEATHER = {
     lat: 25.7617,
     lon: -80.1918,
@@ -1285,7 +1240,6 @@
   function weatherCodeToText(code){
     const c = Number(code);
     if (isNaN(c)) return "—";
-    // Simplified Open-Meteo WMO mapping
     if (c === 0) return "Clear";
     if (c === 1 || c === 2) return "Partly cloudy";
     if (c === 3) return "Overcast";
@@ -1314,7 +1268,6 @@
 
   async function loadWeather(){
     try{
-      // cache
       const now = Date.now();
       const cachedRaw = localStorage.getItem(WEATHER.cacheKey);
       if (cachedRaw){
@@ -1334,18 +1287,13 @@
       const tempF = data?.current?.temperature_2m;
       const code = data?.current?.weather_code;
       setWeatherUI(tempF, code);
-      try{
-        localStorage.setItem(WEATHER.cacheKey, JSON.stringify({ ts: now, tempF, code }));
-      }catch{}
+      try{ localStorage.setItem(WEATHER.cacheKey, JSON.stringify({ ts: now, tempF, code })); }catch{}
     }catch(err){
-      // fail quietly
       const dEl = document.getElementById("weatherDesc");
       if (dEl) dEl.textContent = "Weather unavailable";
-      console.warn(err);
     }
   }
 
-  // first load + refresh every 20 min
   loadWeather();
   setInterval(loadWeather, WEATHER.cacheTtlMs);
 
@@ -1376,13 +1324,6 @@ const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same fold
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
-
-  function mapsUrl(addr){
-    const a = String(addr || "").trim();
-    if (!a) return "";
-    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(a);
-  }
-
 
   function dotClass(status){
     const s = (status||"").toLowerCase().trim();
@@ -1508,8 +1449,7 @@ function statusToProgress(status){
     document.getElementById("kpiTotal").textContent = total;
     document.getElementById("kpiActive").textContent = active;
     document.getElementById("kpiCompleted").textContent = completed;
-    const attEl = document.getElementById("kpiAttention");
-    if (attEl) attEl.textContent = attention;
+    document.getElementById("kpiAttention").textContent = attention;
   }
 function sortProjects(projects){
   const statusRank = (s) => {
@@ -1597,7 +1537,6 @@ const statusSubRank = (s) => {
       return `
         <article class="card is-clickable" data-project-url="${projectUrl}" data-slug="${slug}">
           <a class="card-open-link" href="${projectUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open project"></a>
-<a class="card-open-link" href="${projectUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open project"></a>
           <div class="topline">
             <h3 class="name">${esc(p.name)}</h3>
 
@@ -1624,7 +1563,14 @@ const statusSubRank = (s) => {
             </div>
             <div class="meta-item">
               <span class="meta-label">Address</span>
-              <a class="meta-value addr-link"><i class="fa-solid fa-location-dot" style="color: var(--gold); margin-right:6px;"></i><span href="${mapsUrl(p.projectAddress)}" target="_blank" rel="noopener noreferrer" aria-label="Open address in Google Maps">${esc(p.projectAddress || "—")}</a>
+              <span class="meta-value">
+                ${p.projectAddress 
+                  ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.projectAddress)}" target="_blank" rel="noopener noreferrer">
+                       <i class="fa-solid fa-location-dot" style="margin-right:6px; color:var(--gold);"></i>
+                       ${esc(p.projectAddress)}
+                     </a>`
+                  : "—"}
+              </span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Attention</span>
@@ -1915,7 +1861,7 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
       document.getElementById('refTime').textContent = new Date().toLocaleString();
   
   // ===== Weather gadget (Miami, FL) =====
-  // Uses Open-Meteo (no API key). Change lat/lon to your preferred city if needed.
+  // Uses Open-Meteo (no API key). Change lat/lon if you want another city.
   const WEATHER = {
     lat: 25.7617,
     lon: -80.1918,
@@ -1927,7 +1873,6 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
   function weatherCodeToText(code){
     const c = Number(code);
     if (isNaN(c)) return "—";
-    // Simplified Open-Meteo WMO mapping
     if (c === 0) return "Clear";
     if (c === 1 || c === 2) return "Partly cloudy";
     if (c === 3) return "Overcast";
@@ -1956,7 +1901,6 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 
   async function loadWeather(){
     try{
-      // cache
       const now = Date.now();
       const cachedRaw = localStorage.getItem(WEATHER.cacheKey);
       if (cachedRaw){
@@ -1976,18 +1920,13 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
       const tempF = data?.current?.temperature_2m;
       const code = data?.current?.weather_code;
       setWeatherUI(tempF, code);
-      try{
-        localStorage.setItem(WEATHER.cacheKey, JSON.stringify({ ts: now, tempF, code }));
-      }catch{}
+      try{ localStorage.setItem(WEATHER.cacheKey, JSON.stringify({ ts: now, tempF, code })); }catch{}
     }catch(err){
-      // fail quietly
       const dEl = document.getElementById("weatherDesc");
       if (dEl) dEl.textContent = "Weather unavailable";
-      console.warn(err);
     }
   }
 
-  // first load + refresh every 20 min
   loadWeather();
   setInterval(loadWeather, WEATHER.cacheTtlMs);
 
@@ -1999,47 +1938,6 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 setInterval(() => {
   setLastRefresh(new Date());
 }, 60000);
-</script>
-
-
-<script>
-/* ===== Click feedback helper (adds pressed state on touch/mouse) ===== */
-(function(){
-  function applyPressed(card, on){
-    if (!card) return;
-    if (on) card.classList.add("is-pressed");
-    else card.classList.remove("is-pressed");
-  }
-
-  function bindCard(card){
-    if (!card) return;
-    card.addEventListener("pointerdown", function(){ applyPressed(card, true); }, {passive:true});
-    card.addEventListener("pointerup", function(){ applyPressed(card, false); }, {passive:true});
-    card.addEventListener("pointercancel", function(){ applyPressed(card, false); }, {passive:true});
-    card.addEventListener("mouseleave", function(){ applyPressed(card, false); }, {passive:true});
-  }
-
-  function init(){
-    document.querySelectorAll(".card.is-clickable").forEach(bindCard);
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
-
-  // If cards are rendered dynamically later, observe and bind
-  if (window.MutationObserver){
-    const obs = new MutationObserver(function(muts){
-      muts.forEach(function(m){
-        (m.addedNodes || []).forEach(function(n){
-          if (!n || n.nodeType !== 1) return;
-          if (n.matches && n.matches(".card.is-clickable")) bindCard(n);
-          if (n.querySelectorAll) n.querySelectorAll(".card.is-clickable").forEach(bindCard);
-        });
-      });
-    });
-    obs.observe(document.body, { childList:true, subtree:true });
-  }
-})();
 </script>
 
 </body>
