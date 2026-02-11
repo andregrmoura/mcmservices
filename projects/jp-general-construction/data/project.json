@@ -1,15 +1,14 @@
 {
-  "projectStatus": "Inactive",
+  "projectStatus": "Completed",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
+  "lastUpdate": "Feb 10, 2026",
   "currentEstimate": "",
   "currentInvoice": "",
   "nextStepNote": "",
   "galleryLink": "gallery-coming-soon.html",
-
-  "projectName": "",
+  "projectName": "Delivery",
   "clientName": "JP General construction",
-  "projectAddress": "",
+  "projectAddress": "914 S South Lake Dr, Hollywood, FL 33019",
   "startDate": "",
   "statusDetails": "Inactive",
 
@@ -30,8 +29,8 @@
       "date": ""
     },
     {
-      "title": "",
-      "date": ""
+      "title": "Rooffing materials delivery",
+      "date": "Feb 10, 2026"
     }
   ],
 

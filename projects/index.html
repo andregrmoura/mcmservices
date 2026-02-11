@@ -941,6 +941,19 @@
   // Helpers used across the dashboard
   function clamp(n,min,max){ return Math.min(max, Math.max(min, n)); }
 
+// ---- Shared Status Engine (sync progress + colors with project pages) ----
+  window.__statusEngine = window.__statusEngine || null;
+
+  async function loadStatusEngine(){
+    if (window.__statusEngine) return window.__statusEngine;
+    try{
+      window.__statusEngine = await import("./assets/status-engine.js");
+    }catch(e){
+      window.__statusEngine = null;
+    }
+    return window.__statusEngine;
+  }
+
   function progressPercent(p){
     // Priority: explicit numeric progress from project.json
     const candidates = [
@@ -961,9 +974,17 @@
     }
 
     // Fallback: infer from status (SYNC with project pages)
-    const s = (p?.projectStatus || p?.status || "").toLowerCase().trim();
+    const rawStatus = (p?.projectStatus || p?.status || "").trim();
 
-    // Completed
+    // Prefer shared status-engine.js when available (keeps dashboard + project pages identical)
+    const eng = window.__statusEngine;
+    if (eng && typeof eng.getProgressPercent === "function"){
+      const v = eng.getProgressPercent(rawStatus);
+      if (typeof v === "number" && isFinite(v)) return clamp(v, 0, 100);
+    }
+
+    const s = rawStatus.toLowerCase().trim();
+// Completed
     if (s.includes("complete") || s.includes("done") || s.includes("finalized") || s.includes("finished")) return 100;
 
     // In progress
@@ -1026,6 +1047,45 @@
     }).join("");
   }
 
+  async function initStatusOptions(){
+    // 1) Prefer shared status-engine.js (same as project pages)
+    try{
+      const eng = await loadStatusEngine();
+      if (eng && Array.isArray(eng.STATUS_OPTIONS) && eng.STATUS_OPTIONS.length){
+        STATUS_OPTIONS = eng.STATUS_OPTIONS.slice();
+      }else{
+        STATUS_OPTIONS = DEFAULT_STATUS_OPTIONS.slice();
+      }
+    }catch{
+      STATUS_OPTIONS = DEFAULT_STATUS_OPTIONS.slice();
+    }
+
+    // 2) Ensure uniqueness + keep a clean order
+    const seen = new Set();
+    STATUS_OPTIONS = STATUS_OPTIONS.filter(s => {
+      const v = String(s || "").trim();
+      if (!v) return false;
+      const key = v.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    // 3) Populate filter dropdown
+    const sel = document.getElementById("status");
+    if (sel){
+      const current = sel.value;
+      sel.innerHTML = [
+        '<option value="all">All statuses</option>',
+        ...STATUS_OPTIONS.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`)
+      ].join("");
+      // restore selection if it was set
+      if (current && Array.from(sel.options).some(o => o.value === current)) sel.value = current;
+      else sel.value = "all";
+    }
+  }
+
+
   // ----- Access gate -----
   const DASH_PASSWORD = "mcm2026"; // <-- change here
   // Admin key for status updates (Netlify function)
@@ -1033,11 +1093,16 @@
   const ADMIN_KEY = DASH_PASSWORD; // or set a different value
   const ACCESS_KEY = "mcm_dash_access_ok";
 
-  function unlockDashboard(){
+  
+  const ADMIN_SESSION_KEY = "mcm_dash_admin_key";
+function unlockDashboard(adminKey){
     document.body.classList.remove("locked");
     const ov = document.getElementById("authOverlay");
     if (ov) ov.remove();
-    try { sessionStorage.setItem(ACCESS_KEY, "1"); } catch {}
+    try {
+      sessionStorage.setItem(ACCESS_KEY, "1");
+      if (adminKey) sessionStorage.setItem(ADMIN_SESSION_KEY, String(adminKey).trim());
+    } catch {}
   }
 
   function showAuthError(msg){
@@ -1059,7 +1124,7 @@
     // If previously unlocked in this browser session, skip login
     try{
       if (sessionStorage.getItem(ACCESS_KEY) === "1"){
-        unlockDashboard();
+        unlockDashboard(sessionStorage.getItem(ADMIN_SESSION_KEY) || "");
         return;
       }
     }catch{}
@@ -1089,7 +1154,7 @@
         e.preventDefault();
         const val = (pwd.value || "").trim();
         if (val === DASH_PASSWORD){
-          unlockDashboard();
+          unlockDashboard(val);
         }else{
           showAuthError("Incorrect password. Please try again.");
           pwd.select();
@@ -1143,10 +1208,7 @@
         <input id="q" class="input" type="search" placeholder="Search by name / slug..." autocomplete="off" />
         <select id="status" class="select" aria-label="Filter by status">
           <option value="all">All statuses</option>
-          <option value="Planning">Planning</option>
-          <option value="Active">Active</option>
-          <option value="On Hold">On Hold</option>
-          <option value="Completed">Completed</option>
+          <option value="" disabled selected>Loading…</option>
         </select>
         <select id="city" class="select" aria-label="Filter by city/area">
           <option value="all">All areas</option>
@@ -1581,7 +1643,7 @@ const statusSubRank = (s) => {
           <div class="progress">
             <div class="meta-label" style="margin-bottom:8px;">Progress</div>
             <div class="progress-row">
-              ${(() => { const g = progressGradientForStatus(p.status); return `<div class="bar"><div class="fill" style="width:${pct}%; --c1:${g.c1}; --c2:${g.c2};"></div></div>`; })()}
+              ${(() => { const eng = window.__statusEngine; if (eng && typeof eng.getProgressBarBackground === "function") { const bg = eng.getProgressBarBackground(p.status); return `<div class="bar"><div class="fill" style="width:${pct}%; background:${bg};"></div></div>`; } const g = progressGradientForStatus(p.status); return `<div class="bar"><div class="fill" style="width:${pct}%; --c1:${g.c1}; --c2:${g.c2};"></div></div>`; })()}
               <div class="pct">${pct}%</div>
             </div>
           </div>
@@ -1599,11 +1661,36 @@ const statusSubRank = (s) => {
   }
   // ---- Admin actions (status update) + clickable cards (no Open Project button) ----
   let ALL_PROJECTS = [];
-  const STATUS_OPTIONS = ["Planning", "Active", "On Hold", "Completed", "Canceled"];
+  let STATUS_OPTIONS = [];
+  const DEFAULT_STATUS_OPTIONS = [
+    "Planning",
+    "Active",
+    "In Progress",
+    "Approved",
+    "Scheduled",
+    "Confirmed",
+    "Pending",
+    "Awaiting",
+    "Review",
+    "Approval",
+    "Deposit",
+    "Payment",
+    "On Hold",
+    "Inactive",
+    "Expired",
+    "Cancelled",
+    "Canceled",
+    "Suspended",
+    "Completed"
+  ];
+
 
   function getAdminKey(){
-    // Auto-use embedded ADMIN_KEY (no pop-up prompt)
-    return (typeof ADMIN_KEY !== "undefined" ? String(ADMIN_KEY) : "").trim();
+    try{
+      return (sessionStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
+    }catch{
+      return "";
+    }
   }
 
   async function updateStatusViaFunction(slug, nextStatus){
@@ -1792,6 +1879,8 @@ const statusSubRank = (s) => {
     empty.style.display = "none";
 
     try{
+      await loadStatusEngine();
+      await initStatusOptions();
       const dash = await fetchJson(DASHBOARD_JSON_URL);
       ATTENTION_DAYS = Number(dash?.settings?.attentionDays ?? 14);
 
