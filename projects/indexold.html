@@ -1363,7 +1363,7 @@ function unlockDashboard(adminKey){
 
 
   // CONFIG (AUTO ROOT - works in any folder and on www/non-www)
-const PROJECTS_ROOT_URL = new URL("./", window.location.href); // folder containing this index.html
+const PROJECTS_ROOT_URL = new URL("./", go(projectUrl)); // folder containing this index.html
 const PROJECTS_ROOT = PROJECTS_ROOT_URL.pathname.endsWith("/") ? PROJECTS_ROOT_URL.pathname : (PROJECTS_ROOT_URL.pathname + "/");
 const DASHBOARD_JSON_URL = new URL("dashboard.json", PROJECTS_ROOT_URL).href;
 const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same folder

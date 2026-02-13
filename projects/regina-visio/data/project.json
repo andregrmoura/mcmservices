@@ -1,16 +1,16 @@
 {
-  "projectStatus": "Inactive",
+  "projectStatus": "Active",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
+  "lastUpdate": "Feb 10, 2026",
   "currentEstimate": "",
   "currentInvoice": "",
   "nextStepNote": "",
   "galleryLink": "gallery-coming-soon.html",
 
   "projectName": "",
-  "clientName": "Visio Torres, Regina",
+  "clientName": "Visio-Torres, Regina",
   "projectAddress": "",
-  "startDate": "",
+  "startDate": "Fev 14, 2026",
   "statusDetails": "Inactive",
 
   "insuranceRequirements": [
@@ -34,7 +34,11 @@
       "date": ""
     }
   ],
+  "estimateHistory": [
+    { "title": "", "file": "" }
+  ],
+  "invoiceHistory": [
+    { "title": "", "file": "" }
+  ]
 
-  "estimateHistory": [],
-  "invoiceHistory": []
 }

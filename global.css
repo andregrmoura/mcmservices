@@ -579,4 +579,21 @@ header {
       height: 70px;
     }
   }
-  
+  /* Page transition (fade) */
+html { scroll-behavior: smooth; }
+
+body {
+  opacity: 1;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+body.is-leaving {
+  opacity: 0;
+  transform: translateY(2px);
+}
+
+/* Respeita acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none !important; }
+  body.is-leaving { transform: none !important; }
+}

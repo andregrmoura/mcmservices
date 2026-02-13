@@ -115,4 +115,16 @@
   } else {
     mount();
   }
+  function ensureScript(src) {
+    if ([...document.scripts].some(s => s.src && s.src.includes(src))) return;
+    const script = document.createElement("script");
+    script.src = src;
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+  
+  // ...depois de injetar o footer:
+  ensureScript("/page-transition.js");
+  
+
 })();

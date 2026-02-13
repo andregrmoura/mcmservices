@@ -1,16 +1,16 @@
 {
-  "projectStatus": "Inactive",
+  "projectStatus": "Active",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 02, 2026",
-  "currentEstimate": "",
-  "currentInvoice": "",
+  "lastUpdate": "Feb 13, 2026",
+  "currentEstimate": "./estimates/EST0034.pdf",
+  "currentInvoice": "./invoices/current-invoice.pdf",
   "nextStepNote": "",
   "galleryLink": "gallery-coming-soon.html",
 
-  "projectName": "",
+  "projectName": "Aria on The Biscayne",
   "clientName": "Betor, Richard",
-  "projectAddress": "",
-  "startDate": "",
+  "projectAddress": "488 Biscayne Blvd, Miami, FL 33132",
+  "startDate": "Feb 13, 2026",
   "statusDetails": "Inactive",
 
   "insuranceRequirements": [
@@ -18,7 +18,7 @@
     ""
   ],
 
-  "insuranceStatus": "Inactive",
+  "insuranceStatus": "Active",
 
   "milestones": [
     {
@@ -34,7 +34,10 @@
       "date": ""
     }
   ],
-
-  "estimateHistory": [],
-  "invoiceHistory": []
+"estimateHistory": [
+  { "title": "EST0034", "file": "./estimates/EST0034.pdf" }
+],
+"invoiceHistory": [
+  { "title": "INV041", "file": "./invoices/current-invoice.pdf" }
+]
 }
