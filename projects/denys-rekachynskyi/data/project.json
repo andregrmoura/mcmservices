@@ -10,13 +10,17 @@
   "clientName": "Rekachynskyi, Denys",
   "projectAddress": "335 South Biscayne Blvd, Miami, FL 33131",
   "startDate": "Feb 09, 2026",
-  "statusDetails": "In Progress",
+  "statusDetails": "Complete",
   "insuranceRequirements": [
     "COI - General Liability",
     "Work Exception"
   ],
   "insuranceStatus": "Active",
   "milestones": [
+    {
+      "title": "Work Completed",
+      "date": "Fev 13, 2026"
+    },
     {
       "title": "Work in Progress",
       "date": "Fev 09, 2026"

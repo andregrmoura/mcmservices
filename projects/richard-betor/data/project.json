@@ -1,7 +1,7 @@
 {
-  "projectStatus": "Active",
+  "projectStatus": "Completed",
   "projectStatusSub": "",
-  "lastUpdate": "Feb 13, 2026",
+  "lastUpdate": "Feb 14, 2026",
   "currentEstimate": "./estimates/EST0034.pdf",
   "currentInvoice": "./invoices/current-invoice.pdf",
   "nextStepNote": "",
@@ -11,14 +11,14 @@
   "clientName": "Betor, Richard",
   "projectAddress": "488 Biscayne Blvd, Miami, FL 33132",
   "startDate": "Feb 13, 2026",
-  "statusDetails": "Inactive",
+  "statusDetails": "Complete",
 
   "insuranceRequirements": [
     "COI - General Liability",
     ""
   ],
 
-  "insuranceStatus": "Active",
+  "insuranceStatus": "Inactive",
 
   "milestones": [
     {
@@ -26,12 +26,12 @@
       "date": ""
     },
     {
-      "title": "",
-      "date": ""
+      "title": "Work Completed",
+       "date": "Feb 13, 2026"
     },
     {
-      "title": "",
-      "date": ""
+      "title": "Work Starting",
+      "date": "Feb 13, 2026"
     }
   ],
 "estimateHistory": [
