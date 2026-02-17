@@ -1098,19 +1098,50 @@
   
   const ADMIN_SESSION_KEY = "mcm_dash_admin_key";
 function unlockDashboard(adminKey){
-    const key = String(adminKey || "").trim();
-    if (!key){
-      showAuthError("Enter your admin key to unlock the dashboard.");
-      return;
-    }
-    document.body.classList.remove("locked");
-    const ov = document.getElementById("authOverlay");
-    if (ov) ov.remove();
-    try {
-      localStorage.setItem(ACCESS_KEY, "1");
-      localStorage.setItem(ADMIN_SESSION_KEY, key);
-    } catch {}
+  const key = String(adminKey || "").trim();
+  if (!key){
+    showAuthError("Enter your admin key to unlock the dashboard.");
+    return;
   }
+
+  // Do NOT validate client-side (to avoid mismatches). We verify by calling the backend.
+  // If the key is wrong, the function will return 401.
+  const verifyUrl = "/.netlify/functions/get-portal-leads?limit=1";
+  setAuthLoading(true);
+
+  fetch(verifyUrl, { headers: { "x-admin-key": key } })
+    .then(async (r) => {
+      const t = await r.text();
+      let j = {};
+      try { j = JSON.parse(t); } catch { j = { raw: t }; }
+
+      if (!r.ok || j?.ok === false){
+        // Keep locked
+        setAuthLoading(false);
+        showAuthError("Invalid admin key. Please try again.");
+        return;
+      }
+
+      // Success: persist + unlock UI
+      try{
+        localStorage.setItem(ACCESS_KEY_STORAGE, key);
+        localStorage.setItem(ACCESS_OK_STORAGE, "1");
+      }catch{}
+
+      document.body.classList.add("dash-unlocked");
+      hideAuthError();
+      setAuthLoading(false);
+
+      // Now load the dashboard data
+      try{ loadProjects?.(); }catch{}
+      try{ loadLeads?.(); }catch{}
+    })
+    .catch((err) => {
+      setAuthLoading(false);
+      showAuthError("Could not verify key (network error). Try again.");
+      console.error(err);
+    });
+}
 
   function showAuthError(msg){
     const m = document.getElementById("authMsg");
