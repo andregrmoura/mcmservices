@@ -1,10 +1,15 @@
 export default async (req) => {
+  // Helpers
   const json = (status, data, extraHeaders = {}) =>
     new Response(JSON.stringify(data), {
       status,
-      headers: { "Content-Type": "application/json", ...extraHeaders },
+      headers: {
+        "Content-Type": "application/json",
+        ...extraHeaders,
+      },
     });
 
+  // CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -16,6 +21,7 @@ export default async (req) => {
     });
   }
 
+  // Só POST
   if (req.method !== "POST") {
     return json(405, { error: "Method Not Allowed. Use POST." }, { Allow: "POST, OPTIONS" });
   }
@@ -30,6 +36,7 @@ export default async (req) => {
       body = text ? JSON.parse(text) : {};
     }
 
+    // Aceitar camelCase e snake_case
     const projectSlug = body.projectSlug ?? body.project_slug ?? "";
     const fullName = body.fullName ?? body.full_name ?? "";
     const email = (body.email ?? "").trim();
@@ -60,7 +67,7 @@ export default async (req) => {
       });
     }
 
-    // ---------- 1) Try insert lead (unique email+project) ----------
+    // ---------------- 1) INSERT lead (único) ----------------
     const payload = {
       project_slug: projectSlug,
       full_name: fullName,
@@ -96,9 +103,8 @@ export default async (req) => {
       );
     };
 
-    // leadCreated = true apenas quando inseriu com sucesso
-    const leadCreated = res.ok;
-    const duplicate = (!res.ok && (res.status === 409 || looksLikeDuplicate(text)));
+    const leadCreated = res.ok; // ✅ primeiro acesso
+    const duplicate = !res.ok && (res.status === 409 || looksLikeDuplicate(text)); // ✅ retorno
 
     // Se deu erro diferente de duplicado, aborta
     if (!res.ok && !duplicate) {
@@ -110,12 +116,12 @@ export default async (req) => {
       });
     }
 
-    // ---------- 2) Emails via Resend ----------
-    // Env no Netlify:
-    // RESEND_API_KEY=...
-    // LEADS_NOTIFY_TO=andre@mcmprosolutions.com              (ADMIN - você)
-    // LEADS_NOTIFY_FROM="MCM Leads <leads@mcmprosolutions.com>" (sender verificado)
-    // (Opcional) BRAND_LOGO_URL=...
+    // ---------------- 2) EMAILS ----------------
+    // Netlify env:
+    //   RESEND_API_KEY=...
+    //   LEADS_NOTIFY_TO=commercial@mcmprosolutions.com         (ADMIN)
+    //   LEADS_NOTIFY_FROM="MCM Leads <leads@mcmprosolutions.com>" (sender verificado)
+    //   BRAND_LOGO_URL=https://mcmprosolutions.com/images/mcmbrand-removebg-preview.png (opcional)
     let emailAdmin = { sent: false };
     let emailClient = { sent: false, skipped: true, reason: "Not first access" };
 
@@ -125,23 +131,23 @@ export default async (req) => {
     const BRAND_LOGO_URL = (process.env.BRAND_LOGO_URL || "https://mcmprosolutions.com/images/mcmbrand-removebg-preview.png").trim();
 
     const PORTAL_URL = `https://mcmprosolutions.com/projects/${projectSlug}/`;
-    const ACCESS_URL = `https://mcmprosolutions.com/access/${projectSlug}/`;
 
     const safe = (v) =>
       String(v || "").replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" }[c]));
 
-    // ✅ Admin: SEMPRE (todo acesso)
-    if (RESEND_API_KEY && TO_ADMIN && FROM) {
-      try {
+    // ✅ ADMIN: SEMPRE (cada acesso)
+    try {
+      if (RESEND_API_KEY && TO_ADMIN && FROM) {
         const subject = `Portal Access: ${safe(fullName)} (${safe(projectSlug)})`;
-        const html = `
-          <div style="font-family:-apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5; color:#111;">
-            <div style="max-width:640px;margin:0 auto;padding:16px;">
+
+        const htmlBody = `
+          <div style="font-family:-apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5;">
+            <div style="max-width:640px;margin:0 auto;padding:18px;">
               <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
                 <img src="${BRAND_LOGO_URL}" alt="MCM" style="height:44px;width:auto;object-fit:contain;" />
                 <div>
                   <div style="font-weight:800;font-size:15px;">MCM Project Portal</div>
-                  <div style="font-size:13px;color:#666;">Client access activity</div>
+                  <div style="font-size:13px;color:#666;">Client activity</div>
                 </div>
               </div>
 
@@ -157,7 +163,6 @@ export default async (req) => {
 
                 <p style="margin:10px 0 0;font-size:12px;color:#888;">
                   Portal: ${safe(PORTAL_URL)}<br/>
-                  Access Link: ${safe(ACCESS_URL)}<br/>
                   Time: ${new Date().toISOString()}
                 </p>
               </div>
@@ -165,26 +170,38 @@ export default async (req) => {
           </div>
         `;
 
-        const r = await fetch("https://api.resend.com/emails", {
+        const emailRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
-          body: JSON.stringify({ from: FROM, to: [TO_ADMIN], subject, html, reply_to: email }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: FROM,
+            to: [TO_ADMIN],
+            subject,
+            html: htmlBody,
+            reply_to: email,
+          }),
         });
 
-        const t = await r.text();
-        emailAdmin = r.ok ? { sent: true, response: t ? JSON.parse(t) : null } : { sent: false, status: r.status, details: t };
-      } catch (e) {
-        emailAdmin = { sent: false, error: String(e?.message || e) };
+        const emailText = await emailRes.text();
+        emailAdmin = emailRes.ok
+          ? { sent: true, response: emailText ? JSON.parse(emailText) : null }
+          : { sent: false, status: emailRes.status, details: emailText };
+      } else {
+        emailAdmin = { sent: false, skipped: true, reason: "Missing RESEND_API_KEY / LEADS_NOTIFY_TO / LEADS_NOTIFY_FROM" };
       }
-    } else {
-      emailAdmin = { sent: false, skipped: true, reason: "Missing RESEND_API_KEY / LEADS_NOTIFY_TO / LEADS_NOTIFY_FROM" };
+    } catch (e) {
+      emailAdmin = { sent: false, error: "Admin email error", message: String(e?.message || e) };
     }
 
-    // ✅ Client: SÓ NO PRIMEIRO ACESSO (leadCreated)
-    if (leadCreated && RESEND_API_KEY && FROM) {
-      try {
-        const subject = `Access Confirmed | MCM Project Portal`;
-        const html = `
+    // ✅ CLIENTE: SOMENTE NO PRIMEIRO ACESSO (leadCreated)
+    try {
+      if (leadCreated && RESEND_API_KEY && FROM) {
+        const subject = "Access Confirmed | MCM Project Portal";
+
+        const htmlBody = `
           <div style="font-family:-apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.55; background:#f7f7f7; padding:22px;">
             <div style="max-width:680px;margin:0 auto;background:#ffffff;border:1px solid #eee;border-radius:18px;overflow:hidden;">
               <div style="padding:18px 18px 8px;text-align:center;">
@@ -227,20 +244,34 @@ export default async (req) => {
           </div>
         `;
 
-        const r = await fetch("https://api.resend.com/emails", {
+        const emailRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_API_KEY}` },
-          body: JSON.stringify({ from: FROM, to: [email], subject, html }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: FROM,
+            to: [email], // ✅ email digitado pelo cliente
+            subject,
+            html: htmlBody,
+          }),
         });
 
-        const t = await r.text();
-        emailClient = r.ok ? { sent: true, response: t ? JSON.parse(t) : null } : { sent: false, status: r.status, details: t };
-      } catch (e) {
-        emailClient = { sent: false, error: String(e?.message || e) };
+        const emailText = await emailRes.text();
+        emailClient = emailRes.ok
+          ? { sent: true, response: emailText ? JSON.parse(emailText) : null }
+          : { sent: false, status: emailRes.status, details: emailText };
+      } else if (!leadCreated) {
+        emailClient = { sent: false, skipped: true, reason: "Not first access" };
+      } else {
+        emailClient = { sent: false, skipped: true, reason: "Missing RESEND_API_KEY / LEADS_NOTIFY_FROM" };
       }
+    } catch (e) {
+      emailClient = { sent: false, error: "Client email error", message: String(e?.message || e) };
     }
 
-    // ✅ Retorna 200 tanto para novo quanto para retorno
+    // ✅ Retorna 200 sempre para novo e retorno
     return json(200, {
       ok: true,
       leadCreated,
