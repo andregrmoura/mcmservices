@@ -235,13 +235,7 @@
   </div>
 
   <script>
-    // ===== MODEL 2 SETTINGS =====
-    const ACCESS_TTL_DAYS = 180; // quanto tempo “lembrar” o acesso no navegador
-
     function getProjectSlugFromPath() {
-      // Aceita:
-      // /access/<slug>/
-      // /access/<slug>/index.html
       const parts = window.location.pathname.split("/").filter(Boolean);
       const i = parts.indexOf("access");
       const slug = (i >= 0 && parts[i + 1]) ? parts[i + 1] : "";
@@ -255,36 +249,6 @@
 
     function getProjectSlug() {
       return getProjectSlugFromPath() || getProjectSlugFromQuery();
-    }
-
-    function accessKey(slug){
-      return `mcm_portal_access_${slug}`;
-    }
-
-    function nowMs(){ return Date.now(); }
-
-    function isNotExpired(saved){
-      if (!saved || !saved.ts) return false;
-      const ttlMs = ACCESS_TTL_DAYS * 24 * 60 * 60 * 1000;
-      return (nowMs() - saved.ts) <= ttlMs;
-    }
-
-    function loadSaved(slug){
-      try{
-        const raw = localStorage.getItem(accessKey(slug));
-        return raw ? JSON.parse(raw) : null;
-      }catch{
-        return null;
-      }
-    }
-
-    function saveAccess(slug, fullName, email){
-      const payload = { fullName, email, ts: nowMs() };
-      localStorage.setItem(accessKey(slug), JSON.stringify(payload));
-    }
-
-    function clearAccess(slug){
-      localStorage.removeItem(accessKey(slug));
     }
 
     function showMsg(text){
@@ -303,30 +267,15 @@
       window.location.href = `/projects/${slug}/`;
     }
 
-    // 1) Auto-skip: se já tem acesso salvo válido, entra direto
+    // ✅ Sem auto-skip. Sempre exige nome + email.
     document.addEventListener("DOMContentLoaded", () => {
       const slug = getProjectSlug();
       if (!slug) {
-        // Mostra erro claro (o link que você enviou está incompleto)
         showMsg("Invalid access link.\nMissing project slug.\n\nUse:\n/access/<projectSlug>/\n\nExample:\n/access/khoudari-coral-gables/");
         return;
       }
-
-      const saved = loadSaved(slug);
-
-      if (saved && isNotExpired(saved) && saved.email) {
-        redirectToPortal(slug);
-        return;
-      }
-
-      // Prefill se tiver salvo mas expirado (ajuda o cliente)
-      if (saved && saved.email) {
-        document.getElementById("email").value = saved.email || "";
-        document.getElementById("fullName").value = saved.fullName || "";
-      }
     });
 
-    // Link: usar e-mail diferente
     document.getElementById("useDifferent").addEventListener("click", (e) => {
       e.preventDefault();
       hideMsg();
@@ -335,16 +284,17 @@
       document.getElementById("email").focus();
     });
 
-    // Link: limpar acesso salvo desse projeto
+    // Mantém o link, mas agora só limpa o localStorage (não afeta fluxo)
     document.getElementById("clearAccess").addEventListener("click", (e) => {
       e.preventDefault();
-      const slug = getProjectSlug();
-      if (!slug) return;
-      clearAccess(slug);
-      showMsg("Saved access cleared for this project.\nPlease enter your info again.");
+      try {
+        Object.keys(localStorage)
+          .filter(k => k.startsWith("mcm_portal_access_"))
+          .forEach(k => localStorage.removeItem(k));
+      } catch {}
+      showMsg("Saved access cleared.\nPlease enter your info again.");
     });
 
-    // 2) Primeiro acesso: salva lead + grava acesso local + redireciona
     document.getElementById("accessForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       hideMsg();
@@ -369,15 +319,14 @@
         });
 
         if (!resp.ok){
-          // MOSTRA O ERRO REAL (status + body)
           const details = await resp.text().catch(() => "");
           showMsg(`Save failed (${resp.status}).\n\n${details || "No details returned from server."}`);
           btn.disabled = false;
           return;
         }
 
-        // SALVA ACESSO LOCAL (modelo 2)
-        saveAccess(projectSlug, fullName, email);
+        // opcional: se você quiser salvar só para prefill, pode reativar depois.
+        // localStorage.setItem(`mcm_portal_access_${projectSlug}`, JSON.stringify({ fullName, email, ts: Date.now() }));
 
         redirectToPortal(projectSlug);
       }catch(err){
