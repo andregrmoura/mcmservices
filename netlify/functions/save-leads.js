@@ -1,15 +1,10 @@
 export default async (req) => {
-  // Helpers
   const json = (status, data, extraHeaders = {}) =>
-    new Response(JSON.stringify(data), {
+    new Response(JSON.stringify(data, null, 2), {
       status,
-      headers: {
-        "Content-Type": "application/json",
-        ...extraHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...extraHeaders },
     });
 
-  // CORS preflight (não atrapalha e evita dor de cabeça)
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -21,13 +16,32 @@ export default async (req) => {
     });
   }
 
-  // Só POST
   if (req.method !== "POST") {
     return json(405, { error: "Method Not Allowed. Use POST." }, { Allow: "POST, OPTIONS" });
   }
 
+  // Helpers para pegar detalhes do erro de fetch (DNS/TLS/timeout)
+  const serializeError = (err) => {
+    const cause = err?.cause;
+    return {
+      name: err?.name,
+      message: String(err?.message ?? err),
+      stack: err?.stack,
+      cause: cause
+        ? {
+            name: cause?.name,
+            message: String(cause?.message ?? cause),
+            code: cause?.code,
+            errno: cause?.errno,
+            syscall: cause?.syscall,
+            address: cause?.address,
+            port: cause?.port,
+          }
+        : null,
+    };
+  };
+
   try {
-    // Parse body (robusto)
     let body = {};
     try {
       body = await req.json();
@@ -36,7 +50,6 @@ export default async (req) => {
       body = text ? JSON.parse(text) : {};
     }
 
-    // Aceitar camelCase e snake_case
     const projectSlug = body.projectSlug ?? body.project_slug ?? "";
     const fullName = body.fullName ?? body.full_name ?? "";
     const email = body.email ?? "";
@@ -45,12 +58,8 @@ export default async (req) => {
     if (!projectSlug || !fullName || !email) {
       return json(400, {
         error: "Missing fields",
-        expected_any_of: {
-          projectSlug_or_project_slug: true,
-          fullName_or_full_name: true,
-          email: true,
-        },
-        received: Object.keys(body || {}),
+        expected: ["projectSlug/fullName/email"],
+        receivedKeys: Object.keys(body || {}),
       });
     }
 
@@ -67,6 +76,21 @@ export default async (req) => {
       });
     }
 
+    // 1) TESTE DE CONECTIVIDADE (host do Supabase)
+    // Se isso falhar, é DNS/TLS/rede.
+    try {
+      const ping = await fetch(SUPABASE_URL, { method: "HEAD" });
+      // Mesmo 404/401 é OK aqui — o importante é NÃO dar "fetch failed"
+      // Só registramos o status pra debug.
+      if (!ping) throw new Error("No response from HEAD ping");
+    } catch (e) {
+      return json(500, {
+        error: "Supabase host not reachable from Netlify function",
+        supabase_url_used: SUPABASE_URL,
+        fetch_error: serializeError(e),
+      });
+    }
+
     const payload = {
       project_slug: projectSlug,
       full_name: fullName,
@@ -74,35 +98,43 @@ export default async (req) => {
       ...(phone ? { phone } : {}),
     };
 
-    // Timeout para não “morrer” em silêncio
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
+    // 2) INSERT
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
 
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/portal_leads`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        Prefer: "return=representation",
-      },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    }).finally(() => clearTimeout(timeout));
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/portal_leads`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      }).finally(() => clearTimeout(timeout));
 
-    const text = await res.text();
+      const text = await res.text();
 
-    if (!res.ok) {
+      if (!res.ok) {
+        return json(500, {
+          error: "Supabase insert failed (HTTP response received)",
+          status: res.status,
+          details: text,
+          supabase_url_used: SUPABASE_URL,
+        });
+      }
+
+      return json(200, { ok: true, inserted: text ? JSON.parse(text) : null });
+    } catch (e) {
       return json(500, {
-        error: "Supabase insert failed",
-        status: res.status,
-        details: text,
+        error: "Supabase insert fetch threw (network/DNS/TLS/timeout)",
         supabase_url_used: SUPABASE_URL,
+        fetch_error: serializeError(e),
       });
     }
-
-    return json(200, { ok: true, inserted: text ? JSON.parse(text) : null });
   } catch (err) {
-    return json(500, { error: "Unhandled error", message: String(err) });
+    return json(500, { error: "Unhandled error", details: serializeError(err) });
   }
 };
