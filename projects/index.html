@@ -1098,13 +1098,19 @@
   
   const ADMIN_SESSION_KEY = "mcm_dash_admin_key";
 function unlockDashboard(adminKey){
+    const key = String(adminKey || "").trim();
+    if (!key){
+      showAuthError("Enter your admin key to unlock the dashboard.");
+      return;
+    }
     document.body.classList.remove("locked");
     const ov = document.getElementById("authOverlay");
     if (ov) ov.remove();
     try {
-      sessionStorage.setItem(ACCESS_KEY, "1");
-      if (adminKey) sessionStorage.setItem(ADMIN_SESSION_KEY, String(adminKey).trim());
+      localStorage.setItem(ACCESS_KEY, "1");
+      localStorage.setItem(ADMIN_SESSION_KEY, key);
     } catch {}
+  } catch {}
   }
 
   function showAuthError(msg){
@@ -1123,12 +1129,42 @@ function unlockDashboard(adminKey){
   }
 
   function initAuth(){
-    // If previously unlocked in this browser session, skip login
+    // Persisted unlock (localStorage): only auto-unlock if admin key exists
     try{
-      if (sessionStorage.getItem(ACCESS_KEY) === "1"){
-        unlockDashboard(sessionStorage.getItem(ADMIN_SESSION_KEY) || "");
+      const ok = localStorage.getItem(ACCESS_KEY) === "1";
+      const key = (localStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
+      if (ok && key){
+        unlockDashboard(key);
         return;
       }
+    }catch{}
+
+    const form = document.getElementById("authForm");
+    const pwd = document.getElementById("authPassword");
+
+    // If a key exists but ACCESS not set, prefill to avoid retyping
+    try{
+      const existing = (localStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
+      if (existing && pwd) pwd.value = existing;
+    }catch{}
+
+    if (!form || !pwd) return;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const key = String(pwd.value || "").trim();
+      if (!key){
+        showAuthError("Please enter your admin key.");
+        return;
+      }
+      unlockDashboard(key);
+      try{
+        // load after unlock
+        loadAll();
+        loadLeads();
+      }catch{}
+    });
+  }
     }catch{}
 
     const form = document.getElementById("authForm");
@@ -1237,7 +1273,25 @@ function unlockDashboard(adminKey){
     <div id="error" class="error"></div>
     <section id="grid" class="grid" aria-label="Project cards"></section>
     <div id="empty" class="empty"></div>
-  </div>
+  
+    <!-- Leads -->
+    <div class="section-row" style="margin-top:22px;">
+      <div class="section-title">Leads</div>
+
+      <div class="tools-left" style="justify-content:flex-end;">
+        <input id="leadQuery" class="input" type="search" placeholder="Search name / email / project…" autocomplete="off" style="min-width:240px;">
+        <input id="leadProject" class="input" type="search" placeholder="Filter projectSlug (optional)" autocomplete="off" style="min-width:220px;">
+        <button id="refreshLeads" class="btn" type="button"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button>
+      </div>
+    </div>
+
+    <div id="leadsBox" class="card" style="padding:16px; margin-bottom:18px;">
+      <div class="meta-label" style="margin-bottom:10px;">Latest leads</div>
+      <div id="leadsState" class="sub" style="margin:0 0 10px; display:none;"></div>
+      <div id="leadsList"></div>
+    </div>
+
+</div>
 </main>
 
 <footer>
@@ -1689,13 +1743,103 @@ const statusSubRank = (s) => {
 
   function getAdminKey(){
     try{
-      return (sessionStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
+      return (localStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
     }catch{
       return "";
     }
   }
 
-  async function updateStatusViaFunction(slug, nextStatus){
+  
+  // ===== Leads (Supabase) =====
+  function formatDate(dt){
+    try { return new Date(dt).toLocaleString(); } catch { return ""; }
+  }
+
+  function setLeadsState(msg){
+    const el = document.getElementById("leadsState");
+    if (!el) return;
+    if (!msg){ el.style.display = "none"; el.textContent = ""; return; }
+    el.style.display = "block";
+    el.textContent = msg;
+  }
+
+  function renderLeads(rows){
+    const wrap = document.getElementById("leadsList");
+    if (!wrap) return;
+
+    if (!Array.isArray(rows) || !rows.length){
+      wrap.innerHTML = `<div class="sub" style="margin:0;">No leads yet.</div>`;
+      return;
+    }
+
+    wrap.innerHTML = rows.map(r => {
+      const name = escapeHtml(r.full_name || "-");
+      const email = escapeHtml(r.email || "-");
+      const phone = escapeHtml(r.phone || "");
+      const slug = escapeHtml(r.project_slug || "-");
+      const when = r.created_at ? formatDate(r.created_at) : "";
+
+      return `
+        <div style="display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--border2);">
+          <div style="min-width:0;">
+            <div style="font-weight:700; color:var(--text);">${name}</div>
+            <div class="sub" style="margin:2px 0 0;">
+              ${email}${phone ? ` • ${phone}` : ""} • <strong>${slug}</strong>
+            </div>
+          </div>
+          <div class="sub" style="white-space:nowrap; margin:0;">${escapeHtml(when)}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function loadLeads(){
+    const adminKey = getAdminKey();
+    if (!adminKey){
+      setLeadsState("Unlock the dashboard to view leads.");
+      renderLeads([]);
+      return;
+    }
+
+    const q = (document.getElementById("leadQuery")?.value || "").trim();
+    const projectSlug = (document.getElementById("leadProject")?.value || "").trim();
+
+    const params = new URLSearchParams();
+    params.set("limit", "100");
+    if (q) params.set("q", q);
+    if (projectSlug) params.set("projectSlug", projectSlug);
+
+    setLeadsState("Loading leads…");
+
+    const res = await fetch(`/.netlify/functions/get-portal-leads?${params.toString()}`, {
+      headers: { "x-admin-key": adminKey }
+    });
+
+    const text = await res.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+    if (!res.ok || data.ok === false){
+      setLeadsState(data?.error || data?.details || data?.raw || `HTTP ${res.status}`);
+      renderLeads([]);
+      return;
+    }
+
+    setLeadsState("");
+    renderLeads(data.data || []);
+  }
+
+  function initLeadsUI(){
+    document.getElementById("refreshLeads")?.addEventListener("click", loadLeads);
+
+    document.getElementById("leadQuery")?.addEventListener("input", () => {
+      clearTimeout(window.__leadT);
+      window.__leadT = setTimeout(loadLeads, 300);
+    });
+
+    document.getElementById("leadProject")?.addEventListener("change", loadLeads);
+  }
+async function updateStatusViaFunction(slug, nextStatus){
     const adminKey = getAdminKey();
     if (!adminKey) throw new Error("Missing admin key.");
 
@@ -2052,8 +2196,10 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 
     }
   }
-
+  initLeadsUI();
   loadAll();
+  // Load leads once dashboard is unlocked + projects loaded
+  setTimeout(loadLeads, 250);
 
 setInterval(() => {
   setLastRefresh(new Date());
