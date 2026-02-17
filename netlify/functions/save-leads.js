@@ -1,102 +1,100 @@
-import fetch from "node-fetch";
+exports.handler = async (event) => {
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ error: "Method not allowed" })
+    };
+  }
 
-export async function handler(event) {
   try {
-    const data = JSON.parse(event.body || "{}");
+    const body = JSON.parse(event.body || "{}");
+    const { projectSlug, fullName, email } = body;
 
-    const name = data.name || "Client";
-    const email = data.email;
-    const project = data.project || "MCM Project";
-
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    const FROM =
-      process.env.LEADS_NOTIFY_FROM ||
-      process.env.LEAD_NOTIFY_FROM ||
-      "MCM Leads <leads@mcmprosolutions.com>";
-
-    const TO =
-      process.env.LEADS_NOTIFY_TO ||
-      process.env.LEAD_NOTIFY_TO ||
-      "commercial@mcmprosolutions.com";
-
-    if (!email) {
+    if (!projectSlug || !fullName || !email) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Missing email" }),
+        body: JSON.stringify({ error: "Missing fields" })
       };
     }
 
     // =========================
-    // 1) EMAIL PARA A EMPRESA
+    // 1) Salvar no Supabase
     // =========================
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: FROM,
-        to: [TO],
-        subject: `New Portal Lead: ${name} (${project})`,
-        html: `
-          <div style="font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5;">
-            <h2>New Portal Lead</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Project:</strong> ${project}</p>
-          </div>
-        `,
-        reply_to: [email],
-      }),
-    });
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+      try {
+        await fetch(`${supabaseUrl}/rest/v1/portal_leads`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": supabaseKey,
+            "Authorization": `Bearer ${supabaseKey}`,
+            "Prefer": "resolution=merge-duplicates"
+          },
+          body: JSON.stringify({
+            project_slug: projectSlug,
+            full_name: fullName,
+            email: email,
+            last_seen: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.log("Supabase insert failed:", err.message);
+      }
+    }
 
     // =========================
-    // 2) AUTO-RESPOSTA PARA O CLIENTE
+    // 2) Enviar email (Resend)
     // =========================
-    await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: FROM,
-        to: [email],
-        subject: "Access confirmed – MCM Project Portal",
-        html: `
-          <div style="font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.6; color:#222;">
-            <p>Hi ${name},</p>
+    const resendKey = process.env.RESEND_API_KEY;
+    const emailTo = process.env.LEAD_NOTIFY_TO;
+    const emailFrom = process.env.LEAD_NOTIFY_FROM;
 
-            <p>Your access to the <strong>${project}</strong> portal has been confirmed.</p>
+    if (resendKey && emailTo && emailFrom) {
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendKey}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            from: emailFrom,
+            to: [emailTo],
+            subject: `Portal Access: ${fullName}`,
+            html: `
+              <div style="font-family:Arial,sans-serif">
+                <h2>New Portal Access</h2>
+                <p><strong>Name:</strong> ${fullName}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Project:</strong> ${projectSlug}</p>
+                <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+              </div>
+            `
+          })
+        });
+      } catch (err) {
+        console.log("Email send failed:", err.message);
+      }
+    }
 
-            <p>You can return anytime using the same link to:</p>
-            <ul>
-              <li>Track project updates</li>
-              <li>View photos and progress</li>
-              <li>Access invoices and documents</li>
-            </ul>
-
-            <p>If you have any questions, just reply to this email.</p>
-
-            <p style="margin-top:24px;">
-              Best regards,<br>
-              <strong>MCM Services</strong><br>
-              High-End Residential Projects
-            </p>
-          </div>
-        `,
-      }),
-    });
-
+    // =========================
+    // 3) Resposta de sucesso
+    // =========================
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true }),
+      body: JSON.stringify({ ok: true })
     };
+
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({
+        error: "Internal error",
+        message: err.message
+      })
     };
   }
-}
+};
