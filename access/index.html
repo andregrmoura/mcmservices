@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
@@ -156,6 +155,11 @@
       cursor:pointer;
     }
 
+    .auth-btn:disabled{
+      cursor:not-allowed;
+      opacity:0.75;
+    }
+
     .auth-msg{
       display:none;
       margin-top: 10px;
@@ -166,7 +170,26 @@
       color: var(--text);
       font-size: .92rem;
       text-align:left;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
+
+    .auth-links{
+      margin-top: 12px;
+      font-size: .9rem;
+      color: var(--muted2);
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .auth-link{
+      color: var(--gold2);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .auth-link:hover{ text-decoration: underline; }
   </style>
 </head>
 
@@ -194,22 +217,74 @@
             <input class="auth-input" id="email" type="email" placeholder="Email Address" required />
           </div>
 
-          <button class="auth-btn" type="submit">
+          <button class="auth-btn" type="submit" id="continueBtn">
             <i class="fa-solid fa-arrow-right"></i>
             Continue to Portal
           </button>
 
           <div class="auth-msg" id="msg"></div>
+
+          <div class="auth-links">
+            <a class="auth-link" id="useDifferent">Use a different email</a>
+            <span>•</span>
+            <a class="auth-link" id="clearAccess">Clear saved access</a>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
   <script>
-    function getProjectSlug() {
+    // ===== MODEL 2 SETTINGS =====
+    const ACCESS_TTL_DAYS = 180; // quanto tempo “lembrar” o acesso no navegador
+
+    function getProjectSlugFromPath() {
+      // Aceita:
+      // /access/<slug>/
+      // /access/<slug>/index.html
       const parts = window.location.pathname.split("/").filter(Boolean);
       const i = parts.indexOf("access");
-      return (i >= 0 && parts[i + 1]) ? parts[i + 1] : "";
+      const slug = (i >= 0 && parts[i + 1]) ? parts[i + 1] : "";
+      return (slug || "").trim();
+    }
+
+    function getProjectSlugFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return (params.get("project") || params.get("slug") || "").trim();
+    }
+
+    function getProjectSlug() {
+      return getProjectSlugFromPath() || getProjectSlugFromQuery();
+    }
+
+    function accessKey(slug){
+      return `mcm_portal_access_${slug}`;
+    }
+
+    function nowMs(){ return Date.now(); }
+
+    function isNotExpired(saved){
+      if (!saved || !saved.ts) return false;
+      const ttlMs = ACCESS_TTL_DAYS * 24 * 60 * 60 * 1000;
+      return (nowMs() - saved.ts) <= ttlMs;
+    }
+
+    function loadSaved(slug){
+      try{
+        const raw = localStorage.getItem(accessKey(slug));
+        return raw ? JSON.parse(raw) : null;
+      }catch{
+        return null;
+      }
+    }
+
+    function saveAccess(slug, fullName, email){
+      const payload = { fullName, email, ts: nowMs() };
+      localStorage.setItem(accessKey(slug), JSON.stringify(payload));
+    }
+
+    function clearAccess(slug){
+      localStorage.removeItem(accessKey(slug));
     }
 
     function showMsg(text){
@@ -218,17 +293,73 @@
       box.style.display = "block";
     }
 
+    function hideMsg(){
+      const box = document.getElementById("msg");
+      box.textContent = "";
+      box.style.display = "none";
+    }
+
+    function redirectToPortal(slug){
+      window.location.href = `/projects/${slug}/`;
+    }
+
+    // 1) Auto-skip: se já tem acesso salvo válido, entra direto
+    document.addEventListener("DOMContentLoaded", () => {
+      const slug = getProjectSlug();
+      if (!slug) {
+        // Mostra erro claro (o link que você enviou está incompleto)
+        showMsg("Invalid access link.\nMissing project slug.\n\nUse:\n/access/<projectSlug>/\n\nExample:\n/access/khoudari-coral-gables/");
+        return;
+      }
+
+      const saved = loadSaved(slug);
+
+      if (saved && isNotExpired(saved) && saved.email) {
+        redirectToPortal(slug);
+        return;
+      }
+
+      // Prefill se tiver salvo mas expirado (ajuda o cliente)
+      if (saved && saved.email) {
+        document.getElementById("email").value = saved.email || "";
+        document.getElementById("fullName").value = saved.fullName || "";
+      }
+    });
+
+    // Link: usar e-mail diferente
+    document.getElementById("useDifferent").addEventListener("click", (e) => {
+      e.preventDefault();
+      hideMsg();
+      document.getElementById("email").value = "";
+      document.getElementById("fullName").value = "";
+      document.getElementById("email").focus();
+    });
+
+    // Link: limpar acesso salvo desse projeto
+    document.getElementById("clearAccess").addEventListener("click", (e) => {
+      e.preventDefault();
+      const slug = getProjectSlug();
+      if (!slug) return;
+      clearAccess(slug);
+      showMsg("Saved access cleared for this project.\nPlease enter your info again.");
+    });
+
+    // 2) Primeiro acesso: salva lead + grava acesso local + redireciona
     document.getElementById("accessForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      hideMsg();
 
       const projectSlug = getProjectSlug();
       if (!projectSlug){
-        showMsg("Invalid access link. Please contact MCM Services.");
+        showMsg("Invalid access link.\nMissing project slug.\n\nUse:\n/access/<projectSlug>/");
         return;
       }
 
       const fullName = document.getElementById("fullName").value.trim();
       const email = document.getElementById("email").value.trim();
+
+      const btn = document.getElementById("continueBtn");
+      btn.disabled = true;
 
       try{
         const resp = await fetch("/.netlify/functions/save-leads", {
@@ -238,13 +369,20 @@
         });
 
         if (!resp.ok){
-          showMsg("We couldn’t save your info right now. Please try again.");
+          // MOSTRA O ERRO REAL (status + body)
+          const details = await resp.text().catch(() => "");
+          showMsg(`Save failed (${resp.status}).\n\n${details || "No details returned from server."}`);
+          btn.disabled = false;
           return;
         }
 
-        window.location.href = `/projects/${projectSlug}/`;
+        // SALVA ACESSO LOCAL (modelo 2)
+        saveAccess(projectSlug, fullName, email);
+
+        redirectToPortal(projectSlug);
       }catch(err){
-        showMsg("Connection error. Please try again.");
+        showMsg(`Connection error.\n\n${err?.message || "Please try again."}`);
+        btn.disabled = false;
       }
     });
   </script>
