@@ -92,22 +92,39 @@ export default async (req) => {
 
     const text = await res.text();
 
+    // ✅ TRATAMENTO DE DUPLICADO:
+    // - Supabase/Postgres retorna 409 para unique constraint
+    // - erro contém code 23505 / duplicate key
+    const looksLikeDuplicate = (t) => {
+      const s = String(t || "").toLowerCase();
+      return (
+        s.includes("duplicate key") ||
+        s.includes("already exists") ||
+        s.includes("23505") ||
+        s.includes("unique constraint") ||
+        s.includes("portal_leads_email_project_unique")
+      );
+    };
+
     if (!res.ok) {
-      return json(500, {
-        error: "Supabase insert failed",
-        status: res.status,
-        details: text,
-        supabase_url_used: SUPABASE_URL,
-      });
+      if (res.status === 409 || looksLikeDuplicate(text)) {
+        // ✅ Já existe: não falha o fluxo
+        // (mantém a experiência do cliente e evita “Save failed (500)”)
+        // Opcional: ainda podemos mandar e-mail de notificação como "access again"
+        // Vamos continuar para a parte de e-mail, mas marcando duplicate.
+      } else {
+        return json(500, {
+          error: "Supabase insert failed",
+          status: res.status,
+          details: text,
+          supabase_url_used: SUPABASE_URL,
+        });
+      }
     }
 
+    const duplicate = (!res.ok && (res.status === 409 || looksLikeDuplicate(text)));
 
     // -------- Email notification (optional) --------
-    // Recommended provider: Resend (https://resend.com)
-    // Set in Netlify env:
-    //   RESEND_API_KEY=...
-    //   LEADS_NOTIFY_TO=andre@mcmprosolutions.com   (or your preferred email)
-    //   LEADS_NOTIFY_FROM=Leads <no-reply@mcmprosolutions.com> (must be a verified sender/domain in Resend)
     let emailNotification = { sent: false };
     try {
       const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
@@ -115,12 +132,13 @@ export default async (req) => {
       const FROM = (process.env.LEADS_NOTIFY_FROM || "").trim();
 
       if (RESEND_API_KEY && TO && FROM) {
-        const insertedRow = text ? (JSON.parse(text)?.[0] || JSON.parse(text)) : null;
+        const subject = duplicate
+          ? `Portal Access (Return): ${fullName} (${projectSlug})`
+          : `New Portal Lead: ${fullName} (${projectSlug})`;
 
-        const subject = `New Portal Lead: ${fullName} (${projectSlug})`;
         const htmlBody = `
           <div style="font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.45;">
-            <h2 style="margin:0 0 12px;">New Portal Lead</h2>
+            <h2 style="margin:0 0 12px;">${duplicate ? "Portal Access (Return)" : "New Portal Lead"}</h2>
             <p style="margin:0 0 10px;"><strong>Project:</strong> ${projectSlug}</p>
             <p style="margin:0 0 10px;"><strong>Name:</strong> ${fullName}</p>
             <p style="margin:0 0 10px;"><strong>Email:</strong> ${email}</p>
@@ -140,7 +158,6 @@ export default async (req) => {
             to: [TO],
             subject,
             html: htmlBody,
-            // Optional: reply-to the lead
             reply_to: email,
           }),
         });
@@ -158,7 +175,13 @@ export default async (req) => {
       emailNotification = { sent: false, error: "Email notification error", message: String(e?.message || e) };
     }
 
-    return json(200, { ok: true, inserted: text ? JSON.parse(text) : null, emailNotification });
+    // ✅ Retorna 200 tanto para inserção nova quanto para duplicado
+    return json(200, {
+      ok: true,
+      duplicate,
+      inserted: (!duplicate && text) ? JSON.parse(text) : null,
+      emailNotification
+    });
   } catch (err) {
     return json(500, { error: "Unhandled error", message: String(err) });
   }
