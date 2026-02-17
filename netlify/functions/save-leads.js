@@ -1,248 +1,165 @@
-import { createClient } from "@supabase/supabase-js";
+export default async (req) => {
+  // Helpers
+  const json = (status, data, extraHeaders = {}) =>
+    new Response(JSON.stringify(data), {
+      status,
+      headers: {
+        "Content-Type": "application/json",
+        ...extraHeaders,
+      },
+    });
 
-/**
- * Helpers
- */
-function json(statusCode, bodyObj) {
-  return {
-    statusCode,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-    },
-    body: JSON.stringify(bodyObj),
-  };
-}
-
-function parseBody(event) {
-  const contentType = String(event.headers?.["content-type"] || "").toLowerCase();
-  const raw = event.body || "";
-
-  // JSON
-  if (contentType.includes("application/json")) {
-    try {
-      return JSON.parse(raw || "{}");
-    } catch {
-      return {};
-    }
-  }
-
-  // x-www-form-urlencoded (form padrão)
-  if (contentType.includes("application/x-www-form-urlencoded")) {
-    const params = new URLSearchParams(raw);
-    return Object.fromEntries(params.entries());
-  }
-
-  // Se vier multipart/form-data (FormData), aqui não tem parser.
-  // A solução correta é o front enviar JSON.
-  // Mesmo assim, retornamos {} para erro controlado (400 com debug fields).
-  return {};
-}
-
-async function sendEmailResend({ to, subject, html }) {
-  const RESEND_API_KEY = process.env.RESEND_API_KEY;
-  const FROM = process.env.LEAD_NOTIFY_FROM;
-
-  if (!RESEND_API_KEY) throw new Error("Missing RESEND_API_KEY");
-  if (!FROM) throw new Error("Missing LEAD_NOTIFY_FROM");
-
-  const resp = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: FROM,
-      to: Array.isArray(to) ? to : [to],
-      subject,
-      html,
-    }),
-  });
-
-  if (!resp.ok) {
-    const text = await resp.text();
-    throw new Error(`Resend failed: ${resp.status} ${text}`);
-  }
-
-  return resp.json();
-}
-
-function pickFullName(body) {
-  return String(
-    body.full_name ?? body.fullName ?? body.name ?? body.fullname ?? ""
-  ).trim();
-}
-
-function pickEmail(body) {
-  return String(body.email ?? "").trim().toLowerCase();
-}
-
-/**
- * Netlify Function
- */
-export async function handler(event) {
-  // Preflight
-  if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 204,
+  // CORS preflight (não atrapalha e evita dor de cabeça)
+  if (req.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, apikey",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
       },
-      body: "",
-    };
+    });
   }
 
-  if (event.httpMethod !== "POST") {
-    return json(405, { error: "Method not allowed" });
+  // Só POST
+  if (req.method !== "POST") {
+    return json(405, { error: "Method Not Allowed. Use POST." }, { Allow: "POST, OPTIONS" });
   }
 
   try {
-    // Env checks
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    const ADMIN_EMAIL = process.env.LEADS_NOTIFY_TO; // já existe no Netlify
+    // Parse body (robusto)
+    let body = {};
+    try {
+      body = await req.json();
+    } catch {
+      const text = await req.text();
+      body = text ? JSON.parse(text) : {};
+    }
 
-    if (!SUPABASE_URL) return json(500, { error: "Missing SUPABASE_URL" });
-    if (!SUPABASE_SERVICE_ROLE_KEY)
-      return json(500, { error: "Missing SUPABASE_SERVICE_ROLE_KEY" });
-    if (!ADMIN_EMAIL) return json(500, { error: "Missing LEADS_NOTIFY_TO" });
+    // Aceitar camelCase e snake_case
+    const projectSlug = body.projectSlug ?? body.project_slug ?? "";
+    const fullName = body.fullName ?? body.full_name ?? "";
+    const email = body.email ?? "";
+    const phone = body.phone ?? null;
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
-      auth: { persistSession: false },
-    });
-
-    // Body
-    const body = parseBody(event);
-
-    const full_name = pickFullName(body);
-    const email = pickEmail(body);
-
-    const project_slug = String(body.project_slug || "").trim();
-    const project_url = String(body.project_url || "").trim();
-
-    // Debug rápido: se vier vazio, te mostra quais chaves chegaram
-    if (!full_name || full_name.length < 2) {
+    if (!projectSlug || !fullName || !email) {
       return json(400, {
-        error: "Full name is required",
-        received_fields: Object.keys(body || {}),
-        hint: "Make sure the front sends JSON with full_name (or name/fullName).",
+        error: "Missing fields",
+        expected_any_of: {
+          projectSlug_or_project_slug: true,
+          fullName_or_full_name: true,
+          email: true,
+        },
+        received: Object.keys(body || {}),
       });
     }
 
-    if (!email || !email.includes("@")) {
-      return json(400, {
-        error: "Valid email is required",
-        received_fields: Object.keys(body || {}),
+    const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim().replace(/\/+$/, "");
+    const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+      return json(500, {
+        error: "Missing environment variables",
+        missing: {
+          SUPABASE_URL: !SUPABASE_URL,
+          SUPABASE_SERVICE_ROLE_KEY: !SUPABASE_SERVICE_ROLE_KEY,
+        },
       });
     }
 
-    if (!project_slug) {
-      return json(400, { error: "project_slug is required" });
-    }
-
-    if (!project_url) {
-      return json(400, { error: "project_url is required" });
-    }
-
-    // Metadata
-    const nowIso = new Date().toISOString();
-    const ip =
-      event.headers?.["x-nf-client-connection-ip"] ||
-      event.headers?.["x-forwarded-for"] ||
-      "";
-    const user_agent = event.headers?.["user-agent"] || "";
-
-    // Save lead (upsert)
     const payload = {
-      full_name,
+      project_slug: projectSlug,
+      full_name: fullName,
       email,
-      project_slug,
-      project_url,
-      ip,
-      user_agent,
-      last_seen: nowIso,
+      ...(phone ? { phone } : {}),
     };
 
-    const { data, error } = await supabase
-      .from("portal_leads")
-      .upsert(payload, {
-        onConflict: "email,project_slug",
-        ignoreDuplicates: false,
-      })
-      .select()
-      .single();
+    // Timeout para não “morrer” em silêncio
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
 
-    if (error) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/portal_leads`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeout));
+
+    const text = await res.text();
+
+    if (!res.ok) {
       return json(500, {
         error: "Supabase insert failed",
-        details: error,
-        tip:
-          "Check if portal_leads has columns: full_name, email, project_slug, project_url, last_seen (timestamptz). Also ensure unique index on (email, project_slug).",
+        status: res.status,
+        details: text,
+        supabase_url_used: SUPABASE_URL,
       });
     }
 
-    // Emails
-    const subjectAdmin = `Portal access: ${full_name}`;
-    const htmlAdmin = `
-      <div style="font-family:Arial,sans-serif;line-height:1.5">
-        <h2>New Portal Access</h2>
-        <p><b>Name:</b> ${full_name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Project:</b> ${project_slug}</p>
-        <p><b>Time:</b> ${new Date(nowIso).toLocaleString()}</p>
-        <p><b>IP:</b> ${ip || "N/A"}</p>
-        <p><b>Portal:</b> <a href="${project_url}">${project_url}</a></p>
-      </div>
-    `;
 
-    const subjectClient = `Access confirmed — ${project_slug}`;
-    const htmlClient = `
-      <div style="font-family:Arial,sans-serif;line-height:1.6">
-        <h2>Access Confirmed</h2>
-        <p>Hi ${full_name},</p>
-        <p>Your access to the private project portal has been confirmed.</p>
-        <p><b>Project:</b> ${project_slug}</p>
-        <p><a href="${project_url}">Open your project portal</a></p>
-        <br/>
-        <p>— MCM Services PRO Solutions</p>
-      </div>
-    `;
-
-    // Se o e-mail falhar, você pode preferir não bloquear o acesso.
-    // Aqui eu envio e, se falhar, eu retorno 200 com warning (pra não travar cliente).
-    let emailWarnings = [];
+    // -------- Email notification (optional) --------
+    // Recommended provider: Resend (https://resend.com)
+    // Set in Netlify env:
+    //   RESEND_API_KEY=...
+    //   LEADS_NOTIFY_TO=andre@mcmprosolutions.com   (or your preferred email)
+    //   LEADS_NOTIFY_FROM=Leads <no-reply@mcmprosolutions.com> (must be a verified sender/domain in Resend)
+    let emailNotification = { sent: false };
     try {
-      await sendEmailResend({ to: ADMIN_EMAIL, subject: subjectAdmin, html: htmlAdmin });
+      const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
+      const TO = (process.env.LEADS_NOTIFY_TO || "").trim();
+      const FROM = (process.env.LEADS_NOTIFY_FROM || "").trim();
+
+      if (RESEND_API_KEY && TO && FROM) {
+        const insertedRow = text ? (JSON.parse(text)?.[0] || JSON.parse(text)) : null;
+
+        const subject = `New Portal Lead: ${fullName} (${projectSlug})`;
+        const htmlBody = `
+          <div style="font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.45;">
+            <h2 style="margin:0 0 12px;">New Portal Lead</h2>
+            <p style="margin:0 0 10px;"><strong>Project:</strong> ${projectSlug}</p>
+            <p style="margin:0 0 10px;"><strong>Name:</strong> ${fullName}</p>
+            <p style="margin:0 0 10px;"><strong>Email:</strong> ${email}</p>
+            ${phone ? `<p style="margin:0 0 10px;"><strong>Phone:</strong> ${phone}</p>` : ``}
+            <p style="margin:14px 0 0; color:#666; font-size:13px;">Saved via mcmprosolutions.com portal.</p>
+          </div>
+        `;
+
+        const emailRes = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: FROM,
+            to: [TO],
+            subject,
+            html: htmlBody,
+            // Optional: reply-to the lead
+            reply_to: email,
+          }),
+        });
+
+        const emailText = await emailRes.text();
+        if (!emailRes.ok) {
+          emailNotification = { sent: false, error: "Resend send failed", status: emailRes.status, details: emailText };
+        } else {
+          emailNotification = { sent: true, response: emailText ? JSON.parse(emailText) : null };
+        }
+      } else {
+        emailNotification = { sent: false, skipped: true, reason: "Missing RESEND_API_KEY / LEADS_NOTIFY_TO / LEADS_NOTIFY_FROM" };
+      }
     } catch (e) {
-      emailWarnings.push(`Admin email failed: ${e?.message || e}`);
-    }
-    try {
-      await sendEmailResend({ to: email, subject: subjectClient, html: htmlClient });
-    } catch (e) {
-      emailWarnings.push(`Client email failed: ${e?.message || e}`);
+      emailNotification = { sent: false, error: "Email notification error", message: String(e?.message || e) };
     }
 
-    return json(200, {
-      ok: true,
-      lead: {
-        id: data?.id ?? null,
-        full_name,
-        email,
-        project_slug,
-        last_seen: nowIso,
-      },
-      redirect_to: project_url,
-      warnings: emailWarnings,
-    });
+    return json(200, { ok: true, inserted: text ? JSON.parse(text) : null, emailNotification });
   } catch (err) {
-    return json(500, {
-      error: "Server error",
-      message: err?.message || String(err),
-    });
+    return json(500, { error: "Unhandled error", message: String(err) });
   }
-}
+};
