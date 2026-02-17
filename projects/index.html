@@ -2066,5 +2066,14 @@ setInterval(() => {
 }, 60000);
 </script>
 
+
+<script>
+// Boot: always load project cards (read-only), even before unlock.
+// Admin actions + Leads require unlock.
+document.addEventListener("DOMContentLoaded", () => {
+  try { loadAll(); } catch (e) { console.error(e); }
+});
+</script>
+
 </body>
 </html>
