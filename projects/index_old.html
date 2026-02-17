@@ -1105,7 +1105,6 @@ function unlockDashboard(adminKey){
       sessionStorage.setItem(ACCESS_KEY, "1");
       if (adminKey) sessionStorage.setItem(ADMIN_SESSION_KEY, String(adminKey).trim());
     } catch {}
-    try{ loadLeads(); }catch{}
   }
 
   function showAuthError(msg){
@@ -1238,27 +1237,6 @@ function unlockDashboard(adminKey){
     <div id="error" class="error"></div>
     <section id="grid" class="grid" aria-label="Project cards"></section>
     <div id="empty" class="empty"></div>
-
-    <!-- Leads (Portal Access Log) -->
-    <div class="section-row" style="margin-top:28px;">
-      <div class="section-title">Leads</div>
-      <div class="weather-gadget" style="align-items:flex-end;">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-          <input id="leadQuery" class="input" type="search" placeholder="Search name / email / project…" autocomplete="off" style="min-width:240px;" />
-          <input id="leadProject" class="input" type="text" placeholder="Filter projectSlug (optional)" autocomplete="off" style="min-width:220px;" />
-          <button id="refreshLeads" class="btn" type="button"><i class="fa-solid fa-rotate"></i> Refresh</button>
-        </div>
-        <div style="color:var(--muted2); font-weight:600; font-size:.92rem;">
-          Total: <span id="leadsCount">0</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="leadsBox" class="card" style="padding:16px; margin-bottom:18px;">
-      <div class="meta-label" style="margin-bottom:10px;">Latest portal leads</div>
-      <div id="leadsState" class="sub" style="margin:0 0 10px; display:none;"></div>
-      <div id="leadsList"><div class="sub" style="margin:0;">Unlock the dashboard to view leads.</div></div>
-    </div>
   </div>
 </main>
 
@@ -2074,103 +2052,6 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 
     }
   }
-
-  // ===== Leads (portal_leads) =====
-  function setLeadsState(msg){
-    const el = document.getElementById("leadsState");
-    if (!el) return;
-    if (!msg){ el.style.display = "none"; el.textContent = ""; return; }
-    el.style.display = "block";
-    el.textContent = msg;
-  }
-
-  function setLeadsCount(n){
-    const el = document.getElementById("leadsCount");
-    if (el) el.textContent = String(n ?? 0);
-  }
-
-  function formatLeadDate(dt){
-    try { return new Date(dt).toLocaleString(); } catch { return ""; }
-  }
-
-  function renderLeads(rows){
-    const wrap = document.getElementById("leadsList");
-    if (!wrap) return;
-
-    if (!Array.isArray(rows) || rows.length === 0){
-      wrap.innerHTML = `<div class="sub" style="margin:0;">No leads yet.</div>`;
-      setLeadsCount(0);
-      return;
-    }
-
-    setLeadsCount(rows.length);
-
-    wrap.innerHTML = rows.map(r => {
-      const name = escapeHtml(r.full_name || "-");
-      const email = escapeHtml(r.email || "-");
-      const phone = escapeHtml(r.phone || "");
-      const slug = escapeHtml(r.project_slug || "-");
-      const when = r.created_at ? escapeHtml(formatLeadDate(r.created_at)) : "";
-
-      return `
-        <div style="display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--border2);">
-          <div style="min-width:0;">
-            <div style="font-weight:700; color:var(--text);">${name}</div>
-            <div class="sub" style="margin:2px 0 0;">
-              ${email}${phone ? ` • ${phone}` : ""} • <strong>${slug}</strong>
-            </div>
-          </div>
-          <div class="sub" style="white-space:nowrap; margin:0;">${when}</div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  async function loadLeads(){
-    const adminKey = getAdminKey();
-    if (!adminKey){
-      setLeadsState("");
-      const wrap = document.getElementById("leadsList");
-      if (wrap) wrap.innerHTML = `<div class="sub" style="margin:0;">Unlock the dashboard to view leads.</div>`;
-      setLeadsCount(0);
-      return;
-    }
-
-    const q = (document.getElementById("leadQuery")?.value || "").trim();
-    const projectSlug = (document.getElementById("leadProject")?.value || "").trim();
-
-    const params = new URLSearchParams();
-    params.set("limit", "100");
-    if (q) params.set("q", q);
-    if (projectSlug) params.set("projectSlug", projectSlug);
-
-    setLeadsState("Loading leads…");
-
-    const res = await fetch(`/.netlify/functions/get-portal-leads?${params.toString()}`, {
-      headers: { "x-admin-key": adminKey }
-    });
-
-    const text = await res.text();
-    let data = {};
-    try { data = JSON.parse(text); } catch { data = { raw: text }; }
-
-    if (!res.ok || data.ok === false){
-      setLeadsState(data?.error || data?.details || data?.raw || `HTTP ${res.status}`);
-      renderLeads([]);
-      return;
-    }
-
-    setLeadsState("");
-    renderLeads(data.data || []);
-  }
-
-  // Leads events
-  document.getElementById("refreshLeads")?.addEventListener("click", loadLeads);
-  document.getElementById("leadQuery")?.addEventListener("input", () => {
-    clearTimeout(window.__leadT);
-    window.__leadT = setTimeout(loadLeads, 300);
-  });
-  document.getElementById("leadProject")?.addEventListener("change", loadLeads);
 
   loadAll();
 
