@@ -161,7 +161,7 @@ export default async (req) => {
               <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #e8dfd2;">
                 <div style="background:linear-gradient(135deg,#0d0d0d,#1a1a1a);padding:22px 22px 18px;">
                   <div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#c8a76a;font-weight:700;letter-spacing:.14em;font-size:12px;">
-                    MOURA CONSULTING &amp; MANAGEMENT
+                    <img src="https://mcmprosolutions.com/images/mcmbrand-removebg-preview.png" alt="MCM" style="height:38px;display:block;">
                   </div>
                   <div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#ffffff;font-weight:700;font-size:20px;margin-top:6px;">
                     Private Project Portal
