@@ -1821,6 +1821,39 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(updateMapLink, 800);
 });
 </script>
+<script>
+  (function () {
+    // detect project slug from URL
+    function getProjectSlug() {
+      var parts = window.location.pathname.split("/");
+      var idx = parts.indexOf("projects");
+      if (idx !== -1 && parts[idx + 1]) {
+        return parts[idx + 1];
+      }
+      return "template";
+    }
+  
+    var slug = getProjectSlug();
+    var key = "portalAccess_" + slug;
+  
+    // allow template always for testing
+    if (slug === "template") {
+      console.log("Template project: access screen allowed.");
+      return;
+    }
+  
+    // check if session exists
+    var saved = sessionStorage.getItem(key);
+    if (saved) {
+      console.log("Access already granted for:", slug);
+      return;
+    }
+  
+    // redirect to access page
+    var accessUrl = "/projects/" + slug + "/access.html";
+    window.location.href = accessUrl;
+  })();
+  </script>
   
 </body>
 </html>
