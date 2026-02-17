@@ -272,6 +272,23 @@
       .grid{ grid-template-columns: 1fr; }
     }
 
+
+    /* Leads list */
+    .lead-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+      border-top:1px solid var(--border2);
+    }
+    .lead-main{ min-width:0; }
+    .lead-name{ font-weight:700; color:var(--text); }
+    .lead-sub{ margin:2px 0 0; }
+    .lead-date{ white-space:nowrap; margin:0; }
+    @media (max-width: 720px){
+      .lead-row{ flex-direction:column; align-items:flex-start; }
+      .lead-date{ white-space:normal; }
+    }
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -938,22 +955,175 @@
 
 
 
-<!-- BASIC PASSWORD (single sign-on for dashboard) -->
+<!-- BASIC PASSWORD (professional) -->
 <script>
-  // Storage keys (persistent login)
-  const ACCESS_KEY_STORAGE = "mcm_dash_admin_key";
-  const ACCESS_OK_STORAGE  = "mcm_dash_unlocked";
+  // Helpers used across the dashboard
+  function clamp(n,min,max){ return Math.min(max, Math.max(min, n)); }
 
-  function setAuthLoading(isLoading){
-    const btn = document.querySelector("#authForm .auth-btn");
-    const input = document.getElementById("authPassword");
-    if (btn) btn.disabled = !!isLoading;
-    if (input) input.disabled = !!isLoading;
+// ---- Shared Status Engine (sync progress + colors with project pages) ----
+  window.__statusEngine = window.__statusEngine || null;
+
+  async function loadStatusEngine(){
+    if (window.__statusEngine) return window.__statusEngine;
+    try{
+      window.__statusEngine = await import("./assets/status-engine.js");
+    }catch(e){
+      window.__statusEngine = null;
+    }
+    return window.__statusEngine;
   }
 
-  function hideAuthError(){
-    const m = document.getElementById("authMsg");
-    if (m) m.style.display = "none";
+  function progressPercent(p){
+    // Priority: explicit numeric progress from project.json
+    const candidates = [
+      p?.projectProgress,
+      p?.progress,
+      p?.progressPercent,
+      p?.projectProgressPercent,
+      p?.projectProgressPct,
+      p?.projectProgressValue
+    ];
+
+    for (const v of candidates){
+      if (typeof v === "number" && isFinite(v)) return clamp(v, 0, 100);
+      if (typeof v === "string"){
+        const num = parseFloat(v.replace("%","").trim());
+        if (!isNaN(num) && isFinite(num)) return clamp(num, 0, 100);
+      }
+    }
+
+    // Fallback: infer from status (SYNC with project pages)
+    const rawStatus = (p?.projectStatus || p?.status || "").trim();
+
+    // Prefer shared status-engine.js when available (keeps dashboard + project pages identical)
+    const eng = window.__statusEngine;
+    if (eng && typeof eng.getProgressPercent === "function"){
+      const v = eng.getProgressPercent(rawStatus);
+      if (typeof v === "number" && isFinite(v)) return clamp(v, 0, 100);
+    }
+
+    const s = rawStatus.toLowerCase().trim();
+// Completed
+    if (s.includes("complete") || s.includes("done") || s.includes("finalized") || s.includes("finished")) return 100;
+
+    // In progress
+    if (s.includes("in progress")) return 50;
+
+    // Work started
+    if (s.includes("work started")) return 35;
+
+    // Active / Activated
+    if (s.includes("activated") || s === "active" || s.includes("active")) return 25;
+
+    // Planning / Approved / Pending / Awaiting
+    if (s.includes("approved") || s.includes("planning") || s.includes("pending") || s.includes("await") || s.includes("review") || s.includes("deposit") || s.includes("payment")) return 10;
+
+    // On Hold / Canceled / Inactive
+    if (s.includes("on hold") || s.includes("paused") || s.includes("cancel") || s.includes("inactive") || s.includes("expired") || s.includes("suspend")) return 0;
+
+    return 0;  }
+
+  function setLastRefresh(date){
+    const el = document.getElementById('lastRefresh') || document.getElementById('refTime');
+    if(!el) return;
+    const d = date || new Date();
+    el.textContent = d.toLocaleString('en-US',{month:'short',day:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"\']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","\'":"&#39;"
+    }[c]));
+  }
+
+  function renderLegend(legend){
+    const el = document.getElementById("legend");
+    if (!el) return;
+
+    const entries = legend && typeof legend === "object" ? Object.entries(legend) : [];
+    const fallback = [
+      ["Planning","Project in planning/approval"],
+      ["Active","Work in progress"],
+      ["Completed","Project completed"],
+      ["On Hold","Paused / waiting"]
+    ];
+    const items = entries.length ? entries : fallback;
+
+    const clsFor = (status) => {
+      const s = String(status||"").toLowerCase();
+      if (s.includes("hold")) return "hold";
+      if (s.includes("complete")) return "completed";
+      if (s.includes("active")) return "active";
+      return "planning";
+    };
+
+    el.innerHTML = items.map(([k,v]) => {
+      const cls = clsFor(k);
+      const title = String(k||"").trim();
+      const desc = String(v||"").trim();
+      const tip = desc ? ` title="${escapeHtml(desc)}"` : "";
+      return `<span class="legend-item ${cls}"${tip}><span class="legend-dot"></span>${escapeHtml(title)}</span>`;
+    }).join("");
+  }
+
+  async function initStatusOptions(){
+    // 1) Prefer shared status-engine.js (same as project pages)
+    try{
+      const eng = await loadStatusEngine();
+      if (eng && Array.isArray(eng.STATUS_OPTIONS) && eng.STATUS_OPTIONS.length){
+        STATUS_OPTIONS = eng.STATUS_OPTIONS.slice();
+      }else{
+        STATUS_OPTIONS = DEFAULT_STATUS_OPTIONS.slice();
+      }
+    }catch{
+      STATUS_OPTIONS = DEFAULT_STATUS_OPTIONS.slice();
+    }
+
+    // 2) Ensure uniqueness + keep a clean order
+    const seen = new Set();
+    STATUS_OPTIONS = STATUS_OPTIONS.filter(s => {
+      const v = String(s || "").trim();
+      if (!v) return false;
+      const key = v.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    // 3) Populate filter dropdown
+    const sel = document.getElementById("status");
+    if (sel){
+      const current = sel.value;
+      sel.innerHTML = [
+        '<option value="all">All statuses</option>',
+        ...STATUS_OPTIONS.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`)
+      ].join("");
+      // restore selection if it was set
+      if (current && Array.from(sel.options).some(o => o.value === current)) sel.value = current;
+      else sel.value = "all";
+    }
+  }
+
+
+  // ----- Access gate -----
+  const DASH_PASSWORD = "mcm2026"; // <-- change here
+  // Admin key for status updates (Netlify function)
+  // IMPORTANT: this is embedded in the dashboard JS. If you prefer secure admin updates, keep the prompt version.
+  const ADMIN_KEY = DASH_PASSWORD; // or set a different value
+  const ACCESS_KEY = "mcm_dash_access_ok";
+
+  
+  const ADMIN_SESSION_KEY = "mcm_dash_admin_key";
+function unlockDashboard(adminKey){
+    document.body.classList.remove("locked");
+    const ov = document.getElementById("authOverlay");
+    if (ov) ov.remove();
+    try {
+      sessionStorage.setItem(ACCESS_KEY, "1");
+      if (adminKey) sessionStorage.setItem(ADMIN_SESSION_KEY, String(adminKey).trim());
+    
+    try{ loadLeads(); }catch{}
+  } catch {}
   }
 
   function showAuthError(msg){
@@ -965,114 +1135,57 @@
     }
     if (card){
       card.classList.remove("shake");
-      void card.offsetWidth; // restart animation
+      // reflow to restart animation
+      void card.offsetWidth;
       card.classList.add("shake");
     }
   }
 
-  async function verifyAdminKey(key){
-    const r = await fetch("/.netlify/functions/get-portal-leads?limit=1", {
-      headers: { "x-admin-key": key }
-    });
-    return r.ok;
-  }
-
-  function unlockDashboard(key){
-    const k = String(key || "").trim();
-    if (!k){
-      showAuthError("Please enter your access password.");
-      return;
-    }
-
-    setAuthLoading(true);
-    hideAuthError();
-
-    verifyAdminKey(k)
-      .then((ok) => {
-        if (!ok){
-          setAuthLoading(false);
-          showAuthError("Incorrect password. Please try again.");
-          const pwd = document.getElementById("authPassword");
-          if (pwd) pwd.select();
-          return;
-        }
-
-        // Persist (one login for everything)
-        try{
-          localStorage.setItem(ACCESS_KEY_STORAGE, k);
-          localStorage.setItem(ACCESS_OK_STORAGE, "1");
-        }catch{}
-
-        // Unlock UI
-        document.body.classList.remove("locked");
-        const overlay = document.getElementById("authOverlay");
-        if (overlay) overlay.style.display = "none";
-
-        setAuthLoading(false);
-
-        // Load data (projects + leads)
-        try{ loadAll?.(); }catch{}
-        try{ loadLeads?.(); }catch{}
-      })
-      .catch((err) => {
-        console.error(err);
-        setAuthLoading(false);
-        showAuthError("Could not verify right now. Please try again.");
-      });
-  }
-
-  function getAdminKey(){
-    try { return (localStorage.getItem(ACCESS_KEY_STORAGE) || "").trim(); }
-    catch { return ""; }
-  }
-
-  // Expose for debugging
-  window.unlockDashboard = unlockDashboard;
-  window.getAdminKey = getAdminKey;
-
   function initAuth(){
-    const form = document.getElementById("authForm");
-    const pwd = document.getElementById("authPassword");
-    const toggle = document.getElementById("authToggle");
-
-    // Auto-unlock if previously saved
+    // If previously unlocked in this browser session, skip login
     try{
-      const ok = localStorage.getItem(ACCESS_OK_STORAGE) === "1";
-      const key = (localStorage.getItem(ACCESS_KEY_STORAGE) || "").trim();
-      if (ok && key){
-        unlockDashboard(key);
+      if (sessionStorage.getItem(ACCESS_KEY) === "1"){
+        unlockDashboard(sessionStorage.getItem(ADMIN_SESSION_KEY) || "");
         return;
       }
     }catch{}
 
+    const form = document.getElementById("authForm");
+    const pwd = document.getElementById("authPassword");
+    const toggle = document.getElementById("authToggle");
+
     if (toggle && pwd){
-      // Ensure icon exists
-      if (!toggle.querySelector("i")){
-        toggle.innerHTML = '<i class="fa-regular fa-eye"></i>';
-      }
       toggle.addEventListener("click", () => {
-        const isPwd = (pwd.getAttribute("type") || "password") === "password";
+        const isPwd = pwd.getAttribute("type") === "password";
         pwd.setAttribute("type", isPwd ? "text" : "password");
         toggle.setAttribute("aria-label", isPwd ? "Hide password" : "Show password");
         const icon = toggle.querySelector("i");
-        if (icon) icon.className = isPwd ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
+        if (icon){
+          icon.className = isPwd ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
+        }
         pwd.focus();
       });
     }
 
-    if (!form || !pwd) return;
+    if (form && pwd){
+      // focus on load
+      setTimeout(() => pwd.focus(), 50);
 
-    setTimeout(() => pwd.focus(), 50);
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      unlockDashboard(pwd.value);
-    });
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const val = (pwd.value || "").trim();
+        if (val === DASH_PASSWORD){
+          unlockDashboard(val);
+        }else{
+          showAuthError("Incorrect password. Please try again.");
+          pwd.select();
+        }
+      });
+    }
   }
 
   initAuth();
 </script>
-
 
 <header>
   <a class="logo-link" href="../index.html">
@@ -1109,7 +1222,24 @@
         <div class="value" id="kpiAttention">0</div>
         
       </div>
+    
+    <!-- Leads -->
+    <div class="section-row" style="margin-top:16px;">
+      <div class="section-title">Leads <span id="leadsCount" class="pill" style="margin-left:8px;">0</span></div>
+
+      <div class="tools-left" style="justify-content:flex-end;">
+        <input id="leadQuery" class="input" type="search" placeholder="Search name / email / project…" autocomplete="off" style="min-width:240px;" />
+        <input id="leadProject" class="input" type="text" placeholder="Filter projectSlug (optional)" autocomplete="off" style="min-width:220px;" />
+        <button id="refreshLeads" class="btn" type="button"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
     </div>
+
+    <div id="leadsBox" class="card" style="padding:16px; margin-bottom:14px;">
+      <div class="meta-label" style="margin-bottom:8px;">Latest portal leads</div>
+      <div id="leadsState" class="sub" style="margin:0 0 10px; display:none;"></div>
+      <div id="leadsList"></div>
+    </div>
+</div>
 
     <div class="tools" aria-label="Tools">
       <div class="tools-left">
@@ -1143,25 +1273,7 @@
     <div id="error" class="error"></div>
     <section id="grid" class="grid" aria-label="Project cards"></section>
     <div id="empty" class="empty"></div>
-  
-    <!-- Leads -->
-    <div class="section-row" style="margin-top:22px;">
-      <div class="section-title">Leads</div>
-
-      <div class="tools-left" style="justify-content:flex-end;">
-        <input id="leadQuery" class="input" type="search" placeholder="Search name / email / project…" autocomplete="off" style="min-width:240px;">
-        <input id="leadProject" class="input" type="search" placeholder="Filter projectSlug (optional)" autocomplete="off" style="min-width:220px;">
-        <button id="refreshLeads" class="btn" type="button"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button>
-      </div>
-    </div>
-
-    <div id="leadsBox" class="card" style="padding:16px; margin-bottom:18px;">
-      <div class="meta-label" style="margin-bottom:10px;">Latest leads</div>
-      <div id="leadsState" class="sub" style="margin:0 0 10px; display:none;"></div>
-      <div id="leadsList"></div>
-    </div>
-
-</div>
+  </div>
 </main>
 
 <footer>
@@ -1610,17 +1722,35 @@ const statusSubRank = (s) => {
     "Completed"
   ];
 
-  // ===== Leads (Supabase) =====
-  function formatDate(dt){
-    try { return new Date(dt).toLocaleString(); } catch { return ""; }
+
+  function getAdminKey(){
+    try{
+      return (sessionStorage.getItem(ADMIN_SESSION_KEY) || "").trim();
+    }catch{
+      return "";
+    }
+
+  // ----- Leads (portal access) -----
+  function formatLeadDate(dt){
+    try{ return new Date(dt).toLocaleString(); }catch{ return ""; }
   }
 
   function setLeadsState(msg){
     const el = document.getElementById("leadsState");
     if (!el) return;
-    if (!msg){ el.style.display = "none"; el.textContent = ""; return; }
+    if (!msg){
+      el.style.display = "none";
+      el.textContent = "";
+      return;
+    }
     el.style.display = "block";
     el.textContent = msg;
+  }
+
+  function setLeadsCount(n){
+    const el = document.getElementById("leadsCount");
+    if (!el) return;
+    el.textContent = String(n ?? 0);
   }
 
   function renderLeads(rows){
@@ -1628,26 +1758,27 @@ const statusSubRank = (s) => {
     if (!wrap) return;
 
     if (!Array.isArray(rows) || !rows.length){
-      wrap.innerHTML = `<div class="sub" style="margin:0;">No leads yet.</div>`;
+      wrap.innerHTML = '<div class="sub" style="margin:0;">No leads yet.</div>';
+      setLeadsCount(0);
       return;
     }
+
+    setLeadsCount(rows.length);
 
     wrap.innerHTML = rows.map(r => {
       const name = escapeHtml(r.full_name || "-");
       const email = escapeHtml(r.email || "-");
       const phone = escapeHtml(r.phone || "");
       const slug = escapeHtml(r.project_slug || "-");
-      const when = r.created_at ? formatDate(r.created_at) : "";
+      const when = r.created_at ? escapeHtml(formatLeadDate(r.created_at)) : "";
 
       return `
-        <div style="display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-top:1px solid var(--border2);">
-          <div style="min-width:0;">
-            <div style="font-weight:700; color:var(--text);">${name}</div>
-            <div class="sub" style="margin:2px 0 0;">
-              ${email}${phone ? ` • ${phone}` : ""} • <strong>${slug}</strong>
-            </div>
+        <div class="lead-row">
+          <div class="lead-main">
+            <div class="lead-name">${name}</div>
+            <div class="sub lead-sub">${email}${phone ? ` • ${phone}` : ""} • <strong>${slug}</strong></div>
           </div>
-          <div class="sub" style="white-space:nowrap; margin:0;">${escapeHtml(when)}</div>
+          <div class="sub lead-date">${when}</div>
         </div>
       `;
     }).join("");
@@ -1677,7 +1808,7 @@ const statusSubRank = (s) => {
 
     const text = await res.text();
     let data = {};
-    try { data = JSON.parse(text); } catch { data = { raw: text }; }
+    try{ data = JSON.parse(text); }catch{ data = { raw: text }; }
 
     if (!res.ok || data.ok === false){
       setLeadsState(data?.error || data?.details || data?.raw || `HTTP ${res.status}`);
@@ -1688,18 +1819,9 @@ const statusSubRank = (s) => {
     setLeadsState("");
     renderLeads(data.data || []);
   }
-
-  function initLeadsUI(){
-    document.getElementById("refreshLeads")?.addEventListener("click", loadLeads);
-
-    document.getElementById("leadQuery")?.addEventListener("input", () => {
-      clearTimeout(window.__leadT);
-      window.__leadT = setTimeout(loadLeads, 300);
-    });
-
-    document.getElementById("leadProject")?.addEventListener("change", loadLeads);
   }
-async function updateStatusViaFunction(slug, nextStatus){
+
+  async function updateStatusViaFunction(slug, nextStatus){
     const adminKey = getAdminKey();
     if (!adminKey) throw new Error("Missing admin key.");
 
@@ -2056,23 +2178,26 @@ const registryProjects = Array.isArray(dash?.projects) ? dash.projects : [];
 
     }
   }
-  initLeadsUI();
+
+  // Leads hooks
+  (function initLeadsUI(){
+    const btn = document.getElementById("refreshLeads");
+    const q = document.getElementById("leadQuery");
+    const p = document.getElementById("leadProject");
+    if (btn) btn.addEventListener("click", () => loadLeads());
+    if (q) q.addEventListener("input", () => {
+      clearTimeout(window.__leadT);
+      window.__leadT = setTimeout(() => loadLeads(), 300);
+    });
+    if (p) p.addEventListener("change", () => loadLeads());
+  })();
+
   loadAll();
-  // Load leads once dashboard is unlocked + projects loaded
-  setTimeout(loadLeads, 250);
+  try{ loadLeads(); }catch{}
 
 setInterval(() => {
   setLastRefresh(new Date());
 }, 60000);
-</script>
-
-
-<script>
-// Boot: always load project cards (read-only), even before unlock.
-// Admin actions + Leads require unlock.
-document.addEventListener("DOMContentLoaded", () => {
-  try { loadAll(); } catch (e) { console.error(e); }
-});
 </script>
 
 </body>
