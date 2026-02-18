@@ -1823,7 +1823,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <script>
   (function () {
-    // detect project slug from URL
+
     function getProjectSlug() {
       var parts = window.location.pathname.split("/");
       var idx = parts.indexOf("projects");
@@ -1832,28 +1832,48 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return "template";
     }
-  
+
     var slug = getProjectSlug();
     var key = "portalAccess_" + slug;
-  
-    // allow template always for testing
+
+    function sendAccessNotification(projectSlug) {
+      var fullName = localStorage.getItem("client_full_name") || "";
+      var email = localStorage.getItem("client_email") || "";
+
+      fetch("/.netlify/functions/notify-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectSlug: projectSlug,
+          fullName: fullName,
+          email: email
+        })
+      }).catch(function(){});
+    }
+
+    // TEMPLATE allowed
     if (slug === "template") {
       console.log("Template project: access screen allowed.");
+      sendAccessNotification(slug);
       return;
     }
-  
-    // check if session exists
+
     var saved = sessionStorage.getItem(key);
+
     if (saved) {
       console.log("Access already granted for:", slug);
+      sendAccessNotification(slug);
       return;
     }
-  
-    // redirect to access page
+
+    // redirect if not authorized
     var accessUrl = "/projects/" + slug + "/access.html";
     window.location.href = accessUrl;
+
   })();
-  </script>
-  <script src="/js/page-transitions.js"></script>
-</body>
+</script>
+
+<script src="/js/page-transitions.js"></script>
+
+  </body>
 </html>
