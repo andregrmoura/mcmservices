@@ -708,6 +708,15 @@
         linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.30));
       backdrop-filter: blur(10px);
     }
+
+/* Mobile keyboard fix (iOS/Android): only adjust when keyboard can overlap */
+@media (hover: none) and (pointer: coarse), (max-width: 820px){
+  .auth-overlay{
+    align-items:flex-start;
+    padding:40px 20px;
+    overflow-y:auto;
+  }
+}
     body.dark .auth-overlay{
       background:
         radial-gradient(1200px 700px at 50% 20%, rgba(199,169,107,0.20), rgba(0,0,0,0) 60%),
@@ -1135,6 +1144,20 @@ function unlockDashboard(adminKey){
     const form = document.getElementById("authForm");
     const pwd = document.getElementById("authPassword");
     const toggle = document.getElementById("authToggle");
+
+    const isMobileKeyboard = (
+      (window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches) ||
+      window.innerWidth < 821
+    );
+
+    // On mobile, ensure the password field stays visible when the keyboard opens
+    if (isMobileKeyboard && pwd){
+      pwd.addEventListener("focus", () => {
+        setTimeout(() => {
+          try{ pwd.scrollIntoView({ behavior: "smooth", block: "center" }); }catch{}
+        }, 300);
+      });
+    }
 
     if (toggle && pwd){
       toggle.addEventListener("click", () => {
