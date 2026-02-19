@@ -92,7 +92,7 @@ export default async (req) => {
     // EMAIL CONFIG
     const RESEND_API_KEY = (process.env.RESEND_API_KEY || "").trim();
     const TO_ADMIN = (process.env.LEADS_NOTIFY_TO || "").trim();
-    const FROM = "Moura Consulting & Management <leads@mcmprosolutions.com>";
+    const FROM = (process.env.LEADS_NOTIFY_FROM || "").trim();
     const BRAND_LOGO_URL =
       (process.env.BRAND_LOGO_URL ||
         "https://mcmprosolutions.com/images/transparent-logo-2.png").trim();

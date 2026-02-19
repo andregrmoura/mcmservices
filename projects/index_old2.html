@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Executive Projects Dashboard | MCM Services</title>
+  <title>Projects Dashboard | MCM Services</title>
   <meta name="robots" content="noindex, nofollow" />
 
   <!-- Fonts -->
@@ -32,8 +32,8 @@
       --muted2:#777;
       --border:#DDD;
       --border2:#EEE;
-      --shadow: 0 8px 22px rgba(0,0,0,0.08);
-      --shadow2: 0 14px 34px rgba(0,0,0,0.12);
+      --shadow: 0 4px 14px rgba(0,0,0,0.12);
+      --shadow2: 0 10px 26px rgba(0,0,0,0.14);
       --gold:#C7A96B;
       --gold2:#b9965e;
       --header: rgba(0,0,0,0.4);
@@ -71,7 +71,7 @@
     body{
       margin:0;
       font-family:'Montserrat',sans-serif;
-      background:linear-gradient(180deg, rgba(199,169,107,0.06), rgba(0,0,0,0) 220px), var(--bg);
+      background:var(--bg);
       color:var(--text);
       overflow-x:hidden;
       line-height:1.6;
@@ -84,25 +84,23 @@
       width:100%;
       background:var(--header);
       box-shadow:var(--headerShadow);
-      position:fixed;
+      position:absolute;
       top:0; left:0;
       z-index:100;
-      padding:18px 22px;
+      padding:25px;
       display:flex;
       justify-content:center;
       align-items:center;
     }
-    header{ backdrop-filter: blur(10px); }
-
     .logo-link img{
-      height:90px;
+      height:120px;
       max-width:320px;
       object-fit:contain;
     }
 
     main{
       min-height:80vh;
-      padding:170px 20px 70px;
+      padding:220px 20px 70px;
       display:block;
     }
     .wrap{
@@ -114,9 +112,9 @@
     h1{
       font-family:'Playfair Display',serif;
       color:var(--gold);
-      font-weight:600;
+      font-weight:400;
       margin:0;
-      font-size:2.4rem;
+      font-size:3rem;
       margin-bottom:10px;
     }
     .sub{
@@ -205,7 +203,7 @@
       margin-bottom:6px;
     }
     .kpi .value{
-      font-size:1.7rem;
+      font-size:1.55rem;
       font-weight:700;
       color:var(--text);
       line-height:1.1;
@@ -312,8 +310,6 @@
       box-shadow:var(--shadow2);
       border-color: rgba(199,169,107,.55);
     }
-    .card:active{ transform: translateY(-1px); }
-
 
     .topline{
       display:flex;
@@ -486,8 +482,6 @@
       box-shadow:0 12px 24px rgba(0,0,0,0.10);
       border-color: rgba(199,169,107,.55);
     }
-    .btn:active{ transform: translateY(0); }
-
     .btn.primary{
       background:var(--gold);
       border-color:var(--gold);
@@ -921,8 +915,8 @@
         <img src="../images/transparent-logo-2.png" alt="MCM Services Logo">
       </div>
       <div class="auth-body">
-        <div class="auth-title">Executive Projects Dashboard</div>
-        <p class="auth-sub">Authorized access only. Enter the dashboard password to continue.</p>
+        <div class="auth-title">Projects Dashboard</div>
+        <p class="auth-sub">Private access for internal use. Please enter the access password to continue.</p>
 
         <form class="auth-form" id="authForm" autocomplete="off">
           <div class="auth-field">
@@ -1206,44 +1200,32 @@ function unlockDashboard(adminKey){
 
 <main>
   <div class="wrap">
-    <h1>Executive Projects Dashboard</h1>
-    <p class="sub">Private management portal • Miami, FL</p>
+    <h1>Projects Dashboard</h1>
+    
+
     <div class="top-actions">
-      <div class="badge-line" aria-label="Dashboard badges">
-        <span class="pill-mini"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Internal Use Only</span>
-        <span class="pill-mini"><i class="fa-solid fa-lock" aria-hidden="true"></i> Confidential</span>
       </div>
-      <button class="toggle" id="darkToggle" type="button" aria-label="Toggle theme">
-        <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-        <span>Theme:</span>
-        <span id="darkLabel">Dark</span>
-      </button>
-    </div>
 
     <div class="kpi-row" aria-label="KPIs">
       <div class="kpi">
         <div class="label">Total</div>
         <div class="value" id="kpiTotal">0</div>
         
-      <div class="hint">All registered projects</div>
       </div>
       <div class="kpi">
         <div class="label">Active</div>
         <div class="value" id="kpiActive">0</div>
         
-      <div class="hint">Work in execution</div>
       </div>
       <div class="kpi">
         <div class="label">Completed</div>
         <div class="value" id="kpiCompleted">0</div>
         
-      <div class="hint">Delivered successfully</div>
       </div>
       <div class="kpi">
         <div class="label">Needs Attention</div>
         <div class="value" id="kpiAttention">0</div>
         
-      <div class="hint">Requires review</div>
       </div>
     </div>
 
@@ -1251,7 +1233,7 @@ function unlockDashboard(adminKey){
     <!-- Recent Portal Access (Simple Version) -->
     <div class="card" id="recentAccessCard" style="margin:16px 0; display:none;">
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-        <div style="font-weight:700;">Recent Portal Activity</div>
+        <div style="font-weight:700;">Recent Portal Access</div>
         <button id="recentAccessRefresh" type="button"
           style="padding:8px 14px; border-radius:10px; border:1px solid var(--border); background:var(--pillBg); cursor:pointer;">
           Refresh
@@ -1276,7 +1258,7 @@ function unlockDashboard(adminKey){
     </div>
 
     <div class="section-row">
-      <div class="section-title">Projects Portfolio</div>
+      <div class="section-title">Portfolio</div>
       <div class="weather-gadget" aria-label="Weather and refresh">
         <div class="weather-pill" id="weatherPill" title="Live weather for Miami, FL">
           <i class="fa-solid fa-cloud-sun" aria-hidden="true"></i>
@@ -1297,7 +1279,7 @@ function unlockDashboard(adminKey){
 
     <!-- Leads (Portal Access Log) -->
     <div class="section-row" style="margin-top:28px;">
-      <div class="section-title">Portal Activity</div>
+      <div class="section-title">Leads</div>
       <div class="weather-gadget" style="align-items:flex-end;">
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
           <input id="leadQuery" class="input" type="search" placeholder="Search name / email / project…" autocomplete="off" style="min-width:240px;" />
