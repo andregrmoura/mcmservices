@@ -216,6 +216,157 @@
       color:var(--kpiHint);
     }
 
+    /* Revenue tracker (Executive) */
+    .rev-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      margin: 12px 0 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .rev-card::before{
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:4px;
+      background:var(--gold);
+    }
+    .rev-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .rev-title{
+      font-family:'Playfair Display', serif;
+      color:var(--gold);
+      font-size:1.2rem;
+      margin:0;
+      font-weight:400;
+    }
+    .rev-sub{
+      margin:2px 0 0;
+      color:var(--muted2);
+      font-size:.88rem;
+      font-weight:600;
+    }
+    .rev-metrics{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    @media (max-width: 820px){
+      .rev-metrics{ grid-template-columns: 1fr; }
+    }
+    .rev-m{
+      border:1px solid var(--border2);
+      border-radius:14px;
+      padding:12px 12px 10px;
+      background: var(--pillBg);
+    }
+    .rev-m .lbl{
+      font-size:.75rem;
+      letter-spacing:.05em;
+      color:var(--muted2);
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .rev-m .val{
+      font-size:1.35rem;
+      font-weight:800;
+      color:var(--text);
+      line-height:1.1;
+    }
+    .rev-m .mini{
+      margin-top:6px;
+      font-size:.86rem;
+      color:var(--muted);
+      font-weight:600;
+    }
+        .rev-chart{
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px solid var(--border2);
+    }
+    .rev-chart svg{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .rev-grid{
+      stroke: rgba(0,0,0,0.08);
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+    body.dark .rev-grid{
+      stroke: rgba(255,255,255,0.10);
+    }
+    .rev-axis{
+      stroke: rgba(0,0,0,0.18);
+      stroke-width: 1.2;
+      shape-rendering: crispEdges;
+    }
+    body.dark .rev-axis{
+      stroke: rgba(255,255,255,0.18);
+    }
+    body.dark .rev-bar{ filter: drop-shadow(0 14px 22px rgba(0,0,0,0.45)); }
+    .rev-bar{
+      transition: y .55s ease, height .55s ease, opacity .2s ease;
+      opacity: .98;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.10));
+    }
+    .rev-bar.this{ }
+.rev-bar.last{ }
+body.dark .rev-bar.last{ }
+.rev-val{
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      fill: var(--text);
+    }
+    .rev-cat{
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 10px;
+      letter-spacing: .08em;
+      fill: var(--muted2);
+    }
+
+    .rev-chart-wrap{
+      width:100%;
+      min-height: 220px;
+    }
+    .rev-legend{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      margin-top:10px;
+      color:var(--muted2);
+      font-size:.82rem;
+      font-weight:700;
+    }
+    .rev-leg{ display:inline-flex; align-items:center; gap:8px; }
+    .rev-legend .swatch{
+      width:10px; height:10px; border-radius:3px; display:inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+    }
+    .rev-legend .swatch.blue{ background: linear-gradient(180deg, #60a5fa, #2563eb); }
+    .rev-legend .swatch.green{ background: linear-gradient(180deg, #86efac, #16a34a); }
+    .rev-legend .swatch.yellow{ background: linear-gradient(180deg, #fde68a, #f59e0b); }
+    .rev-legend .swatch.red{ background: linear-gradient(180deg, #fda4af, #e11d48); }
+    body.dark .rev-legend .swatch{ box-shadow: 0 12px 22px rgba(0,0,0,0.45); }
+
+
+
     .tools{
       display:flex;
       justify-content:space-between;
@@ -1248,6 +1399,47 @@ function unlockDashboard(adminKey){
     </div>
 
     
+    
+    <!-- Revenue tracker -->
+    <div class="rev-card" id="revenueCard" style="display:none;">
+      <div class="rev-head">
+        <div>
+          <h2 class="rev-title">Revenue Tracker</h2>
+          <div class="rev-sub">Month-to-date vs previous month</div>
+        </div>
+        <div class="badge-line" style="justify-content:flex-end;">
+          <span class="pill-mini" title="Values are read from revenue.json"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Executive summary</span>
+        </div>
+      </div>
+
+      <div class="rev-metrics" aria-label="Revenue metrics">
+        <div class="rev-m">
+          <div class="lbl">This Month (MTD)</div>
+          <div class="val" id="revThis">—</div>
+          <div class="mini" id="revThisHint">Collected</div>
+        </div>
+        <div class="rev-m">
+          <div class="lbl">Last Month</div>
+          <div class="val" id="revLast">—</div>
+          <div class="mini">Previous full month</div>
+        </div>
+        <div class="rev-m">
+          <div class="lbl">Change</div>
+          <div class="val" id="revDelta">—</div>
+          <div class="mini" id="revDeltaHint">vs last month</div>
+        </div>
+      </div>
+
+            <div class="rev-chart" aria-label="Revenue chart">
+        <div id="revChartWrap" class="rev-chart-wrap" role="img" aria-label="Monthly revenue chart"></div>
+        <div class="rev-legend" aria-label="Revenue chart legend">
+          <span class="rev-leg"><span class="swatch blue"></span>Highest month</span>
+          <span class="rev-leg"><span class="swatch red"></span>Lowest month</span>
+          <span class="rev-leg"><span class="swatch yellow"></span>Other months</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Recent Portal Access (Simple Version) -->
     <div class="card" id="recentAccessCard" style="margin:16px 0; display:none;">
       <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
@@ -1445,6 +1637,209 @@ const PROJECTS_ROOT_URL = new URL("./", window.location.href); // folder contain
 const PROJECTS_ROOT = PROJECTS_ROOT_URL.pathname.endsWith("/") ? PROJECTS_ROOT_URL.pathname : (PROJECTS_ROOT_URL.pathname + "/");
 const DASHBOARD_JSON_URL = new URL("dashboard.json", PROJECTS_ROOT_URL).href;
 const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same folder
+
+
+  // ===== Revenue tracker (reads ./revenue.json) =====
+  const REVENUE_JSON_URL = new URL("revenue.json", PROJECTS_ROOT_URL).href;
+
+  function formatMoney(amount, currency){
+    const n = Number(amount);
+    if (!isFinite(n)) return "—";
+    const cur = (currency || "USD").toUpperCase();
+    try{
+      return new Intl.NumberFormat("en-US", { style:"currency", currency: cur, maximumFractionDigits: 0 }).format(n);
+    }catch{
+      return `$${Math.round(n).toLocaleString("en-US")}`;
+    }
+  }
+
+  function setRevenueUI(data = {}){
+    const card = document.getElementById("revenueCard");
+    if (!card) return;
+
+    const currency = (data.currency || "USD").toUpperCase();
+
+    // ---- Normalize month series ----
+    function normalizeMonths(d){
+      let months = [];
+
+      if (Array.isArray(d.months)) months = d.months;
+      else if (Array.isArray(d.series)) months = d.series;
+      else if (d.byMonth && typeof d.byMonth === "object") {
+        months = Object.entries(d.byMonth).map(([k,v]) => ({ label: k, value: v }));
+      } else if (d.monthly && typeof d.monthly === "object") {
+        months = Object.entries(d.monthly).map(([k,v]) => ({ label: k, value: v }));
+      }
+
+      // Accept different keys
+      months = (months || []).map((m, i) => {
+        const label = (m.label ?? m.month ?? m.name ?? m.key ?? `Month ${i+1}`);
+        const value = (m.value ?? m.amount ?? m.total ?? m.revenue ?? 0);
+        const sortKey = (m.sortKey ?? m.key ?? m.monthKey ?? m.month ?? label);
+        return { label: String(label), value: Number(value), sortKey: String(sortKey) };
+      });
+
+      // Sort if keys look like YYYY-MM or YYYY-MM-DD
+      const isoLike = months.every(x => /^\d{4}-\d{2}(-\d{2})?$/.test(x.sortKey));
+      if (isoLike) months.sort((a,b) => a.sortKey.localeCompare(b.sortKey));
+
+      // Drop NaNs, keep zeros
+      months = months.filter(x => isFinite(x.value));
+
+      // Back-compat: if no months provided, build from thisMonth/lastMonth
+      if (!months.length){
+        const a = Number(d.thisMonth);
+        const b = Number(d.lastMonth);
+        if (isFinite(b)) months.push({ label: "Last Month", value: b, sortKey: "last" });
+        if (isFinite(a)) months.push({ label: "This Month (MTD)", value: a, sortKey: "this" });
+      }
+
+      return months;
+    }
+
+    const months = normalizeMonths(data);
+    if (!months.length){
+      card.style.display = "none";
+      return;
+    }
+    card.style.display = "block";
+
+    // ---- Metrics (use explicit values when present; otherwise last two months) ----
+    const explicitThis = Number(data.thisMonth);
+    const explicitLast = Number(data.lastMonth);
+
+    const seriesThis = months.length ? months[months.length - 1].value : NaN;
+    const seriesLast = months.length > 1 ? months[months.length - 2].value : NaN;
+
+    const a = isFinite(explicitThis) ? explicitThis : seriesThis;
+    const b = isFinite(explicitLast) ? explicitLast : seriesLast;
+
+    const thisTxt = formatMoney(a, currency);
+    const lastTxt = formatMoney(b, currency);
+
+    const delta = (isFinite(a) && isFinite(b)) ? (a - b) : NaN;
+    const deltaPct = (isFinite(a) && isFinite(b) && b !== 0) ? (delta / b) * 100 : NaN;
+
+    const sign = (isFinite(delta) && delta > 0) ? "+" : "";
+    const deltaTxt = isFinite(delta) ? `${sign}${formatMoney(delta, currency)}` : "—";
+    const deltaHint = isFinite(deltaPct) ? `${(deltaPct>0?"+":"")}${deltaPct.toFixed(1)}%` : "—";
+
+    const revThis = document.getElementById("revThis");
+    const revLast = document.getElementById("revLast");
+    const revDelta = document.getElementById("revDelta");
+    const revDeltaHint = document.getElementById("revDeltaHint");
+
+    if (revThis) revThis.textContent = thisTxt;
+    if (revLast) revLast.textContent = lastTxt;
+    if (revDelta) revDelta.textContent = deltaTxt;
+    if (revDeltaHint) revDeltaHint.textContent = `vs last month (${deltaHint})`;
+
+    // ---- Render monthly chart (color logic: max blue, min red, others yellow) ----
+    const wrap = document.getElementById("revChartWrap");
+    if (!wrap) return;
+
+    const values = months.map(m => Math.max(0, Number(m.value) || 0));
+    const maxV = Math.max(...values, 1);
+    const minV = Math.min(...values);
+
+    // Geometry
+    const W = 720, H = 240;
+    const padL = 44, padR = 22, padT = 22, padB = 64;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+    const n = months.length;
+    const gap = Math.max(10, Math.min(18, Math.round(plotW / (n * 6))));
+    const barW = Math.max(18, Math.min(54, Math.floor((plotW - gap * (n - 1)) / n)));
+    const usedW = barW * n + gap * (n - 1);
+    const offsetX = padL + Math.max(0, Math.floor((plotW - usedW) / 2));
+
+    // Labels
+    const rotate = n > 8 ? -35 : (n > 6 ? -25 : 0);
+    const catY = H - 18;
+
+    const gridLines = 4;
+    const grid = Array.from({length: gridLines}, (_,i) => {
+      const y = padT + Math.round((plotH / (gridLines - 1)) * i);
+      return `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" class="rev-grid"></line>`;
+    }).join("");
+
+    const axisY = padT + plotH;
+    const axis = `<line x1="${padL}" y1="${axisY}" x2="${W-padR}" y2="${axisY}" class="rev-axis"></line>`;
+
+    function fillFor(v){
+      if (maxV === minV) return "url(#revGradBlue)";
+      if (v === maxV) return "url(#revGradBlue)";
+      if (v === minV) return "url(#revGradRed)";
+      return "url(#revGradYellow)";
+    }
+
+    const bars = months.map((m, i) => {
+      const v = Math.max(0, Number(m.value) || 0);
+      const h = Math.round((v / maxV) * plotH);
+      const x = offsetX + i * (barW + gap);
+      const y = padT + (plotH - h);
+      const valTxt = formatMoney(v, currency);
+
+      const tx = x + barW / 2;
+      const ty = Math.max(padT + 12, y - 10);
+
+      const label = esc(m.label);
+      const labelEl = rotate
+        ? `<text x="${tx}" y="${catY}" text-anchor="middle" class="rev-cat" transform="rotate(${rotate} ${tx} ${catY})">${label}</text>`
+        : `<text x="${tx}" y="${catY}" text-anchor="middle" class="rev-cat">${label}</text>`;
+
+      return `
+        <rect x="${x}" y="${y}" width="${barW}" height="${h}" rx="14" class="rev-bar" fill="${fillFor(v)}"></rect>
+        <text x="${tx}" y="${ty}" text-anchor="middle" class="rev-val">${valTxt}</text>
+        ${labelEl}
+      `;
+    }).join("");
+
+    const svg = `
+      <svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" aria-label="Monthly revenue chart">
+        <defs>
+          <linearGradient id="revGradBlue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#60a5fa"/>
+            <stop offset="100%" stop-color="#2563eb"/>
+          </linearGradient>
+          <linearGradient id="revGradRed" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fda4af"/>
+            <stop offset="100%" stop-color="#e11d48"/>
+          </linearGradient>
+          <linearGradient id="revGradYellow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fde68a"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+        </defs>
+        ${grid}
+        ${axis}
+        ${bars}
+      </svg>
+    `;
+
+    wrap.innerHTML = svg;
+  }
+
+
+  async function loadRevenue(){
+    try{
+      // Use your existing fetchJson helper (defined later). If it's not ready yet, fallback to fetch.
+      let data = null;
+      if (typeof fetchJson === "function"){
+        data = await fetchJson(REVENUE_JSON_URL);
+      }else{
+        const r = await fetch(REVENUE_JSON_URL, { cache: "no-store" });
+        if (!r.ok) throw new Error(`Revenue HTTP ${r.status}`);
+        data = await r.json();
+      }
+      setRevenueUI(data || {});
+    }catch{
+      // silently hide if missing
+      const card = document.getElementById("revenueCard");
+      if (card) card.style.display = "none";
+    }
+  }
+
 
   let ATTENTION_DAYS = 14;
 
@@ -1990,6 +2385,8 @@ menu.querySelector("#statusCancel").addEventListener("click", closeStatusMenu);
     try{
       await loadStatusEngine();
       await initStatusOptions();
+      // Revenue tracker is independent from projects; load without blocking.
+      try{ loadRevenue(); }catch{}
       const dash = await fetchJson(DASHBOARD_JSON_URL);
       ATTENTION_DAYS = Number(dash?.settings?.attentionDays ?? 14);
 
