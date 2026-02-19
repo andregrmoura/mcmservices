@@ -295,6 +295,22 @@
       padding-top:12px;
       border-top:1px solid var(--border2);
     }
+
+    .rev-chart-title{
+      margin: 0 0 10px;
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .rev-note{
+      margin-top: 10px;
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
     .rev-chart svg{
       width:100%;
       height:auto;
@@ -361,8 +377,8 @@ body.dark .rev-bar.last{ }
     }
     .rev-legend .swatch.blue{ background: linear-gradient(180deg, #60a5fa, #2563eb); }
     .rev-legend .swatch.green{ background: linear-gradient(180deg, #86efac, #16a34a); }
-    .rev-legend .swatch.yellow{ background: linear-gradient(180deg, #fde68a, #f59e0b); }
-    .rev-legend .swatch.red{ background: linear-gradient(180deg, #fda4af, #e11d48); }
+    .rev-legend .swatch.neutral{ background: linear-gradient(180deg, #e5e7eb, #9ca3af); }
+        .rev-legend .swatch.red{ background: linear-gradient(180deg, #fb7185, #be123c); }
     body.dark .rev-legend .swatch{ box-shadow: 0 12px 22px rgba(0,0,0,0.45); }
 
 
@@ -1092,6 +1108,8 @@ body.dark .rev-bar.last{ }
 
         <div class="auth-msg" id="authMsg" role="alert">Incorrect password. Please try again.</div>
         <div class="auth-foot">Tip: Access is shared only with authorized team members.</div>
+
+        <div class="rev-note">Data based on collected revenue only.</div>
       </div>
     </div>
   </div>
@@ -1431,11 +1449,13 @@ function unlockDashboard(adminKey){
       </div>
 
             <div class="rev-chart" aria-label="Revenue chart">
+        <div class="rev-chart-title">Revenue Trend — Last 6 Months</div>
+
         <div id="revChartWrap" class="rev-chart-wrap" role="img" aria-label="Monthly revenue chart"></div>
         <div class="rev-legend" aria-label="Revenue chart legend">
           <span class="rev-leg"><span class="swatch blue"></span>Highest month</span>
           <span class="rev-leg"><span class="swatch red"></span>Lowest month</span>
-          <span class="rev-leg"><span class="swatch yellow"></span>Other months</span>
+          <span class="rev-leg"><span class="swatch neutral"></span>Other months</span>
         </div>
       </div>
     </div>
@@ -1770,7 +1790,7 @@ const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same fold
       if (maxV === minV) return "url(#revGradBlue)";
       if (v === maxV) return "url(#revGradBlue)";
       if (v === minV) return "url(#revGradRed)";
-      return "url(#revGradYellow)";
+      return "url(#revGradNeutral)";
     }
 
     const bars = months.map((m, i) => {
@@ -1803,12 +1823,12 @@ const BASE_PROJECTS_URL = PROJECTS_ROOT; // project portals under this same fold
             <stop offset="100%" stop-color="#2563eb"/>
           </linearGradient>
           <linearGradient id="revGradRed" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fda4af"/>
-            <stop offset="100%" stop-color="#e11d48"/>
+            <stop offset="0%" stop-color="#fb7185"/>
+            <stop offset="100%" stop-color="#be123c"/>
           </linearGradient>
-          <linearGradient id="revGradYellow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fde68a"/>
-            <stop offset="100%" stop-color="#f59e0b"/>
+          <linearGradient id="revGradNeutral" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e5e7eb"/>
+            <stop offset="100%" stop-color="#9ca3af"/>
           </linearGradient>
         </defs>
         ${grid}
