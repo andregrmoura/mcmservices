@@ -1,7 +1,0 @@
-{
-  "currency": "USD",
-  "months": [
-    { "label": "Jan", "value": 5217, "sortKey": "2026-01" },
-    { "label": "Feb", "value": 11212, "sortKey": "2026-02" }
-  ]
-}
