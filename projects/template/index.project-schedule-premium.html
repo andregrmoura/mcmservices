@@ -800,6 +800,179 @@ section + h2{
     .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
+
+    /* ===== Project Schedule (Gantt-lite) ===== */
+    .schedule-empty{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-top:12px;
+      padding:14px 14px;
+      border-radius:12px;
+      border:1px dashed rgba(0,0,0,.18);
+      background:linear-gradient(180deg, rgba(199,169,107,.10), rgba(0,0,0,.02));
+      color:#444;
+    }
+    .schedule-empty-icon{
+      width:44px;height:44px;
+      border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(199,169,107,.14);
+      border:1px solid rgba(199,169,107,.35);
+      flex:0 0 auto;
+    }
+    .schedule-empty-icon i{ color:#b89245; font-size:18px; }
+    .schedule-empty-title{
+      margin:0;
+      font-weight:700;
+      font-size:.98rem;
+      color:#222;
+      font-family:'Montserrat',sans-serif;
+    }
+    .schedule-empty-sub{
+      margin:4px 0 0;
+      font-size:.92rem;
+      color:#666;
+      line-height:1.35;
+    }
+
+    .schedule-card{
+      width:100%;
+      max-width:1200px;
+      margin: 18px auto 22px;
+      background:#fff;
+      border:1px solid #DDD;
+      border-radius:12px;
+      padding:18px 18px 14px;
+    }
+    .schedule-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .schedule-head h3{
+      margin:0;
+      font-size:1.05rem;
+      color:#333;
+      font-weight:600;
+      font-family:'Montserrat',sans-serif;
+    }
+    .schedule-head p{
+      margin:6px 0 0;
+      color:#666;
+      font-size:.92rem;
+      max-width:760px;
+    }
+    .schedule-meta{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top:2px;
+      flex-wrap:wrap;
+    }
+    .schedule-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background:rgba(199,169,107,.08);
+      color:#333;
+      font-size:.85rem;
+      font-weight:600;
+      letter-spacing:.02em;
+    }
+    .schedule-badge i{ color:#C7A96B; }
+    .gantt{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+    .gantt-row{
+      display:grid;
+      grid-template-columns: 240px 1fr;
+      gap:14px;
+      align-items:center;
+    }
+    .gantt-label{
+      min-width:0;
+    }
+    .gantt-title{
+      font-weight:600;
+      color:#222;
+      font-size:.95rem;
+      line-height:1.2;
+      margin:0;
+    }
+    .gantt-sub{
+      margin:4px 0 0;
+      color:#777;
+      font-size:.85rem;
+      line-height:1.25;
+    }
+    .gantt-track{
+      position:relative;
+      height:14px;
+      border-radius:999px;
+      background:#efefef;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .gantt-bar{
+      position:absolute;
+      top:0; bottom:0;
+      left:0;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#d7b97a,#c8a76a);
+      box-shadow:0 0 0 3px rgba(199,169,107,.14);
+      transition:width .5s ease;
+    }
+    .gantt-bar.pending{
+      background:linear-gradient(90deg, rgba(244,180,0,.55), rgba(244,180,0,.90));
+      box-shadow:0 0 0 3px rgba(244,180,0,.14);
+    }
+    .gantt-bar.completed{
+      background:linear-gradient(90deg, rgba(46,125,50,.55), rgba(46,125,50,.95));
+      box-shadow:0 0 0 3px rgba(46,125,50,.14);
+    }
+    .gantt-bar.inactive{
+      background:linear-gradient(90deg, rgba(153,153,153,.40), rgba(153,153,153,.80));
+      box-shadow:0 0 0 3px rgba(153,153,153,.12);
+    }
+    .gantt-ticks{
+      display:flex;
+      justify-content:space-between;
+      color:#888;
+      font-size:.78rem;
+      margin-top:8px;
+      padding-left:254px; /* aligns with rows */
+      gap:10px;
+    }
+    .gantt-empty{
+      margin:10px 0 0;
+      color:#777;
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    .gantt-empty code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92em;
+      background: rgba(0,0,0,.04);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color:#555;
+    }
+    @media (max-width: 768px){
+      .gantt-row{ grid-template-columns: 1fr; }
+      .gantt-ticks{ padding-left:0; }
+    }
+
 </style>
 </head>
 
@@ -974,7 +1147,46 @@ section + h2{
     <a id="galleryBtn" class="primary" href="gallery-coming-soon.html" data-translate="open-project-gallery">View Project Photos</a>
 
     
-    <h2 class="timeline-title" data-translate="timeline-title">Activity Timeline</h2>
+    
+    <h2 data-translate="schedule-title">Project Schedule</h2>
+
+    <div class="schedule-card" id="scheduleCard" aria-label="Project schedule">
+      <div class="schedule-head">
+        <div>
+          <h3 data-translate="schedule-subtitle">Timeline Overview</h3>
+          <p data-translate="schedule-desc">
+            A high-level schedule to track phases and upcoming milestones. Updated as the project progresses.
+          </p>
+        </div>
+        <div class="schedule-meta" aria-label="Schedule status">
+          <span class="schedule-badge" id="scheduleUpdatedBadge">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            <span data-translate="schedule-updated">Updated</span>
+            <span id="scheduleUpdatedAt">—</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="gantt" id="gantt"></div>
+      <div class="gantt-ticks" aria-hidden="true">
+        <span>Start</span><span>Mid</span><span>Finish</span>
+      </div>
+
+      <div class="schedule-empty is-hidden" id="ganttEmpty">
+        <div class="schedule-empty-icon" aria-hidden="true">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div>
+          <p class="schedule-empty-title" data-translate="schedule-empty-title">Schedule being prepared</p>
+          <p class="schedule-empty-sub" data-translate="schedule-empty-sub">
+            We’ll publish a timeline here as soon as the next milestones are confirmed.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+<h2 class="timeline-title" data-translate="timeline-title">Activity Timeline</h2>
 
 
 
@@ -1148,7 +1360,14 @@ section + h2{
       "project-address-label": "Address",
       "start-date-label": "Scheduled Start",
       "status-details-label": "Status Details"
-    }});
+    ,
+      "schedule-title": "Project Schedule",
+      "schedule-subtitle": "Timeline Overview",
+      "schedule-desc": "A high-level schedule to track phases and upcoming milestones. Updated as the project progresses.",
+      "schedule-updated": "Updated",
+      "schedule-empty": "No schedule items yet. Add them in <code>project.json</code> under <code>"schedule"</code>.",
+      "schedule-empty-title": "Schedule being prepared",
+      "schedule-empty-sub": "We’ll publish a timeline here as soon as the next milestones are confirmed."}});
 
     add("es", {
       "portal-title": "Portal Privado del Proyecto",
@@ -1192,7 +1411,14 @@ section + h2{
       "project-address-label": "Dirección",
       "start-date-label": "Inicio Programado",
       "status-details-label": "Detalles del Estado"
-    }});
+    ,
+      "schedule-title": "Cronograma del Proyecto",
+      "schedule-subtitle": "Resumen del Cronograma",
+      "schedule-desc": "Un cronograma de alto nivel para seguir fases e hitos. Se actualiza a medida que avanza el proyecto.",
+      "schedule-updated": "Actualizado",
+      "schedule-empty": "Aún no hay elementos. Agréguelos en <code>project.json</code> bajo <code>"schedule"</code>.",
+      "schedule-empty-title": "Cronograma en preparación",
+      "schedule-empty-sub": "Publicaremos una línea de tiempo en cuanto se confirmen los próximos hitos."}});
 
     add("pt", {
       "portal-title": "Portal Privado do Projeto",
@@ -1236,7 +1462,14 @@ section + h2{
       "project-address-label": "Endereço",
       "start-date-label": "Início Programado",
       "status-details-label": "Detalhes do Status"
-    }});
+    ,
+      "schedule-title": "Cronograma do Projeto",
+      "schedule-subtitle": "Visão Geral",
+      "schedule-desc": "Um cronograma de alto nível para acompanhar fases e próximos marcos. Atualizado conforme o projeto avança.",
+      "schedule-updated": "Atualizado",
+      "schedule-empty": "Ainda não há itens. Adicione em <code>project.json</code> dentro de <code>"schedule"</code>.",
+      "schedule-empty-title": "Cronograma em preparação",
+      "schedule-empty-sub": "Vamos publicar uma linha do tempo assim que os próximos marcos forem confirmados."}});
   })();
 
   // Auto language selection with PT priority (override legacy ES cache)
@@ -1581,7 +1814,129 @@ function applyProgressBar(){
           });
 
           card.classList.remove("is-hidden");
+        
+        // ===== Project Schedule (Gantt-lite) =====
+        (function renderSchedule(projectData){
+          var card = document.getElementById("scheduleCard");
+          var gantt = document.getElementById("gantt");
+          var empty = document.getElementById("ganttEmpty");
+          var updated = document.getElementById("scheduleUpdatedAt");
+          var ticks = document.querySelector(".gantt-ticks");
+          if (!card || !gantt || !empty || !updated) return;
+
+          // Prefer explicit scheduleUpdatedAt from JSON, otherwise reuse lastUpdate if available
+          var updatedAt = "";
+          if (projectData && typeof projectData.scheduleUpdatedAt === "string") updatedAt = projectData.scheduleUpdatedAt.trim();
+          if (!updatedAt){
+            var last = document.querySelector('[data-var="lastUpdate"]');
+            updatedAt = last ? (last.textContent || "").trim() : "";
+          }
+          updated.textContent = updatedAt || "—";
+
+          var items = (projectData && Array.isArray(projectData.schedule)) ? projectData.schedule : [];
+          gantt.innerHTML = "";
+
+          if (!items.length){
+            empty.classList.remove("is-hidden");
+            if (ticks) ticks.style.display = "none";
+            return;
+          }
+          empty.classList.add("is-hidden");
+          if (ticks) ticks.style.display = "";
+
+          // If dates exist, compute relative widths between minStart and maxEnd. Otherwise use percent if provided.
+          function parseDate(s){
+            var d = new Date(s);
+            return isNaN(d.getTime()) ? null : d;
+          }
+          var dates = [];
+          items.forEach(function(it){
+            if (!it) return;
+            var sd = parseDate(it.start);
+            var ed = parseDate(it.end);
+            if (sd) dates.push(sd.getTime());
+            if (ed) dates.push(ed.getTime());
+          });
+          var minT = dates.length ? Math.min.apply(null, dates) : null;
+          var maxT = dates.length ? Math.max.apply(null, dates) : null;
+          var span = (minT !== null && maxT !== null && maxT > minT) ? (maxT - minT) : null;
+
+          function normStatus(s){
+            return (s || "").toString().trim().toLowerCase();
+          }
+
+          items.forEach(function(it){
+            if (!it) return;
+            var title = (it.title || it.name || "Phase").toString().trim();
+            var status = normStatus(it.status);
+            var start = (it.start || "").toString().trim();
+            var end = (it.end || "").toString().trim();
+            var note = (it.note || it.details || "").toString().trim();
+            var pct = (typeof it.percent === "number") ? it.percent : null;
+
+            var row = document.createElement("div");
+            row.className = "gantt-row";
+
+            var label = document.createElement("div");
+            label.className = "gantt-label";
+
+            var h = document.createElement("p");
+            h.className = "gantt-title";
+            h.textContent = title;
+
+            var sub = document.createElement("p");
+            sub.className = "gantt-sub";
+            var range = "";
+            if (start || end){
+              range = (start || "—") + " → " + (end || "—");
+            }
+            sub.textContent = [range, note].filter(Boolean).join(" • ");
+
+            label.appendChild(h);
+            label.appendChild(sub);
+
+            var track = document.createElement("div");
+            track.className = "gantt-track";
+
+            var bar = document.createElement("div");
+            bar.className = "gantt-bar";
+
+            // Color by status
+            if (status.indexOf("complete") !== -1 || status.indexOf("done") !== -1) bar.classList.add("completed");
+            else if (status.indexOf("pending") !== -1 || status.indexOf("await") !== -1) bar.classList.add("pending");
+            else if (status.indexOf("hold") !== -1 || status.indexOf("inactive") !== -1 || status.indexOf("pause") !== -1) bar.classList.add("inactive");
+
+            var widthPct = 0;
+
+            if (span && start && end){
+              var sd = parseDate(start);
+              var ed = parseDate(end);
+              if (sd && ed){
+                var left = (sd.getTime() - minT) / span;
+                var right = (ed.getTime() - minT) / span;
+                left = Math.max(0, Math.min(1, left));
+                right = Math.max(0, Math.min(1, right));
+                widthPct = Math.max(2, (right - left) * 100); // at least visible
+                bar.style.left = (left * 100) + "%";
+              }
+            } else if (pct !== null){
+              widthPct = Math.max(2, Math.min(100, pct));
+            } else {
+              // fallback based on status
+              widthPct = (status.indexOf("complete") !== -1) ? 100 : (status.indexOf("progress") !== -1 ? 60 : 20);
+            }
+
+            bar.style.width = widthPct + "%";
+
+            track.appendChild(bar);
+
+            row.appendChild(label);
+            row.appendChild(track);
+            gantt.appendChild(row);
+          });
         })(data);
+
+})(data);
 }catch(e){ console.warn('UI enhancements error', e); }
 
       });
@@ -1874,23 +2229,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script src="/js/page-transitions.js"></script>
-<script>
-  (function () {
-    try {
-      const parts = window.location.pathname.split("/").filter(Boolean);
-      const projectSlug = parts[1];
-      if (!projectSlug) return;
-  
-      fetch("/.netlify/functions/notify-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectSlug })
-      }).catch(console.error);
-    } catch (e) {
-      console.error("notify-access error:", e);
-    }
-  })();
-  </script>
-  
+
   </body>
 </html>
