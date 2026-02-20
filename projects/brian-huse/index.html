@@ -1874,23 +1874,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script src="/js/page-transitions.js"></script>
-<script>
-  (function () {
-    try {
-      const parts = window.location.pathname.split("/").filter(Boolean);
-      const projectSlug = parts[1];
-      if (!projectSlug) return;
+
   
-      fetch("/.netlify/functions/notify-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectSlug })
-      }).catch(console.error);
-    } catch (e) {
-      console.error("notify-access error:", e);
-    }
-  })();
-  </script>
   
   </body>
 </html>
