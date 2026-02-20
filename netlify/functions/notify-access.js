@@ -5,21 +5,19 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_ADMIN = process.env.MAIL_FROM_ADMIN || 
-  "Project Access <leads@mcmprosolutions.com>";
 
-const FROM_CLIENT = process.env.MAIL_FROM_CLIENT || 
-  "Moura Consulting & Management <leads@mcmprosolutions.com>";
+const ADMIN_EMAIL = process.env.MAIL_TO_ADMIN; // ex: commercial@mcmprosolutions.com
+const FROM_ADMIN =
+  process.env.MAIL_FROM_ADMIN || "Project Access <leads@mcmprosolutions.com>";
 
-
-async function sendResendEmail({ to, subject, html }) {
+async function sendResendEmail({ from, to, subject, html }) {
   const resp = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${RESEND_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ from: FROM_EMAIL, to, subject, html }),
+    body: JSON.stringify({ from, to, subject, html }),
   });
 
   if (!resp.ok) {
@@ -36,12 +34,10 @@ exports.handler = async (event) => {
     }
 
     const { projectSlug, fullName, email } = JSON.parse(event.body || "{}");
-
     if (!projectSlug) {
       return { statusCode: 400, body: JSON.stringify({ error: "Missing projectSlug" }) };
     }
 
-    // 1) salva log no Supabase
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
     }
@@ -54,15 +50,15 @@ exports.handler = async (event) => {
         email: email ? String(email) : null,
       },
     ]);
-
     if (insertErr) throw new Error(`Supabase insert error: ${insertErr.message}`);
 
-    // 2) envia email pro admin
     if (!RESEND_API_KEY) throw new Error("Missing RESEND_API_KEY");
+    if (!ADMIN_EMAIL) throw new Error("Missing MAIL_TO_ADMIN");
 
     const now = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
 
     await sendResendEmail({
+      from: FROM_ADMIN,
       to: ADMIN_EMAIL,
       subject: `Portal Access: ${projectSlug}`,
       html: `
