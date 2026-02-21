@@ -1,9 +1,9 @@
 {
-  "projectStatus": "Planning",
+  "projectStatus": "Active",
   "projectStatusSub": "",
   "lastUpdate": "MMM DD, YYYY",
-  "currentEstimate": "",
-  "currentInvoice": "",
+  "currentEstimate": "./estimates/estimate.pdf",
+  "currentInvoice": "./invoice/current-invoice.pdf",
   "nextStepNote": "",
   "galleryLink": "",
   "projectName": "Client Project Name",

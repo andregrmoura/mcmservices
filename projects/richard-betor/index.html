@@ -800,6 +800,13 @@ section + h2{
     .progress-fill{ height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#d7b97a,#c8a76a); transition:width .6s ease; }
     .progress-pct{ min-width:44px; text-align:right; font-weight:600; color:#333; font-size:14px; }
 
+
+    /* Disabled primary button state */
+    a.primary.is-disabled{
+      opacity: .55;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
 </style>
 </head>
 
@@ -945,27 +952,13 @@ section + h2{
       <p>The current estimate is being prepared and will be available here once completed.</p>
     </div>
 
-<h2 data-translate="current-invoice">Current Invoice</h2>
-
-    <!-- TEMPLATE NOTE:
-         If invoice.pdf exists, replace the placeholder block below with:
-         <div class="pdf-box">
-           <iframe src="invoice.pdf#zoom=page-width" loading="lazy"></iframe>
-         </div>
-    -->
-    <div class="pdf-box is-hidden" data-pdf-box="currentInvoice">
-      <iframe data-src="currentInvoice" loading="lazy"></iframe>
-    </div>
-    <div class="pdf-placeholder" data-placeholder-for="currentInvoice">
-      <div class="placeholder-icon"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></div>
-      <h3>Invoice in preparation</h3>
-      <p>The current invoice will be available here as soon as it is issued.</p>
-    </div>
-
 <h2 data-translate="secure-payment">Secure Payment</h2>
-<a class="primary" href="./payment.html" data-translate="secure-payment-btn">
+
+    <a id="paymentBtn" class="primary" href="./invoices/current-invoice.pdf" target="_blank" rel="noopener" data-translate="secure-payment-btn">
       <i class="fas fa-lock" aria-hidden="true" style="margin-right:8px;"></i>Secure Payment
-    </a><h2 data-translate="project-gallery">Photos from the Latest Project</h2>
+    </a>
+
+<h2 data-translate="project-gallery">Photos from the Latest Project</h2>
 
     <!-- TEMPLATE NOTE:
          Early phase: keep gallery-coming-soon.html
@@ -1821,61 +1814,88 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(updateMapLink, 800);
 });
 </script>
+
+
 <script>
-  (function () {
+  // Set Secure Payment button to Invoice Simple link (from project.json)
+  (function(){
+    var btn = document.getElementById("paymentBtn");
+    if (!btn) return;
 
-    function getProjectSlug() {
-      var parts = window.location.pathname.split("/");
-      var idx = parts.indexOf("projects");
-      if (idx !== -1 && parts[idx + 1]) {
-        return parts[idx + 1];
-      }
-      return "template";
+    function pickPaymentLink(data){
+      if (!data) return "";
+      return (
+        data.paymentLink ||
+        data.invoicePaymentLink ||
+        data.paymentUrl ||
+        data.invoiceLink ||
+        data.invoiceSimpleLink ||
+        ""
+      ).toString().trim();
     }
 
-    var slug = getProjectSlug();
-    var key = "portalAccess_" + slug;
+    var fallbackHref = (btn.getAttribute("data-fallback-href") || btn.getAttribute("href") || "./payment.html").toString().trim();
 
-    function sendAccessNotification(projectSlug) {
-      var fullName = localStorage.getItem("client_full_name") || "";
-      var email = localStorage.getItem("client_email") || "";
+    function setEnabled(url){
+      btn.removeAttribute("aria-disabled");
+      btn.classList.remove("is-disabled");
+      btn.href = url;
+    }
 
-      fetch("/.netlify/functions/notify-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          projectSlug: projectSlug,
-          fullName: fullName,
-          email: email
+    function loadJSON(cb){
+      fetch("./data/project.json", { cache: "no-store" })
+        .then(function(r){
+          if (r && r.ok) return r.json();
+          return fetch("./project.json", { cache: "no-store" })
+            .then(function(r2){ return (r2 && r2.ok) ? r2.json() : null; });
         })
-      }).catch(function(){});
+        .then(function(data){ cb(data); })
+        .catch(function(){ cb(null); });
     }
 
-    // TEMPLATE allowed
-    if (slug === "template") {
-      console.log("Template project: access screen allowed.");
-      sendAccessNotification(slug);
-      return;
-    }
+    // Start with a safe fallback (works even if project.json has no payment link)
+    if (fallbackHref && fallbackHref !== "#") setEnabled(fallbackHref);
 
-    var saved = sessionStorage.getItem(key);
-
-    if (saved) {
-      console.log("Access already granted for:", slug);
-      sendAccessNotification(slug);
-      return;
-    }
-
-    // redirect if not authorized
-    var accessUrl = "/projects/" + slug + "/access.html";
-    window.location.href = accessUrl;
-
+    loadJSON(function(data){
+      var url = pickPaymentLink(data);
+      if (url) setEnabled(url);
+    });
   })();
 </script>
 
-<script src="/js/page-transitions.js"></script>
 
-  
-  
-  </body>
+<script type="module">
+  import { getProgressPercent, getProgressBarBackground } from "../assets/status-engine.js";
+
+  function applySyncedProgressBar(){
+    var fill = document.getElementById("progressFill");
+    var pctEl = document.getElementById("progressPct");
+    var statusEl = document.querySelector('[data-var="projectStatus"]');
+
+    if (!fill || !pctEl || !statusEl) return;
+
+    var status = (statusEl.textContent || "").trim();
+    var pct = getProgressPercent(status);
+
+    fill.style.width = pct + "%";
+    fill.style.background = getProgressBarBackground(status);
+    pctEl.textContent = pct + "%";
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    applySyncedProgressBar();
+
+    var statusEl = document.querySelector('[data-var="projectStatus"]');
+    if (statusEl && window.MutationObserver){
+      var obs = new MutationObserver(applySyncedProgressBar);
+      obs.observe(statusEl, { childList:true, characterData:true, subtree:true });
+    }
+
+    setTimeout(applySyncedProgressBar, 300);
+    setTimeout(applySyncedProgressBar, 900);
+    setTimeout(applySyncedProgressBar, 1500);
+  });
+</script>
+
+</body>
 </html>
