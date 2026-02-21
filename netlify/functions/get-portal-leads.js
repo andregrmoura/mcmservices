@@ -1,21 +1,28 @@
-export default async (req) => {
-  const json = (status, data) =>
-    new Response(JSON.stringify(data), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
 
-  if (req.method === "OPTIONS") return new Response(null, { status: 204 });
-  if (req.method !== "GET") return json(405, { error: "Method Not Allowed" });
+exports.handler = async (event) => {
 
-  // Reutiliza o mesmo esquema do dashboard (x-admin-key)
-  const incomingKey = (req.headers.get("x-admin-key") || "").trim();
+  const json = (status, data) => ({
+    statusCode: status,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204 };
+  }
+
+  if (event.httpMethod !== "GET") {
+    return json(405, { error: "Method Not Allowed" });
+  }
+
+  const incomingKey = (event.headers["x-admin-key"] || "").trim();
   const expectedKey =
     (process.env.DASH_ADMIN_KEY || process.env.ADMIN_KEY || "").trim();
 
   if (!expectedKey) {
     return json(500, { error: "Missing server env: DASH_ADMIN_KEY (or ADMIN_KEY)" });
   }
+
   if (!incomingKey || incomingKey !== expectedKey) {
     return json(401, { error: "Unauthorized" });
   }
@@ -28,25 +35,26 @@ export default async (req) => {
       error: "Missing env vars",
       missing: {
         SUPABASE_URL: !SUPABASE_URL,
-        SUPABASE_SERVICE_ROLE_KEY: !SUPABASE_SERVICE_ROLE_KEY,
-      },
+        SUPABASE_SERVICE_ROLE_KEY: !SUPABASE_SERVICE_ROLE_KEY
+      }
     });
   }
 
   try {
-    const url = new URL(req.url);
-    const projectSlug = (url.searchParams.get("projectSlug") || "").trim();
-    const q = (url.searchParams.get("q") || "").trim();
-    const limit = Math.min(parseInt(url.searchParams.get("limit") || "100", 10), 200);
 
-    // Base query
-    let query = `${SUPABASE_URL}/rest/v1/portal_leads?select=id,project_slug,full_name,email,phone,created_at&order=created_at.desc&limit=${limit}`;
+    const params = event.queryStringParameters || {};
 
-    // filtro por projeto
-    if (projectSlug) query += `&project_slug=eq.${encodeURIComponent(projectSlug)}`;
+    const projectSlug = (params.projectSlug || "").trim();
+    const q = (params.q || "").trim();
+    const limit = Math.min(parseInt(params.limit || "100", 10), 200);
 
-    // (Opcional) busca simples: filtra no servidor usando ilike
-    // Se preferir, dá pra filtrar no front-end. Aqui fica mais “limpo”.
+    let query =
+      `${SUPABASE_URL}/rest/v1/portal_leads?select=id,project_slug,full_name,email,phone,created_at&order=created_at.desc&limit=${limit}`;
+
+    if (projectSlug) {
+      query += `&project_slug=eq.${encodeURIComponent(projectSlug)}`;
+    }
+
     if (q) {
       const qq = `%${q}%`;
       query += `&or=(full_name.ilike.${encodeURIComponent(qq)},email.ilike.${encodeURIComponent(qq)},project_slug.ilike.${encodeURIComponent(qq)})`;
@@ -55,15 +63,27 @@ export default async (req) => {
     const res = await fetch(query, {
       headers: {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-      },
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+      }
     });
 
     const text = await res.text();
-    if (!res.ok) return json(res.status, { error: "Supabase error", details: text });
 
-    return json(200, { ok: true, data: text ? JSON.parse(text) : [] });
-  } catch (e) {
-    return json(500, { error: "Unhandled", message: String(e?.message || e) });
+    if (!res.ok) {
+      return json(res.status, { error: "Supabase error", details: text });
+    }
+
+    const data = text ? JSON.parse(text) : [];
+
+    return json(200, { ok: true, data });
+
+  } catch (err) {
+
+    return json(500, {
+      error: "Unhandled",
+      message: String(err?.message || err)
+    });
+
   }
+
 };
