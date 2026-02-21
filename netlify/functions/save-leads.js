@@ -11,14 +11,7 @@ export default async (req) => {
     });
 
   if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS"
-      }
-    });
+    return new Response(null, { status: 204 });
   }
 
   if (req.method !== "POST") {
@@ -57,9 +50,11 @@ export default async (req) => {
     }
 
     /*
-      TRY INSERT LEAD
-      If duplicate → means returning client
+      INSERT LEAD
+      If duplicate → returning client
     */
+
+    let firstAccess = false;
 
     const insert = await fetch(`${SUPABASE_URL}/rest/v1/portal_leads`, {
       method: "POST",
@@ -77,17 +72,12 @@ export default async (req) => {
       })
     });
 
-    const text = await insert.text();
-
-    const duplicate =
-      text.toLowerCase().includes("duplicate") ||
-      text.toLowerCase().includes("unique") ||
-      text.includes("23505");
-
-    const firstAccess = insert.ok;
+    if (insert.status === 201 || insert.status === 200) {
+      firstAccess = true;
+    }
 
     /*
-      ADMIN EMAIL (EVERY ACCESS)
+      ADMIN EMAIL — ALWAYS SEND
     */
 
     if (RESEND_API_KEY && ADMIN_EMAIL && FROM_EMAIL) {
@@ -118,7 +108,7 @@ export default async (req) => {
     }
 
     /*
-      CLIENT EMAIL (ONLY FIRST ACCESS)
+      CLIENT EMAIL — ONLY FIRST ACCESS
     */
 
     if (firstAccess && RESEND_API_KEY && FROM_EMAIL) {
@@ -170,15 +160,14 @@ export default async (req) => {
 
     return json(200, {
       ok: true,
-      firstAccess,
-      duplicate
+      firstAccess
     });
 
   } catch (err) {
 
     return json(500, {
       error: "Unhandled error",
-      message: String(err)
+      message: String(err?.message || err)
     });
 
   }
