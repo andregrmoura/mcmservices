@@ -36,8 +36,23 @@ export default async (req) => {
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
-    const ADMIN_EMAIL = process.env.MAIL_TO_ADMIN;
-    const FROM_EMAIL = process.env.MAIL_FROM_ADMIN;
+    /* 
+       USE EXISTING NETLIFY VARIABLES (no need to change Netlify)
+    */
+
+    const ADMIN_EMAIL =
+      process.env.LEAD_NOTIFY_TO ||
+      process.env.LEADS_NOTIFY_TO ||
+      process.env.MAIL_TO_ADMIN;
+
+    const FROM_ADMIN =
+      process.env.LEAD_NOTIFY_FROM ||
+      process.env.LEADS_NOTIFY_FROM ||
+      process.env.MAIL_FROM_ADMIN;
+
+    const FROM_CLIENT =
+      process.env.MAIL_FROM_CLIENT ||
+      process.env.LEAD_NOTIFY_FROM;
 
     const LOGO =
       process.env.BRAND_LOGO_URL ||
@@ -50,8 +65,7 @@ export default async (req) => {
     }
 
     /*
-      INSERT LEAD
-      If duplicate → returning client
+      INSERT LEAD (ignore duplicate)
     */
 
     let firstAccess = false;
@@ -77,10 +91,10 @@ export default async (req) => {
     }
 
     /*
-      ADMIN EMAIL — ALWAYS SEND
+      ADMIN EMAIL — ALWAYS
     */
 
-    if (RESEND_API_KEY && ADMIN_EMAIL && FROM_EMAIL) {
+    if (RESEND_API_KEY && ADMIN_EMAIL && FROM_ADMIN) {
 
       await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -89,7 +103,7 @@ export default async (req) => {
           Authorization: `Bearer ${RESEND_API_KEY}`
         },
         body: JSON.stringify({
-          from: FROM_EMAIL,
+          from: FROM_ADMIN,
           to: [ADMIN_EMAIL],
           subject: `Portal Access: ${fullName} (${projectSlug})`,
           html: `
@@ -111,7 +125,7 @@ export default async (req) => {
       CLIENT EMAIL — ONLY FIRST ACCESS
     */
 
-    if (firstAccess && RESEND_API_KEY && FROM_EMAIL) {
+    if (firstAccess && RESEND_API_KEY && FROM_CLIENT) {
 
       await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -120,7 +134,7 @@ export default async (req) => {
           Authorization: `Bearer ${RESEND_API_KEY}`
         },
         body: JSON.stringify({
-          from: FROM_EMAIL,
+          from: FROM_CLIENT,
           to: [email],
           subject: "Your Secure Project Portal Access",
           html: `
