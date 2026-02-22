@@ -66,42 +66,14 @@ exports.handler = async (event) => {
       to: ADMIN_EMAIL,
       subject: `Portal Access: ${projectSlug}`,
       html: `
-        <div style="margin:0;padding:0;background:#f6f6f6;">
-          <div style="padding:24px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,Helvetica,sans-serif;">
-            <div style="max-width:560px;margin:auto;background:#ffffff;border-radius:16px;padding:22px 20px;border:1px solid #ececec;">
-
-              <div style="font-size:16px;line-height:1.4;font-weight:600;color:#111;margin:0 0 12px 0;">
-                Client accessed the portal
-              </div>
-
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="font-size:13.5px;line-height:1.6;color:#333;">
-                <tr>
-                  <td style="padding:6px 0;color:#666;width:120px;">Project</td>
-                  <td style="padding:6px 0;color:#111;">${projectSlug}</td>
-                </tr>
-                <tr>
-                  <td style="padding:6px 0;color:#666;">Name</td>
-                  <td style="padding:6px 0;color:#111;">${fullName || "-"}</td>
-                </tr>
-                <tr>
-                  <td style="padding:6px 0;color:#666;">Email</td>
-                  <td style="padding:6px 0;color:#111;">${email || "-"}</td>
-                </tr>
-                <tr>
-                  <td style="padding:6px 0;color:#666;">Time</td>
-                  <td style="padding:6px 0;color:#111;">${now} (ET)</td>
-                </tr>
-              </table>
-
-              <div style="font-size:12px;line-height:1.6;color:#8a8a8a;margin-top:14px;">
-                © ${new Date().getFullYear()} Moura Consulting &amp; Management
-              </div>
-
-            </div>
-          </div>
+        <div style="font-family:Arial,sans-serif;line-height:1.5">
+          <h2 style="margin:0 0 12px 0">Client accessed the portal</h2>
+          <p style="margin:0 0 6px 0"><b>Project:</b> ${projectSlug}</p>
+          <p style="margin:0 0 6px 0"><b>Name:</b> ${fullName || "-"}</p>
+          <p style="margin:0 0 6px 0"><b>Email:</b> ${email || "-"}</p>
+          <p style="margin:12px 0 0 0;color:#666"><b>Time:</b> ${now} (ET)</p>
         </div>
-      
-`,
+      `,
     });
 
     return { statusCode: 200, body: JSON.stringify({ ok: true }) };
