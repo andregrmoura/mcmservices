@@ -138,34 +138,47 @@ export default async (req) => {
           to: [email],
           subject: "Your Secure Project Portal Access",
           html: `
-            <div style="font-family:Arial;background:#f7f7f7;padding:20px;">
-              <div style="max-width:640px;margin:auto;background:white;border-radius:14px;padding:24px;">
+            <div style="margin:0;padding:0;background:#f6f6f6;">
+              <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+                Your secure access to the project portal is confirmed.
+              </div>
 
-                <div style="text-align:center;margin-bottom:20px;">
-                  <img src="${LOGO}" style="height:110px"/>
+              <div style="padding:28px 16px;">
+                <div style="max-width:560px;margin:auto;background:#ffffff;border-radius:16px;padding:26px 22px;border:1px solid #ececec;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,Helvetica,sans-serif;">
+
+                  <div style="text-align:center;margin-bottom:18px;">
+                    <img src="${LOGO}" alt="Moura Consulting &amp; Management" width="240"
+                      style="display:block;margin:auto;border:0;outline:none;text-decoration:none;" />
+                  </div>
+
+                  <div style="text-align:center;font-size:20px;line-height:1.3;font-weight:600;color:#111111;margin:0 0 10px 0;">
+                    Secure Access Confirmed
+                  </div>
+
+                  <div style="text-align:center;font-size:14.5px;line-height:1.6;font-weight:400;color:#444444;margin:0 0 18px 0;">
+                    Hello ${fullName}, your access to the private project portal has been successfully confirmed.
+                  </div>
+
+                  <div style="text-align:center;margin:26px 0;">
+                    <a href="${PORTAL_URL}"
+                      style="display:inline-block;padding:14px 26px;background:#C6A46C;color:#ffffff;text-decoration:none;border-radius:10px;font-size:15px;line-height:15px;font-weight:500;letter-spacing:0.2px;-webkit-text-size-adjust:none;">
+                      Access Your Project Portal
+                    </a>
+                  </div>
+
+                  <div style="font-size:12.5px;line-height:1.6;font-weight:400;color:#6b6b6b;text-align:center;margin:16px 0 0 0;">
+                    If the button doesn’t work, copy and paste this link:<br />
+                    <span style="word-break:break-all;color:#6b6b6b;">${PORTAL_URL}</span>
+                  </div>
+
+                  <div style="font-size:12px;line-height:1.6;color:#8a8a8a;text-align:center;margin-top:18px;">
+                    © ${new Date().getFullYear()} Moura Consulting &amp; Management
+                  </div>
+
                 </div>
-
-                <h2 style="text-align:center;color:#b9965e;font-weight:400;">
-                  Access Confirmed
-                </h2>
-
-                <p style="text-align:center;">
-                  Hello ${fullName}, your access to your private project portal has been confirmed.
-                </p>
-
-                <div style="text-align:center;margin:30px 0;">
-                  <a href="${PORTAL_URL}"
-                     style="padding:14px 20px;border-radius:10px;background:#b9965e;color:#111;font-weight:700;text-decoration:none;">
-                    Open Project Portal
-                  </a>
-                </div>
-
-                <p style="font-size:12px;color:#777;text-align:center;">
-                  © ${new Date().getFullYear()} Moura Consulting & Management
-                </p>
-
               </div>
             </div>
+          
           `
         })
       });
