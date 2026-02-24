@@ -876,6 +876,78 @@ footer{
   }
 }
 </style>
+
+<style id="logo-responsive-standard">
+/* === Force portfolio logo same responsive size as index === */
+header .logo-link .brand-logo{
+display:inline-block;
+height:120px !important;
+width:clamp(180px,32vw,360px) !important;
+background:#C7A96B;
+-webkit-mask-image:url("images/FODA.png");
+mask-image:url("images/FODA.png");
+-webkit-mask-repeat:no-repeat;
+mask-repeat:no-repeat;
+-webkit-mask-position:center;
+mask-position:center;
+-webkit-mask-size:contain;
+mask-size:contain;
+}
+
+/* mobile breathing space same as index */
+@media (max-width:768px){
+header{
+padding:22px 20px !important;
+}
+header .logo-link{
+display:flex;
+justify-content:center;
+align-items:center;
+width:100%;
+}
+}
+</style>
+
+
+<style id="portfolio-mobile-logo-center-fix">
+/* === FIX: keep logo perfectly centered on mobile (does not affect desktop) === */
+@media (max-width: 768px){
+  header .header-top-row{
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* Reserve a small left slot so the centered logo doesn't look visually off */
+  header .header-top-row .header-col-left{
+    width: 44px !important;
+    min-width: 44px !important;
+    flex: 0 0 44px !important;
+  }
+
+  /* True center: independent from left/right items (hamburger, etc.) */
+  header .header-top-row .logo-link{
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* Keep hamburger on the right */
+  header .header-top-row .hamburger-btn{
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+  }
+}
+</style>
+
 </head>
 <body id="top">
 <header>
