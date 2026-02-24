@@ -1,7 +1,7 @@
 {
   "currency": "USD",
   "months": [
-    { "month": "Jan", "revenue": 5394 },
+    { "month": "Jan", "revenue": 5216 },
     { "month": "Feb", "revenue": 11162 }
    
   ]

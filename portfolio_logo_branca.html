@@ -147,30 +147,7 @@
         object-fit: contain;
     }
 
-    
-
-    /* === Brand logo color (same as button) using PNG mask === */
-    .logo-link { 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .brand-logo{
-        display:block;
-        height:120px;
-        width:360px;
-        max-width: 400px;
-        background:#C7A96B; /* same as button */
-        -webkit-mask-image: url('images/FODA.png');
-        mask-image: url('images/FODA.png');
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: contain;
-        mask-size: contain;
-    }
-/* Menu Principal (Abaixo do Top Row) */
+    /* Menu Principal (Abaixo do Top Row) */
     nav {
         width: 100%;
         display: flex; 
@@ -309,15 +286,7 @@
     margin-left: 0 !important;
   }
 
-  
-
-        /* Brand logo (mask) sizing on mobile */
-        .brand-logo{
-            height: 70px;
-            width: 240px;
-            max-width: 75%;
-        }
-/* Keep languages visible on the right */
+  /* Keep languages visible on the right */
   .lang-switcher{
     display: flex !important;
     margin-left: auto !important;
@@ -883,7 +852,7 @@ footer{
 <div class="header-top-row">
 <div class="header-col-left"></div>
 <a class="logo-link" href="index.html">
-<span class="brand-logo" role="img" aria-label="Moura Consulting &amp; Management logo"></span>
+<img alt="MCM Services Logo - Moura Consulting &amp; Management" src="images/FODA.png"/>
 </a>
 <button aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle Navigation" class="hamburger-btn" onclick="toggleMenu()">
 <i class="fas fa-bars"></i>
