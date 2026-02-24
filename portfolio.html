@@ -948,8 +948,93 @@ width:100%;
 }
 </style>
 
+<style>
+/* ===============================
+   MODAL POPUP – PREMIUM
+   =============================== */
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s ease, visibility .4s ease;
+  z-index: 2000;
+}
+.modal-overlay.open{ opacity:1; visibility:visible; }
+.modal-content{
+  background:#fff;
+  max-width:420px;
+  width:90%;
+  padding:40px 35px;
+  text-align:center;
+  border-radius:10px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.35), 0 5px 15px rgba(0,0,0,.15);
+  transform: translateY(40px);
+  opacity:0;
+  transition: all .45s ease;
+  position: relative;
+}
+.modal-overlay.open .modal-content{ transform:translateY(0); opacity:1; }
+.modal-logo{ max-width:220px; margin:0 auto 20px; display:block; }
+.modal-content h3{
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+  font-size:1.9rem;
+  letter-spacing:.6px;
+  color:#C2A46D;
+  margin-bottom:15px;
+}
+.modal-content p{
+  font-family:'Montserrat',sans-serif;
+  font-size:.95rem;
+  color:#555;
+  line-height:1.7;
+  margin-bottom:30px;
+}
+.modal-cta-btn{
+  background:#C2A46D;
+  color:#1e1e1e;
+  padding:12px 32px;
+  border-radius:6px;
+  font-weight:600;
+  font-size:.9rem;
+  letter-spacing:.4px;
+  text-decoration:none;
+  display:inline-block;
+  transition: all .35s ease;
+}
+.modal-cta-btn:hover{ background:#b4955f; transform:translateY(-1px); }
+.modal-close-btn{
+  position:absolute;
+  top:14px;
+  right:16px;
+  background:none;
+  border:none;
+  font-size:1.4rem;
+  color:#aaa;
+  cursor:pointer;
+  opacity:.6;
+  transition: opacity .3s ease;
+}
+.modal-close-btn:hover{ opacity:.9; }
+</style>
+
 </head>
 <body id="top">
+<div class="modal-overlay" id="welcomeModal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
+    <button type="button" class="modal-close-btn" aria-label="Close" onclick="closeModal()">×</button>
+    <img class="modal-logo" src="images/mcmbrand-removebg-preview.png" alt="MCM Services">
+    <h3 id="welcomeModalTitle">Elevated Residential Projects</h3>
+    <p>Exclusive consulting and management for high-end homes in Miami.</p>
+    <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">Book a Private Consultation</a>
+  </div>
+</div>
+
 <header>
 <div class="header-container">
 <div class="header-top-row">
@@ -985,7 +1070,7 @@ width:100%;
 </section>
 <section id="portfolio">
 <div class="project-grid-container">
-<h2 class="section-title-light" data-key="portfolioSectionTitle">Projetos Ilustrados</h2>
+  <h2 class="section-title-light" data-key="portfolioSectionTitle">Projetos Selecionados</h2>
 <div class="project-grid">
 <div class="project-card">
 <div class="project-image-container" onclick="openLightbox('images/card1.jpg')">
@@ -1048,6 +1133,8 @@ width:100%;
 </div>
 </div>
 </div>
+<div id="popupTrigger" aria-hidden="true" style="height:1px;"></div>
+
 <p class="image-auth-note" data-key="imageAuthNote">All images were authorized by the client.</p>
 </div>
 </section>
@@ -1121,7 +1208,7 @@ width:100%;
             'footer-powered': 'Operado por mcmprosolutions.com',
                 navHome: "Início", navAbout: "Sobre", navContact: "Contato", navPortal: "Acesso Cliente", navPortfolioLink: "Galeria",
                 portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", 
-                'portfolioSectionTitle': "Projetos Ilustrados",
+                'portfolioSectionTitle': "Projetos Selecionados",
                 project1Title: "Cozinha Moderna e Luxuosa", project1Desc: "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.", 
                 project2Title: "Espaço Gourmet de Alto Padrão", project2Desc: "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.", 
                 project3Title: "Banheiro com Design Clean", project3Desc: "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.", 
@@ -1269,7 +1356,88 @@ width:100%;
             }, 100); 
         });
     </script>
-    <script src="/js/page-transitions.js"></script>
+    <script>
+(function(){
+  const TRIGGER_ID = 'popupTrigger';
+  const MODAL_ID = 'welcomeModal';
+  let shown = false;
+
+  function getModal(){ return document.getElementById(MODAL_ID); }
+  function openModal(){
+    const modal = getModal();
+    if(!modal) return;
+
+    // Clear any inline overrides (defensive)
+    modal.style.visibility = '';
+    modal.style.opacity = '';
+    modal.style.pointerEvents = '';
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.addEventListener('keydown', onKeyDown);
+  }
+
+  function onKeyDown(e){
+    if(e.key === 'Escape') closeModal();
+  }
+
+  window.closeModal = function(){
+    const modal = getModal();
+    if(!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.removeEventListener('keydown', onKeyDown);
+  };
+
+  // Close when clicking outside the card
+  document.addEventListener('click', (e) => {
+    const modal = getModal();
+    if(!modal) return;
+    if(!modal.classList.contains('open')) return;
+
+    if(e.target === modal){ // overlay
+      window.closeModal();
+    }
+  });
+
+  function armObserver(){
+    const trigger = document.getElementById(TRIGGER_ID);
+    if(!trigger) return;
+
+    // Prefer IntersectionObserver (precise: after gallery)
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        if(shown) return;
+        const entry = entries[0];
+        if(entry && entry.isIntersecting){
+          shown = true;
+          io.disconnect();
+          setTimeout(openModal, 250);
+        }
+      }, { threshold: 0.2 });
+
+      io.observe(trigger);
+      return;
+    }
+
+    // Fallback (older browsers): require real scroll
+    window.addEventListener('scroll', () => {
+      if(shown) return;
+      if(window.scrollY < 200) return;
+
+      const rect = trigger.getBoundingClientRect();
+      if(rect.top < window.innerHeight * 0.85){
+        shown = true;
+        setTimeout(openModal, 250);
+      }
+    }, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', armObserver);
+})();
+</script>
+
+<script src="/js/page-transitions.js"></script>
 
 </body>
 </html>
