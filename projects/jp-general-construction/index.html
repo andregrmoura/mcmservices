@@ -39,13 +39,13 @@
     header{
       text-align:center;
       width:100%;
-      background:rgba(0,0,0,0.4);
-      box-shadow:0 5px 15px rgba(0,0,0,0.4);
+      background:transparent;
+      box-shadow:none;
       position:absolute;
       top:0;
       left:0;
       z-index:100;
-      padding:25px;
+      padding:25px 25px;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -53,17 +53,17 @@
 
     .logo-link img{
       height:120px;
-      max-width:320px;
+      width:auto;
+      max-width:400px;
       object-fit:contain;
     }
 
     /* MAIN */
     main{
-      min-height:80vh;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
-      padding:220px 20px 80px;
+      padding:60px 20px 80px;
     }
 
     .project-box{
@@ -369,8 +369,8 @@
 
 
     @media (max-width: 768px){
-      h1{ font-size: 2.2rem; }
-      main{ padding: 200px 16px 70px; }
+      h1{ font-size: 2.2rem; margin-top: 0; }
+      main{ padding:40px 16px 70px; }
 }
 
     /* Premium hero layout with right-aligned project meta */
@@ -691,17 +691,10 @@ section + h2{
     }
     .primary:focus-visible{
       outline: none;
-
-    .primary{
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(199,169,107,.10), rgba(199,169,107,.02));
-    }
-
       box-shadow: 0 0 0 4px rgba(199,169,107,.22), 0 12px 26px rgba(0,0,0,.12);
     }
 
-    /* ===== Next step as concierge card (wrap only; no layout changes) ===== */
+/* ===== Next step as concierge card (wrap only; no layout changes) ===== */
     .nextstep-card{
       width:100%;
       max-width:1200px;
@@ -807,16 +800,53 @@ section + h2{
       pointer-events: none;
       cursor: not-allowed;
     }
+
+/* Hero image behind transparent header */
+.portal-hero{
+  position:relative;
+  width:100%;
+  height:170px;
+  background:url('/images/hero-project.jpg') center/cover no-repeat;
+}
+
+.portal-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+}
+
 </style>
+
+<style>
+.brand-logo{
+  display:inline-block;
+  width:320px;
+  height:130px;
+  background-color:#C7A96B;
+  -webkit-mask-image:url('../../images/FODA.png');
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-size:contain;
+  -webkit-mask-position:center;
+  mask-image:url('../../images/FODA.png');
+  mask-repeat:no-repeat;
+  mask-size:contain;
+  mask-position:center;
+}
+</style>
+
 </head>
 
 <body>
 
 <header>
   <a class="logo-link" href="../../index.html">
-    <img src="../../images/FODA.png" alt="MCM Services Logo">
+    <span class="brand-logo" aria-label="MCM Logo"></span>
   </a>
 </header>
+
+<section class="portal-hero"></section>
+
 
 <main>
   <div class="project-box">
@@ -1895,6 +1925,50 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(applySyncedProgressBar, 900);
     setTimeout(applySyncedProgressBar, 1500);
   });
+</script>
+
+
+<script>
+  // Notify admin on every direct access to /projects/<slug>/
+  (function () {
+    try {
+      const parts = (location.pathname || "").split("/").filter(Boolean);
+      const i = parts.indexOf("projects");
+      if (i === -1) return;
+      const slug = parts[i + 1];
+      if (!slug) return;
+
+      // prevent accidental double-fire on the same page load
+      if (window.__mcm_access_ping_sent) return;
+      window.__mcm_access_ping_sent = true;
+
+      const payload = {
+        projectSlug: slug,
+        path: location.pathname,
+        referrer: document.referrer || "",
+        ua: navigator.userAgent || "",
+        source: "project-index",
+        ts: new Date().toISOString()
+      };
+
+      const url = "/.netlify/functions/notify-access";
+      const body = JSON.stringify(payload);
+
+      if (navigator.sendBeacon) {
+        const blob = new Blob([body], { type: "application/json" });
+        navigator.sendBeacon(url, blob);
+      } else {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+          keepalive: true
+        }).catch(function(){});
+      }
+    } catch (e) {
+      // silent
+    }
+  })();
 </script>
 
 </body>
