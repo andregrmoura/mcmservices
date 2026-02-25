@@ -105,24 +105,25 @@
 /* Gold masked logo (preferred) */
 .brand-logo{
   display:inline-block;
-  width:280px;
-  height:110px;
+  width:340px;
+  height:130px;
   background-color: var(--gold);
-  -webkit-mask-image: url('../images/FODA.png');
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  -webkit-mask-position: center;
-  mask-image: url('../images/FODA.png');
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  mask-position: center;
+
+  -webkit-mask-image:url('../images/FODA.png');
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-size:contain;
+  -webkit-mask-position:center;
+
+  mask-image:url('../images/FODA.png');
+  mask-repeat:no-repeat;
+  mask-size:contain;
+  mask-position:center;
 }
 
-/* Fallback image if mask isn't supported */
 .brand-img{
-  height:110px;
+  height:130px;
   width:auto;
-  max-width:280px;
+  max-width:340px;
   object-fit:contain;
 }
 
@@ -133,9 +134,15 @@
 
 /* Mobile */
 @media (max-width:768px){
-  header{ padding:14px 16px; }
-  .brand-logo{ width:240px; height:92px; }
-  .brand-img{ height:85px; max-width:220px; }
+  .brand-logo{
+    width: 300px;
+    height: 115px;
+  }
+
+  .brand-img{
+    height: 115px;
+    max-width: 300px;
+  }
 }
 
 
