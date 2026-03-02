@@ -806,7 +806,7 @@ section + h2{
   position:relative;
   width:100%;
   height:170px;
-  background:url('/images/hero-project.jpg') center/cover no-repeat;
+  background:url('/images/bath_bg.jpg') center/cover no-repeat;
 }
 
 .portal-hero::after{
@@ -1925,6 +1925,50 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(applySyncedProgressBar, 900);
     setTimeout(applySyncedProgressBar, 1500);
   });
+</script>
+
+
+<script>
+  // Notify admin on every direct access to /projects/<slug>/
+  (function () {
+    try {
+      const parts = (location.pathname || "").split("/").filter(Boolean);
+      const i = parts.indexOf("projects");
+      if (i === -1) return;
+      const slug = parts[i + 1];
+      if (!slug) return;
+
+      // prevent accidental double-fire on the same page load
+      if (window.__mcm_access_ping_sent) return;
+      window.__mcm_access_ping_sent = true;
+
+      const payload = {
+        projectSlug: slug,
+        path: location.pathname,
+        referrer: document.referrer || "",
+        ua: navigator.userAgent || "",
+        source: "project-index",
+        ts: new Date().toISOString()
+      };
+
+      const url = "/.netlify/functions/notify-access";
+      const body = JSON.stringify(payload);
+
+      if (navigator.sendBeacon) {
+        const blob = new Blob([body], { type: "application/json" });
+        navigator.sendBeacon(url, blob);
+      } else {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+          keepalive: true
+        }).catch(function(){});
+      }
+    } catch (e) {
+      // silent
+    }
+  })();
 </script>
 
 </body>

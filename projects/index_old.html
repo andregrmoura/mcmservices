@@ -71,7 +71,10 @@
     body{
       margin:0;
       font-family:'Montserrat',sans-serif;
-      background:linear-gradient(180deg, rgba(199,169,107,0.06), rgba(0,0,0,0) 220px), var(--bg);
+      background:
+        linear-gradient(180deg, rgba(199,169,107,0.06), rgba(0,0,0,0) 220px),
+        url('../images/dashboard-bg.jpg') center/cover fixed no-repeat,
+        var(--bg);
       color:var(--text);
       overflow-x:hidden;
       line-height:1.6;
@@ -82,7 +85,9 @@
     /* HEADER (logo centralizada, sem links) */
     header{
       width:100%;
-      background:var(--header);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.70), rgba(0,0,0,0.45)),
+        url('../images/pm25.jpg') center/cover no-repeat;
       box-shadow:var(--headerShadow);
       position:fixed;
       top:0; left:0;
@@ -94,11 +99,52 @@
     }
     header{ backdrop-filter: blur(10px); }
 
-    .logo-link img{
-      height:130px;
-      max-width:320px;
-      object-fit:contain;
-    }
+/* Header logo (gold) — matches the rest of the site */
+.logo-link{ display:flex; justify-content:center; align-items:center; }
+
+/* Gold masked logo (preferred) */
+.brand-logo{
+  display:inline-block;
+  width:340px;
+  height:130px;
+  background-color: var(--gold);
+
+  -webkit-mask-image:url('../images/FODA.png');
+  -webkit-mask-repeat:no-repeat;
+  -webkit-mask-size:contain;
+  -webkit-mask-position:center;
+
+  mask-image:url('../images/FODA.png');
+  mask-repeat:no-repeat;
+  mask-size:contain;
+  mask-position:center;
+}
+
+.brand-img{
+  height:130px;
+  width:auto;
+  max-width:340px;
+  object-fit:contain;
+}
+
+/* Prefer the gold mask when supported */
+@supports ((-webkit-mask-image: url('../images/FODA.png')) or (mask-image: url('../images/FODA.png'))){
+  .brand-img{ display:none; }
+}
+
+/* Mobile */
+@media (max-width:768px){
+  .brand-logo{
+    width: 300px;
+    height: 115px;
+  }
+
+  .brand-img{
+    height: 115px;
+    max-width: 300px;
+  }
+}
+
 
     main{
       min-height:80vh;
@@ -1368,8 +1414,9 @@ function unlockDashboard(adminKey){
 </script>
 
 <header>
-  <a class="logo-link" href="../index.html">
-    <img src="../images/FODA.png" alt="MCM Services Logo">
+  <a class="logo-link" href="../index.html" aria-label="MCM Services Home">
+    <span class="brand-logo" aria-hidden="true"></span>
+    <img class="brand-img" src="../images/FODA.png" alt="MCM Services Logo" />
   </a>
 </header>
 
