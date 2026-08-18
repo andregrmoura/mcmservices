@@ -1056,63 +1056,6 @@
         display: block;
     }
 
-    /* Google Reviews block */
-    .google-review-card {
-        max-width: 520px;
-        margin: 0 auto;
-        background: #FFF;
-        padding: 32px 28px;
-        border-top: 4px solid #C7A96B;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-        text-align: center;
-    }
-
-    .google-review-brand {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 12px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .google-review-brand i {
-        font-size: 1.45rem;
-    }
-
-    .google-review-card p {
-        margin: 0 auto 20px;
-        max-width: 420px;
-        color: #555;
-        font-size: 0.98rem;
-        line-height: 1.7;
-        font-style: normal;
-    }
-
-    .google-review-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 11px 24px;
-        border: 1px solid #C7A96B;
-        border-radius: 6px;
-        color: #C7A96B;
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        background: transparent;
-        transition: all 0.3s ease;
-    }
-
-    .google-review-btn:hover {
-        background: #C7A96B;
-        color: #333;
-        transform: translateY(-1px);
-    }
-
     /* CONTACT FORM */
     .contact-form {
         max-width:600px;
@@ -1943,17 +1886,37 @@ body.menu-open #menuOverlay{
 </div>
 </section>
 <section class="section-light" id="testimonials">
-<h2 class="section-title" style="margin-bottom:30px;">Google Reviews</h2>
-<div class="google-review-card">
-<div class="google-review-brand">
-<i class="fab fa-google" aria-hidden="true"></i>
-<span>Google Reviews</span>
+<h2 class="section-title" data-translate="testimonials-title" style="margin-bottom:30px;">Client Testimonials</h2>
+<div class="testimonial-card-container">
+<div aria-label="Testimonial by Mr. B. Mendes" class="testimonial-card" role="blockquote">
+<p data-translate="testimonial1-text">
+        MCM Services delivered outstanding management. The schedule was precise and the budget control kept everything smooth. Total professionalism.
+    </p>
+<p class="testimonial-author">
+        — Mr. B. Mendes, Miami
+    </p>
 </div>
-<p>Share your experience with Moura Consulting &amp; Management. Your feedback helps future clients make a confident decision.</p>
-<a class="google-review-btn" href="https://g.page/r/Cfqs2HHbWdLJEBI/review" target="_blank" rel="noopener">
-<i class="fab fa-google" aria-hidden="true"></i>
-<span>Leave a Google Review</span>
-</a>
+<div aria-label="Testimonial by Mrs. C. Oliveira" class="testimonial-card" role="blockquote">
+<p data-translate="testimonial2-text">
+        They coordinated our renovation with precision. Excellent communication, risk control and high-quality final result.
+    </p>
+<p class="testimonial-author">
+        — Mrs. C. Oliveira, Coral Gables
+    </p>
+</div>
+<div aria-label="Testimonial by Arch. D. Freitas" class="testimonial-card" role="blockquote">
+<p data-translate="testimonial3-text">
+        Outstanding stakeholder coordination on a complex interior design project. High-end service from start to finish.
+    </p>
+<p class="testimonial-author">
+        — Arch. D. Freitas, Broward
+    </p>
+</div>
+</div>
+<div style="margin-top:25px; text-align:center;">
+<a href="https://g.page/r/Cfqs2HHbWdLJEBI/review" target="_blank" rel="noopener" style="color:#C7A96B; font-weight:600; text-decoration:none;">
+        Review us on Google
+    </a>
 </div>
 </section>
 <section class="section-gray" id="contact">
