@@ -8,56 +8,98 @@
     },
     "subtitle": {
       "en": "Elevating Every Space Through Expert Oversight and Project Coordination.",
-      "pt": "Elevando cada espaço com supervisão e coordenação de projetos.",
-      "es": "Elevando cada espacio con supervisión y coordinación de proyectos."
+      "pt": "Elevando cada espaço com supervisão especializada e coordenação de projetos.",
+      "es": "Elevando cada espacio mediante supervisión especializada y coordinación de proyectos."
     }
   },
   "sectionTitle": {
-    "en": "Illustrated Projects",
-    "pt": "Projetos Ilustrados",
-    "es": "Proyectos Ilustrados"
+    "en": "Selected Projects",
+    "pt": "Projetos Selecionados",
+    "es": "Proyectos Seleccionados"
   },
   "projects": [
     {
       "id": "p1",
       "image": "images/card1.jpg",
       "title": {
-        "en": "Modern Luxury Kitchen",
+        "en": "Modern & Luxurious Kitchen",
         "pt": "Cozinha Moderna e Luxuosa",
         "es": "Cocina Moderna y Lujosa"
       },
       "desc": {
-        "en": "Bold design with a central island, custom cabinetry, and top-tier appliances.",
-        "pt": "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.",
-        "es": "Diseño audaz con isla central, gabinetes a medida y electrodomésticos de última generación."
+        "en": "High-end residential kitchen project coordinated with attention to scope, finishes, and project execution.",
+        "pt": "Projeto residencial de cozinha de alto padrão coordenado com atenção ao escopo, acabamentos e execução.",
+        "es": "Proyecto residencial de cocina de alta gama coordinado con atención al alcance, los acabados y la ejecución."
       }
     },
     {
       "id": "p2",
       "image": "images/card2.jpg",
       "title": {
-        "en": "High-End Gourmet Area",
+        "en": "High-End Gourmet Space",
         "pt": "Espaço Gourmet de Alto Padrão",
         "es": "Área Gourmet de Alta Gama"
       },
       "desc": {
-        "en": "A functional space for cooking with luxury finishes and tailored lighting.",
-        "pt": "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.",
-        "es": "Espacio funcional con acabados de lujo como mármol e iluminación a medida."
+        "en": "Residential project featuring premium finishes, coordinated trades, and detailed project oversight.",
+        "pt": "Projeto residencial com acabamentos premium, coordenação de trades e acompanhamento detalhado da execução.",
+        "es": "Proyecto residencial con acabados premium, coordinación de oficios y supervisión detallada de la ejecución."
       }
     },
     {
       "id": "p3",
       "image": "images/card3.jpg",
       "title": {
-        "en": "Clean Design Bathroom",
-        "pt": "Banheiro com Design Clean",
-        "es": "Baño de Diseño Minimalista"
+        "en": "Modern Bathroom",
+        "pt": "Banheiro Moderno",
+        "es": "Baño Moderno"
       },
       "desc": {
-        "en": "A relaxing, functional layout that optimizes space and light textures.",
-        "pt": "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.",
-        "es": "Proyecto que optimiza el espacio y combina texturas claras para un ambiente funcional y relajante."
+        "en": "Bathroom renovation coordinated to support quality execution, functional planning, and finish consistency.",
+        "pt": "Reforma de banheiro coordenada para garantir qualidade de execução, planejamento funcional e consistência nos acabamentos.",
+        "es": "Renovación de baño coordinada para respaldar la calidad de ejecución, la planificación funcional y la consistencia de los acabados."
+      }
+    },
+    {
+      "id": "p4",
+      "image": "images/card4.jpg",
+      "title": {
+        "en": "Luxury Master Bathroom",
+        "pt": "Banheiro Master de Luxo",
+        "es": "Baño Principal de Lujo"
+      },
+      "desc": {
+        "en": "High-end master bathroom renovation with project coordination focused on trades, finishes, and execution quality.",
+        "pt": "Reforma de banheiro master de alto padrão com coordenação focada nos trades, acabamentos e qualidade da execução.",
+        "es": "Renovación de baño principal de alta gama con coordinación enfocada en los oficios, acabados y calidad de ejecución."
+      }
+    },
+    {
+      "id": "p5",
+      "image": "images/card5.png",
+      "title": {
+        "en": "High-End Master Suite",
+        "pt": "Suíte Master de Alto Padrão",
+        "es": "Suite Principal de Alta Gama"
+      },
+      "desc": {
+        "en": "Residential interior project coordinated with attention to finishes, installation details, and overall project quality.",
+        "pt": "Projeto residencial de interiores coordenado com atenção aos acabamentos, detalhes de instalação e qualidade geral do projeto.",
+        "es": "Proyecto residencial de interiores coordinado con atención a los acabados, detalles de instalación y calidad general del proyecto."
+      }
+    },
+    {
+      "id": "p6",
+      "image": "images/card6.jpg",
+      "title": {
+        "en": "Integrated Living Room",
+        "pt": "Living Room Integrado",
+        "es": "Sala de Estar Integrada"
+      },
+      "desc": {
+        "en": "Integrated residential living space supported through project coordination and detailed construction oversight.",
+        "pt": "Ambiente residencial integrado acompanhado por meio de coordenação de projeto e supervisão detalhada da construção.",
+        "es": "Espacio residencial integrado respaldado por coordinación de proyecto y supervisión detallada de la construcción."
       }
     }
   ]

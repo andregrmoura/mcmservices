@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "background": "images/4gallery.jpg",
+    "title": {
+      "en": "Gallery",
+      "pt": "Galeria",
+      "es": "Galería"
+    },
+    "subtitle": {
+      "en": "Elevating Every Space Through Expert Oversight and Project Coordination.",
+      "pt": "Elevando cada espaço com supervisão e coordenação de projetos.",
+      "es": "Elevando cada espacio con supervisión y coordinación de proyectos."
+    }
+  },
+  "sectionTitle": {
+    "en": "Illustrated Projects",
+    "pt": "Projetos Ilustrados",
+    "es": "Proyectos Ilustrados"
+  },
+  "projects": [
+    {
+      "id": "p1",
+      "image": "images/card1.jpg",
+      "title": {
+        "en": "Modern Luxury Kitchen",
+        "pt": "Cozinha Moderna e Luxuosa",
+        "es": "Cocina Moderna y Lujosa"
+      },
+      "desc": {
+        "en": "Bold design with a central island, custom cabinetry, and top-tier appliances.",
+        "pt": "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.",
+        "es": "Diseño audaz con isla central, gabinetes a medida y electrodomésticos de última generación."
+      }
+    },
+    {
+      "id": "p2",
+      "image": "images/card2.jpg",
+      "title": {
+        "en": "High-End Gourmet Area",
+        "pt": "Espaço Gourmet de Alto Padrão",
+        "es": "Área Gourmet de Alta Gama"
+      },
+      "desc": {
+        "en": "A functional space for cooking with luxury finishes and tailored lighting.",
+        "pt": "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.",
+        "es": "Espacio funcional con acabados de lujo como mármol e iluminación a medida."
+      }
+    },
+    {
+      "id": "p3",
+      "image": "images/card3.jpg",
+      "title": {
+        "en": "Clean Design Bathroom",
+        "pt": "Banheiro com Design Clean",
+        "es": "Baño de Diseño Minimalista"
+      },
+      "desc": {
+        "en": "A relaxing, functional layout that optimizes space and light textures.",
+        "pt": "Projeto que foca na otimização de espaço e na combinação de texturas claras para um visual relaxante e funcional.",
+        "es": "Proyecto que optimiza el espacio y combina texturas claras para un ambiente funcional y relajante."
+      }
+    }
+  ]
+}
