@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Moura Consulting & Management | Luxury Project Management Miami</title>
-<meta content="Moura Consulting offers premium Project Management across Miami. High-end residential coordination and flawless execution." name="description"/>
+<meta content="Moura Consulting provides premium construction project management and owner representation across Miami and South Florida, with high-end residential coordination, oversight, and quality control." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="/favicon-16x16.png?v=3" rel="icon" sizes="16x16" type="image/png"/>
@@ -1793,12 +1793,807 @@ body.menu-open #menuOverlay{
 }
 </style>
 
+
+<style id="moura-premium-home-refresh">
+/* =========================================================
+   MOURA CONSULTING — PREMIUM HOME VISUAL REFRESH
+   Visual-only override. Structure, content and functionality
+   remain unchanged.
+   ========================================================= */
+
+:root{
+  --moura-ivory:#F5F1E8;
+  --moura-ivory-2:#FBF8F2;
+  --moura-paper:#FFFFFF;
+  --moura-ink:#1E1E1C;
+  --moura-charcoal:#252421;
+  --moura-muted:#6E6A63;
+  --moura-gold:#B89557;
+  --moura-gold-soft:#C8AA70;
+  --moura-line:rgba(30,30,28,.12);
+  --moura-shadow:0 24px 60px rgba(25,22,18,.09);
+  --moura-shadow-soft:0 12px 34px rgba(25,22,18,.07);
+  --moura-radius:18px;
+}
+
+/* ---------- Base ---------- */
+html{ background:var(--moura-ivory-2); }
+
+body{
+  background:var(--moura-ivory-2) !important;
+  color:var(--moura-ink) !important;
+  font-family:'Montserrat',sans-serif;
+  letter-spacing:.005em;
+}
+
+section{
+  padding-top:110px !important;
+  padding-bottom:110px !important;
+}
+
+.section-title{
+  font-family:'Playfair Display',serif !important;
+  font-weight:400 !important;
+  color:var(--moura-ink) !important;
+  font-size:clamp(2.7rem,4vw,4.6rem) !important;
+  line-height:1.04 !important;
+  letter-spacing:-.025em !important;
+  margin-bottom:22px !important;
+}
+
+.section-title::after{
+  content:"";
+  display:block;
+  width:52px;
+  height:1px;
+  margin:22px auto 0;
+  background:var(--moura-gold);
+}
+
+.section-subtitle{
+  max-width:760px !important;
+  color:var(--moura-muted) !important;
+  font-size:1rem !important;
+  line-height:1.9 !important;
+  letter-spacing:.01em;
+}
+
+/* ---------- Header ---------- */
+header{
+  background:linear-gradient(to bottom,rgba(18,18,17,.72),rgba(18,18,17,.34)) !important;
+  box-shadow:none !important;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+header::after{ display:none !important; }
+
+nav ul{ gap:42px !important; }
+
+nav ul a{
+  font-size:.78rem !important;
+  text-transform:uppercase;
+  letter-spacing:.16em !important;
+  font-weight:500 !important;
+  color:rgba(255,255,255,.86) !important;
+}
+
+nav ul a:hover,
+nav ul a.active{ color:var(--moura-gold-soft) !important; }
+
+nav ul a::after{
+  height:1px !important;
+  background:var(--moura-gold-soft) !important;
+}
+
+/* ---------- Hero ---------- */
+.hero-container{
+  min-height:760px !important;
+  background:#171715;
+}
+
+.hero-overlay{
+  background:
+    linear-gradient(180deg,rgba(18,18,17,.30) 0%,rgba(18,18,17,.44) 60%,rgba(18,18,17,.64) 100%) !important;
+}
+
+.hero-gradient-overlay{
+  background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,.06) 45%,rgba(0,0,0,.22)) !important;
+}
+
+.hero-content{
+  top:57% !important;
+  max-width:1050px !important;
+  padding-left:40px !important;
+  padding-right:40px !important;
+}
+
+.hero-content h1{
+  font-family:'Playfair Display',serif !important;
+  font-size:clamp(3.7rem,6.5vw,6.9rem) !important;
+  line-height:.98 !important;
+  font-weight:400 !important;
+  letter-spacing:-.035em !important;
+  text-shadow:0 4px 30px rgba(0,0,0,.34) !important;
+  margin-bottom:28px !important;
+}
+
+.hero-content p{
+  max-width:760px;
+  margin-left:auto;
+  margin-right:auto;
+  font-size:clamp(1rem,1.4vw,1.28rem) !important;
+  line-height:1.75 !important;
+  font-weight:300 !important;
+  color:rgba(255,255,255,.88);
+  text-shadow:0 2px 18px rgba(0,0,0,.38) !important;
+  margin-bottom:42px !important;
+}
+
+.hero-cta-buttons{ gap:14px !important; }
+
+.hero-btn{
+  min-width:210px;
+  border-radius:4px !important;
+  padding:15px 28px !important;
+  font-size:.78rem !important;
+  line-height:1.1;
+  font-weight:600 !important;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  box-shadow:none !important;
+  transition:all .28s ease !important;
+}
+
+.hero-btn:not(.secondary){
+  background:rgba(22,22,20,.84) !important;
+  color:var(--moura-gold-soft) !important;
+  border:1px solid rgba(200,170,112,.68) !important;
+}
+
+.hero-btn:not(.secondary):hover{
+  background:var(--moura-gold) !important;
+  color:#171715 !important;
+  border-color:var(--moura-gold) !important;
+  transform:translateY(-2px) !important;
+}
+
+.hero-btn.secondary{
+  background:rgba(248,244,236,.96) !important;
+  color:var(--moura-ink) !important;
+  border:1px solid rgba(248,244,236,.9) !important;
+}
+
+.hero-btn.secondary:hover{
+  background:transparent !important;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.8) !important;
+  transform:translateY(-2px) !important;
+}
+
+.hero-dots{ bottom:26px !important; gap:9px !important; }
+.dot{
+  width:22px !important;
+  height:2px !important;
+  border-radius:2px !important;
+  background:rgba(255,255,255,.4) !important;
+}
+.dot.active{
+  background:var(--moura-gold-soft) !important;
+  transform:none !important;
+}
+
+/* ---------- Services ---------- */
+#services{
+  background:var(--moura-ivory-2) !important;
+  background-image:none !important;
+  color:var(--moura-ink) !important;
+  border-top:none !important;
+}
+
+#services::before{ display:none !important; }
+
+#services .section-subtitle{
+  margin-bottom:58px !important;
+  opacity:1 !important;
+}
+
+.carousel-container{
+  max-width:1180px !important;
+}
+
+.service-cards-carousel{
+  gap:24px !important;
+  padding:6px 4px 18px !important;
+}
+
+.card-style{
+  background:var(--moura-paper) !important;
+  border:1px solid var(--moura-line) !important;
+  border-radius:var(--moura-radius) !important;
+  box-shadow:var(--moura-shadow-soft) !important;
+  overflow:hidden !important;
+  min-height:100%;
+  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease !important;
+}
+
+.card-style:hover{
+  transform:translateY(-7px) !important;
+  box-shadow:var(--moura-shadow) !important;
+  border-color:rgba(184,149,87,.4) !important;
+}
+
+.card-style img{
+  height:245px !important;
+  object-fit:cover !important;
+  filter:saturate(.82) contrast(.96);
+  transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s ease !important;
+}
+
+.card-style:hover img{
+  transform:scale(1.025);
+  filter:saturate(.94) contrast(.98);
+}
+
+.card-content{
+  padding:28px 26px 32px !important;
+  text-align:left !important;
+}
+
+.card-content h3{
+  font-family:'Playfair Display',serif !important;
+  color:var(--moura-ink) !important;
+  font-size:1.65rem !important;
+  line-height:1.15 !important;
+  font-weight:400 !important;
+  margin-bottom:14px !important;
+}
+
+.card-content h3::before{
+  content:"";
+  display:block;
+  width:30px;
+  height:1px;
+  background:var(--moura-gold);
+  margin-bottom:16px;
+}
+
+.card-content p{
+  color:var(--moura-muted) !important;
+  font-size:.91rem !important;
+  line-height:1.8 !important;
+}
+
+.carousel-btn{
+  width:46px !important;
+  height:46px !important;
+  border-radius:50% !important;
+  background:var(--moura-charcoal) !important;
+  color:var(--moura-gold-soft) !important;
+  border:1px solid rgba(184,149,87,.45) !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.14) !important;
+}
+.carousel-btn:hover{
+  background:var(--moura-gold) !important;
+  color:var(--moura-ink) !important;
+}
+
+/* ---------- About ---------- */
+#about{
+  background:var(--moura-ivory) !important;
+  border-top:1px solid rgba(30,30,28,.07) !important;
+}
+
+.about-content{
+  max-width:1120px !important;
+  gap:72px !important;
+  align-items:center !important;
+}
+
+.about-content > img{
+  width:min(390px,38vw) !important;
+  max-width:390px !important;
+  height:520px !important;
+  object-fit:cover !important;
+  border-radius:var(--moura-radius) !important;
+  box-shadow:var(--moura-shadow) !important;
+  filter:saturate(.82) contrast(.96);
+}
+
+.about-text{
+  max-width:610px !important;
+  text-align:left !important;
+}
+
+#about .section-title{
+  text-align:left !important;
+  margin-bottom:28px !important;
+}
+
+#about .section-title::after{
+  margin-left:0 !important;
+}
+
+.about-text p{
+  color:#57534d !important;
+  font-size:.98rem !important;
+  line-height:1.9 !important;
+  margin-bottom:14px !important;
+}
+
+.certifications{
+  justify-content:flex-start !important;
+  gap:12px !important;
+  margin-top:28px !important;
+}
+
+.certifications span,
+.certifications img{
+  width:58px !important;
+  height:58px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(30,30,28,.12) !important;
+  background:#fff !important;
+  box-shadow:none !important;
+  object-fit:cover;
+}
+
+.certifications span{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  color:var(--moura-ink) !important;
+  font-weight:600;
+  font-size:.78rem;
+  letter-spacing:.08em;
+}
+
+.about-cta{
+  margin-top:34px !important;
+  text-align:left !important;
+}
+
+.about-cta a{
+  display:inline-block;
+  background:var(--moura-charcoal) !important;
+  color:var(--moura-gold-soft) !important;
+  border:1px solid var(--moura-charcoal) !important;
+  border-radius:4px !important;
+  padding:15px 28px !important;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  font-size:.76rem !important;
+  font-weight:600 !important;
+  transition:all .28s ease;
+}
+
+.about-cta a:hover{
+  background:transparent !important;
+  color:var(--moura-ink) !important;
+  border-color:var(--moura-gold) !important;
+}
+
+/* ---------- Google reviews ---------- */
+#testimonials{
+  background:#fff !important;
+  border-top:none !important;
+}
+
+.google-reviews-grid{
+  max-width:1120px !important;
+  gap:22px !important;
+  margin-top:48px !important;
+}
+
+.google-review-card{
+  background:var(--moura-ivory-2) !important;
+  border:1px solid rgba(30,30,28,.10) !important;
+  border-radius:var(--moura-radius) !important;
+  box-shadow:none !important;
+  padding:30px !important;
+  text-align:left !important;
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease !important;
+}
+
+.google-review-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(184,149,87,.38) !important;
+  box-shadow:var(--moura-shadow-soft) !important;
+}
+
+.google-review-brand{
+  color:var(--moura-muted) !important;
+  font-size:.72rem !important;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.google-review-brand i{ color:var(--moura-gold) !important; }
+
+.google-review-stars{
+  color:var(--moura-gold) !important;
+  letter-spacing:.12em;
+  margin:15px 0 13px !important;
+}
+
+.google-review-card p{
+  color:#45423d !important;
+  font-family:'Playfair Display',serif;
+  font-size:1.08rem !important;
+  line-height:1.65 !important;
+}
+
+.google-review-btn{
+  border-radius:4px !important;
+  background:transparent !important;
+  color:var(--moura-ink) !important;
+  border:1px solid rgba(30,30,28,.28) !important;
+  padding:14px 25px !important;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:.74rem !important;
+  font-weight:600 !important;
+}
+.google-review-btn:hover{
+  background:var(--moura-charcoal) !important;
+  color:var(--moura-gold-soft) !important;
+  border-color:var(--moura-charcoal) !important;
+}
+
+/* ---------- Contact ---------- */
+#contact{
+  background:var(--moura-charcoal) !important;
+  border-top:none !important;
+  color:#fff !important;
+}
+
+#contact .section-title{
+  color:var(--moura-ivory-2) !important;
+  font-family:'Playfair Display',serif !important;
+  font-weight:400 !important;
+}
+
+#contact .section-title::after{ background:var(--moura-gold-soft); }
+
+#contact .section-subtitle{
+  color:rgba(255,255,255,.66) !important;
+}
+
+.contact-form{
+  max-width:720px !important;
+  margin-top:42px !important;
+  gap:14px !important;
+}
+
+.contact-form input,
+.contact-form textarea{
+  background:rgba(255,255,255,.045) !important;
+  border:1px solid rgba(255,255,255,.17) !important;
+  border-radius:4px !important;
+  color:#fff !important;
+  padding:16px 17px !important;
+  font-family:'Montserrat',sans-serif !important;
+  font-size:.94rem !important;
+  outline:none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{ color:rgba(255,255,255,.48) !important; }
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  border-color:var(--moura-gold-soft) !important;
+  box-shadow:0 0 0 1px rgba(200,170,112,.28);
+}
+
+.contact-form button{
+  background:var(--moura-gold) !important;
+  color:var(--moura-ink) !important;
+  border:1px solid var(--moura-gold) !important;
+  border-radius:4px !important;
+  padding:16px 28px !important;
+  font-size:.77rem !important;
+  font-weight:700 !important;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  transition:all .28s ease !important;
+}
+
+.contact-form button:hover{
+  background:transparent !important;
+  color:var(--moura-gold-soft) !important;
+  border-color:var(--moura-gold-soft) !important;
+}
+
+.whatsapp-btn{
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.23) !important;
+  color:rgba(255,255,255,.82) !important;
+  border-radius:4px !important;
+  padding:13px 24px !important;
+  font-size:.78rem !important;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+}
+.whatsapp-btn:hover{
+  border-color:var(--moura-gold-soft) !important;
+  color:var(--moura-gold-soft) !important;
+}
+
+/* ---------- Footer ---------- */
+footer{
+  background:var(--moura-ivory-2) !important;
+  border-top:1px solid rgba(30,30,28,.09) !important;
+  padding:70px 28px 34px !important;
+}
+
+.footer-logo-container img{
+  height:82px !important;
+  width:auto !important;
+  max-width:250px !important;
+  object-fit:contain !important;
+}
+
+.footer-content-grid{
+  max-width:1050px !important;
+  margin-top:42px !important;
+  padding-top:38px;
+  border-top:1px solid rgba(30,30,28,.09);
+}
+
+.footer-col h4{
+  color:var(--moura-ink) !important;
+  border-bottom:none !important;
+  font-size:.72rem !important;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  font-weight:600 !important;
+}
+
+.footer-col a{
+  color:#66615a !important;
+  font-size:.84rem !important;
+}
+.footer-col a:hover{ color:var(--moura-gold) !important; }
+
+.footer-social-contact i{ color:var(--moura-gold) !important; }
+
+.footer-bottom-line{
+  max-width:1050px;
+  margin:30px auto 0;
+  border-top:1px solid rgba(30,30,28,.08) !important;
+  color:#8b857c !important;
+}
+
+footer .copyright strong{
+  color:#4f4b45 !important;
+  font-weight:500 !important;
+}
+
+/* ---------- Existing modal: align with premium language ---------- */
+.modal-content{
+  background:var(--moura-ivory-2) !important;
+  border:1px solid rgba(184,149,87,.46) !important;
+  border-radius:20px !important;
+  box-shadow:0 30px 80px rgba(0,0,0,.28) !important;
+}
+
+.modal-content h3{
+  color:var(--moura-gold) !important;
+  letter-spacing:.07em !important;
+}
+
+.modal-cta-btn{
+  background:var(--moura-charcoal) !important;
+  color:var(--moura-gold-soft) !important;
+  border:1px solid var(--moura-charcoal);
+  border-radius:4px !important;
+}
+.modal-cta-btn:hover{
+  background:var(--moura-gold) !important;
+  color:var(--moura-ink) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px){
+  section{
+    padding-top:78px !important;
+    padding-bottom:78px !important;
+  }
+
+  .hero-container{
+    min-height:680px !important;
+    height:92vh !important;
+  }
+
+  .hero-content{
+    top:57% !important;
+    padding:20px 24px !important;
+  }
+
+  .hero-content h1{
+    font-size:clamp(3rem,11vw,4.8rem) !important;
+  }
+
+  .hero-cta-buttons{
+    width:100%;
+    max-width:380px;
+    margin:0 auto;
+  }
+
+  .hero-btn{
+    width:100% !important;
+    min-width:0;
+  }
+
+  .about-content{
+    gap:38px !important;
+    flex-direction:column !important;
+  }
+
+  .about-content > img{
+    width:min(100%,410px) !important;
+    max-width:410px !important;
+    height:470px !important;
+  }
+
+  .about-text{
+    max-width:680px !important;
+    text-align:center !important;
+  }
+
+  #about .section-title{
+    text-align:center !important;
+  }
+
+  #about .section-title::after{
+    margin-left:auto !important;
+  }
+
+  .about-cta{ text-align:center !important; }
+  .certifications{ justify-content:center !important; }
+
+  .card-style img{ height:220px !important; }
+}
+
+@media (max-width: 600px){
+  section{
+    padding-left:18px !important;
+    padding-right:18px !important;
+  }
+
+  .section-title{
+    font-size:clamp(2.45rem,12vw,3.5rem) !important;
+  }
+
+  .hero-content h1{
+    font-size:clamp(2.8rem,12.2vw,4.15rem) !important;
+  }
+
+  .hero-content p{
+    font-size:.98rem !important;
+    line-height:1.65 !important;
+  }
+
+  .service-cards-carousel{ gap:16px !important; }
+
+  .card-style{
+    flex-basis:88% !important;
+    width:88% !important;
+    margin:0 6px !important;
+  }
+
+  .card-content{
+    padding:24px 21px 27px !important;
+  }
+
+  .about-content > img{
+    height:420px !important;
+  }
+
+  .google-review-card{
+    padding:24px !important;
+  }
+
+  footer{
+    padding-left:20px !important;
+    padding-right:20px !important;
+  }
+}
+</style>
+
+
+
+
+<style id="moura-certification-badges-fix">
+/* Certification badges — modern circular treatment */
+.certifications{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:18px !important;
+  margin-top:28px !important;
+}
+
+/* PM badge fills the circle */
+.certifications span{
+  width:100px !important;
+  height:100px !important;
+  min-width:100px !important;
+  flex:0 0 100px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  box-sizing:border-box !important;
+  border-radius:50% !important;
+  border:none !important;
+  background:#f58216 !important;
+  color:#fff !important;
+  box-shadow:0 5px 16px rgba(25,22,18,.08) !important;
+  padding:0 !important;
+  font-family:'Montserrat',sans-serif !important;
+  font-size:1.8rem !important;
+  font-weight:700 !important;
+  letter-spacing:.02em !important;
+  line-height:1 !important;
+}
+
+/* Logo badges: circular crop, artwork enlarged and centered */
+.certifications img{
+  width:100px !important;
+  height:100px !important;
+  min-width:100px !important;
+  flex:0 0 100px !important;
+  box-sizing:border-box !important;
+  border-radius:50% !important;
+  border:2px solid rgba(30,30,28,.13) !important;
+  background:#fff !important;
+  box-shadow:0 5px 16px rgba(25,22,18,.08) !important;
+  object-position:center !important;
+}
+
+/* NCCER fills the circle while keeping the full mark centered */
+.certifications #nccer-logo{
+  object-fit:contain !important;
+  padding:3px !important;
+  background:#172536 !important;
+}
+
+/* OSHA: maximize artwork without clipping the wordmark */
+.certifications img:not(#nccer-logo){
+  object-fit:contain !important;
+  padding:8px !important;
+  background:#fff !important;
+}
+
+@media (max-width:900px){
+  .certifications{ justify-content:center !important; }
+}
+
+@media (max-width:600px){
+  .certifications{ gap:12px !important; }
+
+  .certifications span,
+  .certifications img{
+    width:82px !important;
+    height:82px !important;
+    min-width:82px !important;
+    flex-basis:82px !important;
+  }
+
+  .certifications span{ font-size:1.45rem !important; }
+  .certifications #nccer-logo{ padding:3px !important; }
+  .certifications img:not(#nccer-logo){ padding:7px !important; }
+}
+</style>
+
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal">
 <div class="modal-content">
 <button aria-label="Close" class="modal-close-btn" onclick="closeModal()" type="button">×</button>
-<img alt="MCM Services" class="modal-logo" src="images/mcmbrand-removebg-preview.png"/>
+<img alt="Moura Consulting &amp; Management" class="modal-logo" src="images/mcmbrand-removebg-preview.png"/>
 <h3>Elevated Residential Projects</h3>
 <p>
     Exclusive consulting and management for high-end homes in Miami.
@@ -1860,7 +2655,7 @@ body.menu-open #menuOverlay{
 <div class="hero-overlay"></div>
 <div class="hero-content">
 <h1 data-translate="hero2-title">Premium Residential Project Oversight</h1>
-<p data-translate="hero2-subtitle">Flawless execution delivered with transparency and strategic planning.</p>
+<p data-translate="hero2-subtitle">Transparent project oversight supported by strategic planning and coordinated trades.</p>
 <div class="hero-cta-buttons">
 <a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
             View Portfolio
@@ -1875,7 +2670,7 @@ body.menu-open #menuOverlay{
 <div class="hero-overlay"></div>
 <div class="hero-content">
 <h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
-<p data-translate="hero3-subtitle">Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.</p>
+<p data-translate="hero3-subtitle">Risk mitigation, budget control, and quality-focused construction oversight.</p>
 <div class="hero-cta-buttons">
 <a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
             View Portfolio
@@ -1960,7 +2755,7 @@ body.menu-open #menuOverlay{
 <div class="about-text">
 <h2 class="section-title" data-translate="about-title" style="text-align:left; margin-bottom: 20px;">Why Choose Us</h2>
 <p data-translate="about-p1">
-        We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.
+        We coordinate every phase of your residential project with precision, transparency, and quality-focused oversight — helping you stay informed and in control from planning through completion.
     </p>
 <p data-translate="about-p2">
         Our approach is focused on structure, communication and risk control, offering homeowners peace of mind while every phase of the project is managed with precision.
@@ -2017,10 +2812,10 @@ body.menu-open #menuOverlay{
 </section>
 <footer>
 <div class="footer-logo-container">
-<img alt="MCM Services Logo Footer" src="images/transparent-logo-2.png">
+<img alt="Moura Consulting &amp; Management Logo" src="images/transparent-logo-2.png">
 </img></div>
 <p data-translate="footer-tagline" style="color:#666; font-size:.95rem; margin-bottom:15px;">
-    Management Excellence, Flawless Execution.
+    We Coordinate. You Stay in Control.
   </p>
 <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
 <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:6px;"></i>

@@ -967,9 +967,9 @@ width:100%;
 .modal-overlay.open{ opacity:1; visibility:visible; }
 .modal-content{
   background:#fff;
-  max-width:390px;
+  max-width:420px;
   width:90%;
-  padding:34px 30px;
+  padding:40px 35px;
   text-align:center;
   border-radius:10px;
   box-shadow: 0 25px 60px rgba(0,0,0,.35), 0 5px 15px rgba(0,0,0,.15);
@@ -979,29 +979,29 @@ width:100%;
   position: relative;
 }
 .modal-overlay.open .modal-content{ transform:translateY(0); opacity:1; }
-.modal-logo{ max-width:165px; margin:0 auto 24px; display:block; }
+.modal-logo{ max-width:220px; margin:0 auto 20px; display:block; }
 .modal-content h3{
   font-family:'Playfair Display',serif;
   font-weight:500;
-  font-size:1.65rem;
-  letter-spacing:.3px;
+  font-size:1.9rem;
+  letter-spacing:.6px;
   color:#C2A46D;
-  margin-bottom:12px;
+  margin-bottom:15px;
 }
 .modal-content p{
   font-family:'Montserrat',sans-serif;
-  font-size:.9rem;
+  font-size:.95rem;
   color:#555;
-  line-height:1.65;
-  margin-bottom:24px;
+  line-height:1.7;
+  margin-bottom:30px;
 }
 .modal-cta-btn{
   background:#C2A46D;
   color:#1e1e1e;
-  padding:11px 26px;
+  padding:12px 32px;
   border-radius:6px;
   font-weight:600;
-  font-size:.86rem;
+  font-size:.9rem;
   letter-spacing:.4px;
   text-decoration:none;
   display:inline-block;
@@ -1024,389 +1024,460 @@ width:100%;
 </style>
 
 
-<style id="premium-consultation-popup">
-.modal-overlay{
-  background:rgba(12,12,12,.86) !important;
-  backdrop-filter:blur(3px);
-  -webkit-backdrop-filter:blur(3px);
+<style id="moura-premium-portfolio-refresh">
+/* =========================================================
+   MOURA CONSULTING — PREMIUM PORTFOLIO VISUAL REFRESH
+   Visual-only override. Structure, content, links, images,
+   translations and functionality remain unchanged.
+   ========================================================= */
+
+:root{
+  --moura-ivory:#F5F1E8;
+  --moura-ivory-2:#FBF8F2;
+  --moura-paper:#FFFFFF;
+  --moura-ink:#1E1E1C;
+  --moura-charcoal:#252421;
+  --moura-muted:#6E6A63;
+  --moura-gold:#B89557;
+  --moura-gold-soft:#C8AA70;
+  --moura-line:rgba(30,30,28,.12);
+  --moura-shadow:0 24px 60px rgba(25,22,18,.09);
+  --moura-shadow-soft:0 12px 34px rgba(25,22,18,.07);
+  --moura-radius:18px;
 }
-.modal-content.premium-consultation-modal{
-  width:min(90vw,560px) !important;
-  max-width:560px !important;
-  padding:34px 38px 30px !important;
-  border-radius:14px !important;
-  background:linear-gradient(135deg,#fffdfa 0%,#f7f2e9 100%) !important;
-  border:1px solid rgba(199,169,107,.42) !important;
-  box-shadow:0 28px 80px rgba(0,0,0,.48) !important;
+
+html{
+  background:var(--moura-ivory-2);
+}
+
+body{
+  background:var(--moura-ivory-2) !important;
+  color:var(--moura-ink) !important;
+  font-family:'Montserrat',sans-serif !important;
+  letter-spacing:.005em;
+}
+
+/* ---------- Header ---------- */
+header{
+  background:linear-gradient(to bottom,rgba(18,18,17,.72),rgba(18,18,17,.34)) !important;
+  box-shadow:none !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+header::after{
+  display:none !important;
+}
+
+nav ul{
+  gap:42px !important;
+}
+
+nav ul a{
+  font-size:.78rem !important;
+  text-transform:uppercase;
+  letter-spacing:.16em !important;
+  font-weight:500 !important;
+  color:rgba(255,255,255,.86) !important;
+}
+
+nav ul a:hover,
+nav ul a.active{
+  color:var(--moura-gold-soft) !important;
+}
+
+nav ul a::after{
+  height:1px !important;
+  background:var(--moura-gold-soft) !important;
+}
+
+/* ---------- Gallery Hero ---------- */
+#sobre,
+.gallery-hero{
+  min-height:720px !important;
+  height:88vh !important;
+  max-height:860px;
+  position:relative;
   overflow:hidden;
 }
-.modal-content.premium-consultation-modal::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:7px;
-  background:linear-gradient(90deg,#a98445,#dfc488,#a98445);
-}
-.premium-consultation-modal .modal-close-btn{
-  top:20px !important;
-  right:25px !important;
-  font-size:2.2rem !important;
-  font-weight:300 !important;
-  color:#171717 !important;
-  opacity:.9 !important;
-}
-.premium-consultation-modal .modal-logo{
-  width:auto !important;
-  max-width:190px !important;
-  max-height:130px !important;
-  margin:0 auto 22px !important;
-  object-fit:contain;
-}
-.premium-consultation-modal .modal-eyebrow{
-  font-family:'Montserrat',sans-serif;
-  font-size:.66rem;
-  font-weight:600;
-  letter-spacing:2.8px;
-  color:#b9965e;
-  margin-bottom:12px;
-}
-.premium-consultation-modal .modal-gold-rule{
-  width:38px;
-  height:1px;
-  background:#c7a96b;
-  margin:0 auto 14px;
-}
-.premium-consultation-modal h3{
-  font-family:'Playfair Display',serif !important;
-  font-size:clamp(2rem,4vw,2.8rem) !important;
-  line-height:1.08 !important;
-  font-weight:400 !important;
-  letter-spacing:-1.2px !important;
-  color:#171717 !important;
-  margin:0 0 18px !important;
-}
-.premium-consultation-modal .modal-divider{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin:0 auto 18px;
-  color:#c7a96b;
-  font-size:.7rem;
-}
-.premium-consultation-modal .modal-divider::before,
-.premium-consultation-modal .modal-divider::after{
-  content:"";
-  height:1px;
-  flex:1;
-  background:linear-gradient(90deg,transparent,#ded6c8);
-}
-.premium-consultation-modal .modal-divider::after{
-  background:linear-gradient(90deg,#ded6c8,transparent);
-}
-.premium-consultation-modal p{
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.82rem !important;
-  line-height:1.6 !important;
-  font-weight:400 !important;
-  color:#343434 !important;
-  margin:0 auto 22px !important;
-}
-.premium-consultation-modal .modal-cta-btn{
-  display:flex !important;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  width:100%;
-  padding:15px 18px !important;
-  border-radius:5px !important;
-  background:linear-gradient(135deg,#171717,#222) !important;
-  color:#d9bb7b !important;
-  border:1px solid #c7a96b !important;
-  box-shadow:0 8px 20px rgba(0,0,0,.22) !important;
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.68rem !important;
-  font-weight:600 !important;
-  letter-spacing:2px !important;
-}
-.premium-consultation-modal .modal-cta-btn:hover{
-  transform:translateY(-2px) !important;
-  background:#111 !important;
-}
-.premium-consultation-modal .modal-arrow{
-  font-size:1.4rem;
-  line-height:1;
-}
-.premium-consultation-modal .modal-trust{
-  margin-top:18px;
-  font-family:'Montserrat',sans-serif;
-  font-size:.58rem;
-  letter-spacing:.5px;
-  color:#666;
-  white-space:nowrap;
-}
-.premium-consultation-modal .modal-trust > span,
-.premium-consultation-modal .modal-trust b{
-  color:#c7a96b;
-  font-weight:500;
-  margin:0 9px;
-}
-@media(max-width:768px){
-  .modal-content.premium-consultation-modal{
-    width:90vw !important;
-    padding:28px 20px 24px !important;
-    border-radius:12px !important;
-  }
-  .premium-consultation-modal .modal-logo{
-    max-width:155px !important;
-    max-height:105px !important;
-    margin-bottom:18px !important;
-  }
-  .premium-consultation-modal .modal-eyebrow{
-    font-size:.62rem;
-    letter-spacing:2.4px;
-  }
-  .premium-consultation-modal h3{
-    font-size:clamp(1.8rem,8vw,2.35rem) !important;
-  }
-  .premium-consultation-modal p{
-    font-size:.82rem !important;
-    line-height:1.65 !important;
-  }
-  .premium-consultation-modal .desktop-break{display:none;}
-  .premium-consultation-modal .modal-cta-btn{
-    padding:14px 12px !important;
-    font-size:.61rem !important;
-    letter-spacing:2px !important;
-    gap:10px;
-  }
-  .premium-consultation-modal .modal-trust{
-    white-space:normal;
-    line-height:2;
-    font-size:.62rem;
-  }
-}
-</style>
 
+#sobre::before,
+.gallery-hero::before{
+  background:
+    linear-gradient(180deg,rgba(18,18,17,.30) 0%,rgba(18,18,17,.45) 60%,rgba(18,18,17,.65) 100%) !important;
+}
 
-<style id="minimal-consultation-popup">
-.modal-overlay{
-  background:rgba(0,0,0,.72) !important;
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
-}
-.modal-content.minimal-consultation-modal{
-  width:min(86vw,390px) !important;
-  max-width:390px !important;
-  padding:24px 24px 22px !important;
-  border-radius:9px !important;
-  background:#fff !important;
-  border:none !important;
-  box-shadow:0 16px 38px rgba(0,0,0,.26) !important;
-  overflow:visible !important;
-}
-.modal-content.minimal-consultation-modal::after{
-  display:none !important;
-  content:none !important;
-}
-.minimal-consultation-modal .modal-close-btn{
-  top:11px !important;
-  right:14px !important;
-  font-size:1.5rem !important;
-  font-weight:300 !important;
-  color:#444 !important;
-  opacity:.68 !important;
-}
-.minimal-consultation-modal .modal-logo{
-  width:auto !important;
-  max-width:125px !important;
-  max-height:82px !important;
-  margin:0 auto 16px !important;
-  object-fit:contain;
-}
-.minimal-consultation-modal h3{
+#sobre h2,
+.gallery-hero h2{
   font-family:'Playfair Display',serif !important;
-  font-size:1.75rem !important;
-  line-height:1.1 !important;
+  font-size:clamp(4rem,7vw,7rem) !important;
+  line-height:.98 !important;
   font-weight:400 !important;
-  letter-spacing:0 !important;
-  color:#1f1f1f !important;
-  margin:0 0 12px !important;
-}
-.minimal-consultation-modal p{
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.8rem !important;
-  line-height:1.5 !important;
-  font-weight:400 !important;
-  color:#565656 !important;
-  margin:0 auto 18px !important;
-  max-width:315px;
-}
-.minimal-consultation-modal .modal-cta-btn{
-  display:inline-block !important;
-  width:auto !important;
-  min-width:0 !important;
-  padding:11px 20px !important;
-  border-radius:5px !important;
-  background:#C7A96B !important;
-  color:#1f1f1f !important;
-  border:none !important;
-  box-shadow:none !important;
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.8rem !important;
-  font-weight:600 !important;
-  letter-spacing:0 !important;
-  text-transform:none !important;
-}
-.minimal-consultation-modal .modal-cta-btn:hover{
-  background:#b9965e !important;
+  letter-spacing:-.035em !important;
   color:#fff !important;
-  transform:none !important;
-}
-@media(max-width:768px){
-  .modal-content.minimal-consultation-modal{
-    width:84vw !important;
-    max-width:330px !important;
-    padding:22px 20px 20px !important;
-  }
-  .minimal-consultation-modal .modal-logo{
-    max-width:110px !important;
-    max-height:72px !important;
-    margin-bottom:14px !important;
-  }
-  .minimal-consultation-modal h3{
-    font-size:1.55rem !important;
-  }
-  .minimal-consultation-modal p{
-    font-size:.76rem !important;
-  }
-}
-</style>
-
-
-<style id="refined-consultation-popup">
-.modal-overlay{
-  background:rgba(18,18,18,.78) !important;
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
+  text-shadow:0 4px 30px rgba(0,0,0,.34) !important;
+  margin-bottom:22px !important;
 }
 
-.modal-content.refined-consultation-modal{
-  width:min(88vw,455px) !important;
-  max-width:455px !important;
-  padding:34px 34px 30px !important;
-  border-radius:12px !important;
-  background:#fbf8f2 !important;
-  border:1px solid rgba(199,169,107,.32) !important;
-  box-shadow:0 24px 60px rgba(0,0,0,.34) !important;
-  text-align:center !important;
+#sobre p,
+.gallery-hero p{
+  max-width:760px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  font-size:clamp(1rem,1.4vw,1.28rem) !important;
+  line-height:1.75 !important;
+  font-weight:300 !important;
+  color:rgba(255,255,255,.88) !important;
+  text-shadow:0 2px 18px rgba(0,0,0,.38) !important;
+}
+
+/* ---------- Portfolio Section ---------- */
+#portfolio{
+  background:var(--moura-ivory-2) !important;
+  padding:110px 20px !important;
+}
+
+.project-grid-container{
+  max-width:1180px !important;
+}
+
+.section-title-light{
+  font-family:'Playfair Display',serif !important;
+  font-weight:400 !important;
+  color:var(--moura-ink) !important;
+  font-size:clamp(2.7rem,4vw,4.6rem) !important;
+  line-height:1.04 !important;
+  letter-spacing:-.025em !important;
+  margin:0 0 54px !important;
+}
+
+.section-title-light::after{
+  content:"";
+  display:block;
+  width:52px;
+  height:1px;
+  margin:22px auto 0;
+  background:var(--moura-gold);
+}
+
+.project-grid{
+  gap:24px !important;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr)) !important;
+}
+
+.project-card{
+  background:var(--moura-paper) !important;
+  border:1px solid var(--moura-line) !important;
+  border-radius:var(--moura-radius) !important;
+  box-shadow:var(--moura-shadow-soft) !important;
+  overflow:hidden !important;
+  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease !important;
+}
+
+.project-card:hover{
+  transform:translateY(-7px) !important;
+  box-shadow:var(--moura-shadow) !important;
+  border-color:rgba(184,149,87,.4) !important;
+}
+
+.project-image-container{
+  background:#eee !important;
   overflow:hidden !important;
 }
 
-.refined-consultation-modal .modal-close-btn{
-  top:13px !important;
-  right:16px !important;
-  font-size:1.55rem !important;
-  line-height:1 !important;
-  font-weight:300 !important;
-  color:#262626 !important;
-  opacity:.58 !important;
+.project-img{
+  filter:saturate(.82) contrast(.96);
+  transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s ease !important;
 }
 
-.refined-consultation-modal .modal-logo{
-  display:block !important;
+.project-card:hover .project-img,
+.project-image-container:hover .project-img{
+  transform:scale(1.035) !important;
+  filter:saturate(.94) contrast(.98);
+}
+
+.expand-icon{
+  top:auto !important;
+  bottom:16px !important;
+  right:16px !important;
+  width:38px !important;
+  height:38px !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  border-radius:50% !important;
+  background:rgba(24,24,22,.78) !important;
+  border:1px solid rgba(200,170,112,.42);
+  color:var(--moura-gold-soft) !important;
+  font-size:.95rem !important;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+
+.card-content-portfolio{
+  padding:28px 26px 32px !important;
+  text-align:left !important;
+}
+
+.card-content-portfolio h3{
+  font-family:'Playfair Display',serif !important;
+  color:var(--moura-ink) !important;
+  font-size:1.72rem !important;
+  line-height:1.15 !important;
+  font-weight:400 !important;
+  margin:0 0 14px !important;
+  text-align:left !important;
+}
+
+.card-content-portfolio h3::before{
+  content:"";
+  display:block;
+  width:30px;
+  height:1px;
+  background:var(--moura-gold);
+  margin-bottom:16px;
+}
+
+.card-content-portfolio p{
+  color:var(--moura-muted) !important;
+  font-size:.92rem !important;
+  line-height:1.8 !important;
+  text-align:left !important;
+}
+
+/* ---------- CTA ---------- */
+#contato{
+  background:var(--moura-charcoal) !important;
+  border-top:none !important;
+  padding:105px 20px !important;
+  text-align:center !important;
+}
+
+#contato h2{
+  font-family:'Playfair Display',serif !important;
+  font-weight:400 !important;
+  color:var(--moura-ivory-2) !important;
+  font-size:clamp(2.8rem,5vw,5rem) !important;
+  line-height:1.04 !important;
+  letter-spacing:-.025em !important;
+  margin-bottom:34px !important;
+}
+
+#contato h2::after{
+  content:"";
+  display:block;
+  width:52px;
+  height:1px;
+  margin:22px auto 0;
+  background:var(--moura-gold-soft);
+}
+
+.contact-btn-style{
+  background:var(--moura-gold) !important;
+  color:var(--moura-ink) !important;
+  border:1px solid var(--moura-gold) !important;
+  border-radius:4px !important;
+  padding:16px 30px !important;
+  font-size:.77rem !important;
+  font-weight:700 !important;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  box-shadow:none !important;
+  transition:all .28s ease !important;
+}
+
+.contact-btn-style:hover{
+  background:transparent !important;
+  color:var(--moura-gold-soft) !important;
+  border-color:var(--moura-gold-soft) !important;
+  box-shadow:none !important;
+  transform:translateY(-2px) !important;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox{
+  background:rgba(18,18,17,.94) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.lightbox-content{
+  max-width:88% !important;
+  max-height:86vh !important;
+  border-radius:10px;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+
+.close-btn{
+  top:24px !important;
+  right:32px !important;
+  color:rgba(255,255,255,.78) !important;
+  font-size:34px !important;
+  font-weight:300 !important;
+}
+
+/* ---------- Footer ---------- */
+footer{
+  background:var(--moura-ivory-2) !important;
+  color:var(--moura-muted) !important;
+  border-top:1px solid rgba(30,30,28,.09) !important;
+  padding:70px 28px 34px !important;
+}
+
+.footer-logo-container img{
+  height:82px !important;
   width:auto !important;
-  max-width:150px !important;
-  max-height:98px !important;
-  margin:0 auto 20px !important;
+  max-width:250px !important;
   object-fit:contain !important;
 }
 
-.refined-consultation-modal .modal-kicker{
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.68rem !important;
+.footer-logo-container > p{
+  color:#7e786f !important;
+}
+
+.footer-content-grid{
+  max-width:1050px !important;
+  margin:42px auto 0 !important;
+  padding-top:38px;
+  border-top:1px solid rgba(30,30,28,.09);
+}
+
+.footer-col h4{
+  color:var(--moura-ink) !important;
+  border-bottom:none !important;
+  font-size:.72rem !important;
+  text-transform:uppercase;
+  letter-spacing:.15em;
   font-weight:600 !important;
-  letter-spacing:2.1px !important;
-  text-transform:uppercase !important;
-  color:#b49458 !important;
-  margin-bottom:11px !important;
 }
 
-.refined-consultation-modal h3{
-  font-family:'Playfair Display',serif !important;
-  font-size:2.25rem !important;
-  line-height:1.05 !important;
-  font-weight:400 !important;
-  letter-spacing:-.3px !important;
-  color:#1f1f1f !important;
-  margin:0 0 15px !important;
-}
-
-.refined-consultation-modal p{
-  font-family:'Montserrat',sans-serif !important;
+.footer-col a{
+  color:#66615a !important;
   font-size:.84rem !important;
-  line-height:1.6 !important;
-  font-weight:400 !important;
-  color:#5b5b5b !important;
-  max-width:340px !important;
-  margin:0 auto 22px !important;
 }
 
-.refined-consultation-modal .modal-cta-btn{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  min-width:210px !important;
+.footer-col a:hover{
+  color:var(--moura-gold) !important;
+}
+
+.footer-social-contact i{
+  color:var(--moura-gold) !important;
+}
+
+.footer-bottom-line{
+  max-width:1050px;
+  margin:30px auto 0 !important;
+  padding-top:24px !important;
+  border-top:1px solid rgba(30,30,28,.08) !important;
+  color:#8b857c !important;
+}
+
+footer .copyright strong{
+  color:#4f4b45 !important;
+  font-weight:500 !important;
+}
+
+.powered-by{
+  color:#9a958d !important;
+}
+
+/* ---------- Existing popup: keep content, match premium home ---------- */
+.modal-overlay{
+  background:rgba(20,20,18,.78) !important;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.modal-content{
+  background:var(--moura-ivory-2) !important;
+  border:1px solid rgba(184,149,87,.46) !important;
+  border-radius:20px !important;
+  box-shadow:0 30px 80px rgba(0,0,0,.28) !important;
+}
+
+.modal-logo{
+  max-width:320px !important;
   width:auto !important;
-  padding:12px 22px !important;
-  border-radius:5px !important;
-  background:#1f1f1f !important;
-  color:#d1b274 !important;
-  border:1px solid #1f1f1f !important;
-  box-shadow:none !important;
-  font-family:'Montserrat',sans-serif !important;
-  font-size:.78rem !important;
-  font-weight:600 !important;
-  letter-spacing:.35px !important;
-  text-transform:none !important;
-  transition:background .25s ease,color .25s ease,border-color .25s ease !important;
+  height:auto !important;
+  object-fit:contain !important;
 }
 
-.refined-consultation-modal .modal-cta-btn:hover{
-  background:#2b2b2b !important;
-  color:#e0c58d !important;
-  border-color:#2b2b2b !important;
-  transform:none !important;
+.modal-content h3{
+  color:var(--moura-gold) !important;
 }
 
-@media(max-width:768px){
-  .modal-content.refined-consultation-modal{
-    width:86vw !important;
-    max-width:390px !important;
-    padding:30px 24px 26px !important;
+.modal-cta-btn{
+  background:var(--moura-charcoal) !important;
+  color:var(--moura-gold-soft) !important;
+  border:1px solid var(--moura-charcoal) !important;
+  border-radius:4px !important;
+}
+
+.modal-cta-btn:hover{
+  background:var(--moura-gold) !important;
+  color:var(--moura-ink) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  #sobre,
+  .gallery-hero{
+    min-height:650px !important;
+    height:82vh !important;
   }
 
-  .refined-consultation-modal .modal-logo{
-    max-width:132px !important;
-    max-height:86px !important;
-    margin-bottom:18px !important;
+  #portfolio{
+    padding:80px 16px !important;
   }
 
-  .refined-consultation-modal .modal-kicker{
-    font-size:.62rem !important;
-    letter-spacing:1.7px !important;
+  .project-grid{
+    gap:20px !important;
   }
 
-  .refined-consultation-modal h3{
-    font-size:1.95rem !important;
+  #contato{
+    padding:80px 18px !important;
+  }
+}
+
+@media (max-width:600px){
+  #sobre h2,
+  .gallery-hero h2{
+    font-size:clamp(3rem,14vw,4.3rem) !important;
   }
 
-  .refined-consultation-modal p{
-    font-size:.8rem !important;
+  #sobre p,
+  .gallery-hero p{
+    font-size:.98rem !important;
+    line-height:1.65 !important;
+    padding-left:18px;
+    padding-right:18px;
   }
 
-  .refined-consultation-modal .modal-cta-btn{
-    min-width:190px !important;
-    padding:11px 18px !important;
+  .section-title-light{
+    font-size:clamp(2.45rem,12vw,3.5rem) !important;
+  }
+
+  .project-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  .card-content-portfolio{
+    padding:24px 21px 27px !important;
+  }
+
+  #contato h2{
+    font-size:clamp(2.5rem,12vw,3.9rem) !important;
+  }
+
+  footer{
+    padding-left:20px !important;
+    padding-right:20px !important;
+  }
+
+  .modal-logo{
+    max-width:260px !important;
   }
 }
 </style>
@@ -1414,22 +1485,15 @@ width:100%;
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal" aria-hidden="true">
-  <div class="modal-content refined-consultation-modal" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
     <button type="button" class="modal-close-btn" aria-label="Close" onclick="closeModal()">×</button>
-
     <img class="modal-logo" src="images/mcmbrand-removebg-preview.png" alt="Moura Consulting &amp; Management">
-
-    <div class="modal-kicker">Private Project Consultation</div>
-
-    <h3 id="welcomeModalTitle">We Coordinate.<br>You Stay in Control.</h3>
-
-    <p>Owner representation and construction project management for residential projects in Miami and South Florida.</p>
-
-    <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">
-      Request Consultation
-    </a>
+    <h3 id="welcomeModalTitle">Elevated Residential Projects</h3>
+    <p>Exclusive consulting and management for high-end homes in Miami.</p>
+    <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">Book a Private Consultation</a>
   </div>
 </div>
+
 <header>
 <div class="header-container">
 <div class="header-top-row">
@@ -1535,7 +1599,7 @@ width:100%;
 </section>
 <section id="contato" style="text-align: center;">
 <h2 data-key="interestedTitle">We Coordinate. You Stay in Control.</h2>
-<a class="contact-btn-style" data-key="requestQuote" href="index.html#contact">Request Consultation</a>
+<a class="contact-btn-style" data-key="requestQuote" href="index.html#contact">Request a Private Consultation</a>
 </section>
 </main>
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)" style="display: none;">
@@ -1594,7 +1658,7 @@ width:100%;
                 project4Title: "Luxury Master Bathroom", project4Desc: "High-end master bathroom renovation with project coordination focused on trades, finishes, and execution quality.", 
                 project5Title: "High-End Master Suite", project5Desc: "Residential interior project coordinated with attention to finishes, installation details, and overall project quality.", 
                 project6Title: "Integrated Living Room", project6Desc: "Integrated residential living space supported through project coordination and detailed construction oversight.", 
-                interestedTitle: "We Coordinate. You Stay in Control.", requestQuote: "Request Consultation", imageAuthNote: "",
+                interestedTitle: "We Coordinate. You Stay in Control.", requestQuote: "Request a Private Consultation", imageAuthNote: "",
                 footerTagline: "We Coordinate. You Stay in Control.", developerSignature: "Developed by Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> Moura Consulting & Management. All rights reserved.', footer_location: 'Miami, FL', 'footer-nav': 'Navigation', 'footer-contact': 'Contact & Connect', 'footer-legal': 'Legal', 'footer-terms': 'Terms of Use', 'footer-privacy': 'Privacy Policy',
                 'footer-powered': "Crafted & Managed by MCM Services USA Corporation",
                 'footer-location': "Miami, FL"},

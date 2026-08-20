@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Moura Consulting & Management | Luxury Project Management Miami</title>
-<meta content="Moura Consulting offers premium Project Management across Miami. High-end residential coordination and flawless execution." name="description"/>
+<meta content="Moura Consulting provides premium construction project management and owner representation across Miami and South Florida, with high-end residential coordination, oversight, and quality control." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="/favicon-16x16.png?v=3" rel="icon" sizes="16x16" type="image/png"/>
@@ -1056,6 +1056,102 @@
         display: block;
     }
 
+    /* Google Reviews – live cards */
+    .google-reviews-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 30px;
+    }
+
+    .google-review-card {
+        background: #FFF;
+        padding: 28px;
+        border-top: 4px solid #C7A96B;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        text-align: center;
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        transition: transform .3s;
+    }
+
+    .google-review-card:hover { transform: translateY(-3px); }
+
+    .google-review-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .google-review-brand i { font-size: 1rem; }
+
+    .google-review-stars {
+        color: #f4b400;
+        letter-spacing: 2px;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .google-review-card p {
+        margin: 0 0 14px;
+        color: #333;
+        font-size: 1rem;
+        line-height: 1.7;
+        font-style: italic;
+        flex-grow: 1;
+    }
+
+    .google-review-author {
+        color: #C7A96B;
+        font-weight: 600;
+        font-size: 0.98rem;
+        margin-top: auto;
+    }
+
+    .google-review-date {
+        color: #888;
+        font-size: 0.78rem;
+        margin-top: 4px;
+    }
+
+    .google-reviews-cta { margin-top: 28px; text-align: center; }
+
+    .google-review-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 24px;
+        border: 1px solid #C7A96B;
+        border-radius: 6px;
+        color: #C7A96B;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+
+    .google-review-btn:hover {
+        background: #C7A96B;
+        color: #333;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+        .google-reviews-grid { grid-template-columns: 1fr; max-width: 560px; }
+        .google-review-card { min-height: auto; }
+    }
+
     /* CONTACT FORM */
     .contact-form {
         max-width:600px;
@@ -1702,7 +1798,7 @@ body.menu-open #menuOverlay{
 <div class="modal-overlay" id="welcomeModal">
 <div class="modal-content">
 <button aria-label="Close" class="modal-close-btn" onclick="closeModal()" type="button">×</button>
-<img alt="MCM Services" class="modal-logo" src="images/mcmbrand-removebg-preview.png"/>
+<img alt="Moura Consulting &amp; Management" class="modal-logo" src="images/mcmbrand-removebg-preview.png"/>
 <h3>Elevated Residential Projects</h3>
 <p>
     Exclusive consulting and management for high-end homes in Miami.
@@ -1754,7 +1850,7 @@ body.menu-open #menuOverlay{
 <a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
             View Portfolio
         </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="go(projectUrl)='https://wa.me/17862383386'">
+<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
             Request Exclusive Project
         </button>
 </div>
@@ -1764,12 +1860,12 @@ body.menu-open #menuOverlay{
 <div class="hero-overlay"></div>
 <div class="hero-content">
 <h1 data-translate="hero2-title">Premium Residential Project Oversight</h1>
-<p data-translate="hero2-subtitle">Flawless execution delivered with transparency and strategic planning.</p>
+<p data-translate="hero2-subtitle">Transparent project oversight supported by strategic planning and coordinated trades.</p>
 <div class="hero-cta-buttons">
 <a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
             View Portfolio
         </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="go(projectUrl)='https://wa.me/17862383386'">
+<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
             Request Exclusive Project
         </button>
 </div>
@@ -1779,12 +1875,12 @@ body.menu-open #menuOverlay{
 <div class="hero-overlay"></div>
 <div class="hero-content">
 <h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
-<p data-translate="hero3-subtitle">Risk mitigation, budget control, and high-quality craftsmanship, guaranteed.</p>
+<p data-translate="hero3-subtitle">Risk mitigation, budget control, and quality-focused construction oversight.</p>
 <div class="hero-cta-buttons">
 <a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
             View Portfolio
         </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="go(projectUrl)='https://wa.me/17862383386'">
+<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
             Request Exclusive Project
         </button>
 </div>
@@ -1864,7 +1960,7 @@ body.menu-open #menuOverlay{
 <div class="about-text">
 <h2 class="section-title" data-translate="about-title" style="text-align:left; margin-bottom: 20px;">Why Choose Us</h2>
 <p data-translate="about-p1">
-        We manage every step of your home improvement project with precision, transparency, and high-end craftsmanship — ensuring your home receives the expertise it deserves.
+        We coordinate every phase of your residential project with precision, transparency, and quality-focused oversight — helping you stay informed and in control from planning through completion.
     </p>
 <p data-translate="about-p2">
         Our approach is focused on structure, communication and risk control, offering homeowners peace of mind while every phase of the project is managed with precision.
@@ -1886,32 +1982,17 @@ body.menu-open #menuOverlay{
 </div>
 </section>
 <section class="section-light" id="testimonials">
-<h2 class="section-title" data-translate="testimonials-title" style="margin-bottom:30px;">Client Testimonials</h2>
-<div class="testimonial-card-container">
-<div aria-label="Testimonial by Mr. B. Mendes" class="testimonial-card" role="blockquote">
-<p data-translate="testimonial1-text">
-        MCM Services delivered outstanding management. The schedule was precise and the budget control kept everything smooth. Total professionalism.
-    </p>
-<p class="testimonial-author">
-        — Mr. B. Mendes, Miami
-    </p>
+<h2 class="section-title" style="margin-bottom:30px;">Google Reviews</h2>
+<div class="google-reviews-grid" id="googleReviewsGrid" aria-live="polite">
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
 </div>
-<div aria-label="Testimonial by Mrs. C. Oliveira" class="testimonial-card" role="blockquote">
-<p data-translate="testimonial2-text">
-        They coordinated our renovation with precision. Excellent communication, risk control and high-quality final result.
-    </p>
-<p class="testimonial-author">
-        — Mrs. C. Oliveira, Coral Gables
-    </p>
-</div>
-<div aria-label="Testimonial by Arch. D. Freitas" class="testimonial-card" role="blockquote">
-<p data-translate="testimonial3-text">
-        Outstanding stakeholder coordination on a complex interior design project. High-end service from start to finish.
-    </p>
-<p class="testimonial-author">
-        — Arch. D. Freitas, Broward
-    </p>
-</div>
+<div class="google-reviews-cta">
+<a class="google-review-btn" href="https://g.page/r/Cfqs2HHbWdLJEBI/review" target="_blank" rel="noopener">
+<i class="fab fa-google" aria-hidden="true"></i>
+<span>Leave a Google Review</span>
+</a>
 </div>
 </section>
 <section class="section-gray" id="contact">
@@ -1936,10 +2017,10 @@ body.menu-open #menuOverlay{
 </section>
 <footer>
 <div class="footer-logo-container">
-<img alt="MCM Services Logo Footer" src="images/transparent-logo-2.png">
+<img alt="Moura Consulting &amp; Management Logo" src="images/transparent-logo-2.png">
 </img></div>
 <p data-translate="footer-tagline" style="color:#666; font-size:.95rem; margin-bottom:15px;">
-    Management Excellence, Flawless Execution.
+    We Coordinate. You Stay in Control.
   </p>
 <p style="color:#666; font-size:.9rem; margin-bottom:30px;">
 <i class="fas fa-map-marker-alt" style="color:#C7A96B; margin-right:6px;"></i>
@@ -2135,6 +2216,39 @@ document.addEventListener('DOMContentLoaded', () => {
         })();
         </script>
         
+
+<script id="live-google-reviews">
+(function () {
+  const grid = document.getElementById('googleReviewsGrid');
+  if (!grid) return;
+
+  const escapeHTML = (value) => String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+  const stars = (rating) => '★'.repeat(Math.max(1, Math.min(5, Number(rating) || 5))) + '☆'.repeat(Math.max(0, 5 - (Number(rating) || 5)));
+
+  fetch('/.netlify/functions/google-reviews', { headers: { 'Accept': 'application/json' } })
+    .then(response => { if (!response.ok) throw new Error('Reviews unavailable'); return response.json(); })
+    .then(data => {
+      const reviews = Array.isArray(data.reviews) ? data.reviews.slice(0, 3) : [];
+      if (!reviews.length) throw new Error('No reviews returned');
+
+      grid.innerHTML = reviews.map(review => `
+        <article class="google-review-card">
+          <div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div>
+          <div class="google-review-stars" aria-label="${escapeHTML(review.rating)} out of 5 stars">${stars(review.rating)}</div>
+          <p>${escapeHTML(review.comment || 'Rated on Google')}</p>
+          <div class="google-review-author">${escapeHTML(review.author || 'Google user')}</div>
+          ${review.date ? `<div class="google-review-date">${escapeHTML(review.date)}</div>` : ''}
+        </article>`).join('');
+    })
+    .catch(() => {
+      grid.innerHTML = `
+        <article class="google-review-card" style="grid-column:1/-1;min-height:auto;">
+          <div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Reviews</span></div>
+          <p style="font-style:normal;">Our latest Google reviews are temporarily unavailable. You can still view or leave a review directly on Google.</p>
+        </article>`;
+    });
+})();
+</script>
 
         <script src="/js/page-transitions.js"></script>
 
