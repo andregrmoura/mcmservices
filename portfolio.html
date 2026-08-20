@@ -1482,13 +1482,39 @@ footer .copyright strong{
 }
 </style>
 
+
+<style id="welcome-modal-spacing-refinement">
+/* Popup-only refinement */
+#welcomeModal .modal-content{
+  padding:30px 35px 34px !important;
+}
+#welcomeModal .modal-logo{
+  margin:0 auto 8px !important;
+}
+#welcomeModal .modal-content h3{
+  margin:4px 0 12px !important;
+  line-height:1.28 !important;
+}
+#welcomeModal .modal-content p{
+  margin:0 0 22px !important;
+}
+@media (max-width:600px){
+  #welcomeModal .modal-content{
+    padding:28px 26px 30px !important;
+  }
+  #welcomeModal .modal-logo{
+    margin-bottom:6px !important;
+  }
+}
+</style>
+
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal" aria-hidden="true">
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
     <button type="button" class="modal-close-btn" aria-label="Close" onclick="closeModal()">×</button>
     <img class="modal-logo" src="images/mcmbrand-removebg-preview.png" alt="Moura Consulting &amp; Management">
-    <h3 id="welcomeModalTitle">Elevated Residential Projects</h3>
+    <h3 id="welcomeModalTitle">We Coordinate.<br>You Stay in Control.</h3>
     <p>Exclusive consulting and management for high-end homes in Miami.</p>
     <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">Book a Private Consultation</a>
   </div>
