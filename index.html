@@ -2927,6 +2927,1012 @@ footer .copyright strong{
 }
 </style>
 
+
+<style id="mcm-selected-projects-editorial-style">
+/* Editorial two-column Selected Projects */
+.mcm-projects-editorial{
+  background:#FFFFFF !important;
+  padding:72px 22px !important;
+  text-align:left !important;
+}
+.mcm-projects-editorial-grid{
+  display:grid;
+  grid-template-columns:minmax(330px,.78fr) minmax(0,1.42fr);
+  gap:58px;
+  align-items:center;
+}
+.mcm-projects-editorial-copy{
+  padding:18px 0;
+  text-align:left;
+}
+.mcm-projects-editorial-copy .mcm-eyebrow{
+  margin-bottom:18px;
+}
+.mcm-editorial-rule{
+  display:block;
+  width:38px;
+  height:1px;
+  background:#B89557;
+  margin:0 0 28px;
+}
+.mcm-projects-editorial-copy h2{
+  margin:0 0 24px;
+  max-width:500px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.55rem,4vw,4.55rem);
+  line-height:1.03;
+  font-weight:400;
+  letter-spacing:-.035em;
+  color:#1E1E1C;
+}
+.mcm-projects-editorial-copy p{
+  max-width:470px;
+  margin:0;
+  color:#625E57;
+  font-size:.96rem;
+  line-height:1.85;
+}
+.mcm-editorial-portfolio-link{
+  width:min(100%,330px);
+  min-height:58px;
+  margin-top:34px;
+  padding:0 20px 0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:1px solid rgba(184,149,87,.72);
+  color:#1E1E1C;
+  font-size:.74rem;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:background .25s ease,color .25s ease;
+}
+.mcm-editorial-portfolio-link:hover{
+  background:#252421;
+  color:#C8AA70;
+  border-color:#252421;
+}
+.mcm-link-arrow{
+  color:#B89557;
+  font-size:1.35rem;
+  line-height:1;
+  font-weight:400;
+}
+.mcm-project-feature-slider{
+  position:relative;
+  min-height:520px;
+  overflow:hidden;
+  background:#242321;
+}
+.mcm-feature-slide{
+  position:absolute;
+  inset:0;
+  display:block;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .65s ease,visibility .65s ease;
+}
+.mcm-feature-slide.is-active{
+  opacity:1;
+  visibility:visible;
+}
+.mcm-feature-slide img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.005);
+  transition:transform 5.5s ease;
+}
+.mcm-feature-slide.is-active img{
+  transform:scale(1.035);
+}
+.mcm-feature-shade{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.02) 45%,rgba(0,0,0,.72) 100%);
+}
+.mcm-feature-caption{
+  position:absolute;
+  z-index:2;
+  left:36px;
+  bottom:34px;
+  padding-right:190px;
+}
+.mcm-feature-caption span{
+  display:block;
+  color:#D3B77F;
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.mcm-feature-caption strong{
+  display:block;
+  color:#FFFFFF;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.9rem,2.7vw,2.8rem);
+  line-height:1.05;
+  font-weight:400;
+}
+.mcm-feature-controls{
+  position:absolute;
+  z-index:5;
+  right:28px;
+  bottom:28px;
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+.mcm-feature-counter{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:rgba(255,255,255,.88);
+  font-size:.69rem;
+  letter-spacing:.12em;
+}
+.mcm-feature-counter [data-current]{
+  color:#D3B77F;
+}
+.mcm-feature-counter i{
+  display:block;
+  width:28px;
+  height:1px;
+  background:#B89557;
+}
+.mcm-feature-arrows{
+  display:flex;
+  gap:8px;
+}
+.mcm-feature-arrows button{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.42);
+  background:rgba(25,25,23,.18);
+  color:#FFFFFF;
+  font-size:1.05rem;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  transition:border-color .25s ease,color .25s ease,background .25s ease;
+}
+.mcm-feature-arrows button:hover{
+  border-color:#C8AA70;
+  color:#C8AA70;
+  background:rgba(25,25,23,.48);
+}
+@media(max-width:900px){
+  .mcm-projects-editorial-grid{
+    grid-template-columns:1fr;
+    gap:34px;
+  }
+  .mcm-projects-editorial-copy{
+    max-width:680px;
+  }
+  .mcm-project-feature-slider{
+    min-height:440px;
+  }
+}
+@media(max-width:600px){
+  .mcm-projects-editorial{
+    padding:60px 18px !important;
+  }
+  .mcm-project-feature-slider{
+    min-height:390px;
+  }
+  .mcm-feature-caption{
+    left:22px;
+    bottom:82px;
+    padding-right:22px;
+  }
+  .mcm-feature-controls{
+    left:22px;
+    right:22px;
+    bottom:20px;
+    justify-content:space-between;
+  }
+}
+</style>
+
+
+<style id="mcm-editorial-sections-final">
+/* =========================================================
+   EDITORIAL HOME REFINEMENT
+   Services + About + Reviews only.
+   Selected Projects, Owner Representation, Process and Contact
+   keep their current approved structure.
+   ========================================================= */
+
+/* Shared */
+.mcm-editorial-rule{
+  display:block;
+  width:38px;
+  height:1px;
+  background:#B89557;
+  margin:0 0 28px;
+}
+
+/* ---------- Services: title left / numbered services right ---------- */
+.mcm-services-editorial{
+  background:#FFFFFF !important;
+  padding:76px 22px !important;
+  border-top:0 !important;
+}
+.mcm-services-editorial::before{
+  display:none !important;
+}
+.mcm-services-editorial-grid{
+  display:grid;
+  grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);
+  gap:64px;
+  align-items:start;
+}
+.mcm-services-editorial-intro{
+  text-align:left;
+  padding-top:6px;
+}
+.mcm-services-editorial-title{
+  margin:0;
+  max-width:440px;
+  font-family:'Playfair Display',serif !important;
+  font-size:clamp(2.5rem,3.8vw,4.25rem) !important;
+  line-height:1.04 !important;
+  font-weight:400 !important;
+  letter-spacing:-.03em !important;
+  color:#1E1E1C !important;
+  text-align:left !important;
+}
+.mcm-services-editorial-note{
+  max-width:390px;
+  margin:24px 0 0;
+  color:#6A655D;
+  line-height:1.8;
+  font-size:.94rem;
+}
+.mcm-services-editorial-list{
+  border-top:1px solid rgba(30,30,28,.14);
+}
+.mcm-service-editorial-row{
+  display:grid;
+  grid-template-columns:58px 1fr;
+  gap:14px;
+  padding:25px 4px 25px 0;
+  border-bottom:1px solid rgba(30,30,28,.12);
+  text-align:left;
+  transition:padding-left .25s ease,background .25s ease;
+}
+.mcm-service-editorial-row:hover{
+  padding-left:10px;
+  background:rgba(245,241,232,.42);
+}
+.mcm-service-number{
+  color:#B89557;
+  font-size:.68rem;
+  letter-spacing:.15em;
+  padding-top:5px;
+}
+.mcm-service-editorial-content h3{
+  margin:0 0 7px !important;
+  color:#1E1E1C !important;
+  font-family:'Playfair Display',serif !important;
+  font-size:1.45rem !important;
+  line-height:1.15 !important;
+  font-weight:400 !important;
+  text-align:left !important;
+}
+.mcm-service-editorial-content h3::before{
+  display:none !important;
+}
+.mcm-service-editorial-content p{
+  margin:0 !important;
+  max-width:650px;
+  color:#6A655D !important;
+  line-height:1.7 !important;
+  font-size:.88rem !important;
+  text-align:left !important;
+}
+
+/* ---------- About: editorial copy + portrait / credentials ---------- */
+.mcm-about-editorial{
+  background:#F5F1E8 !important;
+  padding:76px 22px !important;
+  border-top:0 !important;
+}
+.mcm-about-editorial-grid{
+  display:grid;
+  grid-template-columns:1fr .92fr;
+  gap:58px;
+  align-items:center;
+}
+.mcm-about-editorial-copy{
+  text-align:left;
+}
+.mcm-about-editorial-copy h2{
+  margin:0 0 22px !important;
+  max-width:550px;
+  font-family:'Playfair Display',serif !important;
+  font-size:clamp(2.5rem,3.7vw,4.15rem) !important;
+  line-height:1.04 !important;
+  font-weight:400 !important;
+  letter-spacing:-.03em !important;
+  color:#1E1E1C !important;
+  text-align:left !important;
+}
+.mcm-about-editorial-copy p{
+  max-width:620px;
+  margin:0 0 13px !important;
+  color:#625E57 !important;
+  font-size:.94rem !important;
+  line-height:1.8 !important;
+  text-align:left !important;
+}
+.mcm-about-editorial-copy .about-cta{
+  text-align:left !important;
+  margin-top:26px !important;
+}
+.mcm-about-editorial-copy .about-cta a{
+  display:inline-block !important;
+  background:#252421 !important;
+  color:#C8AA70 !important;
+  border:1px solid #252421 !important;
+  border-radius:0 !important;
+  padding:14px 25px !important;
+  font-size:.72rem !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase;
+}
+.mcm-about-editorial-copy .about-cta a:hover{
+  background:transparent !important;
+  color:#1E1E1C !important;
+  border-color:#B89557 !important;
+}
+.mcm-about-editorial-visual{
+  position:relative;
+  min-height:540px;
+  background:#D9D3C9;
+  overflow:hidden;
+}
+.mcm-about-editorial-visual > img{
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  object-fit:cover !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  filter:saturate(.84) contrast(.97);
+}
+.mcm-about-credentials-panel{
+  position:absolute;
+  z-index:3;
+  left:24px;
+  right:24px;
+  bottom:24px;
+  background:rgba(30,30,28,.94);
+  border:1px solid rgba(200,170,112,.34);
+  padding:21px 22px;
+  backdrop-filter:blur(8px);
+}
+.mcm-about-credentials-label{
+  display:block;
+  color:#C8AA70;
+  font-size:.63rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  margin-bottom:16px;
+}
+.mcm-about-credential-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.mcm-about-credential{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.mcm-about-credential > span,
+.mcm-about-credential > img{
+  width:42px !important;
+  height:42px !important;
+  min-width:42px !important;
+  flex:0 0 42px !important;
+  border-radius:50% !important;
+  object-fit:contain !important;
+  padding:4px !important;
+  background:#fff !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+  box-shadow:none !important;
+}
+.mcm-about-credential > span{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  padding:0 !important;
+  background:#B89557 !important;
+  color:#1E1E1C !important;
+  font-weight:700 !important;
+  font-size:.72rem !important;
+  letter-spacing:.04em !important;
+}
+.mcm-about-credential div{
+  min-width:0;
+}
+.mcm-about-credential strong{
+  display:block;
+  color:#F8F4EC;
+  font-size:.72rem;
+  letter-spacing:.06em;
+}
+.mcm-about-credential small{
+  display:block;
+  margin-top:2px;
+  color:rgba(255,255,255,.55);
+  font-size:.62rem;
+  line-height:1.3;
+}
+
+/* ---------- Reviews: editorial intro left / live reviews right ---------- */
+.mcm-reviews-editorial{
+  background:#FFFFFF !important;
+  padding:72px 22px !important;
+  border-top:0 !important;
+}
+.mcm-reviews-editorial-grid{
+  display:grid;
+  grid-template-columns:minmax(280px,.68fr) minmax(0,1.32fr);
+  gap:58px;
+  align-items:start;
+}
+.mcm-reviews-editorial-intro{
+  text-align:left;
+  padding-top:6px;
+}
+.mcm-reviews-editorial-intro h2{
+  margin:0 0 18px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,3.5vw,3.8rem);
+  line-height:1.04;
+  font-weight:400;
+  letter-spacing:-.03em;
+  color:#1E1E1C;
+}
+.mcm-reviews-editorial-intro > p{
+  max-width:380px;
+  margin:0;
+  color:#676159;
+  font-size:.93rem;
+  line-height:1.8;
+}
+.mcm-reviews-editorial-intro .google-reviews-cta{
+  margin-top:27px !important;
+  text-align:left !important;
+}
+.mcm-reviews-editorial-intro .google-review-btn{
+  border-radius:0 !important;
+  padding:13px 22px !important;
+  border:1px solid #1E1E1C !important;
+  color:#1E1E1C !important;
+  background:transparent !important;
+  font-size:.7rem !important;
+  letter-spacing:.1em !important;
+  text-transform:uppercase;
+}
+.mcm-reviews-editorial-intro .google-review-btn:hover{
+  background:#252421 !important;
+  color:#C8AA70 !important;
+}
+.mcm-reviews-editorial-cards .google-reviews-grid{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:0 !important;
+  margin:0 !important;
+  max-width:none !important;
+  border-top:1px solid rgba(30,30,28,.14);
+}
+.mcm-reviews-editorial-cards .google-review-card{
+  min-height:auto !important;
+  display:grid !important;
+  grid-template-columns:140px 1fr;
+  column-gap:22px;
+  row-gap:2px;
+  align-items:start !important;
+  padding:24px 2px !important;
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid rgba(30,30,28,.12) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  text-align:left !important;
+}
+.mcm-reviews-editorial-cards .google-review-card:hover{
+  transform:none !important;
+  box-shadow:none !important;
+}
+.mcm-reviews-editorial-cards .google-review-brand{
+  justify-content:flex-start !important;
+  margin:0 !important;
+  color:#756F67 !important;
+  font-size:.68rem !important;
+  letter-spacing:.08em !important;
+}
+.mcm-reviews-editorial-cards .google-review-stars{
+  grid-column:1;
+  margin:9px 0 0 !important;
+  color:#B89557 !important;
+  font-size:.83rem !important;
+}
+.mcm-reviews-editorial-cards .google-review-card p{
+  grid-column:2;
+  grid-row:1 / span 3;
+  margin:0 !important;
+  color:#3E3B36 !important;
+  font-family:'Playfair Display',serif;
+  font-size:1.12rem !important;
+  line-height:1.6 !important;
+  font-style:normal !important;
+  text-align:left !important;
+}
+.mcm-reviews-editorial-cards .google-review-author,
+.mcm-reviews-editorial-cards .google-review-date{
+  text-align:left !important;
+}
+
+/* Maintain deliberate background rhythm between approved sections */
+#owner-representation-home{background:#F5F1E8 !important}
+#services.mcm-services-editorial{background:#FFFFFF !important}
+#selected-projects-home{background:#FBF8F2 !important}
+#process-home{background:#FFFFFF !important}
+#about.mcm-about-editorial{background:#F5F1E8 !important}
+#testimonials.mcm-reviews-editorial{background:#FFFFFF !important}
+
+/* Responsive */
+@media(max-width:900px){
+  .mcm-services-editorial-grid,
+  .mcm-about-editorial-grid,
+  .mcm-reviews-editorial-grid{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  .mcm-about-editorial-visual{
+    min-height:500px;
+  }
+}
+@media(max-width:600px){
+  .mcm-services-editorial,
+  .mcm-about-editorial,
+  .mcm-reviews-editorial{
+    padding:60px 18px !important;
+  }
+  .mcm-service-editorial-row{
+    grid-template-columns:42px 1fr;
+    padding:21px 0;
+  }
+  .mcm-about-editorial-visual{
+    min-height:500px;
+  }
+  .mcm-about-credentials-panel{
+    left:14px;
+    right:14px;
+    bottom:14px;
+    padding:17px 15px;
+  }
+  .mcm-about-credential-grid{
+    grid-template-columns:1fr;
+  }
+  .mcm-reviews-editorial-cards .google-review-card{
+    grid-template-columns:1fr !important;
+    gap:8px;
+  }
+  .mcm-reviews-editorial-cards .google-review-card p{
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+}
+</style>
+
+
+<style id="mcm-about-refined-style">
+/* About refinement: balanced editorial layout, smaller portrait, original credential icons */
+
+.mcm-about-refined{
+  background:#F5F1E8 !important;
+  padding:72px 22px !important;
+  border-top:0 !important;
+}
+
+.mcm-about-refined-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  gap:54px;
+  align-items:center;
+}
+
+.mcm-about-refined-copy{
+  text-align:left;
+}
+
+.mcm-about-refined-copy h2{
+  margin:0 0 22px !important;
+  max-width:560px;
+  font-family:'Playfair Display',serif !important;
+  font-size:clamp(2.45rem,3.6vw,4rem) !important;
+  line-height:1.04 !important;
+  font-weight:400 !important;
+  letter-spacing:-.03em !important;
+  color:#1E1E1C !important;
+  text-align:left !important;
+}
+
+.mcm-about-refined-copy p{
+  max-width:690px;
+  margin:0 0 14px !important;
+  color:#625E57 !important;
+  font-size:.94rem !important;
+  line-height:1.82 !important;
+  text-align:left !important;
+}
+
+.mcm-about-refined-certifications{
+  display:flex !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:14px !important;
+  margin-top:24px !important;
+}
+
+.mcm-about-refined-certifications span,
+.mcm-about-refined-certifications img{
+  width:64px !important;
+  height:64px !important;
+  min-width:64px !important;
+  flex:0 0 64px !important;
+  border-radius:50% !important;
+  box-sizing:border-box !important;
+  box-shadow:none !important;
+}
+
+.mcm-about-refined-certifications span{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#B89557 !important;
+  color:#1E1E1C !important;
+  border:none !important;
+  padding:0 !important;
+  font-family:'Montserrat',sans-serif !important;
+  font-size:.9rem !important;
+  font-weight:700 !important;
+  letter-spacing:.04em !important;
+}
+
+.mcm-about-refined-certifications img{
+  object-fit:contain !important;
+  object-position:center !important;
+  background:#fff !important;
+  border:1px solid rgba(30,30,28,.12) !important;
+  padding:7px !important;
+}
+
+.mcm-about-refined-certifications #nccer-logo{
+  padding:3px !important;
+  background:#172536 !important;
+}
+
+.mcm-about-refined-copy .about-cta{
+  text-align:left !important;
+  margin-top:26px !important;
+}
+
+.mcm-about-refined-copy .about-cta a{
+  display:inline-block !important;
+  background:#252421 !important;
+  color:#C8AA70 !important;
+  border:1px solid #252421 !important;
+  border-radius:0 !important;
+  padding:14px 25px !important;
+  font-size:.72rem !important;
+  font-weight:600 !important;
+  letter-spacing:.12em !important;
+  text-transform:uppercase !important;
+}
+
+.mcm-about-refined-copy .about-cta a:hover{
+  background:transparent !important;
+  color:#1E1E1C !important;
+  border-color:#B89557 !important;
+}
+
+.mcm-about-refined-visual{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.mcm-about-refined-visual img{
+  width:min(100%,360px) !important;
+  height:430px !important;
+  object-fit:cover !important;
+  object-position:center top !important;
+  border-radius:14px !important;
+  box-shadow:0 18px 40px rgba(25,22,18,.10) !important;
+  filter:saturate(.9) contrast(.98);
+}
+
+@media(max-width:900px){
+  .mcm-about-refined-grid{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .mcm-about-refined-copy{
+    text-align:center;
+  }
+
+  .mcm-about-refined-copy h2,
+  .mcm-about-refined-copy p{
+    text-align:center !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  .mcm-about-refined-certifications{
+    justify-content:center !important;
+  }
+
+  .mcm-about-refined-copy .about-cta{
+    text-align:center !important;
+  }
+}
+
+@media(max-width:600px){
+  .mcm-about-refined{
+    padding:60px 18px !important;
+  }
+
+  .mcm-about-refined-visual img{
+    width:min(100%,320px) !important;
+    height:380px !important;
+  }
+
+  .mcm-about-refined-certifications span,
+  .mcm-about-refined-certifications img{
+    width:58px !important;
+    height:58px !important;
+    min-width:58px !important;
+    flex-basis:58px !important;
+  }
+}
+</style>
+
+
+<style id="mcm-mobile-final-polish">
+/* =========================================================
+   MOBILE FINAL POLISH
+   Keeps desktop intact. Optimized for <= 768px.
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Global spacing rhythm */
+  .mcm-new-section,
+  .mcm-about-refined,
+  .mcm-reviews-editorial,
+  .mcm-projects-editorial,
+  .mcm-process {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  /* Owner Representation */
+  .mcm-owner-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .mcm-owner-copy {
+    text-align: center !important;
+  }
+  .mcm-owner-copy h2,
+  .mcm-owner-copy p {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-owner-copy .mcm-eyebrow {
+    text-align: center !important;
+  }
+  .mcm-inline-link {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-owner-visual {
+    min-height: 280px !important;
+    padding: 16px !important;
+  }
+  .mcm-owner-frame {
+    padding: 28px 22px !important;
+  }
+
+  /* Selected Projects editorial */
+  .mcm-projects-editorial-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .mcm-projects-editorial-copy {
+    text-align: center !important;
+  }
+  .mcm-projects-editorial-copy .mcm-eyebrow {
+    text-align: center !important;
+  }
+  .mcm-projects-editorial-copy .mcm-editorial-rule {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-projects-editorial-copy h2,
+  .mcm-projects-editorial-copy p {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-editorial-portfolio-link {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-project-feature-slider {
+    min-height: 360px !important;
+  }
+  .mcm-feature-caption {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 78px !important;
+    padding-right: 0 !important;
+  }
+  .mcm-feature-controls {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 18px !important;
+    justify-content: space-between !important;
+  }
+
+  /* Process: one card per row on phones, two on tablets */
+  .mcm-process-grid-8 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* About */
+  .mcm-about-refined-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  .mcm-about-refined-copy {
+    text-align: center !important;
+  }
+  .mcm-about-refined-copy .mcm-eyebrow,
+  .mcm-about-refined-copy h2,
+  .mcm-about-refined-copy p {
+    text-align: center !important;
+  }
+  .mcm-about-refined-copy .mcm-editorial-rule {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-about-refined-certifications {
+    justify-content: center !important;
+  }
+  .mcm-about-refined-copy .about-cta {
+    text-align: center !important;
+  }
+  .mcm-about-refined-visual img {
+    width: min(100%, 320px) !important;
+    height: 380px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Reviews */
+  .mcm-reviews-editorial-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .mcm-reviews-editorial-intro {
+    text-align: center !important;
+  }
+  .mcm-reviews-editorial-intro .mcm-eyebrow,
+  .mcm-reviews-editorial-intro h2,
+  .mcm-reviews-editorial-intro > p {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-reviews-editorial-intro .mcm-editorial-rule {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .mcm-reviews-editorial-intro .google-reviews-cta {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .mcm-process-grid-8 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mcm-process-grid-8 article {
+    min-height: auto !important;
+    padding: 22px 18px !important;
+  }
+
+  .mcm-project-feature-slider {
+    min-height: 330px !important;
+  }
+
+  .mcm-feature-caption strong {
+    font-size: 1.7rem !important;
+  }
+
+  .mcm-about-refined-visual img {
+    width: min(100%, 290px) !important;
+    height: 350px !important;
+  }
+
+  .mcm-about-refined-certifications span,
+  .mcm-about-refined-certifications img {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    flex-basis: 56px !important;
+  }
+
+  .mcm-reviews-editorial-cards .google-review-card {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .mcm-reviews-editorial-cards .google-review-card p {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+</style>
+
+
+<style id="mcm-selected-projects-inverted-final">
+/* Selected Projects — image left / editorial copy right */
+@media (min-width: 769px) {
+  #selected-projects-home .mcm-projects-editorial-grid{
+    grid-template-columns:minmax(0,1.42fr) minmax(330px,.78fr) !important;
+  }
+
+  #selected-projects-home .mcm-project-feature-slider{
+    grid-column:1 !important;
+    grid-row:1 !important;
+  }
+
+  #selected-projects-home .mcm-projects-editorial-copy{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    padding-left:4px !important;
+  }
+}
+
+/* Keep mobile reading order clean: title/copy first, project image second */
+@media (max-width: 768px) {
+  #selected-projects-home .mcm-projects-editorial-copy{
+    order:1 !important;
+  }
+
+  #selected-projects-home .mcm-project-feature-slider{
+    order:2 !important;
+  }
+}
+</style>
+
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal">
@@ -3043,105 +4049,61 @@ footer .copyright strong{
     </div>
   </div>
 </section>
+<section id="selected-projects-home" class="mcm-new-section mcm-selected-projects mcm-projects-editorial">
+  <div class="mcm-new-wrap mcm-projects-editorial-grid">
 
-<section id="services">
-<div class="content-max-width">
-<h2 class="section-title" data-translate="services-title">Our Project Management Services</h2>
-<p class="section-subtitle" data-translate="contact-subtitle" style="margin-bottom: 50px; opacity: 0.9;">
-        Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
-    </p>
-<div class="carousel-container">
-<button aria-label="Previous service" class="carousel-btn prev-btn" onclick="moveCarousel(-1)" type="button">
-<i class="fas fa-chevron-left"></i>
-</button>
-<div class="carousel-viewport">
-<div class="service-cards-carousel">
-<div class="card-style">
-<img alt="Project Initiation and Scope Definition" data-cms-img="services[0].image" src="images/pm22.jpg"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service1-title" role="heading">Initiation &amp; Scope</h3>
-<p data-translate="service1-text">We clearly define the scope, establishing measurable goals and objectives. We create initial documentation, identify stakeholders, and structure the work plan to ensure full alignment from the start.</p>
-</div>
-</div>
-<div class="card-style">
-<img alt="Project Schedules and Time Management" data-cms-img="services[1].image" src="images/pm24.png"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service2-title" role="heading">Schedules &amp; Time Management</h3>
-<p data-translate="service2-text">We develop realistic and detailed schedules (Gantt/PERT). We optimize the allocation of resources (team, materials, budget) to keep the project on track and maximize efficiency.</p>
-</div>
-</div>
-<div class="card-style">
-<img alt="Risk Management and Quality Control" data-cms-img="services[2].image" src="images/pm23.jpg"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service3-title" role="heading">Risk &amp; Quality</h3>
-<p data-translate="service3-text">We perform proactive risk identification, analysis, and monitoring to mitigate impacts. We implement rigorous quality control to ensure all deliverables meet defined standards.</p>
-</div>
-</div>
-<div class="card-style">
-<img alt="Stakeholder and Communication Management" data-cms-img="services[3].image" src="images/pm30.jpg"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service4-title" role="heading">Stakeholders</h3>
-<p data-translate="service4-text">We maintain transparent and constant communication with everyone involved. We prepare clear status reports and manage stakeholder expectations to ensure continuous satisfaction and collaboration.</p>
-</div>
-</div>
-<div class="card-style">
-<img alt="Budget and Cost Control" data-cms-img="services[4].image" src="images/pm25.jpg"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service5-title" role="heading">Budget &amp; Cost Control</h3>
-<p data-translate="service5-text">We manage the project budget with precision. We monitor costs, control cash flow, and use Earned Value (EVA) techniques to ensure the project is completed within financial constraints.</p>
-</div>
-</div>
-<div class="card-style">
-<img alt="Final Project Delivery and Closure" data-cms-img="services[5].image" src="images/pm26.jpg"/>
-<div class="card-content">
-<h3 aria-level="3" data-translate="service6-title" role="heading">Final Delivery</h3>
-<p data-translate="service6-text">We handle the final delivery, formal client acceptance, and administrative closure. We collect lessons learned to refine processes and ensure continuous improvement in future projects.</p>
-</div>
-</div>
-</div>
-</div>
-<button aria-label="Next service" class="carousel-btn next-btn" onclick="moveCarousel(1)" type="button">
-<i class="fas fa-chevron-right"></i>
-</button>
-</div>
-</div>
-</section>
+    <div class="mcm-projects-editorial-copy">
+      <span class="mcm-eyebrow">SELECTED PROJECTS</span>
+      <span class="mcm-editorial-rule"></span>
+      <h2>A Glimpse Into the Work We Coordinate.</h2>
+      <p>Selected residential projects reflecting the level of detail, coordination, and oversight behind our work.</p>
+      <a href="portfolio.html" class="mcm-editorial-portfolio-link">
+        <span>View Full Portfolio</span>
+        <span class="mcm-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
 
-<section id="selected-projects-home" class="mcm-new-section mcm-selected-projects">
-  <div class="mcm-new-wrap">
-    <span class="mcm-eyebrow">SELECTED PROJECTS</span>
-    <h2 class="mcm-new-title">A Glimpse Into the Work We Coordinate.</h2>
-    <p class="mcm-new-subtitle">Selected residential projects reflecting the level of detail, coordination, and oversight behind our work.</p>
-
-    <div class="mcm-project-grid">
-      <a class="mcm-project-card" href="portfolio.html">
+    <div class="mcm-project-feature-slider" data-project-slider>
+      <a class="mcm-feature-slide is-active" href="portfolio.html" data-slide="0">
         <img src="images/card1.jpg" alt="Modern residential kitchen project">
-        <div class="mcm-project-overlay">
+        <div class="mcm-feature-shade"></div>
+        <div class="mcm-feature-caption">
           <span>Residential Project</span>
           <strong>Modern Kitchen</strong>
         </div>
       </a>
 
-      <a class="mcm-project-card" href="portfolio.html">
+      <a class="mcm-feature-slide" href="portfolio.html" data-slide="1">
         <img src="images/card4.jpg" alt="Luxury master bathroom project">
-        <div class="mcm-project-overlay">
+        <div class="mcm-feature-shade"></div>
+        <div class="mcm-feature-caption">
           <span>Residential Project</span>
           <strong>Luxury Master Bathroom</strong>
         </div>
       </a>
 
-      <a class="mcm-project-card" href="portfolio.html">
+      <a class="mcm-feature-slide" href="portfolio.html" data-slide="2">
         <img src="images/card6.jpg" alt="Integrated residential living space">
-        <div class="mcm-project-overlay">
+        <div class="mcm-feature-shade"></div>
+        <div class="mcm-feature-caption">
           <span>Residential Project</span>
           <strong>Integrated Living Space</strong>
         </div>
       </a>
+
+      <div class="mcm-feature-controls" aria-label="Selected projects controls">
+        <div class="mcm-feature-counter">
+          <span data-current>01</span>
+          <i></i>
+          <span>03</span>
+        </div>
+        <div class="mcm-feature-arrows">
+          <button type="button" data-prev aria-label="Previous project">←</button>
+          <button type="button" data-next aria-label="Next project">→</button>
+        </div>
+      </div>
     </div>
 
-    <div class="mcm-project-cta">
-      <a href="portfolio.html">View Full Portfolio</a>
-    </div>
   </div>
 </section>
 
@@ -3205,46 +4167,71 @@ footer .copyright strong{
   </div>
 </section>
 
-<section class="section-light" id="about">
-<div class="about-content">
-<img alt="Professional Project Manager Portrait" src="images/andre-bg-white-v2.jpg?v=20251228"/>
-<div class="about-text">
-<h2 class="section-title" data-translate="about-title" style="text-align:left; margin-bottom: 20px;">Why Choose Us</h2>
-<p data-translate="about-p1">
+
+
+<section class="section-light mcm-about-refined" id="about">
+  <div class="mcm-new-wrap mcm-about-refined-grid">
+
+    <div class="mcm-about-refined-copy">
+      <span class="mcm-eyebrow">WHY MOURA CONSULTING</span>
+      <span class="mcm-editorial-rule"></span>
+
+      <h2 data-translate="about-title">Why Choose Us</h2>
+
+      <p data-translate="about-p1">
         We coordinate every phase of your residential project with precision, transparency, and quality-focused oversight — helping you stay informed and in control from planning through completion.
-    </p>
-<p data-translate="about-p2">
+      </p>
+
+      <p data-translate="about-p2">
         Our approach is focused on structure, communication and risk control, offering homeowners peace of mind while every phase of the project is managed with precision.
-    </p>
-<p data-translate="about-p3">
+      </p>
+
+      <p data-translate="about-p3">
         Our founder holds qualifications in Project Management from FIU (Florida International University), and important certifications in OSHA and NCCER, reinforcing our commitment to safety, quality, and professional standards.
-    </p>
-<div class="certifications">
-<span aria-label="Project Management Credential – Florida International University (FIU)" title="Project Management – FIU">PM</span>
-<img alt="NCCER Certification Logo" id="nccer-logo" src="images/nccer.jpeg"/>
-<img alt="OSHA Certification Logo" src="images/osha.jpeg"/>
-</div>
-<div class="about-cta">
-<a href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" rel="noopener" target="_blank">
-        Private Consultation
-    </a>
-</div>
-</div>
-</div>
+      </p>
+
+      <div class="certifications mcm-about-refined-certifications">
+        <span aria-label="Project Management Credential – Florida International University (FIU)" title="Project Management – FIU">PM</span>
+        <img alt="NCCER Certification Logo" id="nccer-logo" src="images/nccer.jpeg"/>
+        <img alt="OSHA Certification Logo" src="images/osha.jpeg"/>
+      </div>
+
+      <div class="about-cta">
+        <a href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" rel="noopener" target="_blank">
+          Private Consultation
+        </a>
+      </div>
+    </div>
+
+    <div class="mcm-about-refined-visual">
+      <img alt="Professional Project Manager Portrait" src="images/andre-bg-white-v2.jpg?v=20251228"/>
+    </div>
+
+  </div>
 </section>
-<section class="section-light" id="testimonials">
-<h2 class="section-title" style="margin-bottom:30px;">Google Reviews</h2>
-<div class="google-reviews-grid" id="googleReviewsGrid" aria-live="polite">
-<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
-<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
-<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
-</div>
-<div class="google-reviews-cta">
+
+<section class="section-light mcm-reviews-editorial" id="testimonials">
+  <div class="mcm-new-wrap mcm-reviews-editorial-grid">
+    <div class="mcm-reviews-editorial-intro">
+      <span class="mcm-eyebrow">CLIENT FEEDBACK</span>
+      <span class="mcm-editorial-rule"></span>
+      <h2>Google Reviews</h2>
+      <p>Feedback from clients who have experienced our project coordination and oversight firsthand.</p>
+      <div class="google-reviews-cta">
 <a class="google-review-btn" href="https://g.page/r/Cfqs2HHbWdLJEBI/review" target="_blank" rel="noopener">
 <i class="fab fa-google" aria-hidden="true"></i>
 <span>Leave a Google Review</span>
 </a>
 </div>
+    </div>
+    <div class="mcm-reviews-editorial-cards">
+      <div class="google-reviews-grid" id="googleReviewsGrid" aria-live="polite">
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
+<div class="google-review-card"><div class="google-review-brand"><i class="fab fa-google" aria-hidden="true"></i><span>Google Review</span></div><div class="google-review-stars">★★★★★</div><p>Loading latest review…</p></div>
+</div>
+    </div>
+  </div>
 </section>
 <section class="section-gray" id="contact">
 <h2 class="section-title" data-translate="contact-title" style="font-family:'Montserrat', sans-serif; font-weight:600;">Submit a Project Inquiry</h2>
@@ -3504,5 +4491,48 @@ document.addEventListener('DOMContentLoaded', () => {
         <script src="/js/page-transitions.js"></script>
 
        
+
+<script id="mcm-selected-projects-editorial-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.querySelector("[data-project-slider]");
+  if (!slider) return;
+
+  const slides = Array.from(slider.querySelectorAll(".mcm-feature-slide"));
+  const current = slider.querySelector("[data-current]");
+  const prev = slider.querySelector("[data-prev]");
+  const next = slider.querySelector("[data-next]");
+  let index = 0;
+  let timer;
+
+  function showSlide(newIndex) {
+    index = (newIndex + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle("is-active", i === index));
+    if (current) current.textContent = String(index + 1).padStart(2, "0");
+  }
+
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(() => showSlide(index + 1), 5500);
+  }
+
+  if (prev) prev.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    showSlide(index - 1);
+    restart();
+  });
+
+  if (next) next.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    showSlide(index + 1);
+    restart();
+  });
+
+  showSlide(0);
+  restart();
+});
+</script>
+
 </body>
 </html>
