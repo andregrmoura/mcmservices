@@ -31,21 +31,42 @@ function requestJson(url, options = {}, body = null) {
 
     req.on('error', reject);
 
-    if (body) {
-      req.write(body);
-    }
-
+    if (body) req.write(body);
     req.end();
   });
 }
 
-async function findPlaceId(apiKey) {
+function normalize(value = '') {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isMouraConsulting(place) {
+  const name = normalize(place.displayName?.text || '');
+  const website = normalize(place.websiteUri || '');
+
+  const exactName = name === 'moura consulting & management';
+  const correctWebsite =
+    website.includes('moura-consulting.com') ||
+    website.includes('www.moura-consulting.com');
+
+  return exactName || correctWebsite;
+}
+
+async function searchPlaces(apiKey, textQuery) {
   const body = JSON.stringify({
-    textQuery: 'Moura Consulting & Management Florida',
-    includePureServiceAreaBusinesses: true
+    textQuery,
+    includePureServiceAreaBusinesses: true,
+    languageCode: 'en',
+    regionCode: 'US',
+    maxResultCount: 20
   });
 
-  const data = await requestJson(
+  return requestJson(
     'https://places.googleapis.com/v1/places:searchText',
     {
       method: 'POST',
@@ -53,35 +74,40 @@ async function findPlaceId(apiKey) {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(body),
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'places.id,places.displayName,places.googleMapsUri,places.websiteUri'
+        'X-Goog-FieldMask': [
+          'places.id',
+          'places.displayName',
+          'places.websiteUri',
+          'places.googleMapsUri',
+          'places.formattedAddress'
+        ].join(',')
       }
     },
     body
   );
+}
 
-  const places = data.places || [];
+async function findCorrectPlace(apiKey) {
+  const queries = [
+    'Moura Consulting & Management moura-consulting.com',
+    '"Moura Consulting & Management" Florida',
+    '"Moura Consulting & Management" Miami Florida'
+  ];
 
-  if (!places.length) {
-    throw new Error('Moura Consulting & Management was not found in Places search.');
+  for (const query of queries) {
+    const data = await searchPlaces(apiKey, query);
+    const places = data.places || [];
+
+    const match = places.find(isMouraConsulting);
+
+    if (match?.id) {
+      return match;
+    }
   }
 
-  const exactMatch = places.find((place) => {
-    const name = (place.displayName?.text || '').trim().toLowerCase();
-    return name === 'moura consulting & management';
-  });
-
-  const websiteMatch = places.find((place) => {
-    const website = (place.websiteUri || '').toLowerCase();
-    return website.includes('moura-consulting.com');
-  });
-
-  const selected = exactMatch || websiteMatch || places[0];
-
-  if (!selected?.id) {
-    throw new Error('Places search returned a result without a Place ID.');
-  }
-
-  return selected.id;
+  throw new Error(
+    'Moura Consulting & Management was not found with an exact name or website match.'
+  );
 }
 
 exports.handler = async function () {
@@ -92,7 +118,8 @@ exports.handler = async function () {
       throw new Error('Missing environment variable: GOOGLE_PLACES_API_KEY');
     }
 
-    const placeId = await findPlaceId(GOOGLE_PLACES_API_KEY);
+    const selectedPlace = await findCorrectPlace(GOOGLE_PLACES_API_KEY);
+    const placeId = selectedPlace.id;
 
     const url =
       `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`;
@@ -109,6 +136,7 @@ exports.handler = async function () {
           'userRatingCount',
           'googleMapsUri',
           'websiteUri',
+          'formattedAddress',
           'reviews'
         ].join(',')
       }
@@ -157,7 +185,8 @@ exports.handler = async function () {
           rating: Number(data.rating) || null,
           reviewCount: Number(data.userRatingCount) || 0,
           googleMapsUrl: data.googleMapsUri || '',
-          website: data.websiteUri || ''
+          website: data.websiteUri || '',
+          address: data.formattedAddress || ''
         },
         reviews
       })
