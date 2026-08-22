@@ -6,48 +6,6 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Moura Consulting | Construction Project Management Miami</title>
 <meta content="Moura Consulting provides construction project management and project coordination for owners, general contractors, and project stakeholders across Miami and South Florida." name="description"/>
-<link href="https://moura-consulting.com/" rel="canonical"/>
-<meta content="Moura Consulting | Construction Project Management Miami" property="og:title"/>
-<meta content="Construction project management, coordination, oversight, and project control for owners, general contractors, and project stakeholders across Miami and South Florida." property="og:description"/>
-<meta content="https://moura-consulting.com/" property="og:url"/>
-<meta content="website" property="og:type"/>
-<meta content="https://moura-consulting.com/images/hero3.jpeg" property="og:image"/>
-<meta content="Moura Consulting construction project management" property="og:image:alt"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="Moura Consulting | Construction Project Management Miami" name="twitter:title"/>
-<meta content="Professional project coordination and construction oversight across Miami and South Florida." name="twitter:description"/>
-<meta content="https://moura-consulting.com/images/hero3.jpeg" name="twitter:image"/>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Moura Consulting & Management",
-  "alternateName": "Moura Consulting",
-  "url": "https://moura-consulting.com/",
-  "logo": "https://moura-consulting.com/images/transparent-logo-2.png",
-  "image": "https://moura-consulting.com/images/hero3.jpeg",
-  "description": "Construction project management, coordination, oversight, and project control for owners, general contractors, and project stakeholders.",
-  "telephone": "+1-786-238-3386",
-  "email": "info@moura-consulting.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Miami",
-    "addressRegion": "FL",
-    "addressCountry": "US"
-  },
-  "areaServed": ["Miami-Dade County", "Broward County", "South Florida"],
-  "founder": {
-    "@type": "Person",
-    "name": "André Moura",
-    "jobTitle": "Founder & Project Manager",
-    "sameAs": "https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413"
-  },
-  "sameAs": [
-    "https://www.instagram.com/moura.consulting",
-    "https://www.facebook.com/profile.php?id=61584205148969"
-  ]
-}
-</script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="/favicon-16x16.png?v=3" rel="icon" sizes="16x16" type="image/png"/>
@@ -4430,20 +4388,6 @@ footer .copyright strong{
   resize:vertical;
 }
 
-.contact-form-status{
-  display:none;
-  margin:4px 0 0;
-  padding:14px 16px;
-  border:1px solid rgba(200,170,112,.45);
-  color:rgba(255,255,255,.82);
-  font-size:.82rem;
-  line-height:1.6;
-}
-
-.contact-form-status.is-visible{ display:block; }
-.contact-form-status.is-success{ color:#f7f3ea; }
-.contact-form-status.is-error{ border-color:rgba(220,110,100,.55); }
-
 @media (max-width:850px){
   #contact .contact-split{
     width:min(100% - 36px,680px);
@@ -4777,9 +4721,7 @@ footer .copyright strong{
       </div>
     </div>
     <div class="contact-form-panel">
-      <form class="contact-form" data-netlify="true" id="projectInquiryForm" method="POST" name="project-inquiry" netlify-honeypot="bot-field">
-        <input name="form-name" type="hidden" value="project-inquiry"/>
-        <p class="sr-only"><label>Do not fill this out: <input name="bot-field"/></label></p>
+      <form action="submit_form.php" class="contact-form" method="POST">
         <label class="sr-only" for="name">Your Name</label>
         <input aria-required="true" data-translate="contact-input-name" id="name" name="name" placeholder="Your Name" required="" type="text"/>
         <label class="sr-only" for="email">Your Email</label>
@@ -4787,7 +4729,6 @@ footer .copyright strong{
         <label class="sr-only" for="message">Project Description</label>
         <textarea aria-required="true" data-translate="contact-input-msg" id="message" name="message" placeholder="Describe your project, timeline, and location" required="" rows="5"></textarea>
         <button data-translate="contact-btn-submit" type="submit">Submit Inquiry</button>
-        <p aria-live="polite" class="contact-form-status" id="contactFormStatus"></p>
       </form>
     </div>
   </div>
@@ -4806,9 +4747,9 @@ Miami, Florida<br/>
 <div class="footer-content-grid">
 <div class="footer-col">
 <h4 data-translate="footer-nav">Navigation</h4>
-<a data-translate="nav-home" href="index.html">Home</a>
-<a data-translate="nav-about" href="#about">About</a>
-<a data-translate="nav-contact" href="#contact">Contact</a>
+<a data-translate="nav-home" href="../../">Home</a>
+<a data-translate="nav-about" href="../../#about">About</a>
+<a data-translate="nav-contact" href="../../#contact">Contact</a>
 </div>
 <div class="footer-col footer-social-contact">
 <h4 data-translate="footer-contact">Contact &amp; Connect</h4>
@@ -4994,50 +4935,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })();
         </script>
         
-
-<script id="netlify-project-inquiry">
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('projectInquiryForm');
-  const status = document.getElementById('contactFormStatus');
-  if (!form || !status) return;
-
-  form.addEventListener('submit', async function (event) {
-    event.preventDefault();
-    const button = form.querySelector('button[type="submit"]');
-    const originalLabel = button ? button.textContent : '';
-
-    if (button) {
-      button.disabled = true;
-      button.textContent = 'Sending…';
-    }
-
-    status.className = 'contact-form-status';
-    status.textContent = '';
-
-    try {
-      const body = new URLSearchParams(new FormData(form)).toString();
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body
-      });
-      if (!response.ok) throw new Error('Submission failed');
-
-      form.reset();
-      status.textContent = 'Thank you. Your project inquiry has been received. We will review the information and contact you shortly.';
-      status.className = 'contact-form-status is-visible is-success';
-    } catch (error) {
-      status.innerHTML = 'We could not submit the form. Please contact us by <a href="https://wa.me/17862383386" target="_blank" rel="noopener">WhatsApp</a> or email <a href="mailto:info@moura-consulting.com">info@moura-consulting.com</a>.';
-      status.className = 'contact-form-status is-visible is-error';
-    } finally {
-      if (button) {
-        button.disabled = false;
-        button.textContent = originalLabel;
-      }
-    }
-  });
-});
-</script>
 
 <script id="live-google-reviews">
 (function () {
