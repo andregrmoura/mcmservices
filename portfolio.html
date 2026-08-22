@@ -4,8 +4,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Moura Consulting | Project Management Portfolio – Miami</title>
-<meta content="Explore selected residential projects coordinated and overseen by Moura Consulting &amp; Management, providing construction project management, owner representation, and building consulting services in Miami and South Florida." name="description"/>
+<title>Moura Consulting | Construction Project Management Portfolio – Miami</title>
+<meta content="Explore selected projects coordinated and overseen by Moura Consulting, providing construction project management and project coordination for owners, general contractors, and project stakeholders across Miami and South Florida." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="images/favicon.png?v=4" rel="icon" type="image/png"/>
@@ -453,7 +453,7 @@
         width: 100%;
         height: 100vh; 
         min-height: 500px;
-        background-image: url('images/4gallery.jpg'); 
+        background-image: url('images/obra.png'); 
         background-color: #333; 
         background-size: cover;
         background-position: center;
@@ -1543,6 +1543,335 @@ footer .copyright strong{
 }
 </style>
 
+
+<style id="portfolio-index-alignment-final">
+/* Header logo — white, matching index.html */
+header .logo-link .brand-logo{
+  background:#FFFFFF !important;
+}
+
+/* Portfolio hero refresh — cinematic/editorial, aligned with the homepage */
+#sobre{
+  min-height: 680px;
+  height: 88vh;
+  background-position: center 48%;
+  isolation: isolate;
+}
+#sobre::before{
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.52) 0%, rgba(0,0,0,.20) 42%, rgba(0,0,0,.55) 100%);
+}
+#sobre::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.16), transparent 35%, transparent 65%, rgba(0,0,0,.16));
+}
+#sobre h2,
+#sobre p{
+  position:relative;
+  z-index:2;
+}
+#sobre h2{
+  font-size:clamp(3.5rem, 7vw, 6.4rem);
+  line-height:.98;
+  letter-spacing:-.025em;
+  max-width:1050px;
+  text-wrap:balance;
+  text-shadow:0 5px 28px rgba(0,0,0,.45);
+}
+#sobre p{
+  max-width:760px;
+  margin-top:24px;
+  font-size:clamp(1rem, 1.55vw, 1.3rem);
+  line-height:1.7;
+  letter-spacing:.02em;
+  text-shadow:0 3px 18px rgba(0,0,0,.55);
+}
+#sobre .portfolio-hero-kicker{
+  position:relative;
+  z-index:2;
+  display:block;
+  margin-bottom:18px;
+  font-family:'Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:600;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:#fff;
+  opacity:.9;
+}
+#sobre .portfolio-hero-rule{
+  position:relative;
+  z-index:2;
+  width:58px;
+  height:1px;
+  margin:28px auto 0;
+  background:rgba(255,255,255,.78);
+}
+
+@media (max-width:768px){
+  #sobre{
+    height:82svh;
+    min-height:560px;
+    padding:120px 24px 54px;
+    background-position:center;
+  }
+  #sobre h2{
+    font-size:clamp(3rem, 14vw, 4.5rem);
+    line-height:1;
+  }
+  #sobre p{
+    max-width:560px;
+    font-size:.98rem;
+    line-height:1.65;
+    margin-top:20px;
+  }
+  #sobre .portfolio-hero-kicker{
+    font-size:.68rem;
+    letter-spacing:.2em;
+    margin-bottom:16px;
+  }
+}
+</style>
+
+
+<style id="pm-in-practice-style">
+/* Project Management in Practice — editorial bridge */
+#pm-in-practice{
+  background:#f3efe8;
+  padding:86px 24px;
+}
+.pm-practice-wrap{
+  width:min(1180px,100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);
+  gap:72px;
+  align-items:stretch;
+}
+.pm-practice-copy{
+  padding:22px 0;
+  align-self:center;
+}
+.pm-practice-kicker{
+  display:block;
+  margin-bottom:20px;
+  font-family:'Montserrat',sans-serif;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  color:#9b8156;
+}
+.pm-practice-copy h2{
+  margin:0 0 25px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,4.6vw,4.65rem);
+  line-height:1.02;
+  font-weight:400;
+  letter-spacing:-.025em;
+  color:#252525;
+}
+.pm-practice-copy p{
+  max-width:650px;
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  font-size:1rem;
+  line-height:1.85;
+  color:#5d5a55;
+}
+.pm-practice-panel{
+  min-height:390px;
+  background:#252525;
+  padding:50px 46px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-content:center;
+  gap:0;
+  box-shadow:0 22px 55px rgba(25,25,25,.12);
+}
+.pm-practice-panel span{
+  min-height:118px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.3rem,2vw,1.8rem);
+  font-weight:400;
+  color:#f7f3ec;
+  text-align:center;
+}
+.pm-practice-panel span:nth-child(odd){
+  border-right:1px solid rgba(199,169,107,.42);
+}
+.pm-practice-panel span:nth-child(-n+2){
+  border-bottom:1px solid rgba(199,169,107,.42);
+}
+
+@media(max-width:900px){
+  #pm-in-practice{padding:66px 22px;}
+  .pm-practice-wrap{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  .pm-practice-copy{padding:0;}
+  .pm-practice-panel{
+    min-height:320px;
+    padding:32px 24px;
+  }
+}
+@media(max-width:520px){
+  #pm-in-practice{padding:54px 20px;}
+  .pm-practice-copy h2{
+    font-size:clamp(2.55rem,12vw,3.5rem);
+  }
+  .pm-practice-copy p{
+    font-size:.94rem;
+    line-height:1.75;
+  }
+  .pm-practice-panel{
+    min-height:280px;
+    padding:24px 16px;
+  }
+  .pm-practice-panel span{
+    min-height:100px;
+    padding:14px 8px;
+    font-size:1.25rem;
+  }
+}
+</style>
+
+
+<style id="portfolio-hero-final-refinement">
+/* Final hero refinements */
+#sobre::before{
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,.42) 0%,
+    rgba(0,0,0,.14) 42%,
+    rgba(0,0,0,.42) 100%
+  ) !important;
+}
+#sobre::after{
+  background:linear-gradient(
+    90deg,
+    rgba(0,0,0,.11),
+    transparent 35%,
+    transparent 65%,
+    rgba(0,0,0,.11)
+  ) !important;
+}
+#sobre h2{
+  font-size:clamp(3.35rem, 6.1vw, 5.65rem) !important;
+}
+@media(max-width:768px){
+  #sobre h2{
+    font-size:clamp(2.85rem, 12.5vw, 4.05rem) !important;
+  }
+}
+</style>
+
+
+<style id="portfolio-hero-left-aligned-final">
+/* Hero editorial alignment — desktop left, mobile centered */
+@media (min-width: 769px){
+  #sobre{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    text-align:left !important;
+    padding-left:clamp(64px, 7vw, 140px) !important;
+    padding-right:48px !important;
+  }
+
+  #sobre .portfolio-hero-kicker,
+  #sobre h2,
+  #sobre p,
+  #sobre .portfolio-hero-rule{
+    margin-left:0 !important;
+    margin-right:0 !important;
+    text-align:left !important;
+  }
+
+  #sobre .portfolio-hero-kicker{
+    max-width:620px;
+  }
+
+  #sobre h2{
+    max-width:620px !important;
+    line-height:.96 !important;
+  }
+
+  #sobre p{
+    max-width:560px !important;
+    margin-top:24px !important;
+    line-height:1.65 !important;
+  }
+
+  #sobre .portfolio-hero-rule{
+    width:58px;
+    margin-top:30px !important;
+  }
+}
+
+/* Mobile: keep balanced centered composition */
+@media (max-width: 768px){
+  #sobre{
+    align-items:center !important;
+    text-align:center !important;
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+
+  #sobre .portfolio-hero-kicker,
+  #sobre h2,
+  #sobre p,
+  #sobre .portfolio-hero-rule{
+    margin-left:auto !important;
+    margin-right:auto !important;
+    text-align:center !important;
+  }
+}
+</style>
+
+
+<style id="portfolio-hero-header-clearance">
+/* Give the hero copy breathing room below the header */
+@media (min-width: 769px){
+  #sobre{
+    justify-content:flex-start !important;
+    padding-top:clamp(70px, 6.5vh, 105px) !important;
+    padding-bottom:60px !important;
+  }
+}
+@media (max-width: 768px){
+  #sobre{
+    padding-top:56px !important;
+  }
+}
+</style>
+
+
+<style id="portfolio-hero-header-clearance-v2">
+/* Corrected vertical position: content starts BELOW the absolute header */
+@media (min-width: 769px){
+  #sobre{
+    justify-content:flex-start !important;
+    padding-top:clamp(215px, 22vh, 255px) !important;
+    padding-bottom:60px !important;
+  }
+}
+@media (max-width: 768px){
+  #sobre{
+    justify-content:flex-start !important;
+    padding-top:150px !important;
+    padding-bottom:44px !important;
+  }
+}
+</style>
+
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal" aria-hidden="true">
@@ -1550,7 +1879,7 @@ footer .copyright strong{
     <button type="button" class="modal-close-btn" aria-label="Close" onclick="closeModal()">×</button>
     <img class="modal-logo" src="images/mcmbrand-removebg-preview.png" alt="Moura Consulting &amp; Management">
     <h3 id="welcomeModalTitle">We Coordinate.<br>You Stay in Control.</h3>
-    <p>Exclusive consulting and management for high-end homes in Miami.</p>
+    <p>Structured coordination and project oversight across Miami and South Florida.</p>
     <a class="modal-cta-btn" href="/connect" target="_blank" rel="noopener" onclick="closeModal()">Book a Private Consultation</a>
   </div>
 </div>
@@ -1585,9 +1914,28 @@ footer .copyright strong{
 </header>
 <main>
 <section id="sobre">
-<h2 class="hero-animate" data-key="portfolioTitle" style="z-index: 2;">Gallery</h2>
-<p class="hero-animate" data-key="portfolioSubtitle" style="animation-delay: 0.3s; z-index: 2;">Elevating Every Space Through Expert Oversight and Project Coordination.</p>
+<span class="portfolio-hero-kicker hero-animate">MOURA CONSULTING · PROJECT PORTFOLIO</span>
+<h2 class="hero-animate" data-key="portfolioTitle" style="z-index: 2;">Selected Projects</h2>
+<p class="hero-animate" data-key="portfolioSubtitle" style="animation-delay: 0.3s; z-index: 2;">Construction Project Management Through Structured Coordination and Oversight.</p>
+<span class="portfolio-hero-rule hero-animate" aria-hidden="true"></span>
 </section>
+
+<section id="pm-in-practice" aria-labelledby="pm-practice-title">
+  <div class="pm-practice-wrap">
+    <div class="pm-practice-copy">
+      <span class="pm-practice-kicker">PROJECT MANAGEMENT IN PRACTICE</span>
+      <h2 id="pm-practice-title">Coordination Behind<br>Every Detail.</h2>
+      <p>Each project reflects more than the finished space. Moura Consulting supports planning, trade coordination, scheduling, communication, quality oversight, and project control throughout the construction process.</p>
+    </div>
+    <div class="pm-practice-panel" aria-label="Core project management disciplines">
+      <span>Planning</span>
+      <span>Coordination</span>
+      <span>Oversight</span>
+      <span>Control</span>
+    </div>
+  </div>
+</section>
+
 <section id="portfolio">
 <div class="project-grid-container">
   <h2 class="section-title-light" data-key="portfolioSectionTitle">Selected Projects</h2>
@@ -1689,6 +2037,7 @@ footer .copyright strong{
 <a href="mailto:info@moura-consulting.com"><i aria-hidden="true" class="fas fa-envelope"></i> info@moura-consulting.com</a>
 <a href="https://www.instagram.com/moura.consulting" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i> @moura.consulting</a>
 <a href="https://www.facebook.com/profile.php?id=61584205148969" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i>Moura Consulting</a>
+<a href="https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i> André Moura</a>
 </div>
 <div class="footer-col">
 <h4 data-translate="footer-legal">Legal</h4>
@@ -1711,7 +2060,7 @@ footer .copyright strong{
         const translations = {
             en: {
                 navHome: "Home", navAbout: "About", navContact: "Contact", navPortal: "Client Login", navPortfolioLink: "Gallery",
-                portfolioTitle: "Gallery", portfolioSubtitle: "Elevating Every Space Through Expert Oversight and Project Coordination.", 
+                portfolioTitle: "Selected Projects", portfolioSubtitle: "Construction Project Management Through Structured Coordination and Oversight.", 
                 'portfolioSectionTitle': "Selected Projects",
                 project1Title: "Modern & Luxurious Kitchen", project1Desc: "High-end residential kitchen project coordinated with attention to scope, finishes, and project execution.", 
                 project2Title: "High-End Gourmet Space", project2Desc: "Residential project featuring premium finishes, coordinated trades, and detailed project oversight.", 
@@ -1726,7 +2075,7 @@ footer .copyright strong{
             'pt': {
             'footer-powered': 'Operado pela MCM Services USA Corporation',
                 navHome: "Início", navAbout: "Sobre", navContact: "Contato", navPortal: "Acesso Cliente", navPortfolioLink: "Galeria",
-                portfolioTitle: "Galeria", portfolioSubtitle: "Elevando Cada Espaço Através de Supervisão Especializada e Coordenação de Projetos.", 
+                portfolioTitle: "Projetos Selecionados", portfolioSubtitle: "Gestão de Projetos de Construção com Coordenação Estruturada e Supervisão Profissional.", 
                 'portfolioSectionTitle': "Projetos Selecionados",
                 project1Title: "Cozinha Moderna e Luxuosa", project1Desc: "Design arrojado com ilha central, armários personalizados e eletrodomésticos de última geração.", 
                 project2Title: "Espaço Gourmet de Alto Padrão", project2Desc: "Ambiente que combina funcionalidade para o preparo com acabamentos de luxo, como mármore e iluminação sob medida.", 
@@ -1740,7 +2089,7 @@ footer .copyright strong{
             'es': {
             'footer-powered': 'Operado pela MCM Services USA Corporation',
                 navHome: "Inicio", navAbout: "Nosotros", navContact: "Contacto", navPortal: "Acceso Clientes", navPortfolioLink: "Galería",
-                portfolioTitle: "Galería", portfolioSubtitle: "Elevando Cada Espaço a Través de Supervisão Experta y Coordinación de Proyectos.", 
+                portfolioTitle: "Proyectos Seleccionados", portfolioSubtitle: "Elevando Cada Espaço a Través de Supervisão Experta y Coordinación de Proyectos.", 
                 'portfolioSectionTitle': "Proyectos Seleccionados",
                 project1Title: "Cocina Moderna y Lujosa", project1Desc: "Diseño audaz con isla central, gabinetes personalizados y electrodomésticos de última generación.", 
                 project2Title: "Espacio Gourmet de Alto Nivel", project2Desc: "Un ambiente que combina funcionalidad de preparación con acabados de lujo, como mármol e iluminación a medida.", 
@@ -1749,7 +2098,7 @@ footer .copyright strong{
                 project5Title: "Suite Principal Acogedora", project5Desc: "Dormitorio diseñado para el máximo confort, con una paleta de colores neutras y mobiliario a medida para optimizar el descanso.", 
                 project6Title: "Sala de Estar Integrada", project6Desc: "Sala de estar que se conecta harmoniosamente a otras áreas, utilizando sofás modernos e iluminación escénica.", 
                 interestedTitle: "We Coordinate. You Stay in Control.", requestQuote: "Solicitar Consulta Privada", imageAuthNote: "",
-                footerTagline: "Excelência en la Gestión, Ejecución Impecável.", developerSignature: "Desarrollado por Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> Moura Consulting & Management. Todos los derechos reservados.', footer_location: 'Miami, FL', 'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade',
+                footerTagline: "We Coordinate. You Stay in Control.", developerSignature: "Desarrollado por Andre Moura", copyrightText: '&copy; <span id="currentYear"></span> Moura Consulting & Management. Todos los derechos reservados.', footer_location: 'Miami, FL', 'footer-nav': 'Navegación', 'footer-contact': 'Contacto y Conexión', 'footer-legal': 'Legal', 'footer-terms': 'Términos de Uso', 'footer-privacy': 'Política de Privacidade',
                 'footer-location': "Miami, FL"}
         };
 
