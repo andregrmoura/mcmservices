@@ -1706,12 +1706,12 @@ body.menu-open #menuOverlay{
 </style>
 
 <style>
-  /* Gold logo (same color as primary button) using the original logo as a mask */
+  /* White header logo using the original logo as a mask */
   .logo-link .brand-logo{
     display:inline-block;
     height:120px !important;
     width:clamp(180px, 32vw, 360px) !important;
-    background:#C7A96B;
+    background:#FFFFFF;
     -webkit-mask-image:url("images/FODA.png");
     mask-image:url("images/FODA.png");
     -webkit-mask-repeat:no-repeat;
@@ -2596,7 +2596,7 @@ footer .copyright strong{
   header .header-top-row { margin-bottom: 0 !important; }
   .hero-content h1 { font-size: 4.45rem !important; }
 }
-.logo-link .brand-logo { background: #C7A96B !important; }
+.logo-link .brand-logo { background: #FFFFFF !important; }
 </style>
 
 <style id="mcm-home-visual-expansion">
@@ -3933,6 +3933,511 @@ footer .copyright strong{
 }
 </style>
 
+<style id="mcm-editorial-hero-final">
+/* Editorial hero — aligned with the site's black, ivory and champagne system */
+.hero-container.hero-editorial{
+  min-height:760px !important;
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  background:var(--moura-ink,#171715) !important;
+  overflow:hidden;
+}
+
+.hero-editorial-copy{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:180px clamp(42px,6.5vw,108px) 92px;
+  text-align:left;
+  background:
+    radial-gradient(circle at 12% 22%,rgba(200,170,112,.10),transparent 34%),
+    linear-gradient(145deg,#11110f 0%,#1b1a17 100%);
+}
+
+.hero-editorial-copy::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:18%;
+  width:1px;
+  height:64%;
+  background:linear-gradient(transparent,rgba(200,170,112,.55),transparent);
+}
+
+.hero-editorial-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:28px;
+  color:var(--moura-gold-soft,#d7bc86);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+.hero-editorial-eyebrow::before{
+  content:"";
+  width:36px;
+  height:1px;
+  background:currentColor;
+}
+
+.hero-editorial-copy h1{
+  max-width:650px;
+  margin:0 0 30px;
+  color:#f7f3ea;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.65rem,5.4vw,6.3rem);
+  font-weight:400;
+  line-height:.96;
+  letter-spacing:-.04em;
+}
+
+.hero-editorial-copy p{
+  max-width:610px;
+  margin:0 0 42px;
+  color:rgba(247,243,234,.70);
+  font-size:clamp(.98rem,1.2vw,1.12rem);
+  font-weight:300;
+  line-height:1.85;
+}
+
+.hero-editorial-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:28px;
+}
+
+.hero-editorial-primary{
+  border:1px solid var(--moura-gold,#c8aa70);
+  border-radius:2px;
+  padding:16px 25px;
+  background:var(--moura-gold,#c8aa70);
+  color:#171715;
+  font-family:'Montserrat',sans-serif;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .25s ease;
+}
+
+.hero-editorial-primary:hover{
+  background:transparent;
+  color:var(--moura-gold-soft,#d7bc86);
+  transform:translateY(-2px);
+}
+
+.hero-editorial-link{
+  position:relative;
+  padding:8px 0;
+  color:rgba(255,255,255,.84);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.hero-editorial-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:2px;
+  width:100%;
+  height:1px;
+  background:rgba(215,188,134,.72);
+  transform-origin:left;
+  transition:transform .25s ease;
+}
+
+.hero-editorial-link:hover{ color:var(--moura-gold-soft,#d7bc86); }
+.hero-editorial-link:hover::after{ transform:scaleX(.45); }
+
+.hero-editorial-visual{
+  position:relative;
+  min-width:0;
+  background-position:center;
+  background-size:cover;
+}
+
+.hero-editorial-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(17,17,15,.34) 0%,transparent 28%),
+    linear-gradient(180deg,rgba(17,17,15,.40) 0%,transparent 35%,rgba(17,17,15,.18) 100%);
+}
+
+.hero-editorial-caption{
+  position:absolute;
+  right:34px;
+  bottom:34px;
+  z-index:1;
+  color:rgba(255,255,255,.76);
+  font-size:.63rem;
+  font-weight:600;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+
+@media (max-width:900px){
+  .hero-container.hero-editorial{
+    min-height:0 !important;
+    grid-template-columns:1fr;
+  }
+  .hero-editorial-copy{
+    min-height:650px;
+    padding:155px 28px 76px;
+  }
+  .hero-editorial-copy::after{ display:none; }
+  .hero-editorial-copy h1{
+    max-width:560px;
+    font-size:clamp(3.15rem,12vw,5rem);
+  }
+  .hero-editorial-visual{
+    min-height:390px;
+    background-position:center;
+  }
+  .hero-editorial-visual::before{
+    background:linear-gradient(180deg,rgba(17,17,15,.30),transparent 40%,rgba(17,17,15,.20));
+  }
+}
+
+@media (max-width:560px){
+  .hero-editorial-copy{
+    min-height:620px;
+    padding:140px 22px 64px;
+  }
+  .hero-editorial-eyebrow{ margin-bottom:22px; }
+  .hero-editorial-copy h1{
+    margin-bottom:24px;
+    font-size:clamp(2.85rem,13.5vw,4rem);
+    line-height:1;
+  }
+  .hero-editorial-copy p{
+    margin-bottom:34px;
+    font-size:.94rem;
+    line-height:1.75;
+  }
+  .hero-editorial-actions{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:18px;
+  }
+  .hero-editorial-primary{ width:100%; }
+  .hero-editorial-visual{ min-height:310px; }
+  .hero-editorial-caption{
+    right:20px;
+    bottom:20px;
+  }
+}
+
+/* Dynamic editorial carousel */
+.hero-container.hero-editorial{
+  position:relative;
+  display:block;
+  min-height:760px !important;
+  background:#11110f !important;
+}
+
+.hero-editorial-slide{
+  position:absolute !important;
+  inset:0;
+  display:block !important;
+  opacity:0;
+  visibility:hidden;
+  background-position:center;
+  background-size:cover;
+  transition:opacity 1.65s ease,visibility 1.65s ease !important;
+}
+
+.hero-editorial-slide.active{
+  opacity:1 !important;
+  visibility:visible;
+  z-index:1;
+}
+
+.hero-editorial-slide::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(13,13,12,.96) 0%,rgba(13,13,12,.88) 31%,rgba(13,13,12,.48) 58%,rgba(13,13,12,.10) 100%),
+    linear-gradient(180deg,rgba(10,10,9,.46),transparent 35%,rgba(10,10,9,.28));
+}
+
+.hero-editorial-slide .hero-editorial-copy{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:760px;
+  padding:180px clamp(42px,7vw,120px) 100px;
+  background:transparent;
+}
+
+.hero-editorial-slide .hero-editorial-copy::after{ display:none; }
+
+.hero-static-copy{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  min-height:760px;
+  padding:180px clamp(42px,7vw,120px) 185px;
+  background:transparent;
+  pointer-events:none;
+}
+
+.hero-static-copy::after{ display:none; }
+
+.hero-static-copy h1{
+  max-width:610px;
+  font-size:clamp(3.25rem,4.55vw,5.35rem);
+  line-height:.98;
+}
+
+.hero-static-copy p{ max-width:590px; }
+
+.hero-static-copy .hero-editorial-eyebrow,
+.hero-static-copy h1,
+.hero-static-copy p{ pointer-events:auto; }
+
+.hero-fixed-cta{
+  position:absolute;
+  z-index:6;
+  left:clamp(42px,7vw,120px);
+  bottom:90px;
+}
+
+.hero-editorial .hero-dots{
+  left:clamp(42px,7vw,120px) !important;
+  right:auto !important;
+  bottom:34px !important;
+  z-index:5;
+  transform:none !important;
+}
+
+.hero-editorial .dot{
+  width:34px !important;
+  height:2px !important;
+  cursor:pointer;
+}
+
+@media (max-width:900px){
+  .hero-container.hero-editorial{ min-height:690px !important; }
+  .hero-editorial-slide .hero-editorial-copy{
+    min-height:690px;
+    padding:155px 28px 82px;
+  }
+  .hero-editorial-slide::before{
+    background:
+      linear-gradient(90deg,rgba(13,13,12,.91) 0%,rgba(13,13,12,.75) 55%,rgba(13,13,12,.34) 100%),
+      linear-gradient(180deg,rgba(10,10,9,.38),transparent 38%,rgba(10,10,9,.42));
+  }
+  .hero-editorial .hero-dots{ left:28px !important; }
+  .hero-fixed-cta{ left:28px; bottom:88px; }
+  .hero-static-copy{
+    min-height:690px;
+    padding:155px 28px 180px;
+  }
+  .hero-static-copy h1{
+    max-width:560px;
+    font-size:clamp(3rem,10.5vw,4.6rem);
+  }
+}
+
+@media (max-width:560px){
+  .hero-container.hero-editorial{ min-height:660px !important; }
+  .hero-editorial-slide{ background-position:62% center; }
+  .hero-editorial-slide .hero-editorial-copy{
+    min-height:660px;
+    padding:140px 22px 88px;
+  }
+  .hero-editorial-slide::before{
+    background:
+      linear-gradient(90deg,rgba(12,12,11,.92),rgba(12,12,11,.64)),
+      linear-gradient(180deg,rgba(10,10,9,.34),transparent 36%,rgba(10,10,9,.46));
+  }
+  .hero-editorial .hero-dots{
+    left:22px !important;
+    bottom:30px !important;
+  }
+  .hero-fixed-cta{
+    left:22px;
+    right:22px;
+    bottom:82px;
+  }
+  .hero-fixed-cta .hero-editorial-primary{ width:100%; }
+  .hero-static-copy{
+    min-height:660px;
+    padding:140px 22px 175px;
+  }
+  .hero-static-copy h1{
+    font-size:clamp(2.75rem,12.5vw,3.75rem);
+  }
+}
+
+@media (min-width:769px){
+  header{
+    padding-top:6px !important;
+    padding-bottom:6px !important;
+  }
+  header .brand-logo{
+    height:92px !important;
+    width:min(280px,28vw) !important;
+  }
+}
+</style>
+
+<style id="mcm-contact-split-final">
+#contact .contact-split{
+  width:min(1180px,calc(100% - 48px));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:minmax(300px,.82fr) minmax(440px,1.18fr);
+  gap:clamp(55px,7vw,105px);
+  align-items:start;
+  text-align:left;
+}
+
+#contact .contact-intro{
+  padding-top:10px;
+}
+
+#contact .contact-intro .section-title{
+  max-width:540px;
+  margin:0 0 24px !important;
+  text-align:left;
+  font-size:clamp(2.8rem,4vw,4.55rem) !important;
+}
+
+#contact .contact-intro .section-title::after{
+  margin:24px 0 0 !important;
+}
+
+#contact .contact-intro .section-subtitle{
+  max-width:520px !important;
+  margin:0 0 42px !important;
+  text-align:left !important;
+}
+
+.contact-direct{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:14px;
+  padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+
+.contact-direct-label{
+  margin-bottom:6px;
+  color:var(--moura-gold-soft,#d7bc86);
+  font-size:.66rem;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.contact-direct a{
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  color:rgba(255,255,255,.76);
+  font-size:.84rem;
+  letter-spacing:.035em;
+  transition:color .25s ease;
+}
+
+.contact-direct a i{
+  width:18px;
+  color:var(--moura-gold-soft,#d7bc86);
+  text-align:center;
+}
+
+.contact-direct a:hover{ color:#fff; }
+
+#contact .contact-form-panel{
+  padding:38px;
+  border:1px solid rgba(255,255,255,.13);
+  background:rgba(255,255,255,.025);
+}
+
+#contact .contact-form{
+  width:100%;
+  max-width:none !important;
+  margin:0 !important;
+  gap:16px !important;
+}
+
+#contact .contact-form input,
+#contact .contact-form textarea{
+  text-align:left !important;
+}
+
+#contact .contact-form textarea{
+  min-height:180px;
+  resize:vertical;
+}
+
+@media (max-width:850px){
+  #contact .contact-split{
+    width:min(100% - 36px,680px);
+    grid-template-columns:1fr;
+    gap:48px;
+  }
+  #contact .contact-intro .section-title,
+  #contact .contact-intro .section-subtitle{
+    max-width:100% !important;
+  }
+}
+
+@media (max-width:560px){
+  #contact .contact-split{ width:calc(100% - 28px); }
+  #contact .contact-form-panel{ padding:22px 18px; }
+  #contact .contact-intro .section-title{
+    font-size:clamp(2.45rem,12vw,3.4rem) !important;
+  }
+}
+
+.about-linkedin{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:26px;
+  padding-bottom:7px;
+  border-bottom:1px solid rgba(30,30,28,.28);
+  color:var(--moura-ink,#1e1e1c);
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  transition:color .25s ease,border-color .25s ease;
+}
+
+.about-linkedin i{
+  color:#0A66C2;
+  font-size:1rem;
+}
+
+.about-linkedin:hover{
+  color:var(--moura-gold,#c8aa70);
+  border-color:var(--moura-gold,#c8aa70);
+}
+
+@media (max-width:768px){
+  .about-linkedin{ justify-content:center; }
+}
+</style>
+
 <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"d54b54464cff6f8ddb4075bbca7eb766"})});</script>
 </head>
 <body id="top">
@@ -3980,58 +4485,23 @@ footer .copyright strong{
 </header>
 <!-- Mobile menu overlay (click outside to close) -->
 <div id="menuOverlay"></div>
-<div class="hero-container">
-<div class="hero-gradient-overlay"></div>
-<div class="hero-slide active" data-cms-bg='\"hero.slide1_bg\"' style="background-image:url('images/bath_bg.jpg');">
-<div class="hero-overlay"></div>
-<div class="hero-content">
-<h1 data-translate="hero1-title">Construction Project Management</h1>
-<p data-translate="hero1-subtitle">From planning through closeout — structured coordination, oversight, and project control.</p>
-<div class="hero-cta-buttons">
-<a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
-            View Portfolio
-        </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
-            Request Exclusive Project
-        </button>
-</div>
-</div>
-</div>
-<div class="hero-slide" data-cms-bg='\"hero.slide2_bg\"' style="background-image:url('images/hero2.jpeg');">
-<div class="hero-overlay"></div>
-<div class="hero-content">
-<h1 data-translate="hero2-title">Professional Project Coordination</h1>
-<p data-translate="hero2-subtitle">Clear communication, coordinated trades, scheduling, and field oversight.</p>
-<div class="hero-cta-buttons">
-<a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
-            View Portfolio
-        </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
-            Request Exclusive Project
-        </button>
-</div>
-</div>
-</div>
-<div class="hero-slide" data-cms-bg='\"hero.slide3_bg\"' style="background-image:url('images/hero3.jpeg');">
-<div class="hero-overlay"></div>
-<div class="hero-content">
-<h1 data-translate="hero3-title">Structure and Precision for Your Vision</h1>
-<p data-translate="hero3-subtitle">Risk mitigation, budget control, and quality-focused construction oversight.</p>
-<div class="hero-cta-buttons">
-<a class="hero-btn secondary" data-translate="hero-btn-portfolio" href="portfolio.html">
-            View Portfolio
-        </a>
-<button class="hero-btn" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">
-            Request Exclusive Project
-        </button>
-</div>
-</div>
-</div>
-<div class="hero-dots">
-<div class="dot active" data-slide="0"></div>
-<div class="dot" data-slide="1"></div>
-<div class="dot" data-slide="2"></div>
-</div>
+<div class="hero-container hero-editorial">
+  <div class="hero-slide hero-editorial-slide active" data-cms-bg='\"hero.slide1_bg\"' style="background-image:url('images/hero3.jpeg');"></div>
+  <div class="hero-slide hero-editorial-slide" data-cms-bg='\"hero.slide2_bg\"' style="background-image:url('images/hero2.jpeg');"></div>
+  <div class="hero-slide hero-editorial-slide" data-cms-bg='\"hero.slide3_bg\"' style="background-image:url('images/bath_bg.jpg');"></div>
+  <div class="hero-editorial-copy hero-static-copy">
+    <span class="hero-editorial-eyebrow">Project Management</span>
+    <h1 data-translate="hero1-title">Construction Project Management</h1>
+    <p data-translate="hero1-subtitle">From planning through closeout — structured coordination, oversight, and project control.</p>
+  </div>
+  <div class="hero-dots" aria-label="Hero slides">
+    <div class="dot active" data-slide="0"></div>
+    <div class="dot" data-slide="1"></div>
+    <div class="dot" data-slide="2"></div>
+  </div>
+  <div class="hero-fixed-cta">
+    <button class="hero-editorial-primary" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">Request Exclusive Project</button>
+  </div>
 </div>
 
 <section id="owner-representation-home" class="mcm-new-section mcm-owner-rep">
@@ -4197,9 +4667,14 @@ footer .copyright strong{
         <img alt="OSHA Certification Logo" src="images/osha.jpeg"/>
       </div>
 
+      <a class="about-linkedin" href="https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413" rel="noopener" target="_blank">
+        <i aria-hidden="true" class="fab fa-linkedin-in"></i>
+        André Moura on LinkedIn
+      </a>
+
       <div class="about-cta">
         <a href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" rel="noopener" target="_blank">
-          Private Consultation
+          Connect with André
         </a>
       </div>
     </div>
@@ -4235,24 +4710,28 @@ footer .copyright strong{
   </div>
 </section>
 <section class="section-gray" id="contact">
-<h2 class="section-title" data-translate="contact-title" style="font-family:'Montserrat', sans-serif; font-weight:600;">Submit a Project Inquiry</h2>
-<p class="section-subtitle" data-translate="contact-subtitle" style="text-align: center;">
-    Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.
-</p>
-<form action="submit_form.php" class="contact-form" method="POST">
-<label class="sr-only" for="name">Your Name</label>
-<input aria-required="true" data-translate="contact-input-name" id="name" name="name" placeholder="Your Name" required="" type="text"/>
-<label class="sr-only" for="email">Your Email</label>
-<input aria-required="true" data-translate="contact-input-email" id="email" name="email" placeholder="Your Email" required="" type="email"/>
-<label class="sr-only" for="message">Project Description</label>
-<textarea aria-required="true" data-translate="contact-input-msg" id="message" name="message" placeholder="Describe your project, timeline, and location" required="" rows="5"></textarea>
-<button data-translate="contact-btn-submit" type="submit">Submit Inquiry</button>
-</form>
-<div class="whatsapp-btn-container">
-<a class="whatsapp-btn" data-translate="contact-btn-whatsapp" href="https://wa.me/17862383386" target="_blank">
-<i aria-hidden="true" class="fab fa-whatsapp"></i> Contact via WhatsApp
-    </a>
-</div>
+  <div class="contact-split">
+    <div class="contact-intro">
+      <h2 class="section-title" data-translate="contact-title">Submit a Project Inquiry</h2>
+      <p class="section-subtitle" data-translate="contact-subtitle">Share the basic details of your project. Qualified inquiries will be reviewed prior to consultation.</p>
+      <div class="contact-direct">
+        <span class="contact-direct-label">Direct Contact</span>
+        <a href="mailto:info@moura-consulting.com"><i aria-hidden="true" class="fas fa-envelope"></i>info@moura-consulting.com</a>
+        <a href="https://wa.me/17862383386" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-whatsapp"></i>Contact via WhatsApp</a>
+      </div>
+    </div>
+    <div class="contact-form-panel">
+      <form action="submit_form.php" class="contact-form" method="POST">
+        <label class="sr-only" for="name">Your Name</label>
+        <input aria-required="true" data-translate="contact-input-name" id="name" name="name" placeholder="Your Name" required="" type="text"/>
+        <label class="sr-only" for="email">Your Email</label>
+        <input aria-required="true" data-translate="contact-input-email" id="email" name="email" placeholder="Your Email" required="" type="email"/>
+        <label class="sr-only" for="message">Project Description</label>
+        <textarea aria-required="true" data-translate="contact-input-msg" id="message" name="message" placeholder="Describe your project, timeline, and location" required="" rows="5"></textarea>
+        <button data-translate="contact-btn-submit" type="submit">Submit Inquiry</button>
+      </form>
+    </div>
+  </div>
 </section>
 <footer>
 <div class="footer-logo-container">
@@ -4278,6 +4757,7 @@ Miami, Florida<br/>
 <a href="mailto:info@moura-consulting.com"><i aria-hidden="true" class="fas fa-envelope"></i> info@moura-consulting.com</a>
 <a href="https://www.instagram.com/moura.consulting" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-instagram"></i> @moura.consulting</a>
 <a href="https://www.facebook.com/profile.php?id=61584205148969" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i> Moura Consulting</a>
+<a href="https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413" rel="noopener" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i> André Moura</a>
 </div>
 <div class="footer-col">
 <h4 data-translate="footer-legal">Legal</h4>
