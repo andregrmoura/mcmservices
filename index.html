@@ -4548,6 +4548,134 @@ footer .copyright strong{
 }
 </style>
 
+<style id="moura-credentials-fiu-procore">
+/* Four verified credentials, balanced across desktop and mobile */
+.mcm-about-refined-certifications .credential-badge {
+  font-family:'Montserrat',sans-serif !important;
+  font-style:normal !important;
+  line-height:1 !important;
+}
+.mcm-about-refined-certifications .credential-fiu {
+  background:#081E3F !important;
+  color:#FFCC00 !important;
+  border:2px solid rgba(8,30,63,.18) !important;
+  font-size:1.05rem !important;
+  font-weight:800 !important;
+  letter-spacing:-.04em !important;
+}
+.mcm-about-refined-certifications .credential-procore {
+  background:#fff !important;
+  color:#202020 !important;
+  border:2px solid rgba(30,30,28,.13) !important;
+  font-size:.68rem !important;
+  font-weight:800 !important;
+  letter-spacing:-.055em !important;
+  gap:0 !important;
+}
+.mcm-about-refined-certifications .credential-procore b,
+.mcm-about-refined-certifications .credential-procore i { font:inherit !important; }
+.mcm-about-refined-certifications .credential-procore i { color:#f36c21 !important; }
+@media (max-width:600px) {
+  .mcm-about-refined-certifications { gap:10px !important; flex-wrap:nowrap !important; }
+  .mcm-about-refined-certifications .credential-fiu { font-size:.84rem !important; }
+  .mcm-about-refined-certifications .credential-procore { font-size:.52rem !important; }
+}
+</style>
+
+<style id="moura-process-editorial-cards">
+/* Process presentation only — original wording remains unchanged */
+.mcm-process-grid-8 {
+  max-width:1180px !important;
+  margin:46px auto 0 !important;
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:16px !important;
+  border:0 !important;
+}
+.mcm-process-grid-8 article {
+  position:relative !important;
+  overflow:hidden !important;
+  min-height:270px !important;
+  padding:38px 30px 30px !important;
+  border:1px solid rgba(30,30,28,.09) !important;
+  border-radius:4px !important;
+  background:#fff !important;
+  box-shadow:0 12px 34px rgba(30,30,28,.045) !important;
+  transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease !important;
+}
+.mcm-process-grid-8 article:nth-child(even) {
+  background:#F7F2E9 !important;
+}
+.mcm-process-grid-8 article::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:52px;
+  height:3px;
+  background:#C8AA70;
+  transition:width .32s ease;
+}
+.mcm-process-grid-8 article:hover {
+  transform:translateY(-6px) !important;
+  border-color:rgba(184,149,87,.34) !important;
+  box-shadow:0 20px 44px rgba(30,30,28,.09) !important;
+}
+.mcm-process-grid-8 article:hover::before {
+  width:100%;
+}
+.mcm-process-grid-8 .mcm-step {
+  position:absolute !important;
+  top:18px !important;
+  right:22px !important;
+  z-index:0 !important;
+  margin:0 !important;
+  color:#B89557 !important;
+  font-family:'Playfair Display',serif !important;
+  font-size:3.35rem !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  letter-spacing:-.055em !important;
+  opacity:.13 !important;
+}
+.mcm-process-grid-8 h3 {
+  position:relative !important;
+  z-index:1 !important;
+  margin:50px 0 14px !important;
+  font-size:1.55rem !important;
+  line-height:1.14 !important;
+}
+.mcm-process-grid-8 p {
+  position:relative !important;
+  z-index:1 !important;
+  font-size:.89rem !important;
+  line-height:1.72 !important;
+}
+@media (max-width:900px) {
+  .mcm-process-grid-8 {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media (max-width:560px) {
+  .mcm-process-grid-8 {
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+  }
+  .mcm-process-grid-8 article {
+    min-height:230px !important;
+    padding:30px 24px 26px !important;
+  }
+  .mcm-process-grid-8 h3 {
+    margin-top:42px !important;
+  }
+  .mcm-process-grid-8 .mcm-step {
+    top:15px !important;
+    right:19px !important;
+    font-size:3rem !important;
+  }
+}
+</style>
+
 <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"d54b54464cff6f8ddb4075bbca7eb766"})});</script>
 </head>
 <body id="top">
@@ -4768,13 +4896,14 @@ footer .copyright strong{
       </p>
 
       <p data-translate="about-p3">
-        Our founder holds qualifications in Project Management from FIU (Florida International University), and important certifications in OSHA and NCCER, reinforcing our commitment to safety, quality, and professional standards.
+        Our founder holds construction and Project Management qualifications from FIU (Florida International University), with professional credentials from NCCER, OSHA, and Procore — reinforcing our commitment to safety, quality, and structured project control.
       </p>
 
-      <div class="certifications mcm-about-refined-certifications">
-        <span aria-label="Project Management Credential – Florida International University (FIU)" title="Project Management – FIU">PM</span>
-        <img alt="NCCER Certification Logo" id="nccer-logo" src="images/nccer.jpeg"/>
-        <img alt="OSHA Certification Logo" src="images/osha.jpeg"/>
+      <div class="certifications mcm-about-refined-certifications" aria-label="Professional credentials">
+        <span class="credential-badge credential-fiu" aria-label="FIU Construction Trades Program" title="FIU — Construction Trades Program">FIU</span>
+        <img alt="NCCER — Project Management" id="nccer-logo" src="images/nccer.jpeg" title="NCCER — Project Management"/>
+        <img alt="OSHA 30 certification" src="images/osha.jpeg" title="OSHA 30"/>
+        <span class="credential-badge credential-procore" aria-label="Procore Certified Project Manager, Core Tools" title="Procore Certified — Project Manager (Core Tools)"><b>PRO</b><i>C</i><b>ORE</b></span>
       </div>
 
       <a class="about-linkedin" href="https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413" rel="noopener" target="_blank">
