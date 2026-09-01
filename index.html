@@ -5330,6 +5330,16 @@ header .team-login-header:hover i {
   }
 }
 </style>
+
+<style id="moura-legal-links-native-mobile-fix">
+#link-terms,
+#link-privacy{
+  pointer-events:auto !important;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+</style>
+
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal">
@@ -5687,8 +5697,8 @@ Miami, Florida<br/>
 </div>
 <div class="footer-col">
 <h4 data-translate="footer-legal">Legal</h4>
-<a data-translate="footer-terms" href="terms.html" id="link-terms" ontouchend="window.location.href=this.href; return false;">Terms of Use</a>
-<a data-translate="footer-privacy" href="privacy.html" id="link-privacy" ontouchend="window.location.href=this.href; return false;">Privacy Policy</a>
+<a data-translate="footer-terms" href="/terms.html" id="link-terms">Terms of Use</a>
+<a data-translate="footer-privacy" href="/privacy.html" id="link-privacy">Privacy Policy</a>
 </div>
 </div>
 <div class="footer-bottom-line">
