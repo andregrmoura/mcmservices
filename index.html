@@ -5484,7 +5484,7 @@ header .team-login-header:hover i {
     <h2 class="mcm-new-title">Structured Project Management From Scope to Closeout.</h2>
     <p class="mcm-new-subtitle">A disciplined process built around planning, coordination, cost awareness, quality oversight, and project control.</p>
 
-    <div class="mcm-process-grid-8">
+    <div class="mcm-process-grid-8" id="processStepsGrid">
       <article>
         <span class="mcm-step">01</span>
         <h3>Scope</h3>
@@ -5533,6 +5533,11 @@ header .team-login-header:hover i {
         <p>Support inspections, punch list, documentation, and final project completion.</p>
       </article>
     </div>
+
+    <button class="mcm-process-expand" type="button" aria-expanded="false" aria-controls="processStepsGrid">
+      <span class="mcm-process-expand-label">View all steps</span>
+      <span class="mcm-process-expand-icon" aria-hidden="true">+</span>
+    </button>
   </div>
 </section>
 
@@ -6352,6 +6357,262 @@ footer{
   }
 }
 </style>
+
+
+
+<style id="moura-mobile-desktop-cascade-overlay-final">
+/* =========================================================
+   MOBILE — MATCH DESKTOP / PORTFOLIO CASCADE
+   The section keeps natural height (so Google Reviews never cuts).
+   The active title is represented by a fixed visual copy at the
+   SAME stacking level as its section, not above the whole page.
+   Therefore the next panel, whose z-index is higher, physically
+   slides OVER the previous title exactly like desktop/Portfolio.
+   ========================================================= */
+@media (max-width: 768px) {
+  .moura-cascade-panel,
+  #owner-representation-home.moura-cascade-panel,
+  #selected-projects-home.moura-cascade-panel,
+  #process-home.moura-cascade-panel,
+  #about.moura-cascade-panel,
+  #testimonials.moura-cascade-panel,
+  #contact.moura-cascade-panel {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 100svh !important;
+    overflow: visible !important;
+    isolation: isolate !important;
+  }
+
+  /* Real title remains part of the incoming panel and visibly travels
+     upward over the previous fixed title. No native sticky push-off. */
+  .moura-cascade-panel > .moura-cascade-tab,
+  #owner-representation-home > .moura-cascade-tab,
+  #selected-projects-home > .moura-cascade-tab,
+  #process-home > .moura-cascade-tab,
+  #about > .moura-cascade-tab,
+  #testimonials > .moura-cascade-tab,
+  #contact > .moura-cascade-tab {
+    position: relative !important;
+    top: auto !important;
+    z-index: 4 !important;
+  }
+
+  /* Same ascending panel stack used by desktop. */
+  #owner-representation-home { z-index: 41 !important; }
+  #selected-projects-home    { z-index: 42 !important; }
+  #process-home              { z-index: 43 !important; }
+  #about                     { z-index: 44 !important; }
+  #testimonials              { z-index: 45 !important; }
+  #contact                   { z-index: 46 !important; }
+
+  /* Fixed visual title inherits a per-section z-index via inline style.
+     The next real panel has a higher z-index, so it covers this layer. */
+  .moura-mobile-desktop-cascade-title {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+    transform: none !important;
+  }
+
+  /* Keep desktop helper clones out of the mobile stacking model. */
+  .moura-long-title-fixed,
+  .moura-project-inquiry-fixed,
+  #moura-cascade-fixed-stack {
+    display: none !important;
+  }
+
+  /* Google Reviews: always expand naturally. */
+  #testimonials,
+  #testimonials .mcm-new-wrap,
+  #testimonials .mcm-reviews-editorial-grid,
+  #testimonials .mcm-reviews-editorial-cards,
+  #testimonials .google-reviews-grid {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+</style>
+
+<script id="moura-mobile-desktop-cascade-overlay-script">
+(function(){
+  const mq = window.matchMedia('(max-width: 768px)');
+  const defs = [
+    { id:'owner-representation-home', z:41 },
+    { id:'selected-projects-home',    z:42 },
+    { id:'process-home',              z:43 },
+    { id:'about',                     z:44 },
+    { id:'testimonials',              z:45 },
+    { id:'contact',                   z:46 }
+  ];
+
+  let fixed = null;
+  let activeId = '';
+  let ticking = false;
+
+  function removeFixed(){
+    if (fixed) fixed.remove();
+    fixed = null;
+    activeId = '';
+  }
+
+  function makeFixed(def, tab){
+    if (fixed && activeId === def.id) return;
+    removeFixed();
+    fixed = tab.cloneNode(true);
+    fixed.removeAttribute('id');
+    fixed.classList.add('moura-mobile-desktop-cascade-title');
+    fixed.dataset.source = def.id;
+    fixed.setAttribute('aria-hidden','true');
+    fixed.style.zIndex = String(def.z);
+    document.body.appendChild(fixed);
+    activeId = def.id;
+  }
+
+  function nextBoundaryTop(index){
+    if (index < defs.length - 1) {
+      const next = document.getElementById(defs[index + 1].id);
+      const nextTab = next && next.querySelector(':scope > .moura-cascade-tab');
+      return nextTab ? nextTab.getBoundingClientRect().top : Infinity;
+    }
+    const after = document.querySelector('.insurance-strip') || document.querySelector('footer');
+    return after ? after.getBoundingClientRect().top : Infinity;
+  }
+
+  function update(){
+    if (!mq.matches) {
+      removeFixed();
+      return;
+    }
+
+    let match = null;
+    for (let i = 0; i < defs.length; i++) {
+      const def = defs[i];
+      const section = document.getElementById(def.id);
+      if (!section) continue;
+      const tab = section.querySelector(':scope > .moura-cascade-tab');
+      if (!tab) continue;
+
+      const tabTop = tab.getBoundingClientRect().top;
+      const boundaryTop = nextBoundaryTop(i);
+
+      /* Keep the previous title fixed while the next title approaches.
+         Because the next PANEL has a higher z-index, its real title/body
+         physically slides over the fixed title before this clone is removed. */
+      if (tabTop <= 0 && boundaryTop > 0) {
+        match = { def, tab };
+      }
+    }
+
+    if (match) makeFixed(match.def, match.tab);
+    else removeFixed();
+  }
+
+  function requestUpdate(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      update();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
+  if (mq.addEventListener) mq.addEventListener('change', requestUpdate);
+  else if (mq.addListener) mq.addListener(requestUpdate);
+  requestUpdate();
+})();
+</script>
+
+
+<style id="moura-process-mobile-expand">
+/* Mobile Process — show the first three steps by default and expand on demand. */
+.mcm-process-expand{
+  display:none;
+}
+@media (max-width:768px){
+  #process-home .mcm-process-grid-8 article:nth-child(n+4){
+    display:none !important;
+  }
+  #process-home.process-expanded .mcm-process-grid-8 article:nth-child(n+4){
+    display:block !important;
+    animation:mcmProcessReveal .34s ease both;
+  }
+  #process-home .mcm-process-expand{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    min-height:46px;
+    margin:28px auto 0;
+    padding:11px 18px;
+    border:1px solid rgba(31,30,27,.24);
+    border-radius:999px;
+    background:transparent;
+    color:var(--moura-ink,#1F1E1B);
+    font-family:'Montserrat',sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:border-color .25s ease,background .25s ease,color .25s ease;
+  }
+  #process-home .mcm-process-expand:focus-visible{
+    outline:2px solid var(--moura-gold,#C7A96B);
+    outline-offset:3px;
+  }
+  #process-home .mcm-process-expand-icon{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:24px;
+    height:24px;
+    border:1px solid var(--moura-gold,#C7A96B);
+    border-radius:50%;
+    color:var(--moura-gold,#C7A96B);
+    font-size:1.05rem;
+    font-weight:400;
+    line-height:1;
+  }
+  #process-home.process-expanded .mcm-process-expand{
+    margin-top:30px;
+  }
+  @keyframes mcmProcessReveal{
+    from{opacity:0;transform:translateY(12px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  #process-home.process-expanded .mcm-process-grid-8 article:nth-child(n+4){
+    animation:none !important;
+  }
+}
+</style>
+<script id="moura-process-mobile-expand-script">
+(function(){
+  const section=document.getElementById('process-home');
+  if(!section) return;
+  const button=section.querySelector('.mcm-process-expand');
+  if(!button) return;
+  const label=button.querySelector('.mcm-process-expand-label');
+  const icon=button.querySelector('.mcm-process-expand-icon');
+
+  button.addEventListener('click',function(){
+    const expanded=section.classList.toggle('process-expanded');
+    button.setAttribute('aria-expanded',String(expanded));
+    if(label) label.textContent=expanded?'Show less':'View all steps';
+    if(icon) icon.textContent=expanded?'−':'+';
+  });
+})();
+</script>
 
 </body>
 </html>
