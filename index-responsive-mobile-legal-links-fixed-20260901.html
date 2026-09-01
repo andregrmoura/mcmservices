@@ -5350,7 +5350,7 @@ header .team-login-header:hover i {
 <div class="header-container">
 <div class="header-top-row">
 <div class="header-col-left"></div>
-<a class="logo-link" href="#top">
+<a class="logo-link" href="index.html" aria-label="Go to homepage">
 <span class="brand-logo" role="img" aria-label="Moura Consulting &amp; Management logo"></span>
 </a>
 <a class="team-login-header" href="https://www.getjobber.com/login/" target="_blank" rel="noopener noreferrer" aria-label="Team Login" title="Team Login">
@@ -6610,6 +6610,38 @@ footer{
     button.setAttribute('aria-expanded',String(expanded));
     if(label) label.textContent=expanded?'Show less':'View all steps';
     if(icon) icon.textContent=expanded?'−':'+';
+  });
+})();
+</script>
+
+
+<style id="mobile-legal-links-one-tap-fix">
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  #link-terms,
+  #link-privacy {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #link-terms:hover,
+  #link-privacy:hover {
+    color: #66615a !important;
+  }
+}
+</style>
+<script id="mobile-legal-links-one-tap-script">
+(function(){
+  const links = [
+    document.getElementById('link-terms'),
+    document.getElementById('link-privacy')
+  ].filter(Boolean);
+
+  links.forEach(function(link){
+    link.addEventListener('pointerup', function(event){
+      if (event.pointerType !== 'touch') return;
+      event.preventDefault();
+      window.location.assign(link.href);
+    }, {passive:false});
   });
 })();
 </script>
