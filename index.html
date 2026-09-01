@@ -39,7 +39,7 @@
   "founder": {
     "@type": "Person",
     "name": "André Moura",
-    "jobTitle": "Founder & Project Manager",
+    "jobTitle": "Founder & President",
     "sameAs": "https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413"
   },
   "sameAs": [
@@ -50,11 +50,11 @@
 </script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="/favicon-16x16.png?v=3" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/favicon-32x32.png?v=3" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/favicon-64x64.png?v=3" rel="icon" sizes="64x64" type="image/png"/>
-<link href="/apple-touch-icon.png?v=3" rel="apple-touch-icon"/>
-<link href="/favicon.ico?v=3" rel="shortcut icon"/>
+<link href="/favicon-16x16.png?v=6" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/favicon-32x32.png?v=6" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-64x64.png?v=6" rel="icon" sizes="64x64" type="image/png"/>
+<link href="/apple-touch-icon.png?v=6" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon.ico?v=6" rel="shortcut icon"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"/>
 <style>
@@ -3800,8 +3800,8 @@ footer .copyright strong{
   }
 
   .mcm-about-refined-visual img{
-    width:min(100%,320px) !important;
-    height:380px !important;
+    width:min(100%,270px) !important;
+    height:330px !important;
   }
 
   .mcm-about-refined-certifications span,
@@ -3979,8 +3979,8 @@ footer .copyright strong{
   }
 
   .mcm-about-refined-visual img {
-    width: min(100%, 290px) !important;
-    height: 350px !important;
+    width: min(100%, 270px) !important;
+    height: 330px !important;
   }
 
   .mcm-about-refined-certifications span,
@@ -4295,16 +4295,18 @@ footer .copyright strong{
 .hero-static-copy::after{ display:none; }
 
 .hero-static-copy h1{
-  max-width:610px;
-  font-size:clamp(3.25rem,4.55vw,5.35rem);
-  line-height:.98;
+  max-width:760px;
+  font-size:clamp(3.8rem,5.55vw,6.35rem);
+  line-height:.95;
+  letter-spacing:-.03em;
 }
 
 .hero-static-copy p{ max-width:590px; }
 
 .hero-static-copy .hero-editorial-eyebrow,
 .hero-static-copy h1,
-.hero-static-copy p{ pointer-events:auto; }
+.hero-static-copy p,
+.hero-static-copy .hero-project-cta{ pointer-events:auto; }
 
 .hero-fixed-cta{
   position:absolute;
@@ -4543,8 +4545,29 @@ footer .copyright strong{
   border-color:var(--moura-gold,#c8aa70);
 }
 
+.leadership-name{
+  margin:24px 0 2px;
+  color:var(--moura-ink,#1e1e1c);
+  font-family:'Playfair Display',serif;
+  font-size:1.42rem;
+  font-weight:400;
+  letter-spacing:.01em;
+}
+
+.leadership-role{
+  margin:0 0 4px !important;
+  color:var(--moura-gold,#b89557) !important;
+  font-size:.69rem !important;
+  font-weight:700;
+  letter-spacing:.15em;
+  line-height:1.5 !important;
+  text-transform:uppercase;
+}
+
 @media (max-width:768px){
   .about-linkedin{ justify-content:center; }
+  .leadership-name,
+  .leadership-role{ text-align:center !important; }
 }
 </style>
 
@@ -4677,6 +4700,636 @@ footer .copyright strong{
 </style>
 
 <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"d54b54464cff6f8ddb4075bbca7eb766"})});</script>
+
+<style id="moura-company-insurance-credentials">
+/* Company insurance credentials — intentionally separate from personal certifications */
+.company-insurance {
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid rgba(30,30,28,.12);
+  width:100%;
+  max-width:520px;
+}
+.company-insurance-label {
+  display:block;
+  margin-bottom:10px;
+  font-family:'Montserrat',sans-serif;
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#777;
+}
+.company-insurance-items {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.company-insurance-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 13px;
+  background:#fff;
+  border:1px solid rgba(30,30,28,.14);
+  border-radius:4px;
+  color:#333;
+  font-family:'Montserrat',sans-serif;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.03em;
+  box-shadow:0 2px 8px rgba(0,0,0,.035);
+}
+.company-insurance-badge i {
+  color:#C7A96B;
+  font-size:.82rem;
+}
+@media (max-width:768px) {
+  .company-insurance { margin-left:auto; margin-right:auto; }
+  .company-insurance-items { justify-content:center; }
+}
+</style>
+
+<style id="insurance-editorial-strip">
+.insurance-strip{background:#f3efe7;border-top:1px solid rgba(30,30,28,.12);padding:27px 20px 26px;}
+.insurance-strip-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(260px,.8fr) 1.2fr;gap:42px;align-items:center;text-align:left;}
+.insurance-strip-kicker{display:block;font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#8a7449;margin-bottom:9px;}
+.insurance-strip h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:400;color:#262624;margin:0;line-height:1.2;}
+.insurance-coverage{display:flex;align-items:center;justify-content:flex-end;gap:0;}
+.insurance-item{display:flex;align-items:center;gap:13px;padding:4px 30px;}
+.insurance-item:first-child{padding-left:0;}
+.insurance-item+.insurance-item{border-left:1px solid rgba(30,30,28,.16);}
+.insurance-icon{width:38px;height:38px;border:1px solid #C7A96B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#C7A96B;flex:0 0 38px;}
+.insurance-item strong{display:block;font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#333;line-height:1.3;}
+.insurance-item small{display:block;margin-top:3px;font-family:'Montserrat',sans-serif;font-size:.68rem;color:#777;letter-spacing:.02em;}
+@media(max-width:768px){.insurance-strip{padding:27px 24px}.insurance-strip-inner{grid-template-columns:1fr;gap:25px;text-align:center}.insurance-strip h2{font-size:1.55rem}.insurance-coverage{justify-content:center;flex-direction:column;gap:18px}.insurance-item{padding:0;justify-content:flex-start;width:250px;text-align:left}.insurance-item+.insurance-item{border-left:0;padding-top:18px;border-top:1px solid rgba(30,30,28,.14)}}
+
+</style>
+
+
+
+
+
+<style id="moura-inquiry-footer-join">
+/* Final transition: Project Inquiry closes the cascade and flows directly into the footer area. */
+#contact{
+  padding-bottom:0 !important;
+  margin-bottom:0 !important;
+}
+#contact .contact-split{
+  padding-bottom:clamp(52px,6vw,82px) !important;
+}
+.insurance-strip{
+  position:relative !important;
+  z-index:100 !important;
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+footer{
+  position:relative !important;
+  z-index:100 !important;
+  margin-top:0 !important;
+}
+/* The title stack intentionally remains visible through the footer. */
+#moura-cascade-fixed-stack{transition:opacity .22s ease;}
+@media(max-width:768px){
+  #contact .contact-split{padding-bottom:48px !important;}
+}
+</style>
+
+<style id="moura-insurance-stacked-treatment">
+/* Insurance joins the title cascade. Its content and the footer continue underneath
+   the persistent title stack, exactly like the preceding sections. */
+.insurance-strip{
+  padding-top:0 !important;
+  position:relative !important;
+  z-index:100 !important;
+  overflow:visible !important;
+}
+.insurance-strip > .moura-post-title{
+  width:100%;
+  margin:0;
+}
+.insurance-strip .insurance-strip-inner{
+  padding-top:clamp(42px,5vw,68px) !important;
+  padding-bottom:clamp(42px,5vw,68px) !important;
+}
+footer{
+  position:relative !important;
+  z-index:100 !important;
+  margin-top:0 !important;
+}
+/* The fixed title stack must remain visible all the way through the footer. */
+#moura-cascade-fixed-stack{
+  opacity:1 !important;
+}
+@media(max-width:768px){
+  .insurance-strip .insurance-strip-inner{
+    padding-top:36px !important;
+    padding-bottom:42px !important;
+  }
+}
+</style>
+
+<style id="moura-insurance-horizontal-alignment-fix">
+/* Align Insurance & Protection content with the horizontal gutters of its title band. */
+.insurance-strip .insurance-strip-inner{
+  width:100% !important;
+  max-width:none !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  padding-left:clamp(22px,4.2vw,68px) !important;
+  padding-right:clamp(22px,4.2vw,68px) !important;
+  box-sizing:border-box !important;
+}
+@media(max-width:768px){
+  .insurance-strip .insurance-strip-inner{
+    padding-left:24px !important;
+    padding-right:24px !important;
+  }
+}
+</style>
+
+<style id="moura-insurance-true-centering-fix">
+/* Insurance strip: neutralize the global section bottom padding so the content
+   is vertically centered inside its own band. */
+section.insurance-strip{
+  padding-top:0 !important;
+  padding-right:0 !important;
+  padding-bottom:0 !important;
+  padding-left:0 !important;
+}
+.insurance-strip .insurance-strip-inner{
+  padding-top:clamp(54px,5vw,76px) !important;
+  padding-bottom:clamp(54px,5vw,76px) !important;
+}
+@media(max-width:768px){
+  .insurance-strip .insurance-strip-inner{
+    padding-top:42px !important;
+    padding-bottom:42px !important;
+  }
+}
+</style>
+
+<style id="hero-client-login-button">
+.hero-client-login-btn {
+  position: fixed;
+  right: 64px;
+  bottom: 58px;
+  z-index: 1500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border: 1px solid rgba(199,169,107,.82);
+  background: rgba(24,24,24,.72);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  box-shadow: 0 5px 18px rgba(0,0,0,.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background .3s ease, border-color .3s ease, color .3s ease, transform .3s ease;
+}
+.hero-client-login-btn:hover {
+  background: #C7A96B;
+  border-color: #C7A96B;
+  color: #222;
+  transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+  .hero-client-login-btn {
+    right: 26px;
+    bottom: 48px;
+    padding: 9px 16px;
+    font-size: .68rem;
+    letter-spacing: .9px;
+  }
+}
+</style>
+
+
+<style id="moura-portfolio-cascade-logic">
+/* =========================================================
+   INDEX — PORTFOLIO CASCADE LOGIC
+   Same mechanism used by portfolio:
+   every incoming section is sticky at top:0 and receives a
+   higher z-index, so it physically slides over the previous
+   section and remains above it. No cloned titles / JS stack.
+   ========================================================= */
+:root{
+  --moura-bar-h:58px;
+  --moura-ivory:#F7F4EE;
+  --moura-ink:#1F1E1B;
+  --moura-gold:#C7A96B;
+  --moura-line:rgba(31,30,27,.16);
+}
+
+/* The hero remains in normal flow. The cascade starts below it. */
+.moura-cascade-panel{
+  position:sticky !important;
+  top:0 !important;
+  width:100% !important;
+  min-height:100svh;
+  overflow:visible !important;
+  box-sizing:border-box;
+  border-top:1px solid var(--moura-line);
+  padding:0 !important; /* title band must physically touch viewport top */
+}
+
+/* Exactly like Portfolio: every incoming panel has a higher layer. */
+.moura-cascade-01{z-index:41 !important;}
+.moura-cascade-02{z-index:42 !important;}
+.moura-cascade-03{z-index:43 !important;}
+.moura-cascade-04{z-index:44 !important;}
+.moura-cascade-05{z-index:45 !important;}
+.moura-cascade-06{z-index:46 !important;}
+.moura-cascade-07{z-index:47 !important;}
+
+/* Opaque surfaces are required so each new panel truly covers the old one. */
+.moura-cascade-01{background:#F7F4EE !important;}
+.moura-cascade-02{background:#EFEDE7 !important;}
+.moura-cascade-03{background:#F7F4EE !important;}
+.moura-cascade-04{background:#20201F !important;color:#fff;}
+.moura-cascade-05{background:#F7F4EE !important;}
+.moura-cascade-06{background:#20201F !important;color:#fff;}
+.moura-cascade-07{background:#F7F4EE !important;}
+
+/* Title bar is part of the panel itself. It arrives with the section,
+   slides over the previous title and then stays at the top. */
+.moura-cascade-tab{
+  position:relative !important;
+  z-index:4;
+  width:100%;
+  height:var(--moura-bar-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:0 clamp(24px,5vw,92px);
+  margin:0 !important;
+  background:rgba(247,244,238,.985);
+  color:var(--moura-ink);
+  border-top:1px solid var(--moura-line);
+  border-bottom:1px solid var(--moura-line);
+  box-shadow:0 7px 22px rgba(20,18,14,.045);
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.12rem,1.7vw,1.58rem);
+  font-weight:400;
+  letter-spacing:.025em;
+  line-height:1;
+  text-align:left;
+}
+.moura-cascade-tab span{
+  width:42px;
+  height:1px;
+  display:block;
+  flex:0 0 auto;
+  background:var(--moura-gold);
+}
+.moura-cascade-04 > .moura-cascade-tab,
+.moura-cascade-tab-dark{
+  background:rgba(32,32,31,.992) !important;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.18) !important;
+}
+
+/* Keep the original section content spacing while the top band is integrated. */
+.moura-cascade-panel > .mcm-new-wrap,
+.moura-cascade-panel > .about-content,
+.moura-cascade-panel > .content-max-width{
+  padding-top:clamp(46px,5vw,78px);
+  padding-bottom:clamp(58px,6vw,92px);
+}
+#testimonials,
+#contact{
+  padding-top:0 !important;
+}
+#testimonials .mcm-reviews-editorial-grid{
+  padding-top:clamp(46px,5vw,72px);
+}
+#contact .contact-split{
+  padding-top:clamp(48px,5vw,72px);
+}
+.insurance-strip{
+  padding-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+/* Footer closes the cascade, just as Portfolio returns to normal page flow. */
+footer{
+  position:relative !important;
+  z-index:70 !important;
+  margin-top:0 !important;
+  background:#fff !important;
+}
+
+/* Preserve the floating Jobber portal above every sliding panel. */
+.hero-client-login-btn{
+  position:fixed !important;
+  z-index:5000 !important;
+}
+
+@media(max-width:768px){
+  :root{--moura-bar-h:48px;}
+  .moura-cascade-panel{
+    min-height:100svh;
+  }
+  .moura-cascade-tab{
+    height:var(--moura-bar-h);
+    padding:0 20px;
+    font-size:1.03rem;
+    gap:14px;
+  }
+  .moura-cascade-tab span{width:28px;}
+  .moura-cascade-panel > .mcm-new-wrap,
+  .moura-cascade-panel > .about-content,
+  .moura-cascade-panel > .content-max-width{
+    padding-top:38px;
+    padding-bottom:58px;
+  }
+  #testimonials .mcm-reviews-editorial-grid{padding-top:38px;}
+  #contact .contact-split{padding-top:40px;}
+}
+</style>
+
+
+<style id="moura-long-sections-sticky-title-fix">
+/* =========================================================
+   LONG SECTIONS — PROCESS + ABOUT
+   These two sections are taller than the viewport. Keep only
+   their title bar sticky while their own content continues to
+   scroll underneath it. The following section still arrives on
+   a higher z-index and covers/replaces the previous title.
+   ========================================================= */
+#process-home.moura-cascade-panel,
+#about.moura-cascade-panel{
+  position:relative !important;
+  top:auto !important;
+  min-height:100svh !important;
+  overflow:visible !important;
+}
+
+#process-home > .moura-cascade-tab,
+#about > .moura-cascade-tab{
+  position:sticky !important;
+  top:0 !important;
+  z-index:20 !important;
+}
+
+/* Keep each long section as its own opaque stacking layer so
+   its content passes visually beneath its sticky title bar. */
+#process-home{
+  z-index:43 !important;
+  isolation:isolate;
+}
+#about{
+  z-index:44 !important;
+  isolation:isolate;
+}
+
+/* The next panel must still slide over the long section/title. */
+#testimonials{z-index:45 !important;}
+
+@media(max-width:768px){
+  #process-home.moura-cascade-panel,
+  #about.moura-cascade-panel{
+    min-height:100svh !important;
+  }
+}
+</style>
+
+
+<style id="insurance-section-padding-fix">
+/* Insurance & Protection — restore comfortable vertical breathing room */
+#insurance,
+.insurance-section,
+#insurance-protection {
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
+  min-height: auto !important;
+}
+
+@media (max-width: 768px) {
+  #insurance,
+  .insurance-section,
+  #insurance-protection {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+}
+</style>
+
+
+<style id="insurance-visible-strip-height-fix">
+/* Actual visible Insurance & Protection band */
+.insurance-strip {
+  padding: 58px 42px !important;
+}
+
+@media (max-width: 768px) {
+  .insurance-strip {
+    padding: 44px 24px !important;
+  }
+}
+</style>
+
+
+<style id="insurance-strip-large-final">
+.insurance-strip {
+  padding-top: 150px !important;
+  padding-bottom: 150px !important;
+  padding-left: 42px !important;
+  padding-right: 42px !important;
+}
+
+@media (max-width: 768px) {
+  .insurance-strip {
+    padding-top: 100px !important;
+    padding-bottom: 100px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+</style>
+
+
+<style id="insurance-real-height-final-override">
+/* FINAL override: increase the ACTUAL inner band height; earlier rules zero inner padding. */
+section.insurance-strip { padding: 0 !important; }
+section.insurance-strip .insurance-strip-inner {
+  padding-top: 150px !important;
+  padding-bottom: 150px !important;
+  padding-left: clamp(22px,4.2vw,68px) !important;
+  padding-right: clamp(22px,4.2vw,68px) !important;
+}
+@media (max-width:768px){
+  section.insurance-strip .insurance-strip-inner {
+    padding-top:100px !important; padding-bottom:100px !important;
+    padding-left:24px !important; padding-right:24px !important;
+  }
+}
+</style>
+
+<style id="hero-project-cta-inline-fix">
+/* Jobber CTA belongs under the hero copy, not as a floating corner button. */
+.hero-editorial-copy .hero-project-cta{
+  position:static !important;
+  right:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  width:auto !important;
+  margin-top:26px !important;
+  padding:13px 30px !important;
+  border:1px solid #C7A96B !important;
+  background:rgba(0,0,0,.12) !important;
+  color:#fff !important;
+  font-family:'Montserrat',sans-serif;
+  font-size:.82rem !important;
+  font-weight:600 !important;
+  letter-spacing:1.25px !important;
+  text-transform:uppercase;
+  box-shadow:none !important;
+}
+.hero-editorial-copy .hero-project-cta:hover{
+  background:#C7A96B !important;
+  color:#1f1e1b !important;
+  transform:translateY(-1px) !important;
+}
+@media (max-width:768px){
+  .hero-editorial-copy .hero-project-cta{
+    margin-top:20px !important;
+    padding:12px 22px !important;
+  }
+}
+</style>
+
+<style id="moura-team-login-header">
+/* Team Login — discreet internal access in the header */
+header .team-login-header {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 160;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255,255,255,.92);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: 1.25px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 9px 2px;
+  transition: color .25s ease, opacity .25s ease;
+}
+header .team-login-header i {
+  font-size: .68rem;
+  opacity: .78;
+  transition: transform .25s ease, opacity .25s ease;
+}
+header .team-login-header:hover {
+  color: #C7A96B;
+}
+header .team-login-header:hover i {
+  opacity: 1;
+  transform: translate(2px,-2px);
+}
+
+@media (max-width: 768px) {
+  header .team-login-header {
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    justify-content: center;
+    font-size: 0;
+    letter-spacing: 0;
+  }
+  header .team-login-header i {
+    font-size: .86rem;
+    opacity: .92;
+  }
+}
+</style>
+
+
+<style id="moura-mobile-management-selected-work-flow-fix">
+/* MOBILE ONLY — Management + Selected Work can exceed one viewport.
+   Let each section grow naturally and keep its own title at the top
+   while the section content scrolls underneath it. Desktop unchanged. */
+@media (max-width: 768px) {
+  #owner-representation-home.moura-cascade-panel,
+  #selected-projects-home.moura-cascade-panel {
+    position: relative !important;
+    top: auto !important;
+    min-height: 100svh !important;
+    height: auto !important;
+    overflow: visible !important;
+    isolation: isolate;
+  }
+
+  #owner-representation-home > .moura-cascade-tab,
+  #selected-projects-home > .moura-cascade-tab {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+  }
+
+  #owner-representation-home { z-index: 41 !important; }
+  #selected-projects-home { z-index: 42 !important; }
+}
+</style>
+
+<style id="hero-existing-client-below-cta-fix">
+/* Keep existing-client access directly below the primary hero CTA. */
+.hero-static-copy .hero-cta-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:max-content;
+  max-width:100%;
+}
+.hero-static-copy .hero-cta-stack .hero-project-cta{
+  margin-top:26px !important;
+}
+.hero-static-copy .hero-existing-client-link{
+  display:inline-block;
+  margin-top:11px;
+  color:rgba(255,255,255,.78);
+  font-family:'Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:400;
+  letter-spacing:.15px;
+  text-transform:none;
+  text-decoration:none;
+  transition:color .25s ease, opacity .25s ease;
+}
+.hero-static-copy .hero-existing-client-link:hover{
+  color:#C7A96B;
+}
+@media (max-width:768px){
+  .hero-static-copy .hero-cta-stack{
+    align-items:flex-start;
+  }
+  .hero-static-copy .hero-cta-stack .hero-project-cta{
+    margin-top:20px !important;
+  }
+  .hero-static-copy .hero-existing-client-link{
+    margin-top:9px;
+    font-size:.74rem;
+  }
+}
+</style>
 </head>
 <body id="top">
 <div class="modal-overlay" id="welcomeModal">
@@ -4699,6 +5352,9 @@ footer .copyright strong{
 <div class="header-col-left"></div>
 <a class="logo-link" href="#top">
 <span class="brand-logo" role="img" aria-label="Moura Consulting &amp; Management logo"></span>
+</a>
+<a class="team-login-header" href="https://www.getjobber.com/login/" target="_blank" rel="noopener noreferrer" aria-label="Team Login" title="Team Login">
+  <span>Team Login</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
 </a>
 <button aria-expanded="false" aria-label="Open menu" class="hamburger-btn" onclick="toggleMenu()">
 <i class="fas fa-bars"></i>
@@ -4731,18 +5387,20 @@ footer .copyright strong{
     <span class="hero-editorial-eyebrow">Project Management</span>
     <h1 data-translate="hero1-title">Construction Project Management</h1>
     <p data-translate="hero1-subtitle">From planning through closeout — structured coordination, oversight, and project control.</p>
+    <div class="hero-cta-stack">
+      <a class="hero-client-login-btn hero-project-cta" href="https://clienthub.getjobber.com/client_hubs/241c36f8-9d6e-4ab4-bea5-5c4c26fddad1/login/new?source=share_login" target="_blank" rel="noopener noreferrer">Start Your Project</a>
+      <a class="hero-existing-client-link" href="https://clienthub.getjobber.com/client_hubs/241c36f8-9d6e-4ab4-bea5-5c4c26fddad1/login/new?source=share_login" target="_blank" rel="noopener noreferrer">Already a client? Access your account →</a>
+    </div>
   </div>
   <div class="hero-dots" aria-label="Hero slides">
     <div class="dot active" data-slide="0"></div>
     <div class="dot" data-slide="1"></div>
     <div class="dot" data-slide="2"></div>
   </div>
-  <div class="hero-fixed-cta">
-    <button class="hero-editorial-primary" data-translate="hero-btn" onclick="window.open('https://wa.me/17862383386', '_blank')">Request Exclusive Project</button>
-  </div>
 </div>
 
-<section id="owner-representation-home" class="mcm-new-section mcm-owner-rep">
+<section id="owner-representation-home" class="mcm-new-section mcm-owner-rep moura-cascade-panel moura-cascade-01">
+  <div class="moura-cascade-tab">MANAGEMENT<span></span></div>
   <div class="mcm-new-wrap mcm-owner-grid">
     <div class="mcm-owner-copy">
       <span class="mcm-eyebrow">PROJECT MANAGEMENT</span>
@@ -4758,7 +5416,8 @@ footer .copyright strong{
     </div>
   </div>
 </section>
-<section id="selected-projects-home" class="mcm-new-section mcm-selected-projects mcm-projects-editorial">
+<section id="selected-projects-home" class="mcm-new-section mcm-selected-projects mcm-projects-editorial moura-cascade-panel moura-cascade-02">
+  <div class="moura-cascade-tab">SELECTED WORK<span></span></div>
   <div class="mcm-new-wrap mcm-projects-editorial-grid">
 
     <div class="mcm-projects-editorial-copy">
@@ -4818,7 +5477,8 @@ footer .copyright strong{
 
 
 
-<section id="process-home" class="mcm-new-section mcm-process">
+<section id="process-home" class="mcm-new-section mcm-process moura-cascade-panel moura-cascade-03">
+  <div class="moura-cascade-tab">PROCESS<span></span></div>
   <div class="mcm-new-wrap">
     <span class="mcm-eyebrow">OUR PROCESS</span>
     <h2 class="mcm-new-title">Structured Project Management From Scope to Closeout.</h2>
@@ -4878,25 +5538,26 @@ footer .copyright strong{
 
 
 
-<section class="section-light mcm-about-refined" id="about">
+<section class="section-light mcm-about-refined moura-cascade-panel moura-cascade-04" id="about">
+  <div class="moura-cascade-tab">ABOUT MOURA<span></span></div>
   <div class="mcm-new-wrap mcm-about-refined-grid">
 
     <div class="mcm-about-refined-copy">
-      <span class="mcm-eyebrow">WHY MOURA CONSULTING</span>
+      <span class="mcm-eyebrow">LEADERSHIP</span>
       <span class="mcm-editorial-rule"></span>
 
-      <h2 data-translate="about-title">Why Choose Us</h2>
+      <h2>Leadership with accountability.</h2>
 
-      <p data-translate="about-p1">
-        We coordinate every phase of the project with precision, transparency, and quality-focused oversight — helping clients and project stakeholders stay informed and in control from planning through completion.
+      <p>
+        Moura Consulting is led by André Moura, Founder &amp; President, who directs project management operations and maintains direct accountability from planning through completion.
       </p>
 
-      <p data-translate="about-p2">
-        Our approach is focused on structure, communication, and risk control, providing greater visibility and control while every phase of the project is managed with precision.
+      <p>
+        Under his leadership, we coordinate clients, general contractors, licensed trades, design professionals, and project stakeholders as one aligned project team — bringing structure, communication, and control to every phase.
       </p>
 
-      <p data-translate="about-p3">
-        Our founder holds construction and Project Management qualifications from FIU (Florida International University), with professional credentials from NCCER, OSHA, and Procore — reinforcing our commitment to safety, quality, and structured project control.
+      <p>
+        André holds construction and Project Management qualifications from FIU (Florida International University), with professional credentials from NCCER, OSHA, and Procore — reinforcing the company’s commitment to safety, quality, and disciplined project control.
       </p>
 
       <div class="certifications mcm-about-refined-certifications" aria-label="Professional credentials">
@@ -4906,16 +5567,13 @@ footer .copyright strong{
         <span class="credential-badge credential-procore" aria-label="Procore Certified Project Manager, Core Tools" title="Procore Certified — Project Manager (Core Tools)"><b>PRO</b><i>C</i><b>ORE</b></span>
       </div>
 
+      <h3 class="leadership-name">André Moura</h3>
+      <p class="leadership-role">Founder &amp; President</p>
+
       <a class="about-linkedin" href="https://www.linkedin.com/in/andr%C3%A9-moura-033aa4413" rel="noopener" target="_blank">
         <i aria-hidden="true" class="fab fa-linkedin-in"></i>
-        André Moura on LinkedIn
+        View Executive Profile
       </a>
-
-      <div class="about-cta">
-        <a href="https://blinq.me/cmjbcm89k0ljvs60m2va3lubh?bs=icl" rel="noopener" target="_blank">
-          Connect with André
-        </a>
-      </div>
     </div>
 
     <div class="mcm-about-refined-visual">
@@ -4925,7 +5583,8 @@ footer .copyright strong{
   </div>
 </section>
 
-<section class="section-light mcm-reviews-editorial" id="testimonials">
+<section class="section-light mcm-reviews-editorial moura-cascade-panel moura-cascade-05" id="testimonials">
+  <div class="moura-cascade-tab">GOOGLE REVIEWS<span></span></div>
   <div class="mcm-new-wrap mcm-reviews-editorial-grid">
     <div class="mcm-reviews-editorial-intro">
       <span class="mcm-eyebrow">CLIENT FEEDBACK</span>
@@ -4948,7 +5607,8 @@ footer .copyright strong{
     </div>
   </div>
 </section>
-<section class="section-gray" id="contact">
+<section class="section-gray moura-cascade-panel moura-cascade-06" id="contact">
+  <div class="moura-cascade-tab moura-cascade-tab-dark">PROJECT INQUIRY<span></span></div>
   <div class="contact-split">
     <div class="contact-intro">
       <h2 class="section-title" data-translate="contact-title">Submit a Project Inquiry</h2>
@@ -4972,6 +5632,25 @@ footer .copyright strong{
         <button data-translate="contact-btn-submit" type="submit">Submit Inquiry</button>
         <p aria-live="polite" class="contact-form-status" id="contactFormStatus"></p>
       </form>
+    </div>
+  </div>
+</section>
+
+<section class="insurance-strip" aria-label="Company insurance coverage">
+  <div class="insurance-strip-inner">
+    <div>
+      <span class="insurance-strip-kicker">Professional Protection</span>
+      <h2>Insured. Professional. Accountable.</h2>
+    </div>
+    <div class="insurance-coverage">
+      <div class="insurance-item">
+        <span class="insurance-icon"><i class="fas fa-shield-halved" aria-hidden="true"></i></span>
+        <div><strong>Commercial General Liability</strong></div>
+      </div>
+      <div class="insurance-item">
+        <span class="insurance-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></span>
+        <div><strong>Professional Liability</strong></div>
+      </div>
     </div>
   </div>
 </section>
@@ -5322,6 +6001,278 @@ document.addEventListener("DOMContentLoaded", function () {
   restart();
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+<style id="moura-long-title-true-overlay">
+/* LONG TITLES — true overlay, no native sticky push-off.
+   The original tab stays in document flow; a fixed visual layer holds
+   the active title at top until the next section physically covers it. */
+#process-home > .moura-cascade-tab,
+#about > .moura-cascade-tab{
+  position:relative !important;
+  top:auto !important;
+}
+.moura-long-title-fixed{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  margin:0 !important;
+  pointer-events:none !important;
+}
+.moura-long-title-fixed[data-source="process-home"]{ z-index:43 !important; }
+.moura-long-title-fixed[data-source="about"]{ z-index:44 !important; }
+</style>
+<script id="moura-long-title-true-overlay-script">
+(function(){
+  const defs = [
+    {sectionId:'process-home', nextId:'about', z:43},
+    {sectionId:'about', nextId:'testimonials', z:44}
+  ];
+  let fixed = null;
+  let activeId = '';
+
+  function removeFixed(){
+    if(fixed){ fixed.remove(); fixed = null; }
+    activeId = '';
+  }
+
+  function makeFixed(def, tab){
+    if(activeId === def.sectionId) return;
+    removeFixed();
+    fixed = tab.cloneNode(true);
+    fixed.removeAttribute('id');
+    fixed.classList.add('moura-long-title-fixed');
+    fixed.dataset.source = def.sectionId;
+    fixed.setAttribute('aria-hidden','true');
+    document.body.appendChild(fixed);
+    activeId = def.sectionId;
+  }
+
+  function updateLongTitle(){
+    let match = null;
+    for(const def of defs){
+      const section = document.getElementById(def.sectionId);
+      const next = document.getElementById(def.nextId);
+      if(!section || !next) continue;
+      const tab = section.querySelector(':scope > .moura-cascade-tab');
+      const nextTab = next.querySelector(':scope > .moura-cascade-tab');
+      if(!tab || !nextTab) continue;
+
+      const tabTop = tab.getBoundingClientRect().top;
+      const nextTop = nextTab.getBoundingClientRect().top;
+
+      /* Active from the instant its real title reaches the viewport top
+         until the next real title reaches that same top edge. */
+      if(tabTop <= 0 && nextTop > 0){
+        match = {def, tab};
+      }
+    }
+
+    if(match) makeFixed(match.def, match.tab);
+    else removeFixed();
+  }
+
+  let ticking = false;
+  function requestUpdate(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      updateLongTitle();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
+  requestUpdate();
+})();
+</script>
+
+
+<style id="moura-final-flow-fixes">
+/* ABOUT MOURA: keep the title bar visually identical at every scroll state. */
+#about > .moura-cascade-tab,
+.moura-long-title-fixed[data-source="about"]{
+  background:rgba(247,244,238,.985) !important;
+  color:var(--moura-ink,#1F1E1B) !important;
+  border-top:1px solid var(--moura-line,rgba(31,30,27,.16)) !important;
+  border-bottom:1px solid var(--moura-line,rgba(31,30,27,.16)) !important;
+}
+#about > .moura-cascade-tab span,
+.moura-long-title-fixed[data-source="about"] span{
+  background:var(--moura-gold,#C7A96B) !important;
+}
+
+/* PROJECT INQUIRY is the final cascade panel. Everything after it returns to normal document flow. */
+.insurance-strip{
+  position:relative !important;
+  top:auto !important;
+  z-index:1 !important;
+  min-height:0 !important;
+  overflow:visible !important;
+  margin:0 !important;
+  padding:150px 42px !important;
+  background:#f3efe7 !important;
+  border-top:1px solid rgba(30,30,28,.12) !important;
+}
+.insurance-strip .insurance-strip-inner{
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+}
+@media (max-width: 768px){
+  .insurance-strip{
+    padding:100px 24px !important;
+  }
+}
+footer{
+  position:relative !important;
+  top:auto !important;
+  z-index:1 !important;
+  margin-top:0 !important;
+}
+</style>
+<script id="moura-final-cascade-stop">
+(function(){
+  const insurance = document.querySelector('.insurance-strip');
+  const footer = document.querySelector('footer');
+  const fixedSelector = '.moura-long-title-fixed, #moura-cascade-fixed-stack';
+  function updateCascadeEnd(){
+    if(!insurance) return;
+    const reachedNormalFlow = insurance.getBoundingClientRect().top <= 0;
+    document.querySelectorAll(fixedSelector).forEach(function(el){
+      if(reachedNormalFlow){
+        el.style.opacity='0';
+        el.style.visibility='hidden';
+      }else{
+        el.style.opacity='';
+        el.style.visibility='';
+      }
+    });
+  }
+  window.addEventListener('scroll', updateCascadeEnd, {passive:true});
+  window.addEventListener('resize', updateCascadeEnd);
+  updateCascadeEnd();
+})();
+</script>
+
+
+<style id="moura-project-inquiry-flow-fix">
+/* PROJECT INQUIRY — final fixed title, normal page flow below it. */
+#contact.moura-cascade-panel{
+  position:relative !important;
+  top:auto !important;
+  min-height:0 !important;
+  overflow:visible !important;
+  z-index:46 !important;
+}
+#contact > .moura-cascade-tab{
+  position:relative !important;
+  top:auto !important;
+  z-index:4 !important;
+}
+
+/* The visual copy of the final title stays at the top while the rest of
+   Project Inquiry, Insurance and the footer continue scrolling behind it. */
+.moura-project-inquiry-fixed{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  margin:0 !important;
+  z-index:90 !important;
+  pointer-events:none !important;
+  background:rgba(32,32,31,.992) !important;
+  color:#fff !important;
+  border-top:1px solid rgba(255,255,255,.18) !important;
+  border-bottom:1px solid rgba(255,255,255,.18) !important;
+}
+.moura-project-inquiry-fixed span{
+  background:var(--moura-gold,#C7A96B) !important;
+}
+
+/* Everything after Project Inquiry remains ordinary document flow and must
+   stay below the final fixed title layer. */
+.insurance-strip,
+footer{
+  position:relative !important;
+  top:auto !important;
+  z-index:1 !important;
+}
+</style>
+<script id="moura-project-inquiry-flow-script">
+(function(){
+  const section = document.getElementById('contact');
+  if(!section) return;
+  const tab = section.querySelector(':scope > .moura-cascade-tab');
+  if(!tab) return;
+  let fixed = null;
+
+  function ensureFixed(){
+    if(fixed) return;
+    fixed = tab.cloneNode(true);
+    fixed.removeAttribute('id');
+    fixed.classList.add('moura-project-inquiry-fixed');
+    fixed.setAttribute('aria-hidden','true');
+    document.body.appendChild(fixed);
+  }
+
+  function removeFixed(){
+    if(fixed){ fixed.remove(); fixed = null; }
+  }
+
+  function update(){
+    const top = tab.getBoundingClientRect().top;
+    if(top <= 0) ensureFixed();
+    else removeFixed();
+  }
+
+  let ticking = false;
+  function requestUpdate(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      update();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
+  requestUpdate();
+})();
+</script>
+
+
+<style id="moura-final-content-visibility-fix">
+/* Final page flow: Insurance + footer must scroll above all cascade panels,
+   but remain underneath the fixed PROJECT INQUIRY title. */
+.insurance-strip,
+footer{
+  position:relative !important;
+  top:auto !important;
+  z-index:70 !important;
+}
+.insurance-strip{
+  background:#f3efe7 !important;
+}
+footer{
+  background:#fff !important;
+}
+.moura-project-inquiry-fixed{
+  z-index:90 !important;
+}
+</style>
 
 </body>
 </html>
