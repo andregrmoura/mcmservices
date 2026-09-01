@@ -5687,8 +5687,8 @@ Miami, Florida<br/>
 </div>
 <div class="footer-col">
 <h4 data-translate="footer-legal">Legal</h4>
-<a data-translate="footer-terms" href="terms.html" id="link-terms">Terms of Use</a>
-<a data-translate="footer-privacy" href="privacy.html" id="link-privacy">Privacy Policy</a>
+<a data-translate="footer-terms" href="terms.html" id="link-terms" ontouchend="window.location.href=this.href; return false;">Terms of Use</a>
+<a data-translate="footer-privacy" href="privacy.html" id="link-privacy" ontouchend="window.location.href=this.href; return false;">Privacy Policy</a>
 </div>
 </div>
 <div class="footer-bottom-line">
@@ -6610,38 +6610,6 @@ footer{
     button.setAttribute('aria-expanded',String(expanded));
     if(label) label.textContent=expanded?'Show less':'View all steps';
     if(icon) icon.textContent=expanded?'−':'+';
-  });
-})();
-</script>
-
-
-<style id="mobile-legal-links-one-tap-fix">
-@media (max-width: 768px), (hover: none) and (pointer: coarse) {
-  #link-terms,
-  #link-privacy {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  #link-terms:hover,
-  #link-privacy:hover {
-    color: #66615a !important;
-  }
-}
-</style>
-<script id="mobile-legal-links-one-tap-script">
-(function(){
-  const links = [
-    document.getElementById('link-terms'),
-    document.getElementById('link-privacy')
-  ].filter(Boolean);
-
-  links.forEach(function(link){
-    link.addEventListener('pointerup', function(event){
-      if (event.pointerType !== 'touch') return;
-      event.preventDefault();
-      window.location.assign(link.href);
-    }, {passive:false});
   });
 })();
 </script>
